@@ -95,7 +95,7 @@
     <div class="py-4 text-gray-500">
         <div class="flex justify-start items-center">
             <a href="" class="ml-6">
-                <img src="{{ asset('assets/images/logo.png') }}" alt="">
+                <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="">
             </a>
             <div>
                 <h1 class="text-2xl font-bold text-slate-800">PawonKOE</h1>

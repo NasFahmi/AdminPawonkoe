@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AuthLoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AuthLoginRequest;
+use Illuminate\Support\Facades\RateLimiter;
 
 
 class AuthController extends Controller
@@ -14,7 +15,19 @@ class AuthController extends Controller
      */
     public function loginview()
     {
-        return view('pages.login');
+        // Rate Limiter
+        if (RateLimiter::tooManyAttempts('loginview', $maxAttempts = 4)) {
+            $seconds = RateLimiter::availableIn('loginview');
+            session()->flash('retryAfter', $seconds);
+        } else {
+            // Increment Rate Limiter
+            RateLimiter::hit('loginview');
+        }
+
+        // Mengambil nilai retryAfter jika tersedia
+        $retryAfter = session('retryAfter');
+
+        return view('pages.login', compact('retryAfter'));
     }
 
     /**
@@ -38,12 +51,13 @@ class AuthController extends Controller
         }
 
     }
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         return redirect()->route('login');
     }
-    
+
 }

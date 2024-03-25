@@ -21,10 +21,8 @@ use App\Http\Controllers\Api\ApiTransaksiController;
 */
 
 
-Route::middleware(['throttle:login'])->group(function () {
-    Route::get('/login', [AuthController::class, 'loginview'])->name('loginview');
-    Route::post('/login', [AuthController::class, 'Authlogin'])->name('login');
-});
+Route::post('/login', [AuthController::class, 'Authlogin'])->name('login');
+Route::get('/login', [AuthController::class, 'loginview'])->name('loginview');
 
 
 Route::middleware(['auth'])->group(function () {

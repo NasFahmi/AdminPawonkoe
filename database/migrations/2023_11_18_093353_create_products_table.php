@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('nama_product', 100);
+            $table->longText('slug');
             $table->string('harga', 100);
             $table->longtext('deskripsi');
             $table->string('link_shopee', 255);

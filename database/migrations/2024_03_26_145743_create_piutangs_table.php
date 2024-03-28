@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nominal',255);
             $table->longText('catatan')->nullable();
             $table->boolean('is_complete')->default(0);
-            $table->timestamps('tanggal_disetorkan');
+            $table->timestamp('tanggal_disetorkan');
             $table->string('bukti_nota',255);
         });
     }

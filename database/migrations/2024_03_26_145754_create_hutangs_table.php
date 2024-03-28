@@ -21,7 +21,6 @@ return new class extends Migration
             $table->timestamp('tenggat_pembayaran')->nullable();
             $table->timestamp('tanggal_pembayaran')->nullable();
             $table->string('bukti_pembayaran',255)->nullable();
-            $table->timestamps();
         });
     }
 

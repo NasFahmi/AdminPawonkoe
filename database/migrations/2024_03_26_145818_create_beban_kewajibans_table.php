@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('jenis');
             $table->string('nama');
             $table->string('nominal');
-            $table->timestamps('tanggal');
+            $table->timestamp('tanggal');
 
         });
     }

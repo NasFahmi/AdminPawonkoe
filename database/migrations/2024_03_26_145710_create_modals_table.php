@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nominal');
             $table->string('penyedia');
             $table->bigInteger('jumlah');
-            $table->timestamps('tanggal');
+            $table->timestamp('tanggal');
             $table->unsignedBigInteger('jenis_modal_id');
             $table->foreign('jenis_modal_id')->references('id')->on('jenis_modals')->onDelete('cascade')->onUpdate('cascade');
         });

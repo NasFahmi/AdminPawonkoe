@@ -13,7 +13,7 @@
         }
     </style>
     
-    <link rel="shortcut icon" href="{{ Vite::asset('resources/images/logo.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}" type="image/x-icon">
     @include('partials.link')
     @extends('partials.head')
     <style>

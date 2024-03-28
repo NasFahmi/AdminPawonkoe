@@ -47,14 +47,14 @@ class DashboardController extends Controller
             ->get();
 
         $preorderRecently = Preorder::whereHas('transaksis', function ($query) {
-            $query->where('is_preorder', 1)->where('is_complete',0);
+            $query->where('is_preorder', 1)->where('is_complete', 0);
         })
             ->latest()
             ->limit(3)
             ->get();
         $productRecently = Product::with('fotos', 'transaksis')
-        ->where('tersedia' ,1)    
-        ->latest()->limit(5)->get();
+            ->where('tersedia', 1)
+            ->latest()->limit(5)->get();
 
         $foto = Foto::join('transaksis', 'fotos.product_id', '=', 'transaksis.product_id')
             ->where('transaksis.is_complete', 0)
@@ -81,10 +81,10 @@ class DashboardController extends Controller
         $tanggalPenjualanFormatted = collect($tanggalPenjualan)->map(function ($tanggal) {
             // Menggunakan Carbon untuk memanipulasi format tanggal
             $carbonDate = Carbon::parse($tanggal);
-        
+
             // Set lokal untuk format bulan dalam bahasa Indonesia
             $carbonDate->setLocale(App::getLocale());
-        
+
             // Format tanggal dengan nama bulan
             return $carbonDate->formatLocalized('%d %B %Y'); // Sesuaikan format sesuai kebutuhan
         });
@@ -93,7 +93,7 @@ class DashboardController extends Controller
         // Print the results
 
         // dd($salesData);
-    return view('pages.dashboard', compact(
+        return view('pages.dashboard', compact(
             'data',
             'totalPendapatan',
             'totalProductTerjual',
@@ -107,5 +107,64 @@ class DashboardController extends Controller
             'dataPenjualanFormatted',
             'tanggalPenjualanFormatted'
         ));
+    }
+    public function chart()
+    {
+        $startDate = Carbon::now()->subYear()->startOfDay();
+        $endDate = Carbon::now()->endOfDay();
+
+        $dataPenjualan = Transaksi::where('is_complete', 1)
+            ->whereBetween('tanggal', [$startDate, $endDate])
+            ->orderBy('tanggal', 'asc')
+            ->selectRaw('DATE_FORMAT(tanggal, "%Y-%m") as month, sum(total_harga) as total_penjualan')
+            ->groupBy('month')
+            ->pluck('total_penjualan', 'month')
+            ->toArray();
+
+        // Create an array to map numeric months to Indonesian month names
+        $monthNames = [
+            '01' => 'Januari',
+            '02' => 'Februari',
+            '03' => 'Maret',
+            '04' => 'April',
+            '05' => 'Mei',
+            '06' => 'Juni',
+            '07' => 'Juli',
+            '08' => 'Agustus',
+            '09' => 'September',
+            '10' => 'Oktober',
+            '11' => 'November',
+            '12' => 'Desember',
+        ];
+
+        // Initialize the array with 0 values for each month as strings
+        $dataPenjualanWithMonthNames = array_fill_keys(array_values($monthNames), "0");
+
+        // Replace numeric months with Indonesian month names and update values
+        foreach ($dataPenjualan as $month => $value) {
+            $monthNumber = substr($month, 5, 2); // Extract the month part
+            $monthName = $monthNames[$monthNumber] ?? $monthNumber; // Get the Indonesian month name or use the numeric month
+            $dataPenjualanWithMonthNames[$monthName] = (string) $value;
+        }
+
+        // Extract only the values
+        $dataPenjualanValues = array_values($dataPenjualanWithMonthNames);
+
+        // Extract only the keys (months)
+        $dataBulan = array_keys($dataPenjualanWithMonthNames);
+
+        return response()->json(
+            [
+                'success' => true,
+                'data' => [
+                    'data_penjualan' => $dataPenjualanValues,
+                    'bulan' => $dataBulan,
+                    'start_date' => $startDate,
+                    'endDay' => $endDate,
+                    'tahun' => Carbon::now()->year, // Adding the current year to the response
+                ],
+            ],
+            200
+        );
     }
 }

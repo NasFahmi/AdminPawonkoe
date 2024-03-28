@@ -22,12 +22,12 @@ use App\Http\Controllers\Api\ApiTransaksiController;
 
 
 Route::post('/login', [AuthController::class, 'Authlogin'])->name('login');
-Route::get('/login', [AuthController::class, 'loginview'])->name('loginview');
+Route::get('/', [AuthController::class, 'loginview'])->name('loginview');
 
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'indexDashboard'])->name('admin.dashboard');
-    Route::get('/chart/oneyear', [ApiTransaksiController::class, 'chart'])->name('chart.1year');
+    Route::get('/chart/oneyear', [DashboardController::class, 'chart'])->name('chart.1year');
     Route::get('/admin/dashboard/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/admin/transaksi/create', [TransaksiController::class, 'create'])

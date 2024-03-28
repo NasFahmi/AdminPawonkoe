@@ -6,12 +6,13 @@ use App\Models\Foto;
 use App\Models\Varian;
 use App\Models\Product;
 use App\Models\BeratJenis;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Events\ProductCreated;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use App\Events\ProductCreated;
-use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Imagick\Driver;
 
 class ProductController extends Controller
@@ -69,11 +70,14 @@ class ProductController extends Controller
         }
 
         $data = $request->all();
+        $slug = $data['nama_product'];
+        
         // dd($data);
         try {
             DB::beginTransaction();
             $product = Product::create([
                 'nama_product' => $data['nama_product'],
+                'slug'=> $data['slug'] = Str::of($slug)->slug('-')->__toString(),
                 'harga' => $data['harga'],
                 'deskripsi' => $data['deskripsi'],
                 'link_shopee' => $data['link_shopee'],

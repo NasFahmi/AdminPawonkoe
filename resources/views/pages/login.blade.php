@@ -6,8 +6,9 @@
             <h1 class="text-center md:text-start mb-4 md:ml-10 mt-5 text-xl font-semibold text-slate-400 ">PAWONKOE</h1>
             <div class="flex flex-col overflow-y-auto md:flex-row">
                 <div class="h-32 md:h-auto md:w-1/2">
+                    <p></p>
                     <img aria-hidden="true" class="object-contain w-full h-full "
-                        src="{{ Vite::asset('resources/images/login-ilustration.svg') }}" alt="Office" />
+                    src="{{ asset('assets/images/login-ilustration.svg') }}" alt="Office" />
                 </div>
                 <div class="flex mb-14 items-center justify-center p-6 sm:p-12 md:w-1/2">
                     <div class="w-full">

@@ -18,7 +18,7 @@
             <button class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
                @click="toggleProfileMenu" @keydown.escape="closeProfileMenu" aria-label="Account" aria-haspopup="true">
                <img class="object-cover w-8 h-8 rounded-full"
-                  src="{{Vite::asset('resources/images/logo.png')}}"
+                  src="{{asset('assets/images/logo.png')}}"
                   alt="" aria-hidden="true" />
             </button>
             <template x-if="isProfileMenuOpen">

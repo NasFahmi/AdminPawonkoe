@@ -38,28 +38,30 @@
                                 @enderror
                             </label>
 
-                            <!-- You should use a button here, as the anchor is only used for the example  -->
-                            @if ($retryAfter)
-                                <button type="submit" disabled
-                                    class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-[#db9436] border border-transparent rounded-lg active:bg-blue-600 focus:outline-none focus:shadow-outline-purple"
-                                    style="cursor: not-allowed;">
-                                    Log in
-                                </button>
-                                <div class="text-sm text-gray-600 mt-5 ">
-                                    Please try again in {{ $retryAfter }} seconds.
+                            <button type="submit"
+                                class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-[#db9436] border border-transparent rounded-lg active:bg-blue-600 focus:outline-none focus:shadow-outline-purple">
+                                Log in
+                            </button>
+                            @if (session()->has('login'))
+                                <div id="loginErrorMessage" class="mt-5 text-red-400 font-semibold text-md text-center">
+                                    {{ session('login') }}
                                 </div>
-                            @else
-                                <button type="submit"
-                                    class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-[#db9436] border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-purple"
-                                    style="cursor: pointer;">
-                                    Log in
-                                </button>
                             @endif
-
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        setInterval(function() {
+            var loginErrorMessage = document.getElementById('loginErrorMessage');
+            if (loginErrorMessage) {
+                // Do something if login error message is present
+                console.log('Login error message found.');
+            }
+        }, 1000); // Check every 1 second
+    </script>
+@endpush

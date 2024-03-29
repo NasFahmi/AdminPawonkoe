@@ -32,7 +32,7 @@ class TransaksiController extends Controller
         $data = Transaksi::with(['pembelis', 'history_product_transaksis.history_product', 'methode_pembayaran'])
             ->search(request('search'))
             ->paginate(10);
-        return view('pages.transaksi.index', compact('data'));
+        return view('pages.admin.transaksi.index', compact('data'));
 
 
     }

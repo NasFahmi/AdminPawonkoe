@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('role_or_permission:superadmin|tambah-preorder')
         ->name('preorders.create');
     //Transaksi
+    
     Route::middleware(['permission:edit-transaksi|cetak-transaksi'])->group(function () {
         Route::get('/admin/transaksi/{transaksi}/edit', [TransaksiController::class, 'edit'])->name('transaksis.edit');
         Route::get('/admin/cetak/transaksi', [TransaksiController::class, 'cetakTransaksi'])->name('cetak.transaksi');

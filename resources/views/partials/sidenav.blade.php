@@ -2,7 +2,7 @@
 <aside class="z-20 hidden w-64 overflow-y-auto bg-white md:block flex-shrink-0">
     <div class="py-4 text-gray-500">
         <div class="flex justify-start items-center">
-            <a href="" class="ml-6">
+            <a href="{{ route('admin.dashboard') }}" class="ml-6">
                 <img src="{{ asset('assets/images/logo.png') }}" alt="" class="w-10 h-auto">
             </a>
             <div>

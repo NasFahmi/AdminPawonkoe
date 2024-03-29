@@ -28,7 +28,7 @@ class ProductController extends Controller
             ->paginate(12);
 
         $totalProduct = Product::where('tersedia', 1)->sum('tersedia');
-        return view('pages.product.index', compact('data', 'totalProduct'));
+        return view('pages.admin.product.index', compact('data', 'totalProduct'));
     }
 
     /**

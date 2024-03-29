@@ -44,7 +44,7 @@ class PreorderController extends Controller
         $totalDPBelumLunas = $totalHargaBelumLunas - $totalDP;
         // dd($data);
 
-        return view('pages.preorder.index', compact('data', 'totalPreorder', 'totalDP', 'totalDPBelumLunas'));
+        return view('pages.admin.preorder.index', compact('data', 'totalPreorder', 'totalDP', 'totalDPBelumLunas'));
     }
 
     /**

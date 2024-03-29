@@ -14,7 +14,7 @@
                         <h1 class="mb-4 text-xl font-semibold text-gray-700 ">
                             Login
                         </h1>
-                        <form action="{{ route('login') }}" method="post">
+                        <form action="{{ route('authentication') }}" method="post">
                             @csrf
                             @if ($errors->has('login'))
                                 <p class="text-red-500 text-sm italic">{{ $errors->first('login') }}</p>

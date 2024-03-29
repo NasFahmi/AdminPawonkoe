@@ -94,7 +94,7 @@
                 <p class="text-start font-semibold mb-1">Gambar Saat Ini</p>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     @foreach ($data->fotos as $foto)
-                        <img src="{{asset('storage/'.$foto->foto)}}" alt="" srcset="" class="w-40 h-40 object-cover rounded-lg">
+                        <img src="{{asset('storage/images/'.$foto->foto)}}" alt="" srcset="" class="w-40 h-40 object-cover rounded-lg">
                     @endforeach
                 </div>
             </div>

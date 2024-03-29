@@ -21,8 +21,8 @@ use App\Http\Controllers\Api\ApiTransaksiController;
 */
 
 
-Route::post('/login', [AuthController::class, 'Authlogin'])->name('login');
-Route::get('/', [AuthController::class, 'loginview'])->name('loginview');
+Route::post('/login', [AuthController::class, 'Authlogin'])->name('authentication');
+Route::get('/', [AuthController::class, 'loginview'])->name('login');
 
 
 Route::middleware(['auth'])->group(function () {

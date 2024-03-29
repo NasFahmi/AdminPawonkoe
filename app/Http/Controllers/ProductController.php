@@ -70,14 +70,15 @@ class ProductController extends Controller
         }
 
         $data = $request->all();
-        $slug = $data['nama_product'];
-        
+        $namaProduct = $data['nama_product'];
+        $slug = Str::of($namaProduct)->slug('-')->__toString();
+        // dd($slug);
         // dd($data);
         try {
             DB::beginTransaction();
             $product = Product::create([
                 'nama_product' => $data['nama_product'],
-                'slug'=> $data['slug'] = Str::of($slug)->slug('-')->__toString(),
+                'slug'=> $slug,
                 'harga' => $data['harga'],
                 'deskripsi' => $data['deskripsi'],
                 'link_shopee' => $data['link_shopee'],
@@ -105,8 +106,11 @@ class ProductController extends Controller
             // Proses setiap file yang diunggah
             $images = [];
             foreach ($request->file('image') as $file) {
-                $img = $file->store("images");
-                $images[] = $img;
+                $img = $file->store("public/images");
+                //dd($img); //public/images/1K2vsWy2RnLA1wsc1ivlOEWIeEkFP6z8AjkIpTcy.jpg
+                $imageName = basename($img);
+                // dd($imageName);
+                $images[] = $imageName;
             }
 
             // Simpan informasi gambar ke dalam tabel Foto

@@ -33,10 +33,10 @@
 
                     <div class="right">
                         <div class="w-full">
-                            <label for="Nominal" class="block mb-2 text-sm font-medium text-gray-800">Nominal</label>
-                            <input type="text" placeholder="Nominal" name="Nominal" value="{{ old('Nominal') }}"
+                            <label for="nominal" class="block mb-2 text-sm font-medium text-gray-800">Nominal</label>
+                            <input type="text" placeholder="Nominal" name="nominal" value="{{ old('nominal') }}"
                                 class="input input-bordered input-info bg-slate-50 w-full max-w-4xl duration-50" />
-                            @error('Nominal')
+                            @error('nominal')
                                 <small class="error" style="color: red">{{ $message }}</small>
                             @enderror
                         </div>

@@ -7,6 +7,7 @@ use App\Models\BebanKewajiban;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreBebanKewajibanRequest;
 use App\Http\Requests\UpdateBebanKewajibanRequest;
+use Illuminate\Support\Facades\Validator;
 
 class BebanKewajibanController extends Controller
 {
@@ -31,42 +32,42 @@ class BebanKewajibanController extends Controller
      */
     public function store(StoreBebanKewajibanRequest $request)
     {
-        if ($request->session()->has('user_id')) {
-            dd($request->all());
-        }else{
-            dd($request->all());
+        // if ($request->session()->has('user_id')) {
+        //     dd($request->all());
+        // }else{
+        //     dd($request->all());
+        // }
+        $validator = Validator::make($request->all(), [
+            'jenis' => 'required',
+            'nama' => 'required',
+            'nominal' => 'required',
+            'tanggal' => 'required',
+        ]);
+
+        // dd($validator);
+        if ($validator->fails()) {
+            // dd($request->all());
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-        //     $validator = $request->validate([
-        //         'jenis' => 'required',
-        //         'nama' => 'required',
-        //        'nominal' => 'required',
-        //         'tanggal' => 'required',
-        //     ]);
-
-        //     dd($validator);
-        //    if($validator) {
-        //     return  redirect()->back()->withErrors($validator)->withInput();
-        //    }
-
         try {
             DB::beginTransaction();
 
-            $data = $request->validated();
+            // $data = $request->validated();
             $data = $request->all();
-            // dd($data);
             $dataTanggal = $request->tanggal;
             $dateTime = Carbon::parse($dataTanggal, 'Asia/Jakarta'); // Ganti 'Asia/Jakarta' sesuai dengan timezone yang sesuai
             $tanggal = $dateTime->format('Y-m-d');
             // dd($tanggal);
 
-            BebanKewajiban::create([
+            // dd($data);
+            BebanKewajiban::insert([
                 'jenis' => $data['jenis'],
                 'nama' => $data['nama'],
                 'nominal' => $data['nominal'],
                 'tanggal' => $tanggal
             ]);
             DB::commit();
-            return redirect()->route('beban-kewajiban.index')->with('success', 'Data Berhasilahkan');
+            return redirect()->route('beban-kewajibans.index')->with('success', 'Data Berhasilahkan');
         } catch (\Throwable $th) {
             DB::rollBack();
             // throw $th;

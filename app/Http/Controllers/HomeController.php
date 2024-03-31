@@ -16,25 +16,41 @@ class HomeController extends Controller
             ->limit(5)
             ->where('tersedia', 1)
             ->get();
-        $image = [];
+
+        $images = [];
         foreach ($data as $product) {
             if ($product->fotos->isNotEmpty()) {
-                $path = $product->fotos->first()->foto; // Assuming 'url' is the attribute containing the image URL
-                $image[] = "/storage/images/".$path;
+                $path = $product->fotos->first()->foto;
+                $images[] = ['image' => $path];
             }
         }
 
-        return response()->json($image);
+        return response()->json($images);
     }
+
 
 
     public function katalog()
     {
-        $data = Product::with(['fotos', 'varians',])
+        $products = Product::with(['fotos', 'varians'])
             ->where('tersedia', 1)
-            ->paginate(20);
-        return response()->json($data);
+            ->get();
+
+        $responseData = [];
+
+        foreach ($products as $product) {
+            $responseData[] = [
+                'title' => $product->nama_product,
+                'description' => $product->deskripsi,
+                'price' => $product->harga,
+                'slug' => $product->slug,
+                'image' => $product->fotos->isNotEmpty() ? $product->fotos->first()->foto : null,
+            ];
+        }
+
+        return response()->json($responseData);
     }
+
     public function productSearch($search)
     {
         $data = Product::with(['fotos', 'varians',])
@@ -46,7 +62,25 @@ class HomeController extends Controller
 
     public function detailProduct($slug)
     {
-        $data = Product::with(['fotos', 'varians'])->findOrFail($slug);
-        return response()->json($data);
+        $product = Product::with(['fotos', 'varians'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+        $images = [];
+
+        foreach ($product->fotos as $foto) {
+            $images[] = $foto->foto;
+        }
+
+        return response()->json(
+            [
+                'title' => $product->nama_product,
+                'description' => $product->deskripsi,
+                'price' => $product->harga,
+                'spesification' => $product->spesifikasi_product,
+                'link' => $product->link_shopee,
+                'image' => $images,
+                'varian' =>$product->varians
+            ]
+        );
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PreorderController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\BebanKewajibanController;
 use App\Http\Controllers\Api\ApiTransaksiController;
 
 /*
@@ -24,6 +25,14 @@ use App\Http\Controllers\Api\ApiTransaksiController;
 Route::post('/login', [AuthController::class, 'Authlogin'])->name('authentication');
 Route::get('/', [AuthController::class, 'loginview'])->name('login');
 
+Route::post('/beban-kewajiban', [BebanKewajibanController::class, 'store'])
+->name('beban-kewajibans.store')
+->middleware('auth');
+
+
+Route::get('/beban-kewajiban/create', [BebanKewajibanController::class, 'create'])->name('beban-kewajibans.create');
+Route::get('/admin/beban-kewajiban', [BebanKewajibanController::class, 'index'])->name('beban-kewajibans.index');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'indexDashboard'])->name('admin.dashboard');
@@ -38,11 +47,13 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('role_or_permission:superadmin|tambah-product')
         ->name('products.create');
 
-    Route::get('/admin/preorder/create', [PreorderController::class, 'create'])
-        ->middleware('role_or_permission:superadmin|tambah-preorder')
-        ->name('preorders.create');
+    Route::prefix('admin')->middleware('role_or_permission:superadmin|tambah-preorder')->group(function () {
+        Route::get('/preorder/create', [PreorderController::class, 'create'])->name('preorders.create');
+        Route::post('/preorder', [PreorderController::class, 'store'])->name('preorders.store');
+    });
+
     //Transaksi
-    
+
     Route::middleware(['permission:edit-transaksi|cetak-transaksi'])->group(function () {
         Route::get('/admin/transaksi/{transaksi}/edit', [TransaksiController::class, 'edit'])->name('transaksis.edit');
         Route::get('/admin/cetak/transaksi', [TransaksiController::class, 'cetakTransaksi'])->name('cetak.transaksi');
@@ -67,13 +78,16 @@ Route::middleware(['auth'])->group(function () {
     //Preorder
     Route::middleware(['permission:edit-preorder'])->group(function () {
         Route::get('/admin/preorder/{preorder}/edit', [PreorderController::class, 'edit'])->name('preorders.edit');
+        Route::patch('/admin/preorder/{preorder}', [PreorderController::class, 'update'])->name('preorders.update');
+
     });
     Route::get('/admin/preorder', [PreorderController::class, 'index'])->name('preorders.index');
-    Route::post('/admin/preorder', [PreorderController::class, 'store'])->name('preorders.store');
     Route::get('/admin/preorder/{preorder}', [PreorderController::class, 'show'])->name('preorders.detail');
-    Route::patch('/admin/preorder/{preorder}', [PreorderController::class, 'update'])->name('preorders.update');
 
 
+    //Beban Kewajiban
+    Route::get('/admin/beban-kewajiban/{bebanKewajiban}', [BebanKewajibanController::class, 'show'])->name('beban-kewajibans.detail');
+    Route::patch('/admin/beban-kewajiban/{bebanKewajiban}', [BebanKewajibanController::class, 'update'])->name('beban-kewajibans.update');
 
 });
 

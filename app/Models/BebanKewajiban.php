@@ -15,4 +15,6 @@ class BebanKewajiban extends Model
         'nominal',
         'tanggal',
     ];
+
+    public $timestamps = false;
 }

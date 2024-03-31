@@ -32,42 +32,33 @@ class BebanKewajibanController extends Controller
      */
     public function store(StoreBebanKewajibanRequest $request)
     {
-        // if ($request->session()->has('user_id')) {
-        //     dd($request->all());
-        // }else{
-        //     dd($request->all());
-        // }
-        $validator = Validator::make($request->all(), [
+        $validatedData = $request->validate([
             'jenis' => 'required',
             'nama' => 'required',
             'nominal' => 'required',
             'tanggal' => 'required',
+        ], [
+            'jenis.required' => 'Jenis harus diisi.',
+            'nama.required' => 'Nama harus diisi.',
+            'nominal.required' => 'Nominal harus diisi.',
+            'tanggal.required' => 'Tanggal harus diisi.',
         ]);
 
-        // dd($validator);
-        if ($validator->fails()) {
-            // dd($request->all());
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
         try {
             DB::beginTransaction();
 
-            // $data = $request->validated();
-            $data = $request->all();
-            $dataTanggal = $request->tanggal;
-            $dateTime = Carbon::parse($dataTanggal, 'Asia/Jakarta'); // Ganti 'Asia/Jakarta' sesuai dengan timezone yang sesuai
+            $dateTime = Carbon::parse($validatedData['tanggal'], 'Asia/Jakarta');
             $tanggal = $dateTime->format('Y-m-d');
-            // dd($tanggal);
 
-            // dd($data);
-            BebanKewajiban::insert([
-                'jenis' => $data['jenis'],
-                'nama' => $data['nama'],
-                'nominal' => $data['nominal'],
+            BebanKewajiban::create([
+                'jenis' => $validatedData['jenis'],
+                'nama' => $validatedData['nama'],
+                'nominal' => $validatedData['nominal'],
                 'tanggal' => $tanggal
             ]);
+
             DB::commit();
-            return redirect()->route('beban-kewajibans.index')->with('success', 'Data Berhasilahkan');
+            return redirect()->route('beban-kewajibans.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Throwable $th) {
             DB::rollBack();
             // throw $th;

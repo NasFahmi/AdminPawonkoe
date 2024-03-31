@@ -13,5 +13,4 @@ Route::get('/test',function(){
 
 Route::get('/image/index',[HomeController::class,'indexImage']);
 Route::get('/katalog',[HomeController::class,'katalog']);
-Route::get('/katalog?query={search}',[HomeController::class,'productSearch']);
 Route::get('/katalog/{slug}',[HomeController::class,'detailProduct']);

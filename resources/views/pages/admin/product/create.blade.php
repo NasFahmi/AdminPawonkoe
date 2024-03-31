@@ -116,7 +116,7 @@
                                     class="absolute w-full h-full border opacity-0" name="image[]" multiple
                                     onchange="previewImages()" />
                             </label>
-                            
+
                         </div>
                         @error('image')
                             <small class="error" style="color: red">{{ $message }}</small>

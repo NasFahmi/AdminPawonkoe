@@ -11,18 +11,18 @@
                         <div class="max-w-lg">
                             <div class="flex justify-start items-start flex-col gap-3">
                                 <div class="w-full">
-                                    <label for="jenis" class="block mb-2 text-sm font-medium text-gray-800">Jenis</label>
+                                    <label for="jenis" class="block mb-2 text-sm font-medium text-gray-700">Jenis</label>
                                     <input type="text" placeholder="Jenis" name="jenis" value="{{ old('jenis') }}"
-                                        class="input input-bordered input-info bg-slate-50 w-full max-w-4xl duration-50" />
+                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
                                     @error('jenis')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="w-full mt-4">
-                                    <label for="nama" class="block mb-2 text-sm font-medium  text-gray-800">Nama</label>
+                                    <label for="nama" class="block mb-2 text-sm font-medium  text-gray-700">Nama</label>
                                     <input type="text" placeholder="Nama" name="nama" value="{{ old('nama') }}"
-                                        class="input input-bordered input-info bg-slate-50 w-full max-w-4xl duration-50" />
+                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
                                     @error('nama')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
@@ -33,9 +33,9 @@
 
                     <div class="right">
                         <div class="w-full">
-                            <label for="Nominal" class="block mb-2 text-sm font-medium text-gray-800">Nominal</label>
+                            <label for="Nominal" class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
                             <input type="text" placeholder="Nominal" name="Nominal" value="{{ old('Nominal') }}"
-                                class="input input-bordered input-info bg-slate-50 w-full max-w-4xl duration-50" />
+                                class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
                             @error('Nominal')
                                 <small class="error" style="color: red">{{ $message }}</small>
                             @enderror
@@ -52,7 +52,7 @@
                                     </svg>
                                 </div>
                                 <input datepicker type="text" name="tanggal" value="{{ old('tanggal') }}"
-                                    class="input input-bordered input-info bg-slate-50 w-full max-w-4xl duration-50 ps-10"
+                                    class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Select date">
                             </div>
                             @error('tanggal')

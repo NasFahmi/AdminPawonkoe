@@ -75,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/beban-kewajiban', [BebanKewajibanController::class, 'index'])->name('beban-kewajibans.index');
         Route::get('/admin/beban-kewajiban/{bebanKewajiban}', [BebanKewajibanController::class, 'show'])->name('beban-kewajibans.detail');
         Route::patch('/admin/beban-kewajiban/{bebanKewajiban}', [BebanKewajibanController::class, 'update'])->name('beban-kewajibans.update');
+        Route::get('/admin/beban-kewajiban/{bebanKewajiban}/edit', [BebanKewajibanController::class, 'edit'])->name('beban-kewajibans.edit');
     });
 
 });

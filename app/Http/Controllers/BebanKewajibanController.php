@@ -16,7 +16,8 @@ class BebanKewajibanController extends Controller
      */
     public function index()
     {
-        return view('pages.beban-kewajiban.index');
+        $data = BebanKewajiban::all();
+        return view('pages.beban-kewajiban.index', compact('data'));
     }
 
     /**

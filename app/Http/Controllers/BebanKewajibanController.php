@@ -16,7 +16,13 @@ class BebanKewajibanController extends Controller
      */
     public function index()
     {
-        $data = BebanKewajiban::all();
+
+        $searchTerm = request('search');
+
+        $data = BebanKewajiban::where('jenis', 'like', "%$searchTerm%")
+            ->orWhere('nama', 'like', "%$searchTerm%")
+            ->paginate(10);
+
         return view('pages.beban-kewajiban.index', compact('data'));
     }
 

@@ -13,7 +13,7 @@ class PiutangController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.piutang.index');
     }
 
     /**
@@ -21,7 +21,7 @@ class PiutangController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.piutang.create');
     }
 
     /**

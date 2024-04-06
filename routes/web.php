@@ -3,11 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PreorderController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\BebanKewajibanController;
+use App\Http\Controllers\TemporaryImageController;
 use App\Http\Controllers\Api\ApiTransaksiController;
 
 /*
@@ -78,6 +80,20 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/admin/beban-kewajiban/{bebanKewajiban}', [BebanKewajibanController::class, 'destroy'])->name('beban-kewajibans.destroy');
     });
 
+    //Piutang
+    Route::middleware(['role:superadmin||admin'])->group(function () {
+        Route::get('/admin/piutang', [PiutangController::class, 'index'])->name('piutang.index');
+        Route::get('/admin/piutang/create', [PiutangController::class, 'create'])->name('piutang.create');
+        Route::post('/admin/piutang', [PiutangController::class, 'store'])->name('piutang.store');
+        Route::get('/admin/piutang/{piutang}/edit', [PiutangController::class, 'edit'])->name('piutang.edit');
+        Route::patch('/admin/piutang/{piutang}', [PiutangController::class, 'update'])->name('piutang.update');
+        Route::delete('/admin/piutang/{piutang}', [PiutangController::class, 'destroy'])->name('piutang.destroy');
+    });
+
+
+    Route::post('/product/upload', [TemporaryImageController::class, 'uploadTemporary'])->name('upload.temporary');
+    Route::post('/product/revert', [TemporaryImageController::class, 'deleteTemporary'])->name('delete.temporary');
+    Route::post('/product/load-temporary', [TemporaryImageController::class, 'loadTemporary'])->name('load.temporary');
 });
 
 

@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Foto;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\TemporaryImage;
 use Illuminate\Support\Facades\Storage;
+
 class TemporaryImageController extends Controller
 {
     public function uploadTemporary(Request $request)
     {
-        // return response()->json('test');
-        if ($request->hasFile('photos')) {
-            $images = $request->file('photos');
+        // return response()->json($request->all());
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
             $folders = [];
 
             foreach ($images as $image) {
                 $filename = $image->getClientOriginalName();
                 $folder = uniqid('image-', true);
-                $image->storeAs('public/images/tmp/' . $folder, $filename);
+                $image->storeAs('/images/tmp/' . $folder, $filename);
                 TemporaryImage::create([
                     'folder' => $folder,
                     'file' => $filename,
@@ -41,7 +44,7 @@ class TemporaryImageController extends Controller
         if ($temporaryImage) {
             try {
                 // Delete files from storage
-                Storage::deleteDirectory('public/images/tmp/' . $temporaryImage->folder);
+                Storage::deleteDirectory('/images/tmp/' . $temporaryImage->folder);
 
                 // Delete record from the database
                 $temporaryImage->delete();
@@ -60,7 +63,33 @@ class TemporaryImageController extends Controller
         // If no temporary image found with the given folder, return 404
         return response()->json(['message' => 'Temporary image not found.'], 404);
     }
-    public function loadTemporary(){
-        
+
+
+    public function uploadImageDirectlyToDB(Request $request, $id)
+    {
+        if ($request->hasFile('photos')) {
+            $images = $request->file('photos');
+            $fileNameProduct = [];
+
+            foreach ($images as $image) {
+                $extensionTemp = $image->getClientOriginalExtension();
+                $fileNameProductImage =  Str::random(20) . '.' . $extensionTemp;
+
+                // Store the image in the public/images directory
+                $image->move(public_path('storage/images'), $fileNameProductImage);
+
+                // Store the image path in the database
+                Foto::create([
+                    'foto' => '/storage/images/' . $fileNameProductImage,
+                    'product_id' => $id,
+                ]);
+
+                $fileNameProduct[] = $fileNameProductImage;
+            }
+
+            return $fileNameProduct;
+        }
+
+        return '';
     }
 }

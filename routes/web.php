@@ -68,9 +68,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/product', [ProductController::class, 'index'])->name('products.index');
         Route::get('/admin/product/{product}', [ProductController::class, 'show'])->name('products.detail');
 
+
         Route::post('/product/upload', [TemporaryImageController::class, 'uploadTemporary'])->name('upload.temporary');
         Route::post('/product/revert', [TemporaryImageController::class, 'deleteTemporary'])->name('delete.temporary');
-        Route::post('/product/load-temporary', [TemporaryImageController::class, 'loadTemporary'])->name('load.temporary');
+        Route::post('/product/update/{id}', [TemporaryImageController::class, 'uploadImageDirectlyToDB'])->name('update.toDB');
     });
     // dengan permission
     Route::middleware(['role:superadmin', 'permission:edit-product|hapus-product'])->group(function () {
@@ -81,7 +82,7 @@ Route::middleware(['auth'])->group(function () {
     //dengan permmission
     Route::middleware(['role:superadmin|admin', 'permission:tambah-product'])->group(function () {
         Route::post('/admin/product', [ProductController::class, 'store'])->name('products.store');
-        
+
         Route::get('/admin/create/product', [ProductController::class, 'create'])->name('products.create'); //works
     });
 
@@ -120,9 +121,6 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/admin/piutang/{piutang}', [PiutangController::class, 'update'])->name('piutang.update');
         Route::delete('/admin/piutang/{piutang}', [PiutangController::class, 'destroy'])->name('piutang.destroy');
     });
-
-
-   
 });
 
 

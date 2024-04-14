@@ -147,8 +147,16 @@ class ProductController extends Controller
     public function edit($id)
     {
         $data = Product::with(['fotos', 'varians'])->findOrFail($id);
+        $images = Foto::where('product_id', $id)->get()->map(function ($image) {
+            return [
+                'source' => $image->foto,
+                'options' => [
+                    'type' => 'local'
+                ]
+            ];
+        })->toArray();
         // dd($data);
-        return view('pages.admin.product.edit', compact('data'));
+        return view('pages.admin.product.edit', compact('data','images'));
     }
 
 

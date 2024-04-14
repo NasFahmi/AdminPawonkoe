@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Foto;
+use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\TemporaryImage;
@@ -20,7 +21,7 @@ class TemporaryImageController extends Controller
             foreach ($images as $image) {
                 $filename = $image->getClientOriginalName();
                 $folder = uniqid('image-', true);
-                $image->storeAs('/images/tmp/' . $folder, $filename);
+                $image->storeAs('public/images/tmp/' . $folder, $filename);
                 TemporaryImage::create([
                     'folder' => $folder,
                     'file' => $filename,
@@ -44,7 +45,7 @@ class TemporaryImageController extends Controller
         if ($temporaryImage) {
             try {
                 // Delete files from storage
-                Storage::deleteDirectory('/images/tmp/' . $temporaryImage->folder);
+                Storage::deleteDirectory('public/images/tmp/' . $temporaryImage->folder);
 
                 // Delete record from the database
                 $temporaryImage->delete();
@@ -67,8 +68,9 @@ class TemporaryImageController extends Controller
 
     public function uploadImageDirectlyToDB(Request $request, $id)
     {
-        if ($request->hasFile('photos')) {
-            $images = $request->file('photos');
+        $product = Product::findorFail($id);
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
             $fileNameProduct = [];
 
             foreach ($images as $image) {
@@ -76,11 +78,11 @@ class TemporaryImageController extends Controller
                 $fileNameProductImage =  Str::random(20) . '.' . $extensionTemp;
 
                 // Store the image in the public/images directory
-                $image->move(public_path('storage/images'), $fileNameProductImage);
+                $image->move(public_path('/storage/images/product/'.$product->slug), $fileNameProductImage);
 
                 // Store the image path in the database
                 Foto::create([
-                    'foto' => '/storage/images/' . $fileNameProductImage,
+                    'foto' => '/storage/images/product/' .$product->slug.'/'. $fileNameProductImage,
                     'product_id' => $id,
                 ]);
 

@@ -92,25 +92,11 @@
                         <button type="button" onclick="addInput()" class="text-green-400">Tambah Varian</button>
                     </div>
                 </div>
-                <div class="w-full">
-                    <p class="text-start font-semibold mb-1">Gambar Saat Ini</p>
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        @foreach ($data->fotos as $foto)
-                            <img src="{{ asset('storage/images/' . $foto->foto) }}" alt="" srcset=""
-                                class="w-40 h-40 object-cover rounded-lg">
-                        @endforeach
-                    </div>
-                </div>
                 <div class="flex justify-center items-center flex-col mt-4">
                     <div class="mb-4 w-full">
-                        <label for="gambar" class="block text-gray-700 font-semibold  mb-2">Pilih Gambar</label>
-                        {{-- <input type="file" name="gambar" id="gambar" multiple class="border rounded-md px-4 py-2 w-full">
-                    --}}
-
-                        <div class="flex items-center justify-center w-full relative">
-                            <input id="images" type="file" class="absolute w-full h-full border opacity-0"
-                                name="image[]" multiple />
-                        </div>
+                        <label for="images" class="text-gray-700 font-semibold text-left  mb-2">Pilih Gambar</label>
+                        <input type="file" class="border border-gray-300 px-4 py-2 w-full" id="images" name="images[]"
+                            multiple>
 
                     </div>
                 </div>
@@ -143,12 +129,12 @@
     <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
     <script>
         let images = @json($images);
-        console.log(images);
+        
         let submitbtn = document.getElementById('submitbtn');
         FilePond.registerPlugin(FilePondPluginImagePreview);
         FilePond.registerPlugin(FilePondPluginFileValidateType);
         FilePond.registerPlugin(FilePondPluginFileValidateSize);
-        const inputElement = document.getElementById("photos");
+        const inputElement = document.getElementById("images");
 
         const pond = FilePond.create(inputElement, {
             acceptedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
@@ -187,34 +173,20 @@
                     // Tambahan untuk update file di server (contoh)
                     const formData = new FormData();
                     formData.append('file', file.file);
-                    // Implementasikan upload ke server Anda
-                    // fetch('{{ route('product.update', $data->id) }}', {
-                    //         method: 'PUT',
-                    //         headers: {
-                    //             'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    //         },
-                    //         body: formData,
-                    //     })
-                    //     .then((response) => response.json())
-                    //     .then((data) => {
-                    //         // Handle response (misalnya update status file)
-                    //         console.log(data)
-                    //     });
+
                 }
             },
             server: {
                 process: {
-                    url: '{{ route('update.toDB', $data->id) }}',
+                    url: '{{ route('upload.directtoDB',$data->id) }}',
+                    method:'POST',
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}",
                     }
                 },
 
                 load: (source, load, error, progress, abort, headers) => {
-                    console.log(error)
-                    console.log(abort)
-                    console.log(headers)
-                    console.log(source)
+                  
                     var request = new Request(source);
                     fetch(request).then(function(response) {
 
@@ -225,20 +197,6 @@
                     });
                 },
             },
-
-            // files: [{
-            //         source: '/storage/images/8SwKiRuRFjsYYMtBuJtR.png',
-            //         options: {
-            //             type: 'local',
-            //         },
-            //     },
-            //     {
-            //         source: '/storage/images/RTfaZNir7B6AHKJmKL8S.jpeg',
-            //         options: {
-            //             type: 'local',
-            //         },
-            //     }
-            // ],
             files: images,
         });
     </script>

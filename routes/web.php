@@ -71,7 +71,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/product/upload', [TemporaryImageController::class, 'uploadTemporary'])->name('upload.temporary');
         Route::post('/product/revert', [TemporaryImageController::class, 'deleteTemporary'])->name('delete.temporary');
-        Route::post('/product/update/{id}', [TemporaryImageController::class, 'uploadImageDirectlyToDB'])->name('update.toDB');
+        Route::post('/product/update-image/{id}', [TemporaryImageController::class, 'uploadImageDirectlyToDB'])->name('upload.directtoDB');
     });
     // dengan permission
     Route::middleware(['role:superadmin', 'permission:edit-product|hapus-product'])->group(function () {

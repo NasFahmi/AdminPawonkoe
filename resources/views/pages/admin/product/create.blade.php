@@ -118,7 +118,7 @@
                 @endif --}}
 
                 <div class="flex justify-center items-center mt-3">
-                    <button type="submit" id="submitbtn"
+                    <button type="submit" id="submitbtn" disabled
                         class="text-center focus:outline-none text-white w-full md:w-fit bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-3 me-2 mb duration-300 whitespace-nowrap">Submit</button>
                 </div>
             </form>
@@ -168,6 +168,32 @@
                 }
             },
         });
+
+        let variantcount = 1;
+
+        function addInput() {
+            var formContainer = document.getElementById('form-container');
+            var newFormGroup = document.createElement('div');
+            newFormGroup.className = 'form-group';
+            newFormGroup.innerHTML = ' <div class="form-group flex justify-center items-center gap-2">' +
+                '<input type="text" name="varian[' + variantcount + ']" placeholder="Varian ' + variantcount + '" ' +
+                'class="input input-bordered input-info w-full max-w-md duration-50 bg-slate-50  mb-3" />' +
+                '<div class="w-8 h-8 cursor-pointer" onclick="removeInput(this)" >' +
+                '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+                '<g id="SVGRepo_bgCarrier" stroke-width="0"></g>' +
+                '<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>' +
+                '<g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="10" stroke="#e21818" stroke-width="1.5"></circle>' +
+                '<path d="M15 12H9" stroke="#e21818" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>' +
+                '</div>' +
+                '</div>';
+            formContainer.appendChild(newFormGroup);
+            variantcount++;
+        }
+
+        function removeInput(element) {
+            var formGroup = element.parentElement;
+            formGroup.parentNode.removeChild(formGroup);
+        }
     </script>
 
 @endsection

@@ -3,6 +3,18 @@
 @section('content')
     <div class="container  px-6 pb-6 mx-auto grid">
 
+        <!-- Modal untuk Login Success -->
+        <div id="loginSuccessModal"
+            class="fixed inset-x-0 top-0 transform -translate-y-full flex items-center justify-center z-50">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <svg class="mx-auto mb-4 text-green-500 w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <h3 class="mb-2 text-lg font-normal text-gray-700">Login berhasil!</h3>
+            </div>
+        </div>
+
         <h2 class="my-6 text-2xl font-semibold text-gray-700 ">
             Dashboard
         </h2>
@@ -142,12 +154,11 @@
                                 <div class="w-10 h-10 ">
                                     @foreach ($foto->where('product_id', $preorder->transaksis->product_id) as $item)
                                         <div class="rounded-full w-10 h-10 bg-no-repeat bg-center"
-                                        style="background-image: url('{{ asset('storage/' . $item->first()->foto) }}');
+                                            style="background-image: url('{{ asset('storage/' . $item->first()->foto) }}');
                                         background-size: cover;">
                                         </div>
                                         {{-- <img src="{{ asset('storage/' . $item->foto) }}" alt="" srcset=""
                                             class="rounded-full"> --}}
-                                           
                                     @endforeach
                                 </div>
                                 <div class="">
@@ -241,8 +252,45 @@
                 </div>
             </div>
         </div>
-
         <script>
+            function showLoginSuccessModal() {
+                var modal = document.getElementById('loginSuccessModal');
+                modal.style.display = 'flex'; 
+                setTimeout(function() {
+                    hideLoginSuccessModal();
+                }, 2000); 
+            }
+
+            // Fungsi untuk menyembunyikan modal login berhasil
+            function hideLoginSuccessModal() {
+                var modal = document.getElementById('loginSuccessModal');
+                modal.style.display = 'none'; 
+            }
+
+            // Setelah halaman selesai dimuat, tampilkan pop-up
+            document.addEventListener("DOMContentLoaded", function() {
+                @if (session('success'))
+                    showLoginSuccessModal();
+
+                    var css = document.createElement('style');
+                    css.innerHTML = `
+                    #loginSuccessModal {
+                        animation: slideFromTop 0.5s forwards;
+                    }
+
+                    @keyframes slideFromTop {
+                        from {
+                            transform: translateY(-100%);
+                        }
+                        to {
+                            transform: translateY(50%);
+                        }
+                    }
+                `;
+                    document.head.appendChild(css);
+                @endif
+            });
+        
             let chartyear = document.getElementById('chartyear');
             let judulchart = document.getElementById('judul-chart')
             let pilihanchart = document.getElementById('pilihan-chart')

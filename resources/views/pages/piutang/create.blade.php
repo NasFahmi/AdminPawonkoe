@@ -66,21 +66,11 @@
                                     </div>
                                 </div>
 
-                                <div class="w-full">
-                                    <label for="photos" class="block mb-2 text-sm font-medium text-gray-800">Pilih Gambar</label>
-                                    <input type="file" class="border border-gray-300 px-4 py-2 w-full" id="photos"
-                                        name="photos[]" multiple required>
-                                </div>
-                                <div id="previewContainer" class="flex flex-wrap mb-4">
-                                    <!-- Image preview will be appended here -->
-                                </div>
+
 
                             </div>
                         </div>
                     </div>
-
-
-
 
                     <div class="right">
                         <div class="w-full">
@@ -91,6 +81,41 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="flex justify-center items-center flex-col mt-4">
+                    <div class="mb-4 w-full">
+                        <label for="gambar" class="block text-gray-700 font-semibold  mb-2">Pilih Gambar Nota</label>
+                        <div class="flex items-center justify-center w-full relative">
+                            <label for="dropzone-file"
+                                class="flex flex-col items-center justify-center w-full h-52 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                    </svg>
+                                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
+                                            class="font-semibold">Click to upload</span> or drag and drop</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">JPG, PNG, JPEG</p>
+                                </div>
+                                <input id="dropzone-file" type="file" value="{{ old('image[]') }}"
+                                    class="absolute w-full h-full border opacity-0" name="image[]" multiple
+                                    onchange="previewImages()" />
+                            </label>
+
+                        </div>
+                        @error('image')
+                            <small class="error" style="color: red">{{ $message }}</small>
+                        @enderror
+                        @error('image.*')
+                            <small class="error" style="color: red">{{ $message }}</small>
+                        @enderror
+
+                    </div>
+                    <!-- Image Preview -->
+                    <div id="imagePreviews" class="w-full rounded-lg  grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 "></div>
+                </div>
                 <div class="flex justify-center items-center mt-8">
                     <button type="submit"
                         class="bg-green-400 text-gray-100 px-4 py-2 w-full lg:w-fit rounded-lg hover:bg-green-500 duration-300">Submit</button>
@@ -98,49 +123,25 @@
             </form>
         </div>
     </div>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
     <script>
-        let submitbtn = document.getElementById('submitbtn');
-        FilePond.registerPlugin(FilePondPluginImagePreview);
-        // Register the plugin
-        FilePond.registerPlugin(FilePondPluginFileValidateType);
-        // Get a reference to the file input element
-        FilePond.registerPlugin(FilePondPluginFileValidateSize);
-        const inputElement = document.getElementById("photos");
+        function previewImages() {
+            var previewContainer = document.getElementById('imagePreviews');
+            previewContainer.innerHTML = ''; // Bersihkan konten sebelum menambahkan gambar baru
 
-        // Create a FilePond instance
-        const pond = FilePond.create(inputElement, {
-            acceptedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
-            allowImagePreview: true,
-            maxFileSize: '2MB',
-            allowMultiple: true,
-        });
+            var files = document.getElementById('dropzone-file').files;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
 
-        FilePond.setOptions({
-            required: true,
-            onprocessfile: (error, file) => {
-                if (!error) {
-                    submitbtn.removeAttribute("disabled")
+                reader.onload = function(e) {
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('w-full', 'h-full', 'object-cover');
+                    previewContainer.appendChild(img);
                 }
-            },
-            server: {
-                process: {
-                    url: '{{ route('upload.temporary') }}',
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    }
-                },
-                revert: {
-                    url: '{{ route('delete.temporary') }}',
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    }
-                }
-            },
-        });
+
+                reader.readAsDataURL(file);
+            }
+        }
     </script>
 @endsection

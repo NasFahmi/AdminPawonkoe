@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Piutang;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorePiutangRequest;
 use App\Http\Requests\UpdatePiutangRequest;
 
@@ -29,7 +31,43 @@ class PiutangController extends Controller
      */
     public function store(StorePiutangRequest $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'nominal' => 'required',
+            'tanggal' => 'required',
+        ], [
+           
+            'nama.required' => 'Nama harus diisi.',
+            'nominal.required' => 'Nominal harus diisi.',
+            'tanggal.required' => 'Tanggal harus diisi.',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $data = $request->all();
+            $dateTime = Carbon::parse($validatedData['tanggal'], 'Asia/Jakarta');
+            $tanggal = $dateTime->format('Y-m-d');
+
+            $dataCatatan = null;
+            if (isset($data['catatan'])) {
+                $dataCatatan = $data['catatan'];
+            }
+            Piutang::create([
+                'nama' => $validatedData['nama'],
+                'nominal' => $validatedData['nominal'],
+                'catatan' => $dataCatatan,
+                'tanggal_disetorkan' => $tanggal,
+                'is_complete' => $data['is_complete'],
+                'bukti_nota' => $data['image[]'],
+            ]);
+
+            DB::commit();
+            return redirect()->route('piutang.index')->with('success', 'Data Berhasil Disimpan');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            // throw $th;
+            return redirect()->back()->with('error', 'Gagal menyimpan.');
+        }
     }
 
     /**

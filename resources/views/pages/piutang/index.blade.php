@@ -62,9 +62,6 @@
                     <thead class="text-xs text-gray-700  bg-gray-100  ">
                         <tr class="">
                             <th scope="col" class="w-1/4 px-4 py-2 whitespace-nowrap">
-                                Jenis
-                            </th>
-                            <th scope="col" class=" px-4 py-2 whitespace-nowrap">
                                 Nama
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
@@ -73,8 +70,10 @@
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
                                 Tanggal
                             </th>
+                            <th scope="col" class=" px-4 py-2 whitespace-nowrap">
+                                Status
+                            </th>
                             <th class="whitespace-nowrap px-4 py-2">
-
                             </th>
                         </tr>
                     </thead>
@@ -92,7 +91,6 @@
                                     <span>{{ $items->nama }}</span>
                                 </td>
 
-
                                 <td cope="row" class="w-10 h-16  px-4 py-2 lg:whitespace-nowrap">
                                     <span>{{ $items->nominal }}</span>
                                 </td>
@@ -102,7 +100,6 @@
                                         {{ \Carbon\Carbon::parse($items->tanggal)->locale('ID')->isoFormat('D MMMM YYYY') }}
                                     </span>
                                 </td>
-
 
                                 <td class="w-10 h-16  px-4 py-2  lg:whitespace-nowrap">
                                     <div class="flex justify-center items-center">

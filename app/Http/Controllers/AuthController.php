@@ -29,7 +29,8 @@ class AuthController extends Controller
 
         if (RateLimiter::tooManyAttempts($this->throttle($request), $maxAttempts = 3)) {
             $seconds = RateLimiter::availableIn($this->throttle($request));
-            return back()->with(['login' => 'Login Terlalu Cepat. Silahkan Coba Lagi ' . $seconds . ' Detik']);
+            // dd($seconds);
+            return back()->withErrors(['login' => 'Login Terlalu Cepat. Silahkan Coba Lagi ' . $seconds . ' Detik']);
         }
 
         $succeslogin = Auth::attempt([

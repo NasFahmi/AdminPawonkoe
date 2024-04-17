@@ -14,7 +14,7 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        Permission::create (['name' => 'tambah-product']);
+        Permission::create(['name' => 'tambah-product']);
         Permission::create(['name' => 'tambah-transaksi']);
         Permission::create(['name' => 'tambah-preorder']);
         Permission::create(['name' => 'edit-preorder']);
@@ -33,6 +33,9 @@ class RolePermissionSeeder extends Seeder
         $admin->givePermissionTo('tambah-preorder');
 
         $superAdmin = Role::findByName('superadmin');
+        $superAdmin->givePermissionTo('tambah-product');
+        $superAdmin->givePermissionTo('tambah-transaksi');
+        $superAdmin->givePermissionTo('tambah-preorder');
         $superAdmin->givePermissionTo('edit-preorder');
         $superAdmin->givePermissionTo('edit-transaksi');
         $superAdmin->givePermissionTo('edit-product');

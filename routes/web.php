@@ -20,6 +20,19 @@ use App\Http\Controllers\Api\ApiTransaksiController;
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
+/ role property
+
+        $admin = Role::findByName('admin');
+        $admin->givePermissionTo('tambah-product');
+        $admin->givePermissionTo('tambah-transaksi');
+        $admin->givePermissionTo('tambah-preorder');
+
+        $superAdmin = Role::findByName('superadmin');
+        $superAdmin->givePermissionTo('edit-preorder');
+        $superAdmin->givePermissionTo('edit-transaksi');
+        $superAdmin->givePermissionTo('edit-product');
+        $superAdmin->givePermissionTo('hapus-product');
+        $superAdmin->givePermissionTo('cetak-transaksi');
 |
 */
 
@@ -28,47 +41,66 @@ Route::post('/login', [AuthController::class, 'Authlogin'])->name('authenticatio
 Route::get('/', [AuthController::class, 'loginview'])->name('login');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/dashboard', [DashboardController::class, 'indexDashboard'])->name('admin.dashboard');
-    Route::get('/chart/oneyear', [DashboardController::class, 'chart'])->name('chart.1year');
-    Route::get('/admin/dashboard/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::middleware(['role:superadmin|admin'])->group(function () {
+        Route::get('/admin/dashboard', [DashboardController::class, 'indexDashboard'])->name('admin.dashboard');
+        Route::get('/chart/oneyear', [DashboardController::class, 'chart'])->name('chart.1year');
+        Route::get('/admin/dashboard/logout', [AuthController::class, 'logout'])->name('logout');
+    });
 
-    //Transaksi
-    Route::middleware(['permission:edit-transaksi|cetak-transaksi'])->group(function () {
+    //Transaksi 
+    Route::middleware(['role:superadmin', 'permission:edit-transaksi|cetak-transaksi'])->group(function () {
         Route::get('/admin/transaksi/{transaksi}/edit', [TransaksiController::class, 'edit'])->name('transaksis.edit');
         Route::get('/admin/cetak/transaksi', [TransaksiController::class, 'cetakTransaksi'])->name('cetak.transaksi');
         Route::patch('/admin/transaksi/{transaksi}', [TransaksiController::class, 'update'])->name('transaksis.update');
     });
-    Route::middleware('role_or_permission:superadmin|tambah-transaksi')->group(function () {
+    Route::middleware(['role:superadmin|admin', 'permission:tambah-transaksi'])->group(function () {
         Route::post('/admin/transaksi', [TransaksiController::class, 'store'])->name('transaksis.store');
         Route::get('/admin/transaksi/create', [TransaksiController::class, 'create'])->name('transaksis.create');
     });
-    Route::get('/admin/transaksi', [TransaksiController::class, 'index'])->name('transaksis.index');
-    Route::get('/admin/transaksi/{transaksi}', [TransaksiController::class, 'show'])->name('transaksis.detail');
+    Route::middleware(['role:superadmin|admin'])->group(function () {
+        Route::get('/admin/transaksi', [TransaksiController::class, 'index'])->name('transaksis.index');
+        Route::get('/admin/transaksi/{transaksi}', [TransaksiController::class, 'show'])->name('transaksis.detail');
+    });
 
     //Produk
-    Route::middleware(['permission:edit-product|hapus-product'])->group(function () {
+    //middleware umum tanpa permission
+    Route::middleware(['role:superadmin|admin'])->group(function () {
+        Route::get('/admin/product', [ProductController::class, 'index'])->name('products.index');
+        Route::get('/admin/product/{product}', [ProductController::class, 'show'])->name('products.detail');
+
+
+        Route::post('/product/upload', [TemporaryImageController::class, 'uploadTemporary'])->name('upload.temporary');
+        Route::post('/product/revert', [TemporaryImageController::class, 'deleteTemporary'])->name('delete.temporary');
+        Route::post('/product/update-image/{id}', [TemporaryImageController::class, 'uploadImageDirectlyToDB'])->name('upload.directtoDB');
+    });
+    // dengan permission
+    Route::middleware(['role:superadmin', 'permission:edit-product|hapus-product'])->group(function () {
         Route::get('/admin/product/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
         Route::delete('/admin/product/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+        Route::patch('/admin/product/{product}', [ProductController::class, 'update'])->name('products.update');
     });
-    Route::middleware('role_or_permission:superadmin|tambah-product')->group(function () {
-        Route::get('/admin/product/create', [ProductController::class, 'create'])->name('products.create');
+    //dengan permmission
+    Route::middleware(['role:superadmin|admin', 'permission:tambah-product'])->group(function () {
         Route::post('/admin/product', [ProductController::class, 'store'])->name('products.store');
+
+        Route::get('/admin/create/product', [ProductController::class, 'create'])->name('products.create'); //works
     });
-    Route::get('/admin/product', [ProductController::class, 'index'])->name('products.index');
-    Route::get('/admin/product/{product}', [ProductController::class, 'show'])->name('products.detail');
-    Route::patch('/admin/product/{product}', [ProductController::class, 'update'])->name('products.update');
+
+
 
     //Preorder
-    Route::middleware(['permission:edit-preorder'])->group(function () {
+    Route::middleware(['role:superadmin', 'permission:edit-preorder'])->group(function () {
         Route::get('/admin/preorder/{preorder}/edit', [PreorderController::class, 'edit'])->name('preorders.edit');
         Route::patch('/admin/preorder/{preorder}', [PreorderController::class, 'update'])->name('preorders.update');
     });
-    Route::middleware('role_or_permission:superadmin|tambah-preorder')->group(function () {
+    Route::middleware(['role:superadmin|admin', 'permission:tambah-preorder'])->group(function () {
         Route::get('/preorder/create', [PreorderController::class, 'create'])->name('preorders.create');
         Route::post('/preorder', [PreorderController::class, 'store'])->name('preorders.store');
     });
-    Route::get('/admin/preorder', [PreorderController::class, 'index'])->name('preorders.index');
-    Route::get('/admin/preorder/{preorder}', [PreorderController::class, 'show'])->name('preorders.detail');
+    Route::middleware(['role:superadmin|admin'])->group(function () {
+        Route::get('/admin/preorder', [PreorderController::class, 'index'])->name('preorders.index');
+        Route::get('/admin/preorder/{preorder}', [PreorderController::class, 'show'])->name('preorders.detail');
+    });
 
     //Beban Kewajiban
     Route::middleware(['role:superadmin'])->group(function () {
@@ -89,11 +121,6 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/admin/piutang/{piutang}', [PiutangController::class, 'update'])->name('piutang.update');
         Route::delete('/admin/piutang/{piutang}', [PiutangController::class, 'destroy'])->name('piutang.destroy');
     });
-
-
-    Route::post('/product/upload', [TemporaryImageController::class, 'uploadTemporary'])->name('upload.temporary');
-    Route::post('/product/revert', [TemporaryImageController::class, 'deleteTemporary'])->name('delete.temporary');
-    Route::post('/product/load-temporary', [TemporaryImageController::class, 'loadTemporary'])->name('load.temporary');
 });
 
 

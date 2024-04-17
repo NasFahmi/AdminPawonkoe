@@ -70,7 +70,7 @@
                         @if ($items->tersedia == 1)
                             <div class="card card-compact w-full md:w-60 h-96  bg-base-100 shadow-xl">
                                 <figure class="w-full h-96">
-                                    <img src="{{ asset('storage/images/' . $items->fotos->first()->foto) }}" alt="PRODUCT"
+                                    <img src="{{ asset($items->fotos->first()->foto) }}" alt="PRODUCT"
                                         class="h-auto w-full" />
                                 </figure>
                                 <div class="card-body">

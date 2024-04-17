@@ -10,7 +10,7 @@
                         <!-- Gunakan carousel jika ada lebih dari satu foto -->
                         @foreach ($data->fotos as $index => $foto)
                             <div class="hidden duration-700 ease-in-out bg-cover" data-carousel-item>
-                                <img src="{{ asset('storage/images/' . $foto->foto) }}"
+                                <img src="{{ asset($foto->foto) }}"
                                     class="absolute image-full z-10 block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 cover-image"
                                     alt="...">
                             </div>
@@ -18,7 +18,7 @@
                     @elseif ($data->fotos->count() === 1)
                         <!-- Tampilkan gambar langsung jika hanya ada satu foto -->
                         <div class="block w-full h-full">
-                            <img src="{{ asset('storage/images/' . $data->fotos[0]->foto) }}" class="w-full h-full object-cover"
+                            <img src="{{ asset($data->fotos[0]->foto) }}" class="w-full h-full object-cover"
                                 alt="...">
                         </div>
                     @else

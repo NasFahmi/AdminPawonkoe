@@ -7,6 +7,7 @@ use App\Models\BebanKewajiban;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreBebanKewajibanRequest;
 use App\Http\Requests\UpdateBebanKewajibanRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class BebanKewajibanController extends Controller
@@ -37,7 +38,7 @@ class BebanKewajibanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBebanKewajibanRequest $request)
+    public function store(Request $request)
     {
         $validatedData = $request->validate([
             'jenis' => 'required',
@@ -86,15 +87,46 @@ class BebanKewajibanController extends Controller
      */
     public function edit(BebanKewajiban $bebanKewajiban)
     {
-        //
+        $data = BebanKewajiban::findorFail($bebanKewajiban->id);
+        return view('pages.beban-kewajiban.edit',compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBebanKewajibanRequest $request, BebanKewajiban $bebanKewajiban)
+    public function update(Request $request, BebanKewajiban $bebanKewajiban)
     {
-        //
+        $validatedData = $request->validate([
+            'jenis' => 'required',
+            'nama' => 'required',
+            'nominal' => 'required',
+            'tanggal' => 'required',
+        ], [
+            'jenis.required' => 'Jenis harus diisi.',
+            'nama.required' => 'Nama harus diisi.',
+            'nominal.required' => 'Nominal harus diisi.',
+            'tanggal.required' => 'Tanggal harus diisi.',
+        ]);
+        try {
+            DB::beginTransaction();
+            $data = BebanKewajiban::findorFail($bebanKewajiban->id);
+            $dateTime = Carbon::parse($validatedData['tanggal'], 'Asia/Jakarta');
+            $tanggal = $dateTime->format('Y-m-d');
+            $data->update([
+                'jenis' => $validatedData['jenis'],
+                'nama' => $validatedData['nama'],
+                'nominal' => $validatedData['nominal'],
+                'tanggal' => $tanggal,
+            ]);
+
+
+            DB::commit();
+            return redirect()->route('beban-kewajibans.index')->with('success', 'Data Berhasil Diupdate');
+        } catch (\Throwable $th) {
+            throw $th;
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat megnupdate data');
+        }
     }
 
     /**
@@ -102,6 +134,17 @@ class BebanKewajibanController extends Controller
      */
     public function destroy(BebanKewajiban $bebanKewajiban)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $bebanKewajiban->delete();
+
+            DB::commit();
+            return redirect()->route('beban-kewajibans.index')->with('success', 'Data Berhasil Dihapus');
+        } catch (\Throwable $th) {
+            throw $th;
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat delete data');
+        }
+
     }
 }

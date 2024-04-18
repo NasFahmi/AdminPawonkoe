@@ -1,30 +1,29 @@
 @extends('layout.admin_pages')
-@section('title', 'Admin Beban dan Kewajiban')
+@section('title', 'Admin Produksi')
 @section('content')
     <div class="container px-6 pb-6 mx-auto">
-        <h1 class="text-2xl my-6 font-semibold text-gray-700">Edit Beban & Kewajiban</h1>
+        <h1 class="text-2xl my-6 font-semibold text-gray-700">Tambah Produksi</h1>
         <div class="bg-white px-8 py-8 shadow-lg rounded-3xl">
-            <form action="{{ route('beban-kewajibans.update', $data->id) }}" method="post">
-                @method('PATCH')
+            <form action="{{ route('produksi.store') }}" method="post">
                 @csrf
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
                     <div class="left">
                         <div class="max-w-lg">
                             <div class="flex justify-start items-start flex-col gap-3">
                                 <div class="w-full">
-                                    <label for="jenis" class="block mb-2 text-sm font-medium text-gray-700">Jenis</label>
-                                    <input type="text" placeholder="Jenis" name="jenis" value="{{ $data->jenis }}"
+                                    <label for="jenis" class="block mb-2 text-sm font-medium text-gray-700">Produk</label>
+                                    <input type="text" placeholder="Produk" name="produk" value="{{ old('produk') }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
-                                    @error('jenis')
+                                    @error('produk')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="w-full mt-4">
-                                    <label for="nama" class="block mb-2 text-sm font-medium  text-gray-700">Nama</label>
-                                    <input type="text" placeholder="Nama" name="nama" value="{{ $data->nama }}"
+                                    <label for="nama" class="block mb-2 text-sm font-medium  text-gray-700">Jumlah</label>
+                                    <input type="number" placeholder="Jumlah" name="jumlah" value="{{ old('jumlah') }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
-                                    @error('nama')
+                                    @error('jumlah')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
@@ -34,10 +33,10 @@
 
                     <div class="right">
                         <div class="w-full">
-                            <label for="nominal" class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
-                            <input type="number" placeholder="Nominal" name="nominal" value="{{ $data->nominal }}"
+                            <label for="nominal" class="block mb-2 text-sm font-medium text-gray-700">Volume</label>
+                            <input type="number" placeholder="Volume" name="volume" value="{{ old('volume') }}"
                                 class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
-                            @error('nominal')
+                            @error('volume')
                                 <small class="error" style="color: red">{{ $message }}</small>
                             @enderror
                         </div>
@@ -52,11 +51,9 @@
                                             d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                     </svg>
                                 </div>
-                                <input datepicker type="text" name="tanggal"
-                                    value="{{ \Carbon\Carbon::parse($data->tanggal)->format('m/d/Y') }}"
+                                <input datepicker type="text" name="tanggal" value="{{ old('tanggal') }}"
                                     class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Select date">
-
                             </div>
                             @error('tanggal')
                                 <small class="error" style="color: red">{{ $message }}</small>

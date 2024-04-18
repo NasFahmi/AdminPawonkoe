@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('produk');
             $table->bigInteger('jumlah');
+            $table->bigInteger('volume');
             $table->timestamp('tanggal');
+
         });
     }
 

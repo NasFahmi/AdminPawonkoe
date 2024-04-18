@@ -1,10 +1,10 @@
 @extends('layout.admin_pages')
-@section('title', 'Admin Beban dan Kewajiban')
+@section('title', 'Admin Produksi')
 @section('content')
     <div class="container px-6 pb-6 mx-auto">
         <h1 class="text-2xl my-6 font-semibold text-gray-700">Edit Beban & Kewajiban</h1>
         <div class="bg-white px-8 py-8 shadow-lg rounded-3xl">
-            <form action="{{ route('beban-kewajibans.update', $data->id) }}" method="post">
+            <form action="{{ route('produksi.update', $data->id) }}" method="post">
                 @method('PATCH')
                 @csrf
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -12,19 +12,19 @@
                         <div class="max-w-lg">
                             <div class="flex justify-start items-start flex-col gap-3">
                                 <div class="w-full">
-                                    <label for="jenis" class="block mb-2 text-sm font-medium text-gray-700">Jenis</label>
-                                    <input type="text" placeholder="Jenis" name="jenis" value="{{ $data->jenis }}"
+                                    <label for="produk" class="block mb-2 text-sm font-medium text-gray-700">Produk</label>
+                                    <input type="text" placeholder="Produk" name="produk" value="{{ $data->produk }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
-                                    @error('jenis')
+                                    @error('produk')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="w-full mt-4">
-                                    <label for="nama" class="block mb-2 text-sm font-medium  text-gray-700">Nama</label>
-                                    <input type="text" placeholder="Nama" name="nama" value="{{ $data->nama }}"
+                                    <label for="jumlah" class="block mb-2 text-sm font-medium  text-gray-700">Jumlah</label>
+                                    <input type="number" placeholder="Jumlah" name="jumlah" value="{{ $data->jumlah }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
-                                    @error('nama')
+                                    @error('jumlah')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
@@ -34,10 +34,10 @@
 
                     <div class="right">
                         <div class="w-full">
-                            <label for="nominal" class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
-                            <input type="number" placeholder="Nominal" name="nominal" value="{{ $data->nominal }}"
+                            <label for="volume" class="block mb-2 text-sm font-medium text-gray-700">Volume</label>
+                            <input type="number" placeholder="Volume" name="volume" value="{{ $data->volume }}"
                                 class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
-                            @error('nominal')
+                            @error('volume')
                                 <small class="error" style="color: red">{{ $message }}</small>
                             @enderror
                         </div>

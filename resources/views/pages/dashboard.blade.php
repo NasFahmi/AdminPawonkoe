@@ -188,7 +188,7 @@
                         <div class="bg-blue-100 rounded-md p-4 mb-4">
                             <div class="flex justify-start items-center gap-4 mb-2">
                                 <div class="rounded-full w-16 h-16 bg-cover bg-no-repeat bg-center"
-                                    style="background-image: url('{{ asset('storage/' . $item->fotos->first()->foto) }}')">
+                                    style="background-image: url('{{ asset( $item->fotos->first()->foto) }}')">
                                 </div>
                                 <div class="">
                                     <h1 class="text-gray-700 text-lg md:text-base lg:text-lg font-semibold">

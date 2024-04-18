@@ -11,6 +11,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\BebanKewajibanController;
 use App\Http\Controllers\TemporaryImageController;
 use App\Http\Controllers\Api\ApiTransaksiController;
+use App\Http\Controllers\ProduksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,6 +103,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/preorder/{preorder}', [PreorderController::class, 'show'])->name('preorders.detail');
     });
 
+    //produksi
+    Route::middleware(['role:superadmin'])->group(function () {
+        Route::post('/produksi', [ProduksiController::class, 'store'])->name('produksi.store');
+        Route::get('/produksi/create', [ProduksiController::class, 'create'])->name('produksi.create');
+        Route::get('/admin/produksi', [ProduksiController::class, 'index'])->name('produksi.index');
+        Route::patch('/admin/produksi/{bebanKewajiban}', [ProduksiController::class, 'update'])->name('produksi.update');
+        Route::get('/admin/produksi/{bebanKewajiban}/edit', [ProduksiController::class, 'edit'])->name('produksi.edit');
+        Route::delete('/admin/produksi/{bebanKewajiban}', [ProduksiController::class, 'destroy'])->name('produksi.destroy');
+    });
+    
     //Beban Kewajiban
     Route::middleware(['role:superadmin'])->group(function () {
         Route::post('/beban-kewajiban', [BebanKewajibanController::class, 'store'])->name('beban-kewajibans.store');

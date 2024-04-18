@@ -7,6 +7,7 @@ use App\Models\Piutang;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorePiutangRequest;
 use App\Http\Requests\UpdatePiutangRequest;
+use Illuminate\Http\Request;
 
 class PiutangController extends Controller
 {
@@ -29,25 +30,41 @@ class PiutangController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePiutangRequest $request)
+    public function store(Request $request)
     {
         $validatedData = $request->validate([
             'nama' => 'required',
             'nominal' => 'required',
             'tanggal' => 'required',
+            // 'image' => 'required', 
+
         ], [
            
             'nama.required' => 'Nama harus diisi.',
             'nominal.required' => 'Nominal harus diisi.',
             'tanggal.required' => 'Tanggal harus diisi.',
+            // 'image.required' => 'Nota harus diisi.',
+            // 'image.mimes' => 'Format gambar yang diizinkan: jpeg, png, jpg,',
+            // 'image.max' => 'Ukuran gambar maksimal adalah 2MB.',
+
         ]);
 
         try {
             DB::beginTransaction();
             $data = $request->all();
+
+            // dd($data);
+            if ($request->hasFile('image')) {
+                dd('gambar ada');
+            }
+            $image = $request->file('image');
+            $name = $image->getClientOriginalName();
+            $extension = $image->getClientOriginalExtension();
+            $image->storeAs('public/assets/images', $name);
+            dd($extension);
+            
             $dateTime = Carbon::parse($validatedData['tanggal'], 'Asia/Jakarta');
             $tanggal = $dateTime->format('Y-m-d');
-
             $dataCatatan = null;
             if (isset($data['catatan'])) {
                 $dataCatatan = $data['catatan'];
@@ -58,7 +75,7 @@ class PiutangController extends Controller
                 'catatan' => $dataCatatan,
                 'tanggal_disetorkan' => $tanggal,
                 'is_complete' => $data['is_complete'],
-                'bukti_nota' => $data['image[]'],
+                'bukti_nota' => $imageName,
             ]);
 
             DB::commit();

@@ -41,6 +41,7 @@ Route::post('/login', [AuthController::class, 'Authlogin'])->name('authenticatio
 Route::get('/', [AuthController::class, 'loginview'])->name('login');
 
 Route::middleware(['auth'])->group(function () {
+
     Route::middleware(['role:superadmin|admin'])->group(function () {
         Route::get('/admin/dashboard', [DashboardController::class, 'indexDashboard'])->name('admin.dashboard');
         Route::get('/chart/oneyear', [DashboardController::class, 'chart'])->name('chart.1year');
@@ -67,8 +68,6 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:superadmin|admin'])->group(function () {
         Route::get('/admin/product', [ProductController::class, 'index'])->name('products.index');
         Route::get('/admin/product/{product}', [ProductController::class, 'show'])->name('products.detail');
-
-
         Route::post('/product/upload', [TemporaryImageController::class, 'uploadTemporary'])->name('upload.temporary');
         Route::post('/product/revert', [TemporaryImageController::class, 'deleteTemporary'])->name('delete.temporary');
         Route::post('/product/update-image/{id}', [TemporaryImageController::class, 'uploadImageDirectlyToDB'])->name('upload.directtoDB');
@@ -85,8 +84,6 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/admin/create/product', [ProductController::class, 'create'])->name('products.create'); //works
     });
-
-
 
     //Preorder
     Route::middleware(['role:superadmin', 'permission:edit-preorder'])->group(function () {

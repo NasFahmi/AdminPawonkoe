@@ -22,7 +22,7 @@
                                 <div class="w-full">
                                     <label for="nominal"
                                         class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
-                                    <input type="text" placeholder="Nominal" name="nominal" value="{{ old('nominal') }}"
+                                    <input type="number" placeholder="Nominal" name="nominal" value="{{ old('nominal') }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
                                     @error('nominal')
                                         <small class="error" style="color: red">{{ $message }}</small>
@@ -99,8 +99,8 @@
                                             class="font-semibold">Click to upload</span> or drag and drop</p>
                                     <p class="text-xs text-gray-500 dark:text-gray-400">JPG, PNG, JPEG</p>
                                 </div>
-                                <input id="dropzone-file" type="file" value="{{ old('image[]') }}"
-                                    class="absolute w-full h-full border opacity-0" name="image[]" multiple
+                                <input id="dropzone-file" type="file" value="{{ old('image') }}"
+                                    class="absolute w-full h-full border opacity-0" name="image" multiple
                                     onchange="previewImages()" />
                             </label>
 

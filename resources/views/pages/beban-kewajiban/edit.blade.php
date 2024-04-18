@@ -2,7 +2,7 @@
 @section('title', 'Admin Beban dan Kewajiban')
 @section('content')
     <div class="container px-6 pb-6 mx-auto">
-        <h1 class="text-2xl my-6 font-semibold text-gray-700">Tambah Beban & Kewajiban</h1>
+        <h1 class="text-2xl my-6 font-semibold text-gray-700">Edit Beban & Kewajiban</h1>
         <div class="bg-white px-8 py-8 shadow-lg rounded-3xl">
             <form action="{{ route('beban-kewajibans.update', $data->id) }}" method="post">
                 @method('PATCH')

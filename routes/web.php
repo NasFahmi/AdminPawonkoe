@@ -104,15 +104,15 @@ Route::middleware(['auth'])->group(function () {
     });
 
     //produksi
-    Route::middleware(['role:superadmin'])->group(function () {
+    Route::middleware(['role:superadmin||admin'])->group(function () {
         Route::post('/produksi', [ProduksiController::class, 'store'])->name('produksi.store');
         Route::get('/produksi/create', [ProduksiController::class, 'create'])->name('produksi.create');
         Route::get('/admin/produksi', [ProduksiController::class, 'index'])->name('produksi.index');
-        Route::patch('/admin/produksi/{bebanKewajiban}', [ProduksiController::class, 'update'])->name('produksi.update');
-        Route::get('/admin/produksi/{bebanKewajiban}/edit', [ProduksiController::class, 'edit'])->name('produksi.edit');
-        Route::delete('/admin/produksi/{bebanKewajiban}', [ProduksiController::class, 'destroy'])->name('produksi.destroy');
+        Route::patch('/admin/produksi/{produksi}', [ProduksiController::class, 'update'])->name('produksi.update');
+        Route::get('/admin/produksi/{produksi}/edit', [ProduksiController::class, 'edit'])->name('produksi.edit');
+        Route::delete('/admin/produksi/{produksi}', [ProduksiController::class, 'destroy'])->name('produksi.destroy');
     });
-    
+
     //Beban Kewajiban
     Route::middleware(['role:superadmin'])->group(function () {
         Route::post('/beban-kewajiban', [BebanKewajibanController::class, 'store'])->name('beban-kewajibans.store');

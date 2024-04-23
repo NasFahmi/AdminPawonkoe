@@ -181,7 +181,7 @@
         </ul>
 
     </div>
-    <div class="absolute bottom-1 w-full flex justify-center items-center">
+    <div class="absolute bottom-1 w-full flex justify-center items-center mb-4">
         <p class="text-gray-700">{{env('APP_VERSION')}}</p>
     </div>
 </aside>
@@ -378,7 +378,7 @@
 
         </ul>
     </div>
-    <div class="absolute bottom-1 w-full flex justify-center items-center">
+    <div class="absolute bottom-1 w-full flex justify-center items-center mb-4">
         <p class="text-gray-700">{{env('APP_VERSION')}}</p>
     </div>
 </aside>

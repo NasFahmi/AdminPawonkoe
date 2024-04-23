@@ -1,5 +1,5 @@
 <!-- Desktop sidebar -->
-<aside class="z-20 hidden w-64 overflow-y-auto bg-white md:block flex-shrink-0">
+<aside class="z-20 hidden w-64 overflow-y-auto bg-white md:block flex-shrink-0 relative">
     <div class="py-4 text-gray-500">
         <div class="flex justify-start items-center">
             <a href="{{ route('admin.dashboard') }}" class="ml-6">
@@ -179,6 +179,10 @@
             
 
         </ul>
+
+    </div>
+    <div class="absolute bottom-1 w-full flex justify-center items-center">
+        <p class="text-gray-700">{{env('APP_VERSION')}}</p>
     </div>
 </aside>
 <!-- Mobile sidebar -->
@@ -373,5 +377,8 @@
             
 
         </ul>
+    </div>
+    <div class="absolute bottom-1 w-full flex justify-center items-center">
+        <p class="text-gray-700">{{env('APP_VERSION')}}</p>
     </div>
 </aside>

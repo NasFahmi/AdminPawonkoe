@@ -4,7 +4,7 @@
     <div class="container px-6 pb-6 mx-auto ">
         <p class="text-2xl my-6 font-semibold text-gray-700">Piutang</p>
         {{-- <p>{{$data}}</p> --}}
-        <div
+        {{-- <div
             class="bg-white w-full px-8 py-4 shadow-md rounded-3xl mb-4 flex justify-start items-center max-w-screen-xl lg:w-full">
             <div class="flex justify-start items-start md:items-center flex-col gap-4 w-full lg:flex-row ">
                 <form class="flex items-center w-full lg:w-1/2" action="" method="GET">
@@ -203,8 +203,11 @@
                             Page {{ $data->currentPage() }} of {{ $data->lastPage() }}
                         </div>
                     </div>
-                @endif --}}
+                @endif 
             </div>
+        </div> --}}
+        <div class="text-center">
+            <h1 class="text-black text-lg">Sorry This Feature is Coming soon</h1>
         </div>
     </div>
 @endsection

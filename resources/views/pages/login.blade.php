@@ -51,6 +51,9 @@
                     </div>
                 </div>
             </div>
+            <div class="flex justify-center items-center mb-4">
+                <p class="text-gray-700">{{env('APP_VERSION')}}</p>
+            </div>
         </div>
     </div>
 @endsection

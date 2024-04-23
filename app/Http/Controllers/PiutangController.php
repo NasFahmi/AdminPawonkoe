@@ -75,7 +75,7 @@ class PiutangController extends Controller
                 'catatan' => $dataCatatan,
                 'tanggal_disetorkan' => $tanggal,
                 'is_complete' => $data['is_complete'],
-                'bukti_nota' => $imageName,
+                'bukti_nota' => $name,
             ]);
 
             DB::commit();

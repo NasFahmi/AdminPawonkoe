@@ -131,10 +131,17 @@ class ProductController extends Controller
                 $fileNameProductImage =  Str::random(20) . '.' . $extensionTemp;
                 // dd($fileNameProductImage); //GdomcXRDdftRq30MjJPz.jpeg
                 // copy file image from storage\app\public\images\tmp\image-660a77aaf10368.27307606\WhatsApp Image 2024-03-18 at 9.29.38 PM.jpeg to storage\app\public\images\GdomcXRDdftRq30MjJPz.jpeg
+                // Membuat folder produk jika belum ada
+                $slugFolderPath = 'public/images/product/' . $slug;
+                if (!Storage::exists($slugFolderPath)) {
+                    Storage::makeDirectory($slugFolderPath);
+                    // Mengatur izin folder
+                    $folderPermissions = 0755; // Atur izin sesuai kebutuhan Anda
+                    chmod(storage_path('app/' . $slugFolderPath), $folderPermissions);
+                }
+                // copy file image dari storage\app\public\images\tmp\image-660a77aaf10368.27307606\WhatsApp Image 2024-03-18 at 9.29.38 PM.jpeg ke storage\app\public\images\GdomcXRDdftRq30MjJPz.jpeg
                 $sourcesPath = 'public/images/tmp/' . $folderNameTemp . '/' . $fileNameTemp;
                 $destinationPath = 'public/images/product/' . $slug . '/' . $fileNameProductImage;
-                // dd($sourcesPath);
-                // dd($destinationPath);
                 Storage::copy($sourcesPath, $destinationPath);
                 Foto::updateOrInsert([ //! hanya bekerja di store, namun tidak bekerja di update
                     'foto' => '/storage/images/product/' . $slug . '/' . $fileNameProductImage,

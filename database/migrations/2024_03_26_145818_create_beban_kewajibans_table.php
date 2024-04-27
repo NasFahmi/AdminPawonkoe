@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('nominal');
             $table->timestamp('tanggal');
-
+            $table->softDeletes();
         });
     }
 

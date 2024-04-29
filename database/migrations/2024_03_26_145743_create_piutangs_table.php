@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('tanggal_disetorkan')->nullable();
             $table->timestamp('tanggal_lunas')->nullable();
             $table->string('bukti_nota',255);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

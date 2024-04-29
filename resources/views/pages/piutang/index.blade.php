@@ -3,7 +3,8 @@
 @section('content')
     <div class="container px-6 pb-6 mx-auto ">
         <p class="text-2xl my-6 font-semibold text-gray-700">Piutang</p>
-        
+
+        <div
             class="bg-white w-full px-8 py-4 shadow-md rounded-3xl mb-4 flex justify-start items-center max-w-screen-xl lg:w-full">
             <div class="flex justify-start items-start md:items-center flex-col gap-4 w-full lg:flex-row ">
                 <form class="flex items-center w-full lg:w-1/2" action="" method="GET">
@@ -61,13 +62,13 @@
                     <thead class="text-xs text-gray-700  bg-gray-100  ">
                         <tr class="">
                             <th scope="col" class="w-1/4 px-4 py-2 whitespace-nowrap">
-                                Nama
+                                Nama Toko
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
-                                Nominal
+                                Product
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
-                                Tanggal
+                                Tanggal Disetorkan
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
                                 Status
@@ -82,22 +83,24 @@
                                 class="px-4 py-2 odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-">
                                 <th scope="row" class=" font-medium pl-3  lg:whitespace-nowrap  text-sm">
                                     <span class="text-sm">
-                                        {{ $items->jenis }}
+                                        {{ $items->nama_toko }}
                                     </span>
                                 </th>
 
                                 <td cope="row" class="w-10 h-16   px-4 py-2 lg:whitespace-nowrap">
-                                    <span>{{ $items->nama }}</span>
-                                </td>
-
-                                <td cope="row" class="w-10 h-16  px-4 py-2 lg:whitespace-nowrap">
-                                    <span>{{ $items->nominal }}</span>
+                                    @foreach ($piutang->piutang_produk_piutangs->produk_piutangs as $produk)
+                                        {{ $produk->nama_produk }}
+                                    @endforeach
                                 </td>
 
                                 <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
                                     <span>
-                                        {{ \Carbon\Carbon::parse($items->tanggal)->locale('ID')->isoFormat('D MMMM YYYY') }}
+                                        {{ \Carbon\Carbon::parse($items->tanggal_disetorkan)->locale('ID')->isoFormat('D MMMM YYYY') }}
                                     </span>
+                                </td>
+
+                                <td cope="row" class="w-10 h-16  px-4 py-2 lg:whitespace-nowrap">
+                                    <span>{{ $items->status }}</span>
                                 </td>
 
                                 <td class="w-10 h-16  px-4 py-2  lg:whitespace-nowrap">
@@ -202,9 +205,9 @@
                             Page {{ $data->currentPage() }} of {{ $data->lastPage() }}
                         </div>
                     </div>
-                @endif 
+                @endif
             </div>
-        </div> 
-       
+        </div>
+
     </div>
 @endsection

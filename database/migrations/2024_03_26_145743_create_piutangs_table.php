@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('piutangs', function (Blueprint $table) {
             $table->id();
-            $table->string('nama',255);
-            $table->string('nominal',255);
+            $table->string('nama_toko',255);
+            $table->string('penghasilan',255);
+            $table->string('sewa_titip',255);
             $table->longText('catatan')->nullable();
             $table->boolean('is_complete')->default(0);
-            $table->timestamp('tanggal_disetorkan');
+            $table->timestamp('tanggal_disetorkan')->nullable();
+            $table->timestamp('tanggal_lunas')->nullable();
             $table->string('bukti_nota',255);
+            $table->timestamps();
         });
     }
 

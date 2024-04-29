@@ -20,4 +20,12 @@ class Piutang extends Model
         'bukti_nota',
     ];
     use SoftDeletes;
+    public function notas()
+    {
+        return $this->hasMany(NotaPiutang::class);
+    }
+    public function piutang_produk_piutangs()
+    {
+        return $this->belongsTo(PiutangProdukPiutang::class, 'piutang_id', 'id');
+    }
 }

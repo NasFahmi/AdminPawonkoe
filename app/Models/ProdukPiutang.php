@@ -15,4 +15,8 @@ class ProdukPiutang extends Model
         'harga',
         'total',
     ];
+    public function piutang_produk_piutangs()
+    {
+        return $this->belongsTo(Piutang::class);
+    }
 }

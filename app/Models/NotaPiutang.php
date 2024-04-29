@@ -12,4 +12,8 @@ class NotaPiutang extends Model
         'piutang_id',
         'foto'
     ];
+    public function piutangs()
+    {
+        return $this->belongsTo(Piutang::class);
+    }
 }

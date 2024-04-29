@@ -13,4 +13,12 @@ class PiutangProdukPiutang extends Model
         'piutang_id',
         'total'
     ];
+    public function piutangs(){
+        return $this->hasOne(Piutang::class);
+    }
+    
+    public function produk_piutangs()
+    {
+        return $this->hasMany(ProdukPiutang::class);
+    }
 }

@@ -25,6 +25,7 @@ class PiutangController extends Controller
      */
     public function create()
     {
+        // dd('awdw');
         return view('pages.piutang.create');
     }
 

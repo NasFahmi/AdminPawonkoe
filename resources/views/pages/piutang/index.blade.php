@@ -3,7 +3,7 @@
 @section('content')
     <div class="container px-6 pb-6 mx-auto ">
         <p class="text-2xl my-6 font-semibold text-gray-700">Piutang</p>
-        
+        <div
             class="bg-white w-full px-8 py-4 shadow-md rounded-3xl mb-4 flex justify-start items-center max-w-screen-xl lg:w-full">
             <div class="flex justify-start items-start md:items-center flex-col gap-4 w-full lg:flex-row ">
                 <form class="flex items-center w-full lg:w-1/2" action="" method="GET">
@@ -77,7 +77,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $items)
+                        {{-- @foreach ($data as $items)
                             <tr
                                 class="px-4 py-2 odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-">
                                 <th scope="row" class=" font-medium pl-3  lg:whitespace-nowrap  text-sm">
@@ -189,11 +189,11 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @endforeach --}}
 
                     </tbody>
                 </table>
-                @if ($data->lastPage() > 1)
+                {{-- @if ($data->lastPage() > 1)
                     <div class="mt-4 flex flex-col items-center justify-center">
                         <div class="flex items-center space-x-4">
                             {{ $data->links('pagination::tailwind') }}
@@ -202,9 +202,9 @@
                             Page {{ $data->currentPage() }} of {{ $data->lastPage() }}
                         </div>
                     </div>
-                @endif 
+                @endif  --}}
             </div>
-        </div> 
-       
+        </div>
+
     </div>
 @endsection

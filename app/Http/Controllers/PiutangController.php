@@ -16,7 +16,7 @@ class PiutangController extends Controller
      */
     public function index()
     {
-        $data = Piutang::with('piutang_produk_piutangs.produk_piutangs')->paginate(10);
+        $data = ['test'];
         return view('pages.piutang.index',compact('data'));
     }
 

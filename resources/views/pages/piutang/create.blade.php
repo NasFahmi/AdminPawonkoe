@@ -66,19 +66,31 @@
                                     </div>
                                 </div>
 
-
+                                <div class="w-full">
+                                    <label for="" class="text-sm font-medium text-gray-800 ">Catatan</label>
+                                    <textarea
+                                        class="w-full max-w-4xl h-52 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="Catatan" name="catatan" rows="5"></textarea>
+                                </div>
 
                             </div>
                         </div>
                     </div>
 
                     <div class="right">
-                        <div class="w-full">
-                            <label for="" class="text-sm font-medium text-gray-800 ">Catatan</label>
-                            <textarea
-                                class="w-full max-w-4xl h-52 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Catatan" name="catatan" rows="5"></textarea>
+                        <div class="">
+                            <label class="block text-sm mb-1">
+                                <span class="text-gray-700 dark:text-gray-400">Varian Product</span>
+                            </label>
                         </div>
+                        <div id="form-container">
+                            <!-- Formulir input awal -->
+                            <div class="form-group flex justify-center items-center gap-2">
+
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="addInput()" class="text-green-400">Tambah Varian</button>
                     </div>
                 </div>
 
@@ -114,7 +126,8 @@
 
                     </div>
                     <!-- Image Preview -->
-                    <div id="imagePreviews" class="w-full rounded-lg  grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 "></div>
+                    <div id="imagePreviews" class="w-full rounded-lg  grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
+                    </div>
                 </div>
                 <div class="flex justify-center items-center mt-8">
                     <button type="submit"
@@ -124,6 +137,32 @@
         </div>
     </div>
     <script>
+        let variantcount = 1;
+
+        function addInput() {
+            var formContainer = document.getElementById('form-container');
+            var newFormGroup = document.createElement('div');
+            newFormGroup.className = 'form-group';
+            newFormGroup.innerHTML = ' <div class="form-group flex justify-center items-center gap-2">' +
+                '<input type="text" name="varian[' + variantcount + ']" placeholder="Varian ' + variantcount + '" ' +
+                'class="input input-bordered input-info w-full max-w-md duration-50 bg-slate-50  mb-3" />' +
+                '<div class="w-8 h-8 cursor-pointer" onclick="removeInput(this)" >' +
+                '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+                '<g id="SVGRepo_bgCarrier" stroke-width="0"></g>' +
+                '<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>' +
+                '<g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="10" stroke="#e21818" stroke-width="1.5"></circle>' +
+                '<path d="M15 12H9" stroke="#e21818" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>' +
+                '</div>' +
+                '</div>';
+            formContainer.appendChild(newFormGroup);
+            variantcount++;
+        }
+
+        function removeInput(element) {
+            var formGroup = element.parentElement;
+            formGroup.parentNode.removeChild(formGroup);
+        }
+
         function previewImages() {
             var previewContainer = document.getElementById('imagePreviews');
             previewContainer.innerHTML = ''; // Bersihkan konten sebelum menambahkan gambar baru

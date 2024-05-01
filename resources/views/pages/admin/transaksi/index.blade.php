@@ -1,4 +1,4 @@
-@extends('layout.admin_pages')
+@extends('components.layouts.admin_pages')
 @section('title', 'Admin Transaksi')
 @section('content')
 <div class="container px-6 pb-6 mx-auto ">

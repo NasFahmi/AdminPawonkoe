@@ -1,4 +1,4 @@
-@extends('layout.admin_pages')
+@extends('components.layouts.admin_pages')
 @section('title', $data->nama_product)
 @section('content')
     <div class=" px-4 md:px-20 w-full  justify-center items-center flex-col bg-white py-10">

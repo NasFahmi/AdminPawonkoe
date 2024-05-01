@@ -40,6 +40,7 @@
             /* Set the color of the track (the non-draggable part) */
         }
     </style>
+      @livewireStyles
 </head>
 
 <body>
@@ -49,9 +50,11 @@
             @include('partials.header')
             <main class="h-full overflow-y-auto">
                 @yield('content')
+                
             </main>
         </div>
     </div>
+    @livewireScripts
     @extends('partials.link')
 </body>
 

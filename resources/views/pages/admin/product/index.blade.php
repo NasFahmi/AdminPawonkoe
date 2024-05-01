@@ -1,4 +1,4 @@
-@extends('layout.admin_pages')
+@extends('components.layouts.admin_pages')
 @section('title', 'Admin Product')
 @section('content')
     @if ($data->isEmpty())

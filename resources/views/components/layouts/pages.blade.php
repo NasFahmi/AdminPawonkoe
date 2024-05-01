@@ -7,12 +7,13 @@
     @vite('resources/css/app.css')
     <title>@yield('title')</title>
     <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}" type="image/x-icon">
-
+    @livewireStyles
     @extends('partials.head')
 </head>
 <body>
     <main class="mx-auto scroll-smooth overflow-hidden">
         @yield('content')
     </main>
+    @livewireScripts
 </body>
 </html>

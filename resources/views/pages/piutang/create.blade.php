@@ -1,17 +1,19 @@
-@extends('layout.admin_pages')
+@extends('components.layouts.admin_pages')
 @section('title', 'Admin Piutang')
 @section('content')
     <div class="container px-6 pb-6 mx-auto">
         <h1 class="text-2xl my-6 font-semibold text-gray-700">Tambah Piutang</h1>
         <div class="bg-white px-8 py-8 shadow-lg rounded-3xl">
             <form action="{{ route('piutang.store') }}" method="post">
+                <x-create-piutang/>
                 @csrf
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
                     <div class="left">
                         <div class="max-w-lg">
                             <div class="flex justify-start items-start flex-col gap-3">
                                 <div class="w-full">
-                                    <label for="nama" class="block mb-2 text-sm font-medium text-gray-700">Nama Toko</label>
+                                    <label for="nama" class="block mb-2 text-sm font-medium text-gray-700">Nama
+                                        Toko</label>
                                     <input type="text" placeholder="Nama" name="nama" value="{{ old('nama') }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
                                     @error('nama')
@@ -80,6 +82,7 @@
                                 placeholder="Catatan" name="catatan" rows="5"></textarea>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="flex justify-center items-center flex-col mt-4">
@@ -114,7 +117,8 @@
 
                     </div>
                     <!-- Image Preview -->
-                    <div id="imagePreviews" class="w-full rounded-lg  grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 "></div>
+                    <div id="imagePreviews" class="w-full rounded-lg  grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
+                    </div>
                 </div>
                 <div class="flex justify-center items-center mt-8">
                     <button type="submit"

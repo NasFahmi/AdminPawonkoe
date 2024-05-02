@@ -27,9 +27,11 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (RateLimiter::tooManyAttempts($this->throttle($request), $maxAttempts = 3)) {
-            $seconds = RateLimiter::availableIn($this->throttle($request));
-            // dd($seconds);
+        $throttleKey = $this->throttle($request);
+
+        if (RateLimiter::tooManyAttempts($throttleKey, $maxAttempts = 1)) {
+            $seconds = RateLimiter::availableIn($throttleKey);
+            // dd('asdsa ');
             return back()->withErrors(['login' => 'Login Terlalu Cepat. Silahkan Coba Lagi ' . $seconds . ' Detik']);
         }
 
@@ -39,16 +41,15 @@ class AuthController extends Controller
         ]);
 
         if ($succeslogin) {
-            RateLimiter::clear($this->throttle($request));
+            RateLimiter::clear($throttleKey);
             return redirect()->route('admin.dashboard')->with('success', 'Login berhasil');
         } else {
-            RateLimiter::hit($this->throttle($request));
+            RateLimiter::hit($throttleKey);
             return back()->withErrors(['login' => 'Nama Atau Password Salah']);
         }
-
     }
 
-    public function throttle(Request $request): string
+    public function throttle(Request $request)
     {
         return $request->nama . '|' . $request->ip();
     }

@@ -17,6 +17,6 @@ class ProdukPiutang extends Model
     ];
     public function piutang_produk_piutangs()
     {
-        return $this->belongsTo(Piutang::class);
+        return $this->belongsTo(Piutang::class,'id','produk_piutang_id');
     }
 }

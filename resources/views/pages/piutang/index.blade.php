@@ -61,13 +61,13 @@
                     <thead class="text-xs text-gray-700  bg-gray-100  ">
                         <tr class="">
                             <th scope="col" class="w-1/4 px-4 py-2 whitespace-nowrap">
-                                Nama
+                                Nama Toko
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
-                                Nominal
+                                Product
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
-                                Tanggal
+                                Tanggal Disetorkan
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
                                 Status
@@ -77,26 +77,39 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($data as $items)
+                        @foreach ($data as $items)
                             <tr
                                 class="px-4 py-2 odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-">
                                 <th scope="row" class=" font-medium pl-3  lg:whitespace-nowrap  text-sm">
                                     <span class="text-sm">
-                                        {{ $items->jenis }}
+                                        {{ $items->nama_toko }}
                                     </span>
                                 </th>
 
                                 <td cope="row" class="w-10 h-16   px-4 py-2 lg:whitespace-nowrap">
-                                    <span>{{ $items->nama }}</span>
-                                </td>
+                                    <span>
+                                        @foreach ($items->piutang_produk_piutangs as $products)
+                                            @foreach ($products->produk_piutangs->take(1) as $product)
+                                                {{ $product->nama_produk }}
+                                            @endforeach
+                                        @endforeach
 
-                                <td cope="row" class="w-10 h-16  px-4 py-2 lg:whitespace-nowrap">
-                                    <span>{{ $items->nominal }}</span>
+                                    </span>
                                 </td>
 
                                 <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
                                     <span>
-                                        {{ \Carbon\Carbon::parse($items->tanggal)->locale('ID')->isoFormat('D MMMM YYYY') }}
+                                        {{ \Carbon\Carbon::parse($items->tanggal_disetorkan)->locale('ID')->isoFormat('D MMMM YYYY') }}
+                                    </span>
+                                </td>
+
+                                <td cope="row" class="w-10 h-16  px-4 py-2 lg:whitespace-nowrap">
+                                    <span>
+                                        @if ($items->is_complete)
+                                            Selesai
+                                        @else
+                                            Belum Selesai
+                                        @endif
                                     </span>
                                 </td>
 
@@ -189,11 +202,11 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach --}}
+                        @endforeach
 
                     </tbody>
                 </table>
-                {{-- @if ($data->lastPage() > 1)
+                @if ($data->lastPage() > 1)
                     <div class="mt-4 flex flex-col items-center justify-center">
                         <div class="flex items-center space-x-4">
                             {{ $data->links('pagination::tailwind') }}
@@ -202,7 +215,7 @@
                             Page {{ $data->currentPage() }} of {{ $data->lastPage() }}
                         </div>
                     </div>
-                @endif  --}}
+                @endif
             </div>
         </div>
 

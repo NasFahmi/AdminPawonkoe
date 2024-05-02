@@ -4,7 +4,7 @@
     <div class="container px-6 pb-6 mx-auto">
         <h1 class="text-2xl my-6 font-semibold text-gray-700">Tambah Piutang</h1>
         <div class="bg-white px-8 py-8 shadow-lg rounded-3xl">
-            <form action="{{ route('piutang.store') }}" method="post">
+            <form action="{{ route('piutang.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
                     <div class="left">
@@ -112,7 +112,7 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-400">JPG, PNG, JPEG</p>
                                 </div>
                                 <input id="dropzone-file" type="file" value="{{ old('image') }}"
-                                    class="absolute w-full h-full border opacity-0" name="image" multiple
+                                    class="absolute w-full h-full border opacity-0" name="image[]" multiple
                                     onchange="previewImages()" />
                             </label>
 
@@ -144,11 +144,11 @@
             var newFormGroup = document.createElement('div');
             newFormGroup.className = 'form-group';
             newFormGroup.innerHTML = '<div class="form-group flex-cols mb-4 justify-center items-center">' +
-                '<input type="text" name="varian[' + product + '][product]" placeholder="Product" ' +
+                '<input type="text" name="product[' + product + '][product]" placeholder="Product" ' +
                 'class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />' +
-                '<input type="number" name="varian[' + product + '][quantity]" placeholder="Quantity" ' +
+                '<input type="number" name="product[' + product + '][quantity]" placeholder="Quantity" ' +
                 'class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />' +
-                '<input type="number" name="varian[' + product + '][price]" placeholder="Price" ' +
+                '<input type="number" name="product[' + product + '][price]" placeholder="Price" ' +
                 'class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />' +
                 '<div class="cursor-pointer" onclick="removeInput(this)" >' +
                     '<p class="text-red-400 text-sm">delete product</p>'+

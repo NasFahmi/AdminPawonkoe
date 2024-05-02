@@ -17,7 +17,6 @@ class Piutang extends Model
         'is_complete',
         'tanggal_disetorkan',
         'tanggal_lunas',
-        'bukti_nota',
     ];
     use SoftDeletes;
     public function notas()
@@ -26,6 +25,6 @@ class Piutang extends Model
     }
     public function piutang_produk_piutangs()
     {
-        return $this->belongsTo(PiutangProdukPiutang::class, 'piutang_id', 'id');
+        return $this->hasMany(PiutangProdukPiutang::class, 'piutang_id', 'id');
     }
 }

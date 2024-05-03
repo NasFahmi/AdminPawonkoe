@@ -154,7 +154,7 @@
 
 
             @endif
-            
+
             <li class="relative px-6 py-3 group">
                 @if (Request::is('admin/produksi*'))
                     <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
@@ -176,13 +176,39 @@
                     <span class="ml-4">Produksi</span>
                 </a>
             </li>
-            
+
+            @if (auth()->check() && auth()->user()->hasRole('superadmin'))
+
+                <li class="relative px-6 py-3 group">
+                    @if (Request::is('admin/log-activities*'))
+                        <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"></span>
+                    @endif
+                    <a class="inline-flex items-center w-full text-sm font-semibold 
+            @if (Request::is('admin/log-activities*')) text-gray-800
+            @else
+                text-gray-500 @endif
+            transition-colors duration-150 group-hover:text-gray-800"
+                        href="{{ route('log-activities.index') }}">
+                        <img class="w-5 h-5
+                @if (Request::is('admin/beban-kewajiban*')) opacity-100
+                @else
+                    opacity-60 @endif
+                group-hover:opacity-100
+                "
+                            src="{{ asset('assets/icon/wall-clock.png') }}" alt="" srcset="">
+                        <span class="ml-4">Log Aktivitas</span>
+                    </a>
+                </li>
+
+
+            @endif
 
         </ul>
 
     </div>
     <div class="absolute bottom-1 w-full flex justify-center items-center mb-4">
-        <p class="text-gray-700">{{env('APP_VERSION')}}</p>
+        <p class="text-gray-700">{{ env('APP_VERSION') }}</p>
     </div>
 </aside>
 <!-- Mobile sidebar -->
@@ -352,7 +378,7 @@
 
 
             @endif
-            
+
             <li class="relative px-6 py-3 group">
                 @if (Request::is('admin/produksi*'))
                     <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
@@ -374,11 +400,38 @@
                     <span class="ml-4">Produksi</span>
                 </a>
             </li>
-            
+
+
+            @if (auth()->check() && auth()->user()->hasRole('superadmin'))
+
+                <li class="relative px-6 py-3 group">
+                    @if (Request::is('admin/log-activities*'))
+                        <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"></span>
+                    @endif
+                    <a class="inline-flex items-center w-full text-sm font-semibold 
+            @if (Request::is('admin/log-activities*')) text-gray-800
+            @else
+                text-gray-500 @endif
+            transition-colors duration-150 group-hover:text-gray-800"
+                        href="{{ route('log-activities.index') }}">
+                        <img class="w-5 h-5
+                @if (Request::is('admin/beban-kewajiban*')) opacity-100
+                @else
+                    opacity-60 @endif
+                group-hover:opacity-100
+                "
+                            src="{{ asset('assets/icon/wall-clock.png') }}" alt="" srcset="">
+                        <span class="ml-4">Log Aktivitas</span>
+                    </a>
+                </li>
+
+
+            @endif
 
         </ul>
     </div>
     <div class="absolute bottom-1 w-full flex justify-center items-center mb-4">
-        <p class="text-gray-700">{{env('APP_VERSION')}}</p>
+        <p class="text-gray-700">{{ env('APP_VERSION') }}</p>
     </div>
 </aside>

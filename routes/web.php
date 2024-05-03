@@ -11,6 +11,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\BebanKewajibanController;
 use App\Http\Controllers\TemporaryImageController;
 use App\Http\Controllers\Api\ApiTransaksiController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\ProduksiController;
 
 /*
@@ -128,6 +129,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/piutang/{piutang}/edit', [PiutangController::class, 'edit'])->name('piutang.edit');
         Route::patch('/admin/piutang/{piutang}', [PiutangController::class, 'update'])->name('piutang.update');
         Route::delete('/admin/piutang/{piutang}', [PiutangController::class, 'destroy'])->name('piutang.destroy');
+    });
+
+     //Log
+     Route::middleware(['role:superadmin'])->group(function () {
+        Route::get('/admin/log-activities', [LogController::class, 'index'])->name('log-activities.index');
     });
 });
 

@@ -58,12 +58,18 @@ class BebanKewajibanController extends Controller
             $dateTime = Carbon::parse($validatedData['tanggal'], 'Asia/Jakarta');
             $tanggal = $dateTime->format('Y-m-d');
 
-            BebanKewajiban::create([
+            $bebanKewajiban = BebanKewajiban::create([
                 'jenis' => $validatedData['jenis'],
                 'nama' => $validatedData['nama'],
                 'nominal' => $validatedData['nominal'],
                 'tanggal' => $tanggal
             ]);
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($bebanKewajiban)
+                ->event('add_beban_kewajiban')
+                ->withProperties(['id' => $bebanKewajiban->id])
+                ->log('User ' . auth()->user()->nama . ' add a new beban kewajiban');
 
             DB::commit();
             return redirect()->route('beban-kewajibans.index')->with('success', 'Data Berhasil Disimpan');
@@ -88,7 +94,7 @@ class BebanKewajibanController extends Controller
     public function edit(BebanKewajiban $bebanKewajiban)
     {
         $data = BebanKewajiban::findorFail($bebanKewajiban->id);
-        return view('pages.beban-kewajiban.edit',compact('data'));
+        return view('pages.beban-kewajiban.edit', compact('data'));
     }
 
     /**
@@ -119,6 +125,12 @@ class BebanKewajibanController extends Controller
                 'tanggal' => $tanggal,
             ]);
 
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($data)
+                ->event('update_beban_kewajiban')
+                ->withProperties(['id' => $bebanKewajiban->id])
+                ->log('User ' . auth()->user()->nama . ' update a beban kewajiban');
 
             DB::commit();
             return redirect()->route('beban-kewajibans.index')->with('success', 'Data Berhasil Diupdate');
@@ -136,6 +148,14 @@ class BebanKewajibanController extends Controller
     {
         try {
             DB::beginTransaction();
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($bebanKewajiban)
+                ->event('delete_beban_kewajiban')
+                ->withProperties(['id' => $bebanKewajiban])
+                ->log('User ' . auth()->user()->nama . ' delete a beban kewajiban');
+
             $bebanKewajiban->delete();
 
             DB::commit();
@@ -145,6 +165,5 @@ class BebanKewajibanController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', 'Terjadi kesalahan saat delete data');
         }
-
     }
 }

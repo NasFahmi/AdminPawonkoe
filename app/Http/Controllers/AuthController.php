@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -29,19 +30,31 @@ class AuthController extends Controller
 
         $throttleKey = $this->throttle($request);
 
-        if (RateLimiter::tooManyAttempts($throttleKey, $maxAttempts = 1)) {
+        if (RateLimiter::tooManyAttempts($throttleKey, $maxAttempts = 3)) {
             $seconds = RateLimiter::availableIn($throttleKey);
-            // dd('asdsa ');
+
+            // Log activity for rate limited attempts
+            activity()
+                ->withProperties(['ip' => $request->ip()])
+                ->event('login_attempt_rate_limited')
+                ->log('Login rate limited for IP ' . $request->ip());
+
             return back()->withErrors(['login' => 'Login Terlalu Cepat. Silahkan Coba Lagi ' . $seconds . ' Detik']);
         }
 
-        $succeslogin = Auth::attempt([
+        $successLogin = Auth::attempt([
             'nama' => $request->nama,
             'password' => $request->password
         ]);
 
-        if ($succeslogin) {
+        if ($successLogin) {
             RateLimiter::clear($throttleKey);
+            
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties(['ip' => $request->ip()])
+                ->event('login_succesfull')
+                ->log('User ' . auth()->user()->nama . ' logged into account from IP ' . $request->ip());
             return redirect()->route('admin.dashboard')->with('success', 'Login berhasil');
         } else {
             RateLimiter::hit($throttleKey);
@@ -57,11 +70,17 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+
+        activity()
+            ->causedBy(auth()->user())
+            ->withProperties(['ip' => $request->ip()])
+            ->event('logout_succesfull')
+            ->log('User ' . auth()->user()->nama . ' logout from account with IP ' . $request->ip());
+
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         return redirect()->route('login');
     }
-
 }

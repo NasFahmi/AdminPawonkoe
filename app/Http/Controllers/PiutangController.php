@@ -31,7 +31,7 @@ class PiutangController extends Controller
         // }
         return view('pages.piutang.index', compact('data'));
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -94,21 +94,21 @@ class PiutangController extends Controller
             if ($request->hasFile('image')) {
                 $images = $request->file('image'); // not empty
                 // dd($images); // Check if $images is not empty
-            
+
                 $foldername = $data['nama_toko'] . '_' . $tanggal;
                 $folderPath = 'public/images/piutang/' . $foldername;
-            
+
                 if (!Storage::exists($folderPath)) {
                     Storage::makeDirectory($folderPath, 0755, true); // Recursive directory creation
                 }
-            
+
                 foreach ($images as $image) {
                     $nameResource = Str::random(10);
                     $extension = $image->getClientOriginalExtension();
                     $name = $nameResource . '.' . $extension;
-            
+
                     $image->storeAs($folderPath, $name);
-            
+
                     NotaPiutang::create([
                         'piutang_id' => $piutang->id,
                         'foto' => $folderPath . '/' . $name, // Concatenate folder path and file name
@@ -142,6 +142,14 @@ class PiutangController extends Controller
 
             $piutang->penghasilan = $total - $data['sewa_titip'];
             $piutang->save();
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($piutang)
+                ->event('add_piutang')
+                ->withProperties(['id' => $piutang->id])
+                ->log('User ' . auth()->user()->nama . ' add a piutang');
+
             DB::commit();
             return redirect()->route('piutang.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Throwable $th) {

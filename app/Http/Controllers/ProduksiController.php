@@ -17,7 +17,7 @@ class ProduksiController extends Controller
     public function index()
     {
         $data = Produksi::paginate(10);
-        return view('pages.produksi.index',compact('data'));
+        return view('pages.produksi.index', compact('data'));
     }
 
     /**
@@ -51,12 +51,19 @@ class ProduksiController extends Controller
             $dateTime = Carbon::parse($validatedData['tanggal'], 'Asia/Jakarta');
             $tanggal = $dateTime->format('Y-m-d');
 
-            Produksi::create([
+            $produksi = Produksi::create([
                 'produk' => $validatedData['produk'],
                 'volume' => $validatedData['volume'],
                 'jumlah' => $validatedData['jumlah'],
                 'tanggal' => $tanggal
             ]);
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($produksi)
+                ->event('add_produksi')
+                ->withProperties(['id' => $produksi->id])
+                ->log('User ' . auth()->user()->nama . ' add a produksi');
 
             DB::commit();
             return redirect()->route('produksi.index')->with('success', 'Data Berhasil Disimpan');
@@ -81,7 +88,7 @@ class ProduksiController extends Controller
     public function edit(Produksi $produksi)
     {
         $data = Produksi::findorFail($produksi->id);
-        return view('pages.produksi.edit',compact('data'));
+        return view('pages.produksi.edit', compact('data'));
     }
 
     /**
@@ -112,6 +119,12 @@ class ProduksiController extends Controller
                 'tanggal' => $tanggal
             ]);
 
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($data)
+                ->withProperties(['id' => $data->id])
+                ->event('update_produksi')
+                ->log('User ' . auth()->user()->nama . ' update a produksi');
 
             DB::commit();
             return redirect()->route('produksi.index')->with('success', 'Data Berhasil Diupdate');
@@ -129,10 +142,18 @@ class ProduksiController extends Controller
     {
         try {
             DB::beginTransaction();
+            
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($produksi)
+                ->withProperties(['data' => $produksi])
+                ->event('delete_produksi')
+                ->log('User ' . auth()->user()->nama . ' delete a produksi');
+
             $produksi->delete();
 
             DB::commit();
-            return redirect()->route('beban-kewajibans.index')->with('success', 'Data Berhasil Dihapus');
+            return redirect()->route('produksi.index')->with('success', 'Data Berhasil Dihapus');
         } catch (\Throwable $th) {
             throw $th;
             DB::rollBack();

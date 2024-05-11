@@ -11,7 +11,7 @@
                         <div class="max-w-lg">
                             <div class="flex justify-start items-start flex-col gap-3">
                                 <div class="w-full">
-                                    <label for="nama_toko" class="block mb-2 text-sm font-medium text-gray-700">Nama</label>
+                                    <label for="nama_toko" class="block mb-2 text-sm font-medium text-gray-700">Nama Toko</label>
                                     <input type="text" placeholder="Nama Toko" name="nama_toko" value="{{ old('nama_toko') }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
                                     @error('nama_toko')

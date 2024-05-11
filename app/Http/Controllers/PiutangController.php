@@ -21,7 +21,9 @@ class PiutangController extends Controller
      */
     public function index()
     {
-        $data = Piutang::with(['piutang_produk_piutangs.produk_piutangs'])->paginate(10);
+        $data = Piutang::with(['piutang_produk_piutangs.produk_piutangs'])
+        ->search(request('search'))
+        ->paginate(10);
         // foreach ($data as $items) {
         //     foreach ($items->piutang_produk_piutangs as $products ) {
         //         foreach ($products->produk_piutangs as $product) {
@@ -111,7 +113,7 @@ class PiutangController extends Controller
 
                     NotaPiutang::create([
                         'piutang_id' => $piutang->id,
-                        'foto' => $folderPath . '/' . $name, // Concatenate folder path and file name
+                        'foto' => 'storage/images/piutang/'.$foldername . '/' . $name, // Concatenate folder path and file name
                     ]);
                 }
             }
@@ -170,24 +172,95 @@ class PiutangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Piutang $piutang)
+    public function edit($id)
     {
-        //
+        $piutang = Piutang::with('piutang_produk_piutangs','notas')->findorFail($id);
+        $data = ProdukPiutang::where('produk_piutang_id', $piutang->id)->get();
+        $dataNota = NotaPiutang::where('piutang_id', $piutang->id)->get();
+        return view('pages.piutang.edit', compact('piutang','data','dataNota'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePiutangRequest $request, Piutang $piutang)
+    public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'tanggal_lunas' => 'required|date_format:m/d/Y',
+            'image.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Adjust max file size as needed
+        ], [
+            'required' => 'The :attribute field is required.',
+            'date_format' => 'The :attribute must be in the format mm/dd/yyyy.',
+            'image' => 'The :attribute must be an image.',
+            'mimes' => 'The :attribute must be a file of type: :values.',
+            'max' => 'The :attribute may not be greater than :max kilobytes.',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $data = $request->all();
+            // dd($data);
+            $dateTime = Carbon::parse($data['tanggal_lunas'], 'Asia/Jakarta');
+            $tanggal = $dateTime->format('Y-m-d');
+
+            // 1. Update piutang
+            $piutang = Piutang::findOrFail($id);
+            $piutang->update([
+                'is_complete' => $data['is_complete'],
+                'tanggal_lunas' => $tanggal,
+            ]);
+
+            // 3. Update image
+            if ($request->hasFile('image')) {
+                $images = $request->file('image'); // not empty
+                $foldername = $piutang->nama_toko . '_' . $tanggal;
+                $folderPath = 'public/images/piutang/' . $foldername;
+
+                if (!Storage::exists($folderPath)) {
+                    Storage::makeDirectory($folderPath, 0755, true); // Recursive directory creation
+                }
+
+                foreach ($images as $image) {
+                    $nameResource = Str::random(10);
+                    $extension = $image->getClientOriginalExtension();
+                    $name = $nameResource . '.' . $extension;
+
+                    $image->storeAs($folderPath, $name);
+
+                    NotaPiutang::updateOrCreate([
+                        'piutang_id' => $piutang->id,
+                    ], [
+                        'foto' => 'storage/'.$folderPath . '/' . $name, // Concatenate folder path and file name
+                    ]);
+                }
+            }
+
+
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($piutang)
+                ->event('update_piutang')
+                ->withProperties(['id' => $piutang->id])
+                ->log('User ' . auth()->user()->nama . ' update a piutang');
+
+            DB::commit();
+            return redirect()->route('piutang.index')->with('success', 'Data Berhasil Diupdate');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+            return redirect()->back()->with('error', 'Gagal menyimpan.');
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Piutang $piutang)
+    public function destroy($id)
     {
-        //
+        $piutang = Piutang::findOrFail($id);
+        $piutang->delete();
+        return redirect()->route('piutang.index')->with('success', 'Data Berhasil Dihapus');
     }
 }

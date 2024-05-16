@@ -19,4 +19,5 @@ class ProdukPiutang extends Model
     {
         return $this->belongsTo(Piutang::class,'id','produk_piutang_id');
     }
+
 }

@@ -16,7 +16,10 @@ class ProduksiController extends Controller
      */
     public function index()
     {
-        $data = Produksi::paginate(10);
+        $searchTerm = request('search');
+
+        $data = Produksi::where('produk', 'like', "%$searchTerm%")
+            ->paginate(10);
         return view('pages.produksi.index', compact('data'));
     }
 

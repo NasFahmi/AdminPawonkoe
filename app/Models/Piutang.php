@@ -27,4 +27,15 @@ class Piutang extends Model
     {
         return $this->hasMany(PiutangProdukPiutang::class, 'piutang_id', 'id');
     }
+    public function produk_piutangs()
+    {
+        return $this->hasMany(ProdukPiutang::class);
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        if ($search) {
+            $query->where('nama_toko', 'like', '%' . $search . '%');
+        }
+    }
 }

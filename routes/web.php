@@ -12,6 +12,7 @@ use App\Http\Controllers\BebanKewajibanController;
 use App\Http\Controllers\TemporaryImageController;
 use App\Http\Controllers\Api\ApiTransaksiController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\ModalController;
 use App\Http\Controllers\ProduksiController;
 
 /*
@@ -135,6 +136,16 @@ Route::middleware(['auth'])->group(function () {
      Route::middleware(['role:superadmin'])->group(function () {
         Route::get('/admin/log-activities', [LogController::class, 'index'])->name('log-activities.index');
     });
+
+        //Beban modal
+        Route::middleware(['role:superadmin'])->group(function () {
+            Route::post('/modal', [ModalController::class, 'store'])->name('modal.store');
+            Route::get('/modal', [ModalController::class, 'create'])->name('modal.create');
+            Route::get('/admin/modal', [ModalController::class, 'index'])->name('modal.index');
+            Route::patch('/admin/modal/{modal}', [ModalController::class, 'update'])->name('modal.update');
+            Route::get('/admin/modal/{modal}/edit', [ModalController::class, 'edit'])->name('modal.edit');
+            Route::delete('/admin/modal/{modal}', [ModalController::class, 'destroy'])->name('modal.destroy');
+        });
 });
 
 

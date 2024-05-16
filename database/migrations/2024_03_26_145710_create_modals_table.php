@@ -19,6 +19,7 @@ return new class extends Migration
             $table->bigInteger('jumlah');
             $table->timestamp('tanggal');
             $table->unsignedBigInteger('jenis_modal_id');
+            $table->softDeletes();
             $table->foreign('jenis_modal_id')->references('id')->on('jenis_modals')->onDelete('cascade')->onUpdate('cascade');
         });
     }

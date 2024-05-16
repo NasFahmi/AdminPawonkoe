@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(akunSeeder::class);
         // $this->call(PembeliSeeder::class);
         $this->call(MethodePembayaranSeeder::class);
+        $this->call(JenisModalSeeder::class);
         // $this->call(PreorderSeeder::class);
         // $this->call(ProductSeeder::class);
         // $this->call(VarianSeeder::class);

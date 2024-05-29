@@ -131,6 +131,10 @@ class ModalController extends Controller
      */
     public function destroy(Modal $modal)
     {
-        //
+        // Delete the specified modal
+        $modal->delete();
+
+        // Redirect back to the index page with a success message
+        return redirect()->route('modal.index')->with('success', 'Data Berhasil Dihapus');
     }
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\BebanKewajibanController;
 use App\Http\Controllers\TemporaryImageController;
 use App\Http\Controllers\Api\ApiTransaksiController;
+use App\Http\Controllers\HutangController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ModalController;
 use App\Http\Controllers\ProduksiController;
@@ -132,20 +133,30 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/admin/piutang/{piutang}', [PiutangController::class, 'destroy'])->name('piutang.destroy');
     });
 
-     //Log
-     Route::middleware(['role:superadmin'])->group(function () {
+    //Log
+    Route::middleware(['role:superadmin'])->group(function () {
         Route::get('/admin/log-activities', [LogController::class, 'index'])->name('log-activities.index');
     });
 
-        //Beban modal
-        Route::middleware(['role:superadmin'])->group(function () {
-            Route::post('/modal', [ModalController::class, 'store'])->name('modal.store');
-            Route::get('/modal', [ModalController::class, 'create'])->name('modal.create');
-            Route::get('/admin/modal', [ModalController::class, 'index'])->name('modal.index');
-            Route::patch('/admin/modal/{modal}', [ModalController::class, 'update'])->name('modal.update');
-            Route::get('/admin/modal/{modal}/edit', [ModalController::class, 'edit'])->name('modal.edit');
-            Route::delete('/admin/modal/{modal}', [ModalController::class, 'destroy'])->name('modal.destroy');
-        });
+    //Beban modal
+    Route::middleware(['role:superadmin'])->group(function () {
+        Route::post('/modal', [ModalController::class, 'store'])->name('modal.store');
+        Route::get('/modal', [ModalController::class, 'create'])->name('modal.create');
+        Route::get('/admin/modal', [ModalController::class, 'index'])->name('modal.index');
+        Route::patch('/admin/modal/{modal}', [ModalController::class, 'update'])->name('modal.update');
+        Route::get('/admin/modal/{modal}/edit', [ModalController::class, 'edit'])->name('modal.edit');
+        Route::delete('/admin/modal/{modal}', [ModalController::class, 'destroy'])->name('modal.destroy');
+    });
+
+    // hutang
+    Route::middleware(['role:superadmin'])->group(function () {
+        Route::post('/hutang', [HutangController::class, 'store'])->name('hutang.store');
+        Route::get('/hutang', [HutangController::class, 'create'])->name('hutang.create');
+        Route::get('/admin/hutang', [HutangController::class, 'index'])->name('hutang.index');
+        Route::patch('/admin/hutang/{hutang}', [HutangController::class, 'update'])->name('hutang.update');
+        Route::get('/admin/hutang/{hutang}/edit', [HutangController::class, 'edit'])->name('hutang.edit');
+        Route::delete('/admin/hutang/{hutang}', [HutangController::class, 'destroy'])->name('hutang.destroy');
+    });
 });
 
 

@@ -13,7 +13,12 @@ class HutangController extends Controller
      */
     public function index()
     {
-        //
+        $searchTerm = request('search');
+
+        $data = Hutang::where('nama', 'like', "%$searchTerm%")
+            ->paginate(10);
+
+        return view('pages.hutang.index', compact('data'));
     }
 
     /**
@@ -21,7 +26,7 @@ class HutangController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.hutang.create');
     }
 
     /**
@@ -29,7 +34,6 @@ class HutangController extends Controller
      */
     public function store(StoreHutangRequest $request)
     {
-        //
     }
 
     /**

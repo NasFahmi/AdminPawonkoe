@@ -125,7 +125,30 @@
                 </li>
             @endif
 
+            @if (auth()->check() && auth()->user()->hasRole('superadmin'))
 
+                <li class="relative px-6 py-3 group">
+                    @if (Request::is('admin/hutang*'))
+                        <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"></span>
+                    @endif
+                    <a class="inline-flex items-center w-full text-sm font-semibold 
+            @if (Request::is('admin/hutang*')) text-gray-800
+            @else
+                text-gray-500 @endif
+            transition-colors duration-150 group-hover:text-gray-800"
+                        href="{{ route('hutang.index') }}">
+                        <img class="w-5 h-5
+                @if (Request::is('admin/hutang*')) opacity-100
+                @else
+                    opacity-60 @endif
+                group-hover:opacity-100
+                "
+                            src="{{ asset('assets/icon/business-credit-report.png') }}" alt="" srcset="">
+                        <span class="ml-4">Hutang</span>
+                    </a>
+                </li>
+            @endif
 
 
             @if (auth()->check() && auth()->user()->hasRole('superadmin'))
@@ -345,6 +368,32 @@
                     "
                             src="{{ asset('assets/icon/sack-dollar.png') }}" alt="" srcset="">
                         <span class="ml-4">Piutang</span>
+                    </a>
+                </li>
+            @endif
+
+            @if (auth()->check() && auth()->user()->hasRole('superadmin'))
+
+                <li class="relative px-6 py-3 group">
+                    @if (Request::is('admin/hutang*'))
+                        <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"></span>
+                    @endif
+                    <a class="inline-flex items-center w-full text-sm font-semibold 
+                @if (Request::is('admin/hutang*')) text-gray-800
+                @else
+                    text-gray-500 @endif
+                transition-colors duration-150 group-hover:text-gray-800"
+                        href="{{ route('hutang.index') }}">
+                        <img class="w-5 h-5
+                    @if (Request::is('admin/hutang*')) opacity-100
+                    @else
+                        opacity-60 @endif
+                    group-hover:opacity-100
+                    "
+                            src="{{ asset('assets/icon/business-credit-report.png') }}" alt=""
+                            srcset="">
+                        <span class="ml-4">Hutang</span>
                     </a>
                 </li>
             @endif

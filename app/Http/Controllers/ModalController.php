@@ -18,8 +18,7 @@ class ModalController extends Controller
     {
         $data = Modal::with(['jenis_modal'])->get();
 
-        return view('pages.modal.index',compact('data'));
-
+        return view('pages.modal.index', compact('data'));
     }
 
     /**
@@ -84,15 +83,48 @@ class ModalController extends Controller
     {
         $data = Modal::with('jenis_modal')->findOrFail($modal->id);
         return view('pages.modal.edit', compact('data'));
-    }    
+    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateModalRequest $request, Modal $modal)
+    public function update(Request $request, Modal $modal)
     {
-        //
+        // Validate the request data
+        $validatedData = $request->validate([
+            'jenis' => 'required',
+            'nama' => 'required',
+            'nominal' => 'required|numeric',
+            'penyedia' => 'required',
+            'jumlah' => 'required|numeric',
+            'tanggal' => 'required',
+        ], [
+            'jenis.required' => 'Jenis harus diisi.',
+            'nama.required' => 'Nama harus diisi.',
+            'nominal.required' => 'Nominal harus diisi.',
+            'penyedia.required' => 'Penyedia harus diisi.',
+            'jumlah.required' => 'Jumlah harus diisi.',
+            'tanggal.required' => 'Tanggal harus diisi.',
+        ]);
+
+        // Parse and format the date
+        $dateTime = Carbon::parse($validatedData['tanggal'], 'Asia/Jakarta');
+        $tanggal = $dateTime->format('Y-m-d');
+
+        // Update the Modal instance with the validated data
+        $modal->update([
+            'jenis_modal_id' => $validatedData['jenis'],
+            'nama' => $validatedData['nama'],
+            'nominal' => $validatedData['nominal'],
+            'penyedia' => $validatedData['penyedia'],
+            'jumlah' => $validatedData['jumlah'],
+            'tanggal' => $tanggal,
+        ]);
+
+        // Redirect back to the index page with a success message
+        return redirect()->route('modal.index')->with('success', 'Data Berhasil Diupdate');
     }
+
 
     /**
      * Remove the specified resource from storage.

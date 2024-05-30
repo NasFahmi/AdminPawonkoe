@@ -1,10 +1,10 @@
 @extends('layout.admin_pages')
-@section('title', 'modal')
+@section('title', 'Modal')
 @section('content')
     <div class="container px-6 pb-6 mx-auto ">
-        <p class="text-2xl my-6 font-semibold text-gray-700">modal</p>
-        <div>
-            <class="bg-white w-full px-8 py-4 shadow-md rounded-3xl mb-4 flex justify-start items-center max-w-screen-xl lg:w-full">
+        <p class="text-2xl my-6 font-semibold text-gray-700">Modal</p>
+        <div
+            class="bg-white w-full px-8 py-4 shadow-md rounded-3xl mb-4 flex justify-start items-center max-w-screen-xl lg:w-full">
             <div class="flex justify-start items-start md:items-center flex-col gap-4 w-full lg:flex-row ">
                 <form class="flex items-center w-full lg:w-1/2" action="" method="GET">
                     <label for="default-search" class="sr-only">Search</label>
@@ -67,9 +67,6 @@
                                 Nama
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
-                                Nominal
-                            </th>
-                            <th scope="col" class=" px-4 py-2 whitespace-nowrap">
                                 Penyedia
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
@@ -94,16 +91,12 @@
 
                                 <th scope="row" class=" font-medium pl-3  lg:whitespace-nowrap  text-sm">
                                     <span class="text-sm">
+
                                         {{ $items->nama }}
                                     </span>
                                 </th>
 
 
-                                <th scope="row" class=" font-medium pl-3  lg:whitespace-nowrap  text-sm">
-                                    <span class="text-sm">
-                                        {{ $items->nominal }}
-                                    </span>
-                                </th>
 
 
                                 <th scope="row" class=" font-medium pl-3  lg:whitespace-nowrap  text-sm">
@@ -192,10 +185,13 @@
                                             </li>
 
                                             <li>
-                                                <a href="{{ route('beban-kewajibans.destroy', $items->id) }}"
+                                                <form action="{{ route('modal.destroy', $items->id) }}" method="POST"
                                                     class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
-                                                    <div class="flex justify-start items-center gap-2">
-                                                        <div class="w-4 h-4 ">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="flex justify-start items-center gap-2 w-full text-left">
+                                                        <div class="w-4 h-4">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                                 height="16" fill="currentColor" class="bi bi-trash"
                                                                 viewBox="0 0 16 16">
@@ -207,9 +203,9 @@
                                                                     fill="red" />
                                                             </svg>
                                                         </div>
-                                                        <span class="font-semibold text-red-400 ">Hapus</span>
-                                                    </div>
-                                                </a>
+                                                        <span class="font-semibold text-red-400">Hapus</span>
+                                                    </button>
+                                                </form>
                                             </li>
 
                                         </ul>

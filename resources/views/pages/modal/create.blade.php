@@ -12,17 +12,17 @@
                             <div class="flex justify-start items-start flex-col gap-3">
                                 <div class="w-full">
 
-                                    <div class="max-w-sm mx-auto">
-                                        <label for="jenis"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis</label>
-                                        <select id="jenis" name="jenis"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                            @foreach($data as $items)
-                                            <option value="{{$items->id}}">{{$items->jenis_modal}}</option>
-                                            @endforeach
-                                          
-                                        </select>
-                                    </div>
+
+                                    <label for="jenis"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis</label>
+                                    <select id="jenis" name="jenis"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        @foreach ($data as $items)
+                                            <option value="{{ $items->id }}">{{ $items->jenis_modal }}</option>
+                                        @endforeach
+
+                                    </select>
+
 
                                     @error('jenis')
                                         <small class="error" style="color: red">{{ $message }}</small>
@@ -64,15 +64,7 @@
                     <div class="right">
                         <div class="max-w-lg">
                             <div class="flex justify-start items-start flex-col gap-3">
-                                <div class="w-full">
-                                    <label for="nominal"
-                                        class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
-                                    <input type="number" placeholder="Nominal" name="nominal" value="{{ old('nominal') }}"
-                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
-                                    @error('nominal')
-                                        <small class="error" style="color: red">{{ $message }}</small>
-                                    @enderror
-                                </div>
+
 
 
                                 <div class="w-full">
@@ -99,10 +91,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex justify-center items-center mt-8">
-                        <button type="submit"
-                            class="bg-green-400 text-gray-100 px-4 py-2 w-full lg:w-fit rounded-lg hover:bg-green-500 duration-300">Submit</button>
-                    </div>
+                </div>
+                <div class="flex justify-center items-center mt-8">
+                    <button type="submit"
+                        class="bg-green-400 text-gray-100 px-4 py-2 w-full lg:w-fit rounded-lg hover:bg-green-500 duration-300">Submit</button>
+                </div>
             </form>
         </div>
     </div>

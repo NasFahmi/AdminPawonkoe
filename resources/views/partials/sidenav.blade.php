@@ -177,6 +177,32 @@
 
 
             @endif
+            @if (auth()->check() && auth()->user()->hasRole('superadmin'))
+
+                <li class="relative px-6 py-3 group">
+                    @if (Request::is('admin/modal*'))
+                        <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"></span>
+                    @endif
+                    <a class="inline-flex items-center w-full text-sm font-semibold 
+                @if (Request::is('admin/modal*')) text-gray-800
+                @else
+                    text-gray-500 @endif
+                transition-colors duration-150 group-hover:text-gray-800"
+                        href="{{ route('modal.index') }}">
+                        <img class="w-5 h-5
+                    @if (Request::is('admin/modal*')) opacity-100
+                    @else
+                        opacity-60 @endif
+                    group-hover:opacity-100
+                    "
+                            src="{{ asset('assets/icon/deposit.png') }}" alt="" srcset="">
+                        <span class="ml-4">Modal</span>
+                    </a>
+                </li>
+
+
+            @endif
 
             <li class="relative px-6 py-3 group">
                 @if (Request::is('admin/produksi*'))
@@ -422,6 +448,33 @@
                     "
                             src="{{ asset('assets/icon/calculator-bill.png') }}" alt="" srcset="">
                         <span class="ml-4">Beban & Kewajiban</span>
+                    </a>
+                </li>
+
+
+            @endif
+
+@if (auth()->check() && auth()->user()->hasRole('superadmin'))
+
+                <li class="relative px-6 py-3 group">
+                    @if (Request::is('admin/modal*'))
+                        <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"></span>
+                    @endif
+                    <a class="inline-flex items-center w-full text-sm font-semibold 
+                @if (Request::is('admin/modal*')) text-gray-800
+                @else
+                    text-gray-500 @endif
+                transition-colors duration-150 group-hover:text-gray-800"
+                        href="{{ route('modal.index') }}">
+                        <img class="w-5 h-5
+                    @if (Request::is('admin/modal*')) opacity-100
+                    @else
+                        opacity-60 @endif
+                    group-hover:opacity-100
+                    "
+                            src="{{ asset('assets/icon/deposit.png') }}" alt="" srcset="">
+                        <span class="ml-4">Modal</span>
                     </a>
                 </li>
 

@@ -21,4 +21,5 @@ class Hutang extends Model
     {
         return $this->hasMany(CicilanHutang::class, 'id', 'hutangId');
     }
+    public $timestamps = false;
 }

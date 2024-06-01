@@ -2,15 +2,15 @@
 @section('title', 'Admin Hutang')
 @section('content')
     <div class="container px-6 pb-6 mx-auto ">
-        <p class="text-2xl my-6 font-semibold text-gray-700">Hutang</p>
+        <p class="my-6 text-2xl font-semibold text-gray-700">Hutang</p>
         {{-- <p>{{$data}}</p> --}}
         <div
-            class="bg-white w-full px-8 py-4 shadow-md rounded-3xl mb-4 flex justify-start items-center max-w-screen-xl lg:w-full">
-            <div class="flex justify-start items-start md:items-center flex-col gap-4 w-full lg:flex-row ">
+            class="flex items-center justify-start w-full max-w-screen-xl px-8 py-4 mb-4 bg-white shadow-md rounded-3xl lg:w-full">
+            <div class="flex flex-col items-start justify-start w-full gap-4 md:items-center lg:flex-row ">
                 <form class="flex items-center w-full lg:w-1/2" action="" method="GET">
                     <label for="default-search" class="sr-only">Search</label>
                     <div class="relative w-full">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
                             <svg class="w-5 h-5 text-gray-500" aria-hidden="true" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -38,9 +38,9 @@
                     </button>
                 </form>
                 </form>
-                <div class="flex justify-center items-center flex-col md:flex-row gap-4 w-full md:w-fit ">
+                <div class="flex flex-col items-center justify-center w-full gap-4 md:flex-row md:w-fit ">
                     <a href="{{ route('hutang.create') }}"
-                        class="bg-sky-200 px-4 w-full md:w-fit py-2 rounded-3xl flex justify-center items-center gap-1 ">
+                        class="flex items-center justify-center w-full gap-1 px-4 py-2 bg-sky-200 md:w-fit rounded-3xl ">
                         <div class="w-4 h-4">
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -51,32 +51,29 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="font-semibold text-sky-600 text-sm">Tambah Hutang</span>
+                        <span class="text-sm font-semibold text-sky-600">Tambah Hutang</span>
                     </a>
                 </div>
             </div>
         </div>
-        <div class="bg-white p-8 shadow-lg rounded-3xl max-w-screen-xl  lg:w-full">
+        <div class="max-w-screen-xl p-8 bg-white shadow-lg rounded-3xl lg:w-full">
             <div class="overflow-x-auto ">
-                <table class=" text-sm text-left table-auto w-full">
-                    <thead class="text-xs text-gray-700  bg-gray-100  ">
+                <table class="w-full text-sm text-left table-auto ">
+                    <thead class="text-xs text-gray-700 bg-gray-100 ">
                         <tr class="">
                             <th scope="col" class="px-4 py-2 whitespace-nowrap">
                                 Nama
                             </th>
-                            <th scope="col" class=" px-4 py-2 whitespace-nowrap">
-                                Nominal
+                            <th scope="col" class="px-4 py-2 whitespace-nowrap">
+                                Jumlah Hutang
                             </th>
-                            <th scope="col" class=" px-4 py-2 whitespace-nowrap">
-                                Catatan
-                            </th>
-                            <th scope="col" class=" px-4 py-2 whitespace-nowrap">
+                            <th scope="col" class="px-4 py-2 whitespace-nowrap">
                                 Status
                             </th>
-                            <th scope="col" class=" px-4 py-2 whitespace-nowrap">
+                            <th scope="col" class="px-4 py-2 whitespace-nowrap">
                                 Tanggal Lunas
                             </th>
-                            <th class="whitespace-nowrap px-4 py-2">
+                            <th class="px-4 py-2 whitespace-nowrap">
 
                             </th>
                         </tr>
@@ -85,25 +82,24 @@
                         @foreach ($data as $items)
                             <tr
                                 class="px-4 py-2 odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-">
-                                <th scope="row" class=" font-medium pl-3  lg:whitespace-nowrap  text-sm">
+                                <th scope="row" class="pl-3 text-sm font-medium lg:whitespace-nowrap">
                                     <span class="text-sm">
                                         {{ $items->nama }}
                                     </span>
                                 </th>
 
-                                <td cope="row" class="w-10 h-16   px-4 py-2 lg:whitespace-nowrap">
+                                <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
                                     <span>{{ $items->jumlah_hutang }}</span>
                                 </td>
 
 
-                                <td cope="row" class="w-10 h-16  px-4 py-2 lg:whitespace-nowrap">
-                                    <span>{{ $items->catatan }}</span>
+                                <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
+                                    @if ($items->status == '1')
+                                        <span>Selesai</span>
+                                    @else
+                                        <span>Belum Selesai</span>
+                                    @endif
                                 </td>
-
-                                <td cope="row" class="w-10 h-16  px-4 py-2 lg:whitespace-nowrap">
-                                    <span>{{ $items->status }}</span>
-                                </td>
-
 
                                 <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
                                     <span>
@@ -112,8 +108,8 @@
                                 </td>
 
 
-                                <td class="w-10 h-16  px-4 py-2  lg:whitespace-nowrap">
-                                    <div class="flex justify-center items-center">
+                                <td class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
+                                    <div class="flex items-center justify-center">
                                         <div class="w-6 h-6 cursor-pointer"
                                             data-dropdown-toggle="dropdown{{ $loop->iteration }}">
                                             <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -146,14 +142,14 @@
                                         </div>
                                     </div>
                                     <div id="dropdown{{ $loop->iteration }}"
-                                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-3xl shadow w-44 dark:bg-gray-700">
+                                        class="z-10 hidden bg-white divide-y divide-gray-100 shadow rounded-3xl w-44 dark:bg-gray-700">
                                         <ul class="text-sm text-gray-700 dark:text-gray-200 rounded-3xl"
                                             aria-labelledby="dropdownDefaultButton">
                                             <li>
                                                 @if (auth()->check() && auth()->user()->hasRole('superadmin'))
                                                     <a href="{{ route('hutang.edit', $items->id) }}"
                                                         class="block px-4 py-2 hover:bg-green-100 bg-green-50">
-                                                        <div class="flex justify-start items-center gap-2">
+                                                        <div class="flex items-center justify-start gap-2">
                                                             <div class="w-4 h-4 ">
                                                                 <svg viewBox="0 0 24 24" fill="none"
                                                                     xmlns="http://www.w3.org/2000/svg">
@@ -175,7 +171,30 @@
                                                     </a>
                                                 @endif
                                             </li>
-
+                                            <li>
+                                                <a href="{{ route('transaksis.detail', $items->id) }}"
+                                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
+                                                    <div class="flex items-center justify-start gap-2">
+                                                        <div class="w-4 h-4 ">
+                                                            <svg viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M9.75 12C9.75 10.7574 10.7574 9.75 12 9.75C13.2426 9.75 14.25 10.7574 14.25 12C14.25 13.2426 13.2426 14.25 12 14.25C10.7574 14.25 9.75 13.2426 9.75 12Z"
+                                                                        fill="#0ea5e9"></path>
+                                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                        d="M2 12C2 13.6394 2.42496 14.1915 3.27489 15.2957C4.97196 17.5004 7.81811 20 12 20C16.1819 20 19.028 17.5004 20.7251 15.2957C21.575 14.1915 22 13.6394 22 12C22 10.3606 21.575 9.80853 20.7251 8.70433C19.028 6.49956 16.1819 4 12 4C7.81811 4 4.97196 6.49956 3.27489 8.70433C2.42496 9.80853 2 10.3606 2 12ZM12 8.25C9.92893 8.25 8.25 9.92893 8.25 12C8.25 14.0711 9.92893 15.75 12 15.75C14.0711 15.75 15.75 14.0711 15.75 12C15.75 9.92893 14.0711 8.25 12 8.25Z"
+                                                                        fill="#0ea5e9"></path>
+                                                                </g>
+                                                            </svg>
+                                                        </div>
+                                                        <span class="font-semibold text-sky-400 ">Details</span>
+                                                    </div>
+                                                </a>
+                                            </li>
                                             <li>
                                                 @if (auth()->check() && auth()->user()->hasRole('superadmin'))
                                                     <form action="{{ route('hutang.destroy', $items->id) }}"
@@ -183,8 +202,8 @@
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"
-                                                            class="block px-4 py-2 w-full hover:bg-red-100 bg-red-50">
-                                                            <div class="flex justify-start items-center gap-2">
+                                                            class="block w-full px-4 py-2 hover:bg-red-100 bg-red-50">
+                                                            <div class="flex items-center justify-start gap-2">
                                                                 <div class="w-4 h-4">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                                         height="16" fill="currentColor"
@@ -214,7 +233,7 @@
                     </tbody>
                 </table>
                 @if ($data->lastPage() > 1)
-                    <div class="mt-4 flex flex-col items-center justify-center">
+                    <div class="flex flex-col items-center justify-center mt-4">
                         <div class="flex items-center space-x-4">
                             {{ $data->links('pagination::tailwind') }}
                         </div>

@@ -13,11 +13,13 @@
                             <div class="flex justify-start items-start flex-col gap-3">
                                 <div class="w-full">
                                     <label for="jenis" class="block mb-2 text-sm font-medium text-gray-700">Jenis</label>
+                                    {{-- <p>{{ $data }}</p> --}}
                                     <select id="jenis" name="jenis"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         @foreach ($dataJenis as $items)
                                             <option value="{{ $items->id }}"
-                                                {{ $items->id == $data->jenis ? 'selected' : '' }}>{{ $items->jenis_modal }}
+                                                {{ $items->id == $data->jenis_modal_id ? 'selected' : '' }}>
+                                                {{ $items->jenis_modal }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -77,10 +79,22 @@
                                 <div class="w-full">
                                     <label for="jumlah"
                                         class="block mb-2 text-sm font-medium text-gray-700">jumlah</label>
-                                    <input type="text" placeholder="Jumlah" name="jumlah"
+                                    <input type="text" placeholder="Jumlah" name="jumlah" id="jumlah"
                                         value="{{ old('jumlah', $data->jumlah) }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
                                     @error('jumlah')
+                                        <small class="error" style="color: red">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <div class="w-full">
+                                    <label for="nominal"
+                                        class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
+                                    <input type="number" placeholder="Nominal" name="nominal"
+                                        value="{{ old('jumlah', $data->nominal) }}"
+                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                                    @error('nominal')
+                                        test
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
@@ -95,4 +109,23 @@
             </form>
         </div>
     </div>
+    <script>
+        document.getElementById('jenis').addEventListener('change', function() {
+            var jenis = this.value;
+            console.log(jenis);
+            var jumlah = document.getElementById('jumlah');
+            console.log(jumlah);
+
+            // Ganti 'specificValue' dengan nilai yang Anda inginkan untuk memicu kondisi
+            if (jenis == 2) {
+                // alert('value 2');
+                jumlah.value = 1;
+                jumlah.disabled = true;
+            } else {
+                // alert('value bukan 2');
+                jumlah.disabled = false;
+                jumlah.value = '';
+            }
+        });
+    </script>
 @endsection

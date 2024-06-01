@@ -11,8 +11,6 @@
                         <div class="max-w-lg">
                             <div class="flex justify-start items-start flex-col gap-3">
                                 <div class="w-full">
-
-
                                     <label for="jenis"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis</label>
                                     <select id="jenis" name="jenis"
@@ -20,19 +18,16 @@
                                         @foreach ($data as $items)
                                             <option value="{{ $items->id }}">{{ $items->jenis_modal }}</option>
                                         @endforeach
-
                                     </select>
-
-
                                     @error('jenis')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
 
-                                <div class="w-full ">
-                                    <label for="nama" class="block mb-2 text-sm font-medium  text-gray-700">Nama</label>
+                                <div class="w-full">
+                                    <label for="nama" class="block mb-2 text-sm font-medium text-gray-700">Nama</label>
                                     <input type="text" placeholder="Nama" name="nama" value="{{ old('nama') }}"
-                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
+                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
                                     @error('nama')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
@@ -64,15 +59,12 @@
                     <div class="right">
                         <div class="max-w-lg">
                             <div class="flex justify-start items-start flex-col gap-3">
-
-
-
                                 <div class="w-full">
                                     <label for="Penyedia"
                                         class="block mb-2 text-sm font-medium text-gray-700">Penyedia</label>
                                     <input type="text" placeholder="Penyedia" name="penyedia"
                                         value="{{ old('penyedia') }}"
-                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
+                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
                                     @error('penyedia')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
@@ -80,10 +72,21 @@
 
                                 <div class="w-full">
                                     <label for="jumlah"
-                                        class="block mb-2 text-sm font-medium text-gray-700">jumlah</label>
-                                    <input type="text" placeholder="Jumlah" name="jumlah" value="{{ old('jumlah') }}"
-                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
+                                        class="block mb-2 text-sm font-medium text-gray-700">Jumlah</label>
+                                    <input type="number" placeholder="Jumlah" name="jumlah" id="jumlah"
+                                        value="{{ old('jumlah') }}"
+                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
                                     @error('jumlah')
+                                        <small class="error" style="color: red">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <div class="w-full">
+                                    <label for="nominal"
+                                        class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
+                                    <input type="number" placeholder="Nominal" name="nominal" value="{{ old('nominal') }}"
+                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                                    @error('nominal')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
@@ -99,4 +102,24 @@
             </form>
         </div>
     </div>
+    <script>
+        document.getElementById('jenis').addEventListener('change', function() {
+            var jenis = this.value;
+            // console.log(jenis);
+            var jumlah = document.getElementById('jumlah');
+            // console.log(jumlah);
+
+            // Ganti 'specificValue' dengan nilai yang Anda inginkan untuk memicu kondisi
+            if (jenis == 2) {
+                // alert('value 2');
+                jumlah.value = 1;
+                jumlah.disabled = true;
+            } else {
+                // alert('value bukan 2');
+                jumlah.disabled = false;
+                jumlah.value = '';
+            }
+        });
+    </script>
+
 @endsection

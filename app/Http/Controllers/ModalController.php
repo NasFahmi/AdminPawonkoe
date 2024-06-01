@@ -36,7 +36,7 @@ class ModalController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         $validatedData = $request->validate([
             'jenis' => 'required',
             'nama' => 'required',
@@ -82,7 +82,8 @@ class ModalController extends Controller
     public function edit(Modal $modal)
     {
         $data = Modal::with('jenis_modal')->findOrFail($modal->id);
-        return view('pages.modal.edit', compact('data'));
+        $dataJenis = JenisModal::all();
+        return view('pages.modal.edit', compact('data', 'dataJenis'));
     }
 
     /**

@@ -60,7 +60,7 @@
                 <table class=" text-sm text-left table-auto w-full">
                     <thead class="text-xs text-gray-700  bg-gray-100  ">
                         <tr class="">
-                            <th scope="col" class="w-1/4 px-4 py-2 whitespace-nowrap">
+                            <th scope="col" class=" px-4 py-2 whitespace-nowrap">
                                 Jenis
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
@@ -70,7 +70,10 @@
                                 Penyedia
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
-                                jumlah
+                                Jumlah
+                            </th>
+                            <th scope="col" class=" px-4 py-2 whitespace-nowrap">
+                                Nominal
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
                                 Tanggal
@@ -111,11 +114,16 @@
                                         {{ $items->jumlah }}
                                     </span>
                                 </th>
+                                <th scope="row" class=" font-medium pl-3  lg:whitespace-nowrap  text-sm">
+                                    <span class="text-sm">
+                                        {{ $items->nominal }}
+                                    </span>
+                                </th>
 
 
                                 <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
                                     <span>
-                                        {{ \Carbon\Carbon::parse($items->tanggal_disetorkan)->locale('ID')->isoFormat('D MMMM YYYY') }}
+                                        {{ \Carbon\Carbon::parse($items->tanggal)->locale('ID')->isoFormat('D MMMM YYYY') }}
                                     </span>
                                 </td>
 

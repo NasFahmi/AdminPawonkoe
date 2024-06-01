@@ -13,6 +13,12 @@ class Hutang extends Model
         'nama',
         'catatan',
         'status',
+        'jumlah_hutang',
         'tanggal_lunas',
     ];
+
+    public function hutang_cicilan()
+    {
+        return $this->hasMany(CicilanHutang::class, 'id', 'hutangId');
+    }
 }

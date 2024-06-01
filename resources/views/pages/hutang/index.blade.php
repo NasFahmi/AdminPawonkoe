@@ -74,7 +74,7 @@
                                 Status
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
-                                Tenggat Pembayaran
+                                Tanggal Lunas
                             </th>
                             <th class="whitespace-nowrap px-4 py-2">
 
@@ -92,7 +92,7 @@
                                 </th>
 
                                 <td cope="row" class="w-10 h-16   px-4 py-2 lg:whitespace-nowrap">
-                                    <span>{{ $items->nominal }}</span>
+                                    <span>{{ $items->jumlah_hutang }}</span>
                                 </td>
 
 
@@ -107,7 +107,7 @@
 
                                 <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
                                     <span>
-                                        {{ \Carbon\Carbon::parse($items->tenggat_pembayaran)->locale('ID')->isoFormat('D MMMM YYYY') }}
+                                        {{ \Carbon\Carbon::parse($items->tanggal_lunas)->locale('ID')->isoFormat('D MMMM YYYY') }}
                                     </span>
                                 </td>
 

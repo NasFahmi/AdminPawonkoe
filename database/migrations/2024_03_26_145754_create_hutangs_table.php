@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama', 255);
             $table->longText('catatan')->nullable();
             $table->boolean('status')->default(0);
+            $table->bigInteger('jumlah_hutang');
             $table->timestamp('tanggal_lunas')->nullable();
             $table->softDeletes();
         });

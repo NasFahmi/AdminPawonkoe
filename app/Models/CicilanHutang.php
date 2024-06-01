@@ -14,4 +14,15 @@ class CicilanHutang extends Model
         'tanggal',
         'status',
     ];
+
+    protected $cast = [
+        'tanggal' => "date",
+    ];
+
+
+
+    public function cicilan_hutang()
+    {
+        return $this->belongsTo(Hutang::class, 'hutangId', 'id');
+    }
 }

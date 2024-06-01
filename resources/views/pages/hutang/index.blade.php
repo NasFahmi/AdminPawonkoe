@@ -61,7 +61,7 @@
                 <table class=" text-sm text-left table-auto w-full">
                     <thead class="text-xs text-gray-700  bg-gray-100  ">
                         <tr class="">
-                            <th scope="col" class="w-1/4 px-4 py-2 whitespace-nowrap">
+                            <th scope="col" class="px-4 py-2 whitespace-nowrap">
                                 Nama
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">

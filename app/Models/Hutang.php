@@ -14,6 +14,7 @@ class Hutang extends Model
         'catatan',
         'status',
         'jumlah_hutang',
+        'tenggat_waktu',
         'tanggal_lunas',
     ];
 

@@ -14,8 +14,8 @@
                                 <p class="text-sm text-gray-700">{{ $hutangData->nama }}</p>
                             </div>
                             <div class="w-full">
-                                <h1 class="block pt-2 text-normal font-medium text-gray-800">Jumlah Hutang</h1>
-                                <p class="text-sm text-gray-700">Rp.
+                                <h1 class="block pt-2 text-normal font-medium text-gray-800 ">Jumlah Hutang</h1>
+                                <p class="text-sm text-gray-700 font-medium">Rp.
                                     {{ number_format($hutangData->jumlah_hutang, 0, ',', '.') }}</p>
 
                             </div>
@@ -46,59 +46,65 @@
                     <div class="w-full">
                         <h1 class="block pt-2 text-normal font-medium text-gray-800">Tanggal Lunas</h1>
                         @if (isset($hutangData->tanggal_lunas))
-                            <p class="text-sm text-gray-700">{{ $hutangData->tanggal_lunas->format('d-m-Y H:i:s') }}</p>
+                            <p class="text-sm text-gray-700">
+                                {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $hutangData->tanggal_lunas)->format('d-m-Y H:i:s') }}
+                            </p>
                         @else
                             <p class="text-sm text-gray-700">-</p>
                         @endif
                     </div>
+                    <div class="w-full">
+                        <h1 class="block pt-2 text-normal font-medium text-gray-800">Sisa Hutang</h1>
+                        @if ($hutangData->status == 0)
+                            <p class="text-sm text-red-400 font-semibold">Rp.
+                                {{ number_format($hutangData->remaining_debt, 0, ',', '.') }}</p>
+                        @else
+                            <p class="text-sm text-gray-700">Tidak ada sisa hutang</p>
+                        @endif
+                    </div>
+
                 </div>
             </div>
-            <table class="w-full mt-8 text-sm text-left table-auto ">
-                <thead class="text-xs text-gray-700 bg-gray-100 ">
-                    <tr class="">
-                        <th scope="col" class="px-4 py-2 whitespace-nowrap">
-                            Nominal
-                        </th>
-                        <th scope="col" class="px-4 py-2 whitespace-nowrap">
-                            Tanggal
-                        </th>
-                        <th scope="col" class="px-4 py-2 whitespace-nowrap">
-                            Status
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($hutangData->hutang_cicilan as $items)
-                        <tr
-                            class="px-4 py-2 odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-">
-                            <th scope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
-                                <span class="text-sm">
-                                    Rp. {{ number_format($items->nominal, 0, ',', '.') }}
 
-                                </span>
+            @if ($hutangData->status == 1)
+                <p class="text-center text-sm font-medium">Tidak ada data cicilan</p>
+            @else
+                <table class="w-full mt-8 text-sm text-left table-auto ">
+                    <thead class="text-xs text-gray-700 bg-gray-100 ">
+                        <tr class="">
+                            <th scope="col" class="px-4 py-2 whitespace-nowrap">
+                                Nominal
                             </th>
-
-                            <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
-                                <span>
-                                    {{ \Carbon\Carbon::parse($items->tanggal)->locale('ID')->isoFormat('D MMMM YYYY') }}
-                                </span>
-                            </td>
-
-
-                            <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
-                                @if ($items->status == '1')
-                                    <span class="text-green-400">Selesai</span>
-                                @else
-                                    <span class="text-red-400">Belum Selesai</span>
-                                @endif
-                            </td>
-
-
+                            <th scope="col" class="px-4 py-2 whitespace-nowrap">
+                                Tanggal
+                            </th>
                         </tr>
-                    @endforeach
+                    </thead>
+                    <tbody>
+                        @foreach ($hutangData->hutang_cicilan as $items)
+                            <tr
+                                class="px-4 py-2 odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-">
+                                <th scope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
+                                    <span class="text-sm font-normal">
+                                        Rp. {{ number_format($items->nominal, 0, ',', '.') }}
 
-                </tbody>
-            </table>
+                                    </span>
+                                </th>
+
+                                <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
+                                    <span>
+                                        {{ \Carbon\Carbon::parse($items->created_at)->locale('id')->isoFormat('D MMMM YYYY HH:mm:ss') }}
+
+                                    </span>
+                                </td>
+
+
+                            </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+            @endif
         </div>
     </div>
 @endsection

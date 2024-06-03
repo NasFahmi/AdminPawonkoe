@@ -96,7 +96,11 @@
                                 </td>
 
                                 <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
-                                    <span>Rp. {{ number_format($items->remaining_debt, 0, ',', '.') }}</span>
+                                    @if ($items->status == '1')
+                                        <span>-</span>
+                                    @else
+                                        <span>Rp. {{ number_format($items->remaining_debt, 0, ',', '.') }}</span>
+                                    @endif
 
                                 </td>
 

@@ -11,12 +11,6 @@ class CicilanHutang extends Model
     protected $fillable = [
         'hutangId',
         'nominal',
-        'tanggal',
-        'status',
-    ];
-
-    protected $cast = [
-        'tanggal' => "date",
     ];
 
 

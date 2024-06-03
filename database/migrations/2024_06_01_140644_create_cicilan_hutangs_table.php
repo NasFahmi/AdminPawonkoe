@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('hutangId');
             $table->bigInteger('nominal');
-            $table->timestamp('tanggal');
-            $table->boolean('status');
             $table->timestamps();
 
             $table->foreign('hutangId')->references('id')->on('hutangs')->onDelete('cascade')->onUpdate('cascade');

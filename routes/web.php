@@ -163,7 +163,6 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:superadmin'])->group(function () {
         Route::post('/admin/hutang/{id}/cicilan', [CicilanHutang::class, 'store'])->name('cicilan.store');
         Route::get('/admin/hutang/{id}/cicilan', [CicilanHutang::class, 'create'])->name('cicilan.create');
-        Route::patch('/admin/hutang/{hutang}/cicilan/{cicilan}/edit', [CicilanHutang::class, 'update'])->name('cicilan.update');
     });
 });
 

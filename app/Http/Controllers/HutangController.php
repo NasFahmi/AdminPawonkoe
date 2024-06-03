@@ -41,14 +41,32 @@ class HutangController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
+        //selesai
+        // "nama" => "Ariq"
+        // "catatan" => "awdwad"
+        // "status" => "1"
+        // "jumlahHutang" => "200000"
+        // "tanggal_lunas" => "06/14/2024"
+        // "tenggat_waktu" => null
+        // "nominal" => null
+        //belum selesai
+        // "nama" => "Ariq"
+        // "catatan" => "ad"
+        // "status" => "0"
+        // "jumlahHutang" => "200000"
+        // "tanggal_lunas" => null
+        // "tenggat_waktu" => "06/14/2024"
+        // "nominal" => "100000"
         // Validasi input
         $validatedData = $request->validate([
             'nama' => 'required|string|max:255',
             'catatan' => 'nullable|string',
             'jumlahHutang' => 'required|numeric|min:1',
-            'nominal' => 'required|numeric|min:1',
-            'tenggat_waktu' => 'required',
-            'status_cicilan' => 'required|in:0,1',
+            'tanggal_lunas' => 'nullable',
+            'tenggat_waktu' => 'nullable',
+            'nominal' => 'nullable|numeric|min:1',
+            'status' => 'required|in:0,1',
         ]);
         if ($request->nominal > $request->jumlahHutang) {
             return back()->withErrors(['nominal' => 'Nominal cicilan awal tidak boleh lebih dari jumlah hutang.'])->withInput();
@@ -56,28 +74,40 @@ class HutangController extends Controller
 
         try {
             DB::beginTransaction();
-            $tanggalLunas = $request->tanggal_lunas;
-            if (isset($request->tanggal_lunas)) {
+            // lunas
+            if ($validatedData['tanggal_lunas'] != null) {
+
                 $tanggalLunas = Carbon::parse($validatedData['tanggal_lunas'], 'Asia/Jakarta')->format('Y-m-d');
+                // Membuat data hutang
+                Hutang::create([
+                    'nama' => $validatedData['nama'],
+                    'catatan' => $validatedData['catatan'],
+                    'status' => $validatedData['status'], // Sesuaikan nama kolom jika berbeda
+                    'jumlah_hutang' => $validatedData['jumlahHutang'],
+                    'tenggat_waktu' => null,
+                    'tanggal_lunas' => $tanggalLunas,
+                ]);
             }
-            $tenggatWaktu = Carbon::parse($validatedData['tenggat_waktu'], 'Asia/Jakarta')->format('Y-m-d');
 
-            // Membuat data hutang
-            $hutang = Hutang::create([
-                'nama' => $validatedData['nama'],
-                'catatan' => $validatedData['catatan'],
-                'status' => $validatedData['status_cicilan'], // Sesuaikan nama kolom jika berbeda
-                'jumlah_hutang' => $validatedData['jumlahHutang'],
-                'tanggal_lunas' => $tanggalLunas,
-            ]);
 
-            // Membuat data cicilan
-            CicilanHutang::create([
-                'hutangId' => $hutang->id,
-                'nominal' => $validatedData['nominal'],
-                'tanggal' => $tenggatWaktu,
-                'status' => $validatedData['status_cicilan'], // Sesuaikan nama kolom jika berbeda
-            ]);
+
+            if ($validatedData['tenggat_waktu'] != null) {
+                $tenggatWaktu = Carbon::parse($validatedData['tenggat_waktu'], 'Asia/Jakarta')->format('Y-m-d');
+                // Membuat data cicilan
+                $hutang = Hutang::create([
+                    'nama' => $validatedData['nama'],
+                    'catatan' => $validatedData['catatan'],
+                    'status' => $validatedData['status'], // Sesuaikan nama kolom jika berbeda
+                    'jumlah_hutang' => $validatedData['jumlahHutang'],
+                    'tenggat_waktu' => $tenggatWaktu,
+                    'tanggal_lunas' => null,
+                ]);
+                CicilanHutang::create([
+                    'hutangId' => $hutang->id,
+                    'nominal' => $validatedData['nominal'],
+                ]);
+            }
+
 
 
 
@@ -106,7 +136,7 @@ class HutangController extends Controller
      */
     public function edit(Hutang $hutang)
     {
-        dd('edit');
+        return view('pages.hutang.edit', compact('hutang'));
     }
 
     /**

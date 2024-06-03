@@ -30,6 +30,22 @@
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
+                                <div class="w-full mt-4">
+                                    <label class="block mb-2 text-sm font-medium text-gray-700">Status</label>
+                                    <div class="flex items-center mb-4">
+                                        <input id="radioStatus1" type="radio" value="1" name="status"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ">
+                                        <label for="radioStatus1"
+                                            class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Selesai</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input id="radioStatus0" type="radio" value="0" name="status"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ">
+                                        <label for="radioStatus0"
+                                            class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Belum
+                                            Selesai</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -46,7 +62,7 @@
                             @enderror
                         </div>
 
-                        <div class="w-full mt-1">
+                        <div class="w-full " id="tanggalLunas">
                             <label for="" class="block pt-2 text-sm font-medium text-gray-800">Tanggal Lunas</label>
                             <div class="relative max-w-lg mt-2">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
@@ -60,27 +76,14 @@
                                     class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Select date">
                             </div>
-                            <p class="text-xs italic">*abaikan jika hutang belum lunas</p>
+                            <p class="text-xs italic">*lewati jika hutang belum lunas</p>
                             @error('tanggal_lunas')
                                 <small class="error" style="color: red">{{ $message }}</small>
                             @enderror
                         </div>
-                    </div>
-                </div>
-                <h1 class="mt-5 mb-2 text-lg font-medium">Cicilan Hutang Awal</h1>
-                <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
-                    <div class="left">
-                        <div class="w-full">
-                            <label for="nominal" class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
-                            <input type="number" placeholder="Nominal" name="nominal" value="{{ old('nominal') }}"
-                                class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
-                            @error('nominal')
-                                <small class="error" style="color: red">{{ $message }}</small>
-                            @enderror
-                        </div>
-
-                        <div class="w-full mt-1">
-                            <label for="" class="block pt-2 text-sm font-medium text-gray-800">Tenggat Waktu</label>
+                        <div class="w-full " id="tenggatWaktu">
+                            <label for="" class="block pt-2 text-sm font-medium text-gray-800">Tenggat
+                                Waktu</label>
                             <div class="relative max-w-lg mt-2">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -96,24 +99,29 @@
                             @error('tanggal')
                                 <small class="error" style="color: red">{{ $message }}</small>
                             @enderror
+                            <p class="text-xs italic">*lewati jika hutang sudah lunas</p>
                         </div>
+
                     </div>
-                    <div class="right">
-                        <!-- Radio buttons -->
-                        <div class="w-full">
-                            <label class="block mb-2 text-sm font-medium text-gray-700">Status</label>
-                            <div class="flex items-center mb-4">
-                                <input id="default-radio-1" type="radio" value="1" name="status_cicilan"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ">
-                                <label for="default-radio-1"
-                                    class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Selesai</label>
+                </div>
+                <div id="cicilanAwal" class="">
+
+                    <h1 class="mt-5 text-lg font-medium text-gray-800">Cicilan Hutang Awal</h1>
+                    <p class="text-gray-700 mb-2 font-normal text-xs">Isi nominal dengan jumlah cicilan pertama Anda.</p>
+
+                    </p>
+                    <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
+                        <div class="left">
+                            <div class="w-full">
+                                <label for="nominal" class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
+                                <input type="number" placeholder="Nominal" name="nominal" value="{{ old('nominal') }}"
+                                    class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
+                                @error('nominal')
+                                    <small class="error" style="color: red">{{ $message }}</small>
+                                @enderror
                             </div>
-                            <div class="flex items-center">
-                                <input checked id="default-radio-2" type="radio" value="0" name="status_cicilan"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ">
-                                <label for="default-radio-2"
-                                    class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Belum Selesai</label>
-                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -124,4 +132,46 @@
             </form>
         </div>
     </div>
+    <script>
+        const statusTrue = document.getElementById('radioStatus1');
+        const statusFalse = document.getElementById('radioStatus0');
+        const tanggalLunas = document.getElementById('tanggalLunas');
+        const tenggatWaktu = document.getElementById('tenggatWaktu');
+        const cicilanAwal = document.getElementById('cicilanAwal');
+        console.log(statusFalse.checked);
+        console.log(statusTrue.checked);
+        console.log(tanggalLunas);
+        console.log(tenggatWaktu);
+        statusTrue.addEventListener('change', function() {
+            if (statusTrue.checked) {
+                console.log('radioStatus 1 checked');
+                tanggalLunas.style.display = 'block';
+                tenggatWaktu.style.display = 'none';
+                cicilanAwal.style.display = 'none';
+            }
+        });
+
+        statusFalse.addEventListener('change', function() {
+            if (statusFalse.checked) {
+                console.log('radioStatus 0 checked');
+                console.log('radioStatus 1 unchecked'); // Since they're mutually exclusive
+                tanggalLunas.style.display = 'none';
+                tenggatWaktu.style.display = 'block';
+                cicilanAwal.style.display = 'block';
+            }
+        });
+        // if (selectedStatus === '1') {
+        //     tanggalLunas.style.display = 'block';
+        //     tenggatWaktu.style.display = 'none';
+        // } else {
+        //     tanggalLunas.style.display = 'none';
+        //     tenggatWaktu.style.display = 'block';
+        // }
+
+
+        // // Inisialisasi tampilan saat halaman pertama kali dimuat
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     toggleFields();
+        // });
+    </script>
 @endsection

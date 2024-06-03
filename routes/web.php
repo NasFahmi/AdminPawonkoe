@@ -15,6 +15,7 @@ use App\Http\Controllers\HutangController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ModalController;
 use App\Http\Controllers\ProduksiController;
+use App\Models\CicilanHutang;
 
 /*
 |--------------------------------------------------------------------------
@@ -153,9 +154,16 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/hutang', [HutangController::class, 'store'])->name('hutang.store');
         Route::get('/hutang', [HutangController::class, 'create'])->name('hutang.create');
         Route::get('/admin/hutang', [HutangController::class, 'index'])->name('hutang.index');
+        Route::get('/admin/hutang/{id}', [HutangController::class, 'show'])->name('hutang.detail');
         Route::patch('/admin/hutang/{hutang}', [HutangController::class, 'update'])->name('hutang.update');
         Route::get('/admin/hutang/{hutang}/edit', [HutangController::class, 'edit'])->name('hutang.edit');
         Route::delete('/admin/hutang/{hutang}', [HutangController::class, 'destroy'])->name('hutang.destroy');
+    });
+
+    Route::middleware(['role:superadmin'])->group(function () {
+        Route::post('/admin/hutang/{id}/cicilan', [CicilanHutang::class, 'store'])->name('cicilan.store');
+        Route::get('/admin/hutang/{id}/cicilan', [CicilanHutang::class, 'create'])->name('cicilan.create');
+        Route::patch('/admin/hutang/{hutang}/cicilan/{cicilan}/edit', [CicilanHutang::class, 'update'])->name('cicilan.update');
     });
 });
 

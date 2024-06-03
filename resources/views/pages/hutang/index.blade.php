@@ -68,6 +68,9 @@
                                 Jumlah Hutang
                             </th>
                             <th scope="col" class="px-4 py-2 whitespace-nowrap">
+                                Sisa Hutang
+                            </th>
+                            <th scope="col" class="px-4 py-2 whitespace-nowrap">
                                 Status
                             </th>
                             <th scope="col" class="px-4 py-2 whitespace-nowrap">
@@ -82,22 +85,27 @@
                         @foreach ($data as $items)
                             <tr
                                 class="px-4 py-2 odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-">
-                                <th scope="row" class="pl-3 text-sm font-medium lg:whitespace-nowrap">
+                                <th scope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
                                     <span class="text-sm">
                                         {{ $items->nama }}
                                     </span>
                                 </th>
 
                                 <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
-                                    <span>{{ $items->jumlah_hutang }}</span>
+                                    <span>Rp. {{ number_format($items->jumlah_hutang, 0, ',', '.') }}</span>
+                                </td>
+
+                                <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
+                                    <span>Rp. {{ number_format($items->remaining_debt, 0, ',', '.') }}</span>
+
                                 </td>
 
 
                                 <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
                                     @if ($items->status == '1')
-                                        <span>Selesai</span>
+                                        <span class="text-green-400">Selesai</span>
                                     @else
-                                        <span>Belum Selesai</span>
+                                        <span class="text-red-400">Belum Selesai</span>
                                     @endif
                                 </td>
 
@@ -148,7 +156,7 @@
                                             <li>
                                                 @if (auth()->check() && auth()->user()->hasRole('superadmin'))
                                                     <a href="{{ route('hutang.edit', $items->id) }}"
-                                                        class="block px-4 py-2 hover:bg-green-100 bg-green-50">
+                                                        class="block px-4 py-2 hover:bg-green-200 bg-green-100">
                                                         <div class="flex items-center justify-start gap-2">
                                                             <div class="w-4 h-4 ">
                                                                 <svg viewBox="0 0 24 24" fill="none"
@@ -172,7 +180,7 @@
                                                 @endif
                                             </li>
                                             <li>
-                                                <a href="{{ route('transaksis.detail', $items->id) }}"
+                                                <a href="{{ route('hutang.detail', $items->id) }}"
                                                     class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
                                                     <div class="flex items-center justify-start gap-2">
                                                         <div class="w-4 h-4 ">

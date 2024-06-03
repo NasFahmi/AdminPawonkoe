@@ -19,7 +19,12 @@ class Hutang extends Model
 
     public function hutang_cicilan()
     {
-        return $this->hasMany(CicilanHutang::class, 'id', 'hutangId');
+        return $this->hasMany(CicilanHutang::class, 'hutangId', 'id');
+    }
+    public function getRemainingDebtAttribute(): float
+    {
+        $totalCicilan = $this->hutang_cicilan()->sum('nominal');
+        return $this->jumlah_hutang - $totalCicilan;
     }
     public $timestamps = false;
 }

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hutang;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreHutangRequest;
 use App\Http\Requests\UpdateHutangRequest;
+use Illuminate\Http\Request;
 use App\Models\CicilanHutang;
 
 class HutangController extends Controller
@@ -19,8 +19,11 @@ class HutangController extends Controller
     {
         $searchTerm = request('search');
 
-        $data = Hutang::where('nama', 'like', "%$searchTerm%")
+        $data = Hutang::with('hutang_cicilan')->where('nama', 'like', "%$searchTerm%")
             ->paginate(10);
+        // $jumlahHutangBelumDibayar = Hutang::with('hutang_cicilan')->get();
+        // dd($jumlahHutangBelumDibayar);
+        // dd($data);
 
         return view('pages.hutang.index', compact('data'));
     }
@@ -43,16 +46,20 @@ class HutangController extends Controller
             'nama' => 'required|string|max:255',
             'catatan' => 'nullable|string',
             'jumlahHutang' => 'required|numeric|min:1',
-            'tanggal_lunas' => 'required|date',
             'nominal' => 'required|numeric|min:1',
-            'tenggat_waktu' => 'required|date',
+            'tenggat_waktu' => 'required',
             'status_cicilan' => 'required|in:0,1',
         ]);
+        if ($request->nominal > $request->jumlahHutang) {
+            return back()->withErrors(['nominal' => 'Nominal cicilan awal tidak boleh lebih dari jumlah hutang.'])->withInput();
+        }
 
         try {
             DB::beginTransaction();
-
-            $tanggalLunas = Carbon::parse($validatedData['tanggal_lunas'], 'Asia/Jakarta')->format('Y-m-d');
+            $tanggalLunas = $request->tanggal_lunas;
+            if (isset($request->tanggal_lunas)) {
+                $tanggalLunas = Carbon::parse($validatedData['tanggal_lunas'], 'Asia/Jakarta')->format('Y-m-d');
+            }
             $tenggatWaktu = Carbon::parse($validatedData['tenggat_waktu'], 'Asia/Jakarta')->format('Y-m-d');
 
             // Membuat data hutang
@@ -73,7 +80,7 @@ class HutangController extends Controller
             ]);
 
 
-            // $this->store($request);
+
             DB::commit();
 
             return redirect()->route('hutang.index')->with('success', 'Data Berhasil Disimpan');
@@ -86,9 +93,12 @@ class HutangController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Hutang $hutang)
+    public function show($id)
     {
-        //
+        // dd($id);
+        $hutangData = Hutang::with('hutang_cicilan')->findOrFail($id);
+        // dd($hutangData);
+        return view('pages.hutang.detail', compact('hutangData'));
     }
 
     /**
@@ -96,7 +106,7 @@ class HutangController extends Controller
      */
     public function edit(Hutang $hutang)
     {
-        //
+        dd('edit');
     }
 
     /**

@@ -69,6 +69,23 @@
             @if ($hutangData->status == 1)
                 <p class="text-center text-sm font-medium">Tidak ada data cicilan</p>
             @else
+                <div class="w-full flex justify-end">
+
+                    <a href="{{ route('cicilan.create', $hutangData->id) }}"
+                        class="flex items-center justify-center w-full gap-1 px-4 py-2 bg-green-200 md:w-fit rounded-3xl ">
+                        <div class="w-4 h-4">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M6 12H18M12 6V18" stroke="#0284c7" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                </g>
+                            </svg>
+                        </div>
+                        <span class="text-xs font-semibold text-green-600">Tambah Hutang</span>
+                    </a>
+                </div>
                 <table class="w-full mt-8 text-sm text-left table-auto ">
                     <thead class="text-xs text-gray-700 bg-gray-100 ">
                         <tr class="">

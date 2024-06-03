@@ -11,6 +11,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\BebanKewajibanController;
 use App\Http\Controllers\TemporaryImageController;
 use App\Http\Controllers\Api\ApiTransaksiController;
+use App\Http\Controllers\CicilanHutangController;
 use App\Http\Controllers\HutangController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ModalController;
@@ -161,8 +162,8 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::middleware(['role:superadmin'])->group(function () {
-        Route::post('/admin/hutang/{id}/cicilan', [CicilanHutang::class, 'store'])->name('cicilan.store');
-        Route::get('/admin/hutang/{id}/cicilan', [CicilanHutang::class, 'create'])->name('cicilan.create');
+        Route::post('/admin/hutang/{id}/cicilan', [CicilanHutangController::class, 'store'])->name('cicilan.store');
+        Route::get('/admin/hutang/{id}/cicilan', [CicilanHutangController::class, 'create'])->name('cicilan.create');
     });
 });
 

@@ -142,16 +142,77 @@ class HutangController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateHutangRequest $request, Hutang $hutang)
+    public function update(Request $request, Hutang $hutang)
     {
-        //
+
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255',
+            'catatan' => 'nullable|string',
+            'jumlahHutang' => 'required|numeric|min:1',
+            'tanggal_lunas' => 'nullable',
+            'tenggat_waktu' => 'nullable',
+            'status' => 'required|in:0,1',
+        ]);
+        try {
+            DB::beginTransaction();
+            // lunas
+            //! skenario pertama ketika belum selesai -> selesai nanti akan ngaruh ke data ciclan
+            if ($validatedData['status'] == 1) {
+                $tanggalLunas = Carbon::parse($validatedData['tanggal_lunas'], 'Asia/Jakarta')->format('Y-m-d');
+                $hutang->update([
+                    'nama' => $validatedData['nama'],
+                    'catatan' => $validatedData['catatan'],
+                    'jumlah_hutang' => $validatedData['jumlahHutang'],
+                    'status' => $validatedData['status'], // Sesuaikan nama kolom jika berbeda
+                    'tanggal_lunas' => $tanggalLunas,
+                    'tenggat_waktu' => null,
+                ]);
+                $cicilan = CicilanHutang::where('hutangId', $hutang->id)->get();
+                $totalNominalHutang = $cicilan->sum('nominal');
+                CicilanHutang::create([
+                    'hutnagId' => $hutang->id,
+                    'nominal' => $hutang->jumlah_hutang - $totalNominalHutang,
+                ]);
+            }
+
+            //! skenario kedua ketika selesai -> belum selesai
+            //! unfinish, jika di clear cicilan yang emiliki hutang id = id hutang, maka itu terlalu beresiko, 
+            if ($validatedData['status'] == 0) {
+                $tenggatWaktu = Carbon::parse($validatedData['tenggat_waktu'], 'Asia/Jakarta')->format('Y-m-d');
+                $hutang->update([
+                    'nama' => $validatedData['nama'],
+                    'catatan' => $validatedData['catatan'],
+                    'jumlah_hutang' => $validatedData['jumlahHutang'],
+                    'status' => $validatedData['status'], // Sesuaikan nama kolom jika berbeda
+                    'tanggal_lunas' => null,
+                    'tenggat_waktu' => $tenggatWaktu,
+                ]);
+            }
+
+
+            DB::commit();
+
+            return redirect()->route('hutang.index')->with('success', 'Data Berhasil Disimpan');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Hutang $hutang)
+    public function destroy($id)
     {
-        //
+        $hutang = Hutang::find($id);
+        try {
+            DB::beginTransaction();
+            $hutang->delete();
+            DB::commit();
+            return redirect()->route('hutang.index')->with('success', 'Data Berhasil Didelete');
+        } catch (\Throwable $th) {
+            // throw $th;
+            DB::rollBack();
+        }
     }
 }

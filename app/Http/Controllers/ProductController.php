@@ -136,7 +136,7 @@ class ProductController extends Controller
                 if (!Storage::exists($slugFolderPath)) {
                     Storage::makeDirectory($slugFolderPath);
                     // Mengatur izin folder
-                    $folderPermissions = 0755; // Atur izin sesuai kebutuhan Anda
+                    $folderPermissions = 0664; // Atur izin sesuai kebutuhan Anda
                     chmod(storage_path('app/' . $slugFolderPath), $folderPermissions);
                 }
                 // copy file image dari storage\app\public\images\tmp\image-660a77aaf10368.27307606\WhatsApp Image 2024-03-18 at 9.29.38 PM.jpeg ke storage\app\public\images\GdomcXRDdftRq30MjJPz.jpeg

@@ -43,10 +43,10 @@ use App\Models\CicilanHutang;
 */
 
 
-Route::post('/login', [AuthController::class, 'Authlogin'])->name('authentication');
-Route::get('/', [AuthController::class, 'loginview'])->name('login');
+Route::post('/login', [AuthController::class, 'Authlogin'])->name('authentication')->middleware(['throttle:60,1']);
+Route::get('/', [AuthController::class, 'loginview'])->name('login')->middleware(['throttle:60,1']);
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'throttle:60,1'])->group(function () {
 
     Route::middleware(['role:superadmin|admin'])->group(function () {
         Route::get('/admin/dashboard', [DashboardController::class, 'indexDashboard'])->name('admin.dashboard');
@@ -133,6 +133,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/piutang/{piutang}/edit', [PiutangController::class, 'edit'])->name('piutang.edit');
         Route::patch('/admin/piutang/{piutang}', [PiutangController::class, 'update'])->name('piutang.update');
         Route::delete('/admin/piutang/{piutang}', [PiutangController::class, 'destroy'])->name('piutang.destroy');
+    });
+    // Hasil Penjualan
+    Route::middleware(['role:superadmin||admin'])->group(function () {
+        Route::get('/admin/penjualan', [PiutangController::class, 'index'])->name('penjualan.index');
     });
 
     //Log

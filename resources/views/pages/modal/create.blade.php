@@ -112,12 +112,10 @@
 
             // Ganti 'specificValue' dengan nilai yang Anda inginkan untuk memicu kondisi
             if (jenis == 2) {
-                alert('value 2');
                 jumlah.value = 1;
                 jumlah.readOnly = true;
             } else {
-                alert('value bukan 2');
-                jumlah.disabled = false;
+                jumlah.readOnly = false;
                 jumlah.value = '';
             }
         });

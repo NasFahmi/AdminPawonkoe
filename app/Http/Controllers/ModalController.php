@@ -16,7 +16,15 @@ class ModalController extends Controller
      */
     public function index()
     {
-        $data = Modal::with(['jenis_modal'])->get();
+        $searchTerm = request('search');
+
+        $data = Modal::with(['jenis_modal'])
+            ->whereHas('jenis_modal', function ($query) use ($searchTerm) {
+                $query->where('jenis_modal', 'like', "%$searchTerm%");
+            })
+            ->orWhere('nama', 'like', "%$searchTerm%")
+            ->paginate(10);
+
 
         return view('pages.modal.index', compact('data'));
     }

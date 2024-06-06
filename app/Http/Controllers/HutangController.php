@@ -102,10 +102,12 @@ class HutangController extends Controller
                     'tenggat_waktu' => $tenggatWaktu,
                     'tanggal_lunas' => null,
                 ]);
-                CicilanHutang::create([
-                    'hutangId' => $hutang->id,
-                    'nominal' => $validatedData['nominal'],
-                ]);
+                if (isset($request->nominal)) {
+                    CicilanHutang::create([
+                        'hutangId' => $hutang->id,
+                        'nominal' => $validatedData['nominal'],
+                    ]);
+                }
             }
 
 
@@ -170,7 +172,7 @@ class HutangController extends Controller
                 $cicilan = CicilanHutang::where('hutangId', $hutang->id)->get();
                 $totalNominalHutang = $cicilan->sum('nominal');
                 CicilanHutang::create([
-                    'hutnagId' => $hutang->id,
+                    'hutangId' => $hutang->id,
                     'nominal' => $hutang->jumlah_hutang - $totalNominalHutang,
                 ]);
             }
@@ -187,6 +189,7 @@ class HutangController extends Controller
                     'tanggal_lunas' => null,
                     'tenggat_waktu' => $tenggatWaktu,
                 ]);
+                CicilanHutang::where('hutangId', $hutang->id)->delete();
             }
 
 

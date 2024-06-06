@@ -43,10 +43,10 @@ use App\Models\CicilanHutang;
 */
 
 
-Route::post('/login', [AuthController::class, 'Authlogin'])->name('authentication')->middleware(['throttle:60,1']);
-Route::get('/', [AuthController::class, 'loginview'])->name('login')->middleware(['throttle:60,1']);
+Route::post('/login', [AuthController::class, 'Authlogin'])->name('authentication');
+Route::get('/', [AuthController::class, 'loginview'])->name('login');
 
-Route::middleware(['auth', 'throttle:60,1'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['role:superadmin|admin'])->group(function () {
         Route::get('/admin/dashboard', [DashboardController::class, 'indexDashboard'])->name('admin.dashboard');

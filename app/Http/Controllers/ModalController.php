@@ -42,14 +42,13 @@ class ModalController extends Controller
             'nama' => 'required',
             'nominal' => 'required|numeric',
             'penyedia' => 'required',
-            'jumlah' => 'required|numeric',
+            'jumlah' => 'numeric',
             'tanggal' => 'required',
         ], [
             'jenis.required' => 'Jenis harus diisi.',
             'nama.required' => 'Nama harus diisi.',
             'nominal.required' => 'Nominal harus diisi.',
             'Penyedia.required' => 'penyedia harus diisi.',
-            'jumlah.required' => 'jumlah harus diisi.',
             'tanggal.required' => 'Tanggal harus diisi.',
         ]);
 
@@ -62,7 +61,7 @@ class ModalController extends Controller
             'nama' => $validatedData['nama'],
             'nominal' => $validatedData['nominal'],
             'penyedia' => $validatedData['penyedia'],
-            'jumlah' => $validatedData['jumlah'],
+            'jumlah' => $request->jumlah,
             'tanggal' => $tanggal
         ]);
         return redirect()->route('modal.index')->with('success', 'Data Berhasil Disimpan');

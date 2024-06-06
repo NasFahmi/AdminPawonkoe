@@ -45,6 +45,7 @@
                                             </svg>
                                         </div>
                                         <input datepicker type="text" name="tanggal" value="{{ old('tanggal') }}"
+                                            required
                                             class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Select date">
                                     </div>
@@ -111,11 +112,11 @@
 
             // Ganti 'specificValue' dengan nilai yang Anda inginkan untuk memicu kondisi
             if (jenis == 2) {
-                // alert('value 2');
+                alert('value 2');
                 jumlah.value = 1;
-                jumlah.disabled = true;
+                jumlah.readOnly = true;
             } else {
-                // alert('value bukan 2');
+                alert('value bukan 2');
                 jumlah.disabled = false;
                 jumlah.value = '';
             }

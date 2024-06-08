@@ -9,7 +9,14 @@ use Spatie\Activitylog\Models\Activity;
 class LogController extends Controller
 {
     public function index(){
-        $data = Activity::latest()->paginate(10);
+        $searchTerm = request('search');
+        if($searchTerm){
+            $data = Activity::where('event','like','%'.$searchTerm.'%')
+            ->orWhere('description','like','%'.$searchTerm.'%')
+            ->latest()->paginate(10);
+        }else{
+            $data = Activity::latest()->paginate(10);
+        }
         $actor = [];
         foreach($data as $item){
             $subject = User::find($item->causer_id); 

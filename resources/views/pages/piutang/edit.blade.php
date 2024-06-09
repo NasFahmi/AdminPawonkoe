@@ -92,14 +92,16 @@
                         @endforeach
                     </div>
                     {{-- <button type="button" onclick="addInput()" class="text-green-400">Tambah Product</button> --}}
-                    <div class="">
+                    <div class="col-span-2">
                         <span class="col-span-full text-sm font-medium text-gray-700">Nota Sebelum</span>
-                        @foreach ($dataNota as $item)
-                            <div
-                                class="relative overflow-hidden bg-white rounded-lg shadow-md flex justify-center items-center">
-                                <img src="{{ asset($item->foto) }}" class="w-auto h-48 object-cover">
-                            </div>
-                        @endforeach
+                        <div class="flex justify-start items-center">
+                            @foreach ($dataNota as $item)
+                                <div
+                                    class="relative overflow-hidden bg-white rounded-lg shadow-md flex justify-center items-center">
+                                    <img src="{{ asset($item->foto) }}" class="w-auto h-48 object-cover">
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
 
 

@@ -10,7 +10,7 @@
                     </path>
                 </svg>
             </a>
-            <h1 class="text-2xl my-6 font-semibold text-gray-700 ">Detail Transaksi</h1>
+            <h1 class="text-base md:text-2xl my-6 font-semibold text-gray-700 ">Detail Transaksi</h1>
         </div>
         {{-- <p>{{$data}}</p> --}}
         <div class="grid grid-cols-1 gap-8">
@@ -20,7 +20,7 @@
                         <p class="text-sm text-gray-400">Pendapatan</p>
                         <div class="flex gap-4 justify-start items-center">
                             <div class="flex justify-start items-center gap-2">
-                                <div class="w-8 h-8 flex justify-center items-center">
+                                <div class="w-6 h-6 md:w-8 md:h-8 flex justify-center items-center">
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -37,18 +37,19 @@
                                         </g>
                                     </svg>
                                 </div>
-                                <h1 class="text-2xl text-gray-800 font-semibold">Rp.
+                                <h1 class="text-base md:text-2xl text-gray-800 font-semibold">Rp.
                                     {{ number_format($data->total_harga, 0, ',', '.') }}</h1>
                             </div>
                             @if ($data->is_complete == true)
                                 <div
-                                    class="bg-green-200 px-4 py-2 w-fit h-fit rounded-3xl flex justify-center items-center">
-                                    <span class="text-green-500 font-semibold">Selesai</span>
+                                    class="bg-green-200 px-3 py-2 md:px-4 md:py-2 w-fit h-fit rounded-3xl flex justify-center items-center">
+                                    <span class="text-green-500 text-xs md:text-base font-semibold">Selesai</span>
                                 </div>
                             @elseif ($data->is_complete == false)
                                 <div
-                                    class="bg-red-200 px-4 py-2 w-fit h-fit rounded-3xl flex justify-center items-center whitespace-nowrap">
-                                    <span class="text-red-500 font-semibold whitespace-nowrap">Belum Selesai</span>
+                                    class="bg-red-200 px-3 py-2 md:px-4 md:py-2 w-fit h-fit rounded-3xl flex justify-center items-center whitespace-nowrap">
+                                    <span class="text-red-500 text-xs md:text-base font-semibold whitespace-nowrap">Belum
+                                        Selesai</span>
                                 </div>
                             @endif
                         </div>
@@ -69,7 +70,7 @@
                                     </g>
                                 </svg>
                             </div>
-                            <h1 class="text-2xl text-gray-800 font-semibold">
+                            <h1 class="text-base md:text-2xl text-gray-800 font-semibold">
                                 {{ \Carbon\Carbon::parse($data->tanggal)->format('d F Y') }}
                             </h1>
                         </div>
@@ -78,44 +79,45 @@
                     <p class="text-sm text-gray-400 mt-1">Product </p>
                     <div class="flex flex-col gap-2 mt-1">
                         <div class="grid grid-cols-5 justify-start items-start">
-                            <p class="text-base col-span-2 text-gray-500">Nama Product</p>
-                            @foreach ($data->history_product_transaksis as $history_product )
-                            <p class="text-base col-span-3 text-gray-800 font-medium">{{ $history_product->history_product->nama_product }}
+                            <p class="text-sm md:text-base col-span-2 text-gray-500">Nama Product</p>
+                            @foreach ($data->history_product_transaksis as $history_product)
+                                <p class="text-sm md:text-base col-span-3 text-gray-800 font-medium">
+                                    {{ $history_product->history_product->nama_product }}
                             @endforeach
                             </p>
                         </div>
                         <div class="grid grid-cols-5 justify-start items-start">
-                            <p class="text-base col-span-2 text-gray-500">Methode Pembayaran</p>
-                            <p class="text-base col-span-3 text-gray-800 font-medium">
+                            <p class="text-sm md:text-base col-span-2 text-gray-500">Methode Pembayaran</p>
+                            <p class="text-sm md:text-base col-span-3 text-gray-800 font-medium">
                                 {{ $data->methode_pembayaran->methode_pembayaran }}</p>
                         </div>
                         <div class="grid grid-cols-5 justify-start items-start">
-                            <p class="text-base col-span-2 text-gray-500">Harga Product</p>
-                            @foreach ($data->history_product_transaksis as $history_product )
-                                    <p class="text-base col-span-3 text-gray-800 font-medium">Rp.
-                                        {{ number_format($history_product->history_product->harga, 0, ',', '.') }}</p>
+                            <p class="text-sm md:text-base col-span-2 text-gray-500">Harga Product</p>
+                            @foreach ($data->history_product_transaksis as $history_product)
+                                <p class="text-sm md:text-base col-span-3 text-gray-800 font-medium">Rp.
+                                    {{ number_format($history_product->history_product->harga, 0, ',', '.') }}</p>
                             @endforeach
-                            
+
                         </div>
                         <div class="grid grid-cols-5 justify-start items-start">
-                            <p class="text-base col-span-2 text-gray-500">Jumlah</p>
-                            <p class="text-base col-span-3 text-gray-800 font-medium">{{ $data->jumlah }}</p>
+                            <p class="text-sm md:text-base col-span-2 text-gray-500">Jumlah</p>
+                            <p class="text-sm md:text-base col-span-3 text-gray-800 font-medium">{{ $data->jumlah }}</p>
                         </div>
                         <div class="grid grid-cols-5 justify-start items-start">
-                            <p class="text-base col-span-2 text-gray-500">Total Harga</p>
-                            <p class="text-base col-span-3 text-gray-800 font-medium">Rp.
+                            <p class="text-sm md:text-base col-span-2 text-gray-500">Total Harga</p>
+                            <p class="text-sm md:text-base col-span-3 text-gray-800 font-medium">Rp.
                                 {{ number_format($data->total_harga, 0, ',', '.') }}</p>
                         </div>
                         <div class="grid grid-cols-5 justify-start items-start">
-                            <p class="text-base col-span-2 text-gray-500">Keterangan</p>
-                            <p class="text-base col-span-3 text-gray-800 font-medium">{{ $data->keterangan }}</p>
+                            <p class="text-sm md:text-base col-span-2 text-gray-500">Keterangan</p>
+                            <p class="text-sm md:text-base col-span-3 text-gray-800 font-medium">{{ $data->keterangan }}</p>
                         </div>
                         <div class="grid grid-cols-5 justify-start items-start">
-                            <p class="text-base col-span-2 text-gray-500">Status</p>
+                            <p class="text-sm md:text-base col-span-2 text-gray-500">Status</p>
                             @if ($data->is_complete == true)
-                                <p class="text-base col-span-3 text-green-400 font-medium">Selesai</p>
+                                <p class="text-sm md:text-base col-span-3 text-green-400 font-medium">Selesai</p>
                             @elseif ($data->is_complete == false)
-                                <p class="text-base col-span-3 text-red-400 font-medium">Belum Selesai</p>
+                                <p class="text-sm md:text-base col-span-3 text-red-400 font-medium">Belum Selesai</p>
                             @endif
                         </div>
                         {{-- <div class="grid grid-cols-5 justify-start items-start">
@@ -158,32 +160,32 @@
                         <p class="text-base text-gray-800 font-medium mb-2">Informasi Preorder</p>
                         <hr>
                         <div class="grid grid-cols-2 justify-start items-start">
-                                <p class="text-sm col-span-1 text-gray-500 whitespace-nowrap ">Tanggal Pembayaran DP</p>
-                                <p class="text-base col-span-1 text-gray-800 font-medium">
-                                    {{ \Carbon\Carbon::parse($data->preorders->tanggal_pembayaran_down_payment)->format('d F Y') }}
-                                </p>
-                            </div>
+                            <p class="text-sm col-span-1 text-gray-500 whitespace-nowrap ">Tanggal Pembayaran DP</p>
+                            <p class="text-base col-span-1 text-gray-800 font-medium">
+                                {{ \Carbon\Carbon::parse($data->preorders->tanggal_pembayaran_down_payment)->format('d F Y') }}
+                            </p>
+                        </div>
                         <div class="flex flex-col gap-2 mt-1">
                             <div class="grid grid-cols-2 justify-start items-start">
                                 <p class="text-sm col-span-1 text-gray-500">DP</p>
                                 <p class="text-base col-span-1 text-gray-800 font-medium">Rp.
                                     {{ number_format($data->preorders->down_payment, 0, ',', '.') }} </p>
                             </div>
-                            
+
                             @if ($data->is_complete == 1)
-                                 <div class="grid grid-cols-2 justify-start items-start">
-                                <p class="text-sm col-span-1 text-gray-500 whitespace-nowrap">Kekurangan Harga</p>
-                                <p class="text-base col-span-1 text-green-500    font-medium">Lunas</p>
-                            </div>
+                                <div class="grid grid-cols-2 justify-start items-start">
+                                    <p class="text-sm col-span-1 text-gray-500 whitespace-nowrap">Kekurangan Harga</p>
+                                    <p class="text-base col-span-1 text-green-500    font-medium">Lunas</p>
+                                </div>
                             @elseif ($data->is_complete == 0)
-                            <div class="grid grid-cols-2 justify-start items-start">
-                                <p class="text-sm col-span-1 text-gray-500 whitespace-nowrap">Kekurangan Harga</p>
-                                <p class="text-base col-span-1 text-red-400 font-medium">Rp.
-                                    {{ number_format($data->total_harga - $data->preorders->down_payment, 0, ',', '.') }}
-                                </p>
-                            </div>
+                                <div class="grid grid-cols-2 justify-start items-start">
+                                    <p class="text-sm col-span-1 text-gray-500 whitespace-nowrap">Kekurangan Harga</p>
+                                    <p class="text-base col-span-1 text-red-400 font-medium">Rp.
+                                        {{ number_format($data->total_harga - $data->preorders->down_payment, 0, ',', '.') }}
+                                    </p>
+                                </div>
                             @endif
-                            
+
 
                         </div>
                     </div>

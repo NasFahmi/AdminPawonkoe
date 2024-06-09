@@ -133,45 +133,21 @@ class ProductController extends Controller
                 // copy file image from storage\app\public\images\tmp\image-660a77aaf10368.27307606\WhatsApp Image 2024-03-18 at 9.29.38 PM.jpeg to storage\app\public\images\GdomcXRDdftRq30MjJPz.jpeg
                 // Membuat folder produk jika belum ada
                 $slugFolderPath = 'public/images/product/' . $slug;
-                $sourcesPath = 'public/images/tmp/' . $folderNameTemp . '/' . $fileNameTemp;
-                $destinationPath = 'public/images/product/' . $slug . '/' . $fileNameProductImage;
-                // Membuat folder produk jika belum ada
                 if (!Storage::exists($slugFolderPath)) {
                     Storage::makeDirectory($slugFolderPath);
                     // Mengatur izin folder
-                    $folderPermissions = 0755; // Owner: read, write, execute; Group: read, execute; Others: read, execute
+                    $folderPermissions = 0755; // Atur izin sesuai kebutuhan Anda
                     chmod(storage_path('app/' . $slugFolderPath), $folderPermissions);
                 }
                 // copy file image dari storage\app\public\images\tmp\image-660a77aaf10368.27307606\WhatsApp Image 2024-03-18 at 9.29.38 PM.jpeg ke storage\app\public\images\GdomcXRDdftRq30MjJPz.jpeg
-                // Pengecekan file dan izin
-                if (!file_exists($sourcesPath)) {
-                    return redirect()->back()->with('error', 'File sumber tidak ditemukan.');
-                }
-
-                if (!is_readable($sourcesPath)) {
-                    return redirect()->back()->with('error', 'File sumber tidak dapat dibaca.');
-                }
-
-                if (!is_writable(dirname($destinationPath))) {
-                    mkdir(dirname($destinationPath), 0755, true);
-                }
-
-                // Copy file image
-                if (!Storage::copy($sourcesPath, $destinationPath)) {
-                    return redirect()->back()->with('error', 'Gagal menyalin file gambar.');
-                }
-
-                // Set file permissions
-                chmod($destinationPath, 0644);
-                // Update or insert ke database
-                Foto::updateOrInsert([
+                $sourcesPath = 'public/images/tmp/' . $folderNameTemp . '/' . $fileNameTemp;
+                $destinationPath = 'public/images/product/' . $slug . '/' . $fileNameProductImage;
+                Storage::copy($sourcesPath, $destinationPath);
+                Foto::updateOrInsert([ //! hanya bekerja di store, namun tidak bekerja di update
                     'foto' => '/storage/images/product/' . $slug . '/' . $fileNameProductImage,
                     'product_id' => $productID,
                 ]);
                 // dd($isertimagedb);
-                // Hapus file temporary
-
-
                 $imageTemp->delete();
                 Storage::deleteDirectory('public/images/tmp/' . $folderNameTemp);
             }

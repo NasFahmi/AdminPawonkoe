@@ -86,7 +86,7 @@ class DashboardController extends Controller
             $carbonDate->setLocale(App::getLocale());
 
             // Format tanggal dengan nama bulan
-            return $carbonDate->formatLocalized('%d %B %Y'); // Sesuaikan format sesuai kebutuhan
+            return $carbonDate->translatedFormat('d F Y'); // Sesuaikan format sesuai kebutuhan
         });
 
         // dd($tanggalPenjualanFormatted);

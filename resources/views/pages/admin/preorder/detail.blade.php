@@ -10,7 +10,7 @@
                     </path>
                 </svg>
             </a>
-            <h1 class="text-base md:text-2xl my-6 font-semibold text-gray-700 ">Detail PreOrder</h1>
+            <h1 class="text-base md:text-2xl my-6 font-semibold text-gray-700 ">Detail Preorder</h1>
         </div>
         {{-- <p>{{$data}}</p> --}}
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">

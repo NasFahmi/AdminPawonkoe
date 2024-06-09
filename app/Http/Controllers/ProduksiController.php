@@ -37,9 +37,9 @@ class ProduksiController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'produk' => 'required',
-            'volume' => 'required',
-            'jumlah' => 'required',
+            'produk' => 'required|string|max:255',
+            'volume' => 'required|numeric',  // Ensure volume is numeric
+            'jumlah' => 'required|integer',
             'tanggal' => 'required',
         ], [
             'produk.required' => 'Produk harus diisi.',
@@ -50,13 +50,13 @@ class ProduksiController extends Controller
 
         try {
             DB::beginTransaction();
-
+            // dd($validatedData);
             $dateTime = Carbon::parse($validatedData['tanggal'], 'Asia/Jakarta');
             $tanggal = $dateTime->format('Y-m-d');
 
             $produksi = Produksi::create([
                 'produk' => $validatedData['produk'],
-                'volume' => $validatedData['volume'],
+                'volume' => (float) $validatedData['volume'],  // Cast volume to float
                 'jumlah' => $validatedData['jumlah'],
                 'tanggal' => $tanggal
             ]);
@@ -145,7 +145,7 @@ class ProduksiController extends Controller
     {
         try {
             DB::beginTransaction();
-            
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($produksi)

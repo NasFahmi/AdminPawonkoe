@@ -14,10 +14,10 @@ class JenisModalSeeder extends Seeder
     public function run(): void
     {
         JenisModal::create([
-            'jenis_modal'=>'alat'
+            'jenis_modal' => 'Fisik'
         ]);
         JenisModal::create([
-            'jenis_modal'=>'uang'
+            'jenis_modal' => 'Finansial'
         ]);
     }
 }

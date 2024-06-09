@@ -68,7 +68,7 @@
                                 Jumlah
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
-                                Volume
+                                Volume (gram)
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
                                 Tanggal

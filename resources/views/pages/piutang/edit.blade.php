@@ -70,7 +70,7 @@
                         </div>
                     </div>
 
-                    <div class="right overflow-y-auto h-[484px]">
+                    <div class="right overflow-y-auto max-h-[484px]">
                         <div class="">
                             <label class="block text-sm mb-1">
                                 <span class="block mb-2 text-sm font-medium text-gray-700   ">Product</span>
@@ -89,15 +89,15 @@
                                     class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     disabled />
                             </div>
+                        @endforeach
                     </div>
-                    @endforeach
                     {{-- <button type="button" onclick="addInput()" class="text-green-400">Tambah Product</button> --}}
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div class="">
                         <span class="col-span-full text-sm font-medium text-gray-700">Nota Sebelum</span>
                         @foreach ($dataNota as $item)
                             <div
                                 class="relative overflow-hidden bg-white rounded-lg shadow-md flex justify-center items-center">
-                                <img src="{{ asset($item->foto) }}" class="w-full h-48 object-cover">
+                                <img src="{{ asset($item->foto) }}" class="w-auto h-48 object-cover">
                             </div>
                         @endforeach
                     </div>
@@ -146,22 +146,22 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <div class="left">
-                    <!-- Status and tanggal lunas -->
-                    <div class="w-full">
-                        <p class="block mb-2 text-sm font-medium text-gray-800">Status</p>
-                        <div class="flex items-center mb-4">
-                            <input checked id="radio-btn-2" type="radio" value="0" name="is_complete"
-                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-                            <label for="radio-btn-2" class="ms-2 text-sm font-medium text-gray-900 ">Belum
-                                Selesai</label>
+                    <div class="left">
+                        <!-- Status and tanggal lunas -->
+                        <div class="w-full">
+                            <p class="block mb-2 text-sm font-medium text-gray-800">Status</p>
+                            <div class="flex items-center mb-4">
+                                <input checked id="radio-btn-2" type="radio" value="0" name="is_complete"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
+                                <label for="radio-btn-2" class="ms-2 text-sm font-medium text-gray-900 ">Belum
+                                    Selesai</label>
+                            </div>
+                            <div class="flex items-center ">
+                                <input id="radio-btn-1" type="radio" value="1" name="is_complete"
+                                    class="w-4 h-4  text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
+                                <label for="radio-btn-1" class="ms-2 text-sm font-medium text-gray-900 ">Selesai</label>
+                            </div>
                         </div>
-                        <div class="flex items-center ">
-                            <input id="radio-btn-1" type="radio" value="1" name="is_complete"
-                                class="w-4 h-4  text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 ">
-                            <label for="radio-btn-1" class="ms-2 text-sm font-medium text-gray-900 ">Selesai</label>
-                        </div>
-                    </div>
                     </div>
                     <div class="right">
                         <label for="" class="block mt-2 mb-2 text-sm font-medium text-gray-800">Tanggal

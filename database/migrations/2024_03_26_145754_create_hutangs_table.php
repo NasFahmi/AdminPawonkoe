@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('hutangs', function (Blueprint $table) {
             $table->id();
-            $table->string('nama',255);
-            $table->string('nominal',255);
+            $table->string('nama', 255);
             $table->longText('catatan')->nullable();
-            $table->boolean('is_complete')->default(0);
-            $table->timestamp('tanggal_hutang')->nullable();
-            $table->timestamp('tenggat_pembayaran')->nullable();
-            $table->timestamp('tanggal_pembayaran')->nullable();
-            $table->string('bukti_pembayaran',255)->nullable();
+            $table->boolean('status')->default(0);
+            $table->bigInteger('jumlah_hutang');
+            $table->timestamp('tenggat_waktu')->nullable();
+            $table->timestamp('tanggal_lunas')->nullable();
+            $table->softDeletes();
         });
     }
 

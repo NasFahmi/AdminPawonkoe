@@ -19,7 +19,7 @@
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
-
+                                
                                 <div class="w-full mt-4">
                                     <label for="nama" class="block mb-2 text-sm font-medium  text-gray-700">Nama</label>
                                     <input type="text" placeholder="Nama" name="nama" value="{{ $data->nama }}"
@@ -31,6 +31,45 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                        <div class="left">
+                            <div class="max-w-lg">
+                                <div class="flex justify-start items-start flex-col gap-3">
+                                    <div class="w-full">
+                                        <label for="jenis" class="block mb-2 text-sm font-medium text-gray-700">nominal</label>
+                                        <input type="text" placeholder="Nominal" name="nominal" value="{{ $data->nominal }}"
+                                            class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
+                                        @error('jenis')
+                                            <small class="error" style="color: red">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                                        <div class="left">
+                                            <div class="max-w-lg">
+                                                <div class="flex justify-start items-start flex-col gap-3">
+                                                    <div class="w-full">
+                                                        <label for="jenis" class="block mb-2 text-sm font-medium text-gray-700">Penyedia</label>
+                                                        <input type="text" placeholder="Penyedia" name="penyedia" value="{{ $data->penyedia }}"
+                                                            class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
+                                                        @error('jenis')
+                                                            <small class="error" style="color: red">{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
+
+                                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                                                        <div class="left">
+                                                            <div class="max-w-lg">
+                                                                <div class="flex justify-start items-start flex-col gap-3">
+                                                                    <div class="w-full">
+                                                                        <label for="jenis" class="block mb-2 text-sm font-medium text-gray-700">Jumlah</label>
+                                                                        <input type="text" placeholder="Jenis" name="jenis" value="{{ $data->jenis }}"
+                                                                            class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
+                                                                        @error('jenis')
+                                                                            <small class="error" style="color: red">{{ $message }}</small>
+                                                                        @enderror
+                                                                    </div>
 
                     <div class="right">
                         <div class="w-full">

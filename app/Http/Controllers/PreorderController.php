@@ -139,22 +139,29 @@ class PreorderController extends Controller
                 "Preorder_id" => $idPreorder,
                 "is_complete" => '0',
             ]);
-            $historyProduct = HistoryProduct::where('product_id',$data['product'])->get()->last();
+            $historyProduct = HistoryProduct::where('product_id', $data['product'])->get()->last();
             // dd($historyProduct->id);
             HistoryProductTransaksi::create([
-                "transaksi_id"=>$transaksi->id,
-                "history_product_id"=> $historyProduct->id,
+                "transaksi_id" => $transaksi->id,
+                "history_product_id" => $historyProduct->id,
             ]);
-            
+
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($transaksi)
+                ->event('add_transaksi preorder')
+                ->withProperties(['id' => $transaksi->id])
+                ->log('User ' . auth()->user()->nama . ' add a transaksi preorder');
+
+
             DB::commit();
             return redirect()->route('preorders.index')->with('success', 'Transaksi has been created successfully');
         } catch (\Throwable $th) {
             DB::rollBack();
             // throw $th;
             return redirect()->back()->with('error', 'Failed to create transaksi data.');
-
         }
-
     }
 
 
@@ -200,7 +207,6 @@ class PreorderController extends Controller
                     "keterangan" => $dataInput['keterangan'],
                 ];
                 $preorder->update($dataPreorder);
-
             } else {
                 // sudah selesai
                 $dataPreorder = [
@@ -211,17 +217,23 @@ class PreorderController extends Controller
                 ];
                 $preorder->update($dataPreorder);
                 event(new TransaksiSelesai($id));
-
             }
+
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($preorder)
+                ->withProperties(['id' => $preorder->id])
+                ->event('update_transaksi preorder')
+                ->log('User ' . auth()->user()->nama . ' update a transaksi preorder');
+
             DB::commit();
             return redirect()->route('preorders.index')->with('success', 'Preorder has been updated successfully');
-
         } catch (\Throwable $th) {
 
             DB::rollBack();
             // throw $th;
             return redirect()->back()->with('error', 'Failed to update transaksi data.');
-
         }
     }
 
@@ -237,6 +249,13 @@ class PreorderController extends Controller
                 ->findOrFail($preorder);
 
             $dataPembeli = $dataTransaksi->pembelis;
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($dataTransaksi)
+                ->event('delete_transaksi preorder')
+                ->withProperties(['data' => $dataTransaksi])
+                ->log('User ' . auth()->user()->nama . ' delete a transaksi preorder');
 
             $dataTransaksi->delete();
             $dataPembeli->delete();

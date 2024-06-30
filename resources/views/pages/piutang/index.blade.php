@@ -3,8 +3,7 @@
 @section('content')
     <div class="container px-6 pb-6 mx-auto ">
         <p class="text-2xl my-6 font-semibold text-gray-700">Piutang</p>
-        {{-- <p>{{$data}}</p> --}}
-        {{-- <div
+        <div
             class="bg-white w-full px-8 py-4 shadow-md rounded-3xl mb-4 flex justify-start items-center max-w-screen-xl lg:w-full">
             <div class="flex justify-start items-start md:items-center flex-col gap-4 w-full lg:flex-row ">
                 <form class="flex items-center w-full lg:w-1/2" action="" method="GET">
@@ -25,7 +24,7 @@
                         <form action="" method="GET">
                             <input type="search" id="default-search" name="search"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Cari Jenis Atau Nama">
+                                placeholder="Cari Nama Toko">
                     </div>
                     <button type="submit"
                         class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -62,13 +61,13 @@
                     <thead class="text-xs text-gray-700  bg-gray-100  ">
                         <tr class="">
                             <th scope="col" class="w-1/4 px-4 py-2 whitespace-nowrap">
-                                Nama
+                                Nama Toko
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
-                                Nominal
+                                Produk
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
-                                Tanggal
+                                Tanggal Disetorkan
                             </th>
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
                                 Status
@@ -77,29 +76,41 @@
                             </th>
                         </tr>
                     </thead>
-                    {{-- <tbody>
+                    <tbody>
                         @foreach ($data as $items)
                             <tr
                                 class="px-4 py-2 odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-">
                                 <th scope="row" class=" font-medium pl-3  lg:whitespace-nowrap  text-sm">
                                     <span class="text-sm">
-                                        {{ $items->jenis }}
+                                        {{ $items->nama_toko }}
                                     </span>
                                 </th>
 
                                 <td cope="row" class="w-10 h-16   px-4 py-2 lg:whitespace-nowrap">
-                                    <span>{{ $items->nama }}</span>
-                                </td>
+                                    <span>
+                                        @foreach ($items->piutang_produk_piutangs as $products)
+                                            @foreach ($products->produk_piutangs->take(1) as $product)
+                                                {{ $product->nama_produk }}
+                                            @endforeach
+                                        @endforeach
 
-                                <td cope="row" class="w-10 h-16  px-4 py-2 lg:whitespace-nowrap">
-                                    <span>{{ $items->nominal }}</span>
+                                    </span>
                                 </td>
 
                                 <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
                                     <span>
-                                        {{ \Carbon\Carbon::parse($items->tanggal)->locale('ID')->isoFormat('D MMMM YYYY') }}
+                                        {{ \Carbon\Carbon::parse($items->tanggal_disetorkan)->locale('ID')->isoFormat('D MMMM YYYY') }}
                                     </span>
                                 </td>
+
+                                <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
+                                    <span
+                                        class="rounded px-2 py-1 {{ $items->is_complete ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
+                                        {{ $items->is_complete ? 'Selesai' : 'Belum Selesai' }}
+                                    </span>
+                                </td>
+
+
 
                                 <td class="w-10 h-16  px-4 py-2  lg:whitespace-nowrap">
                                     <div class="flex justify-center items-center">
@@ -139,8 +150,8 @@
                                         <ul class="text-sm text-gray-700 dark:text-gray-200 rounded-3xl"
                                             aria-labelledby="dropdownDefaultButton">
                                             <li>
-                                                @if (auth()->check() && auth()->user()->hasRole('superadmin'))
-                                                    <a href="{{ route('beban-kewajibans.edit', $items->id) }}"
+                                                @if (auth()->check() && auth()->user()->hasRole('superadmin') && !$items->is_complete)
+                                                    <a href="{{ route('piutang.edit', $items->id) }}"
                                                         class="block px-4 py-2 hover:bg-gray-100 bg-green-50">
                                                         <div class="flex justify-start items-center gap-2">
                                                             <div class="w-4 h-4 ">
@@ -165,25 +176,32 @@
                                                 @endif
                                             </li>
 
-                                            <li>
-                                                <a href="{{ route('beban-kewajibans.destroy', $items->id) }}"
-                                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
-                                                    <div class="flex justify-start items-center gap-2">
-                                                        <div class="w-4 h-4 ">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                height="16" fill="currentColor" class="bi bi-trash"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"
-                                                                    fill="red" />
-                                                                <path
-                                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"
-                                                                    fill="red" />
-                                                            </svg>
-                                                        </div>
-                                                        <span class="font-semibold text-red-400 ">Hapus</span>
-                                                    </div>
-                                                </a>
+                                           <li>
+                                                @if (auth()->check() && auth()->user()->hasRole('superadmin'))
+                                                    <form action="{{ route('piutang.destroy', $items->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="block px-4 py-2 w-full hover:bg-red-100 bg-red-50">
+                                                            <div class="flex justify-start items-center gap-2">
+                                                                <div class="w-4 h-4">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                        height="16" fill="currentColor"
+                                                                        class="bi bi-trash" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"
+                                                                            fill="red" />
+                                                                        <path
+                                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"
+                                                                            fill="red" />
+                                                                    </svg>
+                                                                </div>
+                                                                <span class="font-semibold text-red-400">Hapus</span>
+                                                            </div>
+                                                        </button>
+                                                    </form>
+                                                @endif
                                             </li>
 
                                         </ul>
@@ -203,11 +221,9 @@
                             Page {{ $data->currentPage() }} of {{ $data->lastPage() }}
                         </div>
                     </div>
-                @endif 
+                @endif
             </div>
-        </div> --}}
-        <div class="text-center">
-            <h1 class="text-black text-lg">Sorry This Feature is Coming soon</h1>
         </div>
+
     </div>
 @endsection

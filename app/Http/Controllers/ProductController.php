@@ -152,6 +152,12 @@ class ProductController extends Controller
                 Storage::deleteDirectory('public/images/tmp/' . $folderNameTemp);
             }
 
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($product)
+                ->event('add_product')
+                ->withProperties(['id' => $productID])
+                ->log('User ' . auth()->user()->nama . ' add a new product ');
 
 
             DB::commit();
@@ -286,6 +292,13 @@ class ProductController extends Controller
                 // dd('end foreach');
             }
 
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($product)
+                ->withProperties(['id' => $product->id])
+                ->event('update_product')
+                ->log('User ' . auth()->user()->nama . ' edit a product ');
+
             DB::commit();
 
             return redirect()->route('products.index')->with('success', 'Product has been updated successfully');
@@ -304,6 +317,12 @@ class ProductController extends Controller
         try {
             // Find the product with its related photos and variants
             $data = Product::with(['fotos', 'varians'])->findOrFail($product->id);
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($data)
+                ->event('delete_product')
+                ->withProperties(['data' => $data])
+                ->log('User ' . auth()->user()->nama . ' delete a product ');
 
             // Update the 'tersedia' column to false
             $data->update(['tersedia' => false]);

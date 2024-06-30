@@ -57,8 +57,8 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-8">
-            <div class="flex justify-start items-start flex-col col-span-2 gap-4">
+        <div class="grid lg:grid-cols-3 grid-cols-1 gap-4">
+            <div class="flex justify-start items-start flex-col col-span-2  gap-4">
                 {{-- card --}}
                 {{-- {{$data->id}} --}}
                 @foreach ($data as $preorder)
@@ -68,7 +68,8 @@
 
                             <div class="grid grid-cols-2 gap-4 mb-1">
                                 <p class=" text-gray-400">Product</p>
-                                <p class="font-medium text-gray-800 whitespace-nowrap">: {{ $preorder->products->nama_product }}</p>
+                                <p class="font-medium text-gray-800 whitespace-nowrap">:
+                                    {{ $preorder->products->nama_product }}</p>
 
                             </div>
                             <div class="grid grid-cols-2 gap-4 mb-1">
@@ -106,9 +107,7 @@
                                 </div>
                                 <p class="text-sm text-sky-500 font-medium ">Details</p>
                             </a>
-                            @if (auth()->check() &&
-                                    (auth()->user()->hasRole('superadmin') ||
-                                        auth()->user()->can('edit-preorder')))
+                            @if (auth()->check() && (auth()->user()->hasRole('superadmin') || auth()->user()->can('edit-preorder')))
                                 @if ($preorder->is_complete == 0)
                                     <a href="{{ route('preorders.edit', $preorder->id) }}"
                                         class="flex justify-center items-center gap-1 cursor-pointer">
@@ -136,7 +135,8 @@
                                 @if ($preorder->is_complete == true)
                                     <p class="text-md col-span-3 text-green-400 font-medium whitespace-nowrap">Selesai</p>
                                 @elseif ($preorder->is_complete == false)
-                                    <p class="text-md col-span-3 text-red-400 font-medium whitespace-nowrap">Belum Selesai</p>
+                                    <p class="text-md col-span-3 text-red-400 font-medium whitespace-nowrap">Belum Selesai
+                                    </p>
                                 @endif
                             </div>
 
@@ -207,17 +207,17 @@
                         Belum Lunas)</p>
                 </div>
             </div>
-            
+
         </div>
         @if ($totalPreorder >= 7)
-                    <div class="mt-4 flex flex-col items-center justify-center">
-            <div class="flex items-center space-x-4">
-                {{ $data->links('pagination::tailwind') }}
+            <div class="mt-4 flex flex-col items-center justify-center">
+                <div class="flex items-center space-x-4">
+                    {{ $data->links('pagination::tailwind') }}
+                </div>
+                <div class="mt-2 text-sm text-gray-700">
+                    Page {{ $data->currentPage() }} of {{ $data->lastPage() }}
+                </div>
             </div>
-            <div class="mt-2 text-sm text-gray-700">
-                Page {{ $data->currentPage() }} of {{ $data->lastPage() }}
-            </div>
-        </div>                
         @endif
     </div>
     <script>

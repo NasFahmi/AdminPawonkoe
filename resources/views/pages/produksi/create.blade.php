@@ -11,7 +11,8 @@
                         <div class="max-w-lg">
                             <div class="flex justify-start items-start flex-col gap-3">
                                 <div class="w-full">
-                                    <label for="jenis" class="block mb-2 text-sm font-medium text-gray-700">Produk</label>
+                                    <label for="jenis"
+                                        class="block mb-2 text-sm font-medium text-gray-700">Produk</label>
                                     <input type="text" placeholder="Produk" name="produk" value="{{ old('produk') }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
                                     @error('produk')
@@ -20,7 +21,8 @@
                                 </div>
 
                                 <div class="w-full mt-4">
-                                    <label for="nama" class="block mb-2 text-sm font-medium  text-gray-700">Jumlah</label>
+                                    <label for="nama"
+                                        class="block mb-2 text-sm font-medium  text-gray-700">Jumlah</label>
                                     <input type="number" placeholder="Jumlah" name="jumlah" value="{{ old('jumlah') }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
                                     @error('jumlah')
@@ -33,13 +35,15 @@
 
                     <div class="right">
                         <div class="w-full">
-                            <label for="nominal" class="block mb-2 text-sm font-medium text-gray-700">Volume</label>
-                            <input type="number" placeholder="Volume" name="volume" value="{{ old('volume') }}"
-                                class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
+                            <label for="volume" class="block mb-2 text-sm font-medium text-gray-700">Volume (gram)</label>
+                            <input type="text" placeholder="Volume" name="volume" value="{{ old('volume') }}"
+                                class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                pattern="^\d+(\.\d+)?$" title="Please enter a valid number (integer or decimal)" />
                             @error('volume')
                                 <small class="error" style="color: red">{{ $message }}</small>
                             @enderror
                         </div>
+
 
                         <div class="w-full mt-5">
                             <label for="" class="block pt-2 text-sm font-medium text-gray-800">Tanggal</label>

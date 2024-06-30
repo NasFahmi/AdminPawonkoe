@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('nama');
             $table->string('nominal');
             $table->string('penyedia');
-            $table->bigInteger('jumlah');
+            $table->bigInteger('jumlah')->default(1);
             $table->timestamp('tanggal');
             $table->unsignedBigInteger('jenis_modal_id');
+            $table->softDeletes();
             $table->foreign('jenis_modal_id')->references('id')->on('jenis_modals')->onDelete('cascade')->onUpdate('cascade');
         });
     }

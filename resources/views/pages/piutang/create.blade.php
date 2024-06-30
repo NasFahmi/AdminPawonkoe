@@ -4,27 +4,27 @@
     <div class="container px-6 pb-6 mx-auto">
         <h1 class="text-2xl my-6 font-semibold text-gray-700">Tambah Piutang</h1>
         <div class="bg-white px-8 py-8 shadow-lg rounded-3xl">
-            <form action="{{ route('piutang.store') }}" method="post">
+            <form action="{{ route('piutang.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
                     <div class="left">
                         <div class="max-w-lg">
                             <div class="flex justify-start items-start flex-col gap-3">
                                 <div class="w-full">
-                                    <label for="nama" class="block mb-2 text-sm font-medium text-gray-700">Nama</label>
-                                    <input type="text" placeholder="Nama" name="nama" value="{{ old('nama') }}"
+                                    <label for="nama_toko" class="block mb-2 text-sm font-medium text-gray-700">Nama Toko</label>
+                                    <input type="text" placeholder="Nama Toko" name="nama_toko" value="{{ old('nama_toko') }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
-                                    @error('nama')
+                                    @error('nama_toko')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="w-full">
-                                    <label for="nominal"
-                                        class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
-                                    <input type="number" placeholder="Nominal" name="nominal" value="{{ old('nominal') }}"
+                                    <label for="sewa_titip"
+                                        class="block mb-2 text-sm font-medium text-gray-700">Sewa Titip</label>
+                                    <input type="number" placeholder="Sewa Titip" name="sewa_titip" value="{{ old('sewa_titip') }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
-                                    @error('nominal')
+                                    @error('sewa_titip')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
@@ -41,16 +41,16 @@
                                                     d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                             </svg>
                                         </div>
-                                        <input datepicker type="text" name="tanggal" value="{{ old('tanggal') }}"
+                                        <input datepicker type="text" name="tanggal_disetorkan" value="{{ old('tanggal_disetorkan') }}"
                                             class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Select date">
                                     </div>
-                                    @error('tanggal')
+                                    @error('tanggal_disetorkan')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
 
-                                <div class="w-full">
+                                {{-- <div class="w-full">
                                     <p class="block mb-2 text-sm font-medium text-gray-800">Status</p>
                                     <div class="flex items-center mb-4">
                                         <input id="radio-btn-1" type="radio" value="1" name="is_complete"
@@ -64,21 +64,33 @@
                                         <label for="radio-btn-2" class="ms-2 text-sm font-medium text-gray-900 ">Belum
                                             Selesai</label>
                                     </div>
+                                </div> --}}
+
+                                <div class="w-full">
+                                    <label for="" class="text-sm font-medium text-gray-800 ">Catatan</label>
+                                    <textarea
+                                        class="w-full max-w-4xl h-52 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="Catatan" name="catatan" rows="5"></textarea>
                                 </div>
-
-
 
                             </div>
                         </div>
                     </div>
 
-                    <div class="right">
-                        <div class="w-full">
-                            <label for="" class="text-sm font-medium text-gray-800 ">Catatan</label>
-                            <textarea
-                                class="w-full max-w-4xl h-52 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Catatan" name="catatan" rows="5"></textarea>
+                    <div class="right overflow-y-auto h-[484px]">
+                        <div class="">
+                            <label class="block text-sm mb-1">
+                                <span class="text-gray-700 dark:text-gray-400">Product</span>
+                            </label>
                         </div>
+                        <div id="form-container">
+                            <!-- Formulir input awal -->
+                            <div class="form-group flex justify-center items-center gap-2">
+
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="addInput()" class="text-green-400">Tambah Product</button>
                     </div>
                 </div>
 
@@ -100,7 +112,7 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-400">JPG, PNG, JPEG</p>
                                 </div>
                                 <input id="dropzone-file" type="file" value="{{ old('image') }}"
-                                    class="absolute w-full h-full border opacity-0" name="image" multiple
+                                    class="absolute w-full h-full border opacity-0" name="image[]" multiple
                                     onchange="previewImages()" />
                             </label>
 
@@ -114,7 +126,8 @@
 
                     </div>
                     <!-- Image Preview -->
-                    <div id="imagePreviews" class="w-full rounded-lg  grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 "></div>
+                    <div id="imagePreviews" class="w-full rounded-lg  grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
+                    </div>
                 </div>
                 <div class="flex justify-center items-center mt-8">
                     <button type="submit"
@@ -124,6 +137,33 @@
         </div>
     </div>
     <script>
+        let product = 1;
+
+        function addInput() {
+            var formContainer = document.getElementById('form-container');
+            var newFormGroup = document.createElement('div');
+            newFormGroup.className = 'form-group';
+            newFormGroup.innerHTML = '<div class="form-group flex-cols mb-4 justify-center items-center">' +
+                '<input type="text" name="product[' + product + '][product]" placeholder="Product" ' +
+                'class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />' +
+                '<input type="number" name="product[' + product + '][quantity]" placeholder="Quantity" ' +
+                'class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />' +
+                '<input type="number" name="product[' + product + '][price]" placeholder="Price" ' +
+                'class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />' +
+                '<div class="cursor-pointer" onclick="removeInput(this)" >' +
+                    '<p class="text-red-400 text-sm">delete product</p>'+
+                '</div>' +
+                '</div>';
+            formContainer.appendChild(newFormGroup);
+            product++;
+        }
+
+
+        function removeInput(element) {
+            var formGroup = element.parentElement;
+            formGroup.parentNode.removeChild(formGroup);
+        }
+
         function previewImages() {
             var previewContainer = document.getElementById('imagePreviews');
             previewContainer.innerHTML = ''; // Bersihkan konten sebelum menambahkan gambar baru

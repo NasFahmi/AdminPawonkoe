@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Piutang;
+use App\Models\NotaPiutang;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\ProdukPiutang;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StorePiutangRequest;
 use App\Http\Requests\UpdatePiutangRequest;
-use Illuminate\Http\Request;
+use App\Models\PiutangProdukPiutang;
 
 class PiutangController extends Controller
 {
@@ -16,14 +21,26 @@ class PiutangController extends Controller
      */
     public function index()
     {
-        return view('pages.piutang.index');
+        $data = Piutang::with(['piutang_produk_piutangs.produk_piutangs'])
+        ->search(request('search'))
+        ->paginate(10);
+        // foreach ($data as $items) {
+        //     foreach ($items->piutang_produk_piutangs as $products ) {
+        //         foreach ($products->produk_piutangs as $product) {
+        //             dd($product->nama_produk);
+        //         }
+        //     }
+        // }
+        return view('pages.piutang.index', compact('data'));
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+        // dd('awdw');
         return view('pages.piutang.create');
     }
 
@@ -32,57 +49,114 @@ class PiutangController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $validatedData = $request->validate([
-            'nama' => 'required',
-            'nominal' => 'required',
-            'tanggal' => 'required',
-            // 'image' => 'required', 
+            'nama_toko' => 'required|string',
+            'sewa_titip' => 'required|numeric',
+            'tanggal_disetorkan' => 'required|date_format:m/d/Y',
+            'catatan' => 'nullable|string',
+            'product.*.product' => 'required|string',
+            'product.*.quantity' => 'required|numeric',
+            'product.*.price' => 'required|numeric',
+            'image.*' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Adjust max file size as needed
 
         ], [
-           
-            'nama.required' => 'Nama harus diisi.',
-            'nominal.required' => 'Nominal harus diisi.',
-            'tanggal.required' => 'Tanggal harus diisi.',
-            // 'image.required' => 'Nota harus diisi.',
-            // 'image.mimes' => 'Format gambar yang diizinkan: jpeg, png, jpg,',
-            // 'image.max' => 'Ukuran gambar maksimal adalah 2MB.',
 
+            'required' => 'The :attribute field is required.',
+            'string' => 'The :attribute must be a string.',
+            'numeric' => 'The :attribute must be a number.',
+            'date_format' => 'The :attribute must be in the format mm/dd/yyyy.',
+            'image' => 'The :attribute must be an image.',
+            'mimes' => 'The :attribute must be a file of type: :values.',
+            'max' => 'The :attribute may not be greater than :max kilobytes.',
         ]);
 
         try {
             DB::beginTransaction();
             $data = $request->all();
-
-            // dd($data);
-            if ($request->hasFile('image')) {
-                dd('gambar ada');
-            }
-            $image = $request->file('image');
-            $name = $image->getClientOriginalName();
-            $extension = $image->getClientOriginalExtension();
-            $image->storeAs('public/assets/images', $name);
-            dd($extension);
-            
-            $dateTime = Carbon::parse($validatedData['tanggal'], 'Asia/Jakarta');
+            // dd($data['nama_toko']);
+            $dateTime = Carbon::parse($data['tanggal_disetorkan'], 'Asia/Jakarta');
             $tanggal = $dateTime->format('Y-m-d');
-            $dataCatatan = null;
-            if (isset($data['catatan'])) {
-                $dataCatatan = $data['catatan'];
-            }
-            Piutang::create([
-                'nama' => $validatedData['nama'],
-                'nominal' => $validatedData['nominal'],
-                'catatan' => $dataCatatan,
+            // 1. store piutang
+            // Piutang
+            $piutang = Piutang::create([
+                'nama_toko' => $data['nama_toko'],
+                'sewa_titip' => $data['sewa_titip'],
                 'tanggal_disetorkan' => $tanggal,
-                'is_complete' => $data['is_complete'],
-                'bukti_nota' => $name,
+                'catatan' => $data['catatan'],
             ]);
+            // 2. store piutang product piutang
+
+            // piutang product piutang
+            $piutangProductPiutang = PiutangProdukPiutang::create([
+                'piutang_id' => $piutang->id,
+            ]);
+
+            // 3. store image
+            if ($request->hasFile('image')) {
+                $images = $request->file('image'); // not empty
+                // dd($images); // Check if $images is not empty
+
+                $foldername = $data['nama_toko'] . '_' . $tanggal;
+                $folderPath = 'public/images/piutang/' . $foldername;
+
+                if (!Storage::exists($folderPath)) {
+                    Storage::makeDirectory($folderPath, 0755, true); // Recursive directory creation
+                }
+
+                foreach ($images as $image) {
+                    $nameResource = Str::random(10);
+                    $extension = $image->getClientOriginalExtension();
+                    $name = $nameResource . '.' . $extension;
+
+                    $image->storeAs($folderPath, $name);
+
+                    NotaPiutang::create([
+                        'piutang_id' => $piutang->id,
+                        'foto' => 'storage/images/piutang/'.$foldername . '/' . $name, // Concatenate folder path and file name
+                    ]);
+                }
+            }
+
+            // 4. store semua product kedalam database
+            $productData = $request->input('product');
+
+            foreach ($productData as $product) {
+                ProdukPiutang::create([
+                    'produk_piutang_id' => $piutangProductPiutang->id,
+                    'nama_produk' => $product['product'],
+                    'jumlah' => $product['quantity'],
+                    'harga' => $product['price'],
+                    'total' => $product['quantity'] * $product['price'],
+                ]);
+            }
+            // dd($data);
+
+            // calculate total didalam tabel piutang product piutang
+            $productPiutang = ProdukPiutang::where('produk_piutang_id', $piutangProductPiutang->id)->get(); //result array
+            $total = 0;
+            foreach ($productPiutang as $product) {
+                // Add the total of each product to the total sum
+                $total += $product->total;
+            }
+            $piutangProductPiutang->total = $total;
+            $piutangProductPiutang->save();
+
+            $piutang->penghasilan = $total - $data['sewa_titip'];
+            $piutang->save();
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($piutang)
+                ->event('add_piutang')
+                ->withProperties(['id' => $piutang->id])
+                ->log('User ' . auth()->user()->nama . ' add a piutang');
 
             DB::commit();
             return redirect()->route('piutang.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Throwable $th) {
             DB::rollBack();
-            // throw $th;
+            throw $th;
             return redirect()->back()->with('error', 'Gagal menyimpan.');
         }
     }
@@ -98,24 +172,95 @@ class PiutangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Piutang $piutang)
+    public function edit($id)
     {
-        //
+        $piutang = Piutang::with('piutang_produk_piutangs','notas')->findorFail($id);
+        $data = ProdukPiutang::where('produk_piutang_id', $piutang->id)->get();
+        $dataNota = NotaPiutang::where('piutang_id', $piutang->id)->get();
+        return view('pages.piutang.edit', compact('piutang','data','dataNota'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePiutangRequest $request, Piutang $piutang)
+    public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'tanggal_lunas' => 'required|date_format:m/d/Y',
+            'image.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Adjust max file size as needed
+        ], [
+            'required' => 'The :attribute field is required.',
+            'date_format' => 'The :attribute must be in the format mm/dd/yyyy.',
+            'image' => 'The :attribute must be an image.',
+            'mimes' => 'The :attribute must be a file of type: :values.',
+            'max' => 'The :attribute may not be greater than :max kilobytes.',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $data = $request->all();
+            // dd($data);
+            $dateTime = Carbon::parse($data['tanggal_lunas'], 'Asia/Jakarta');
+            $tanggal = $dateTime->format('Y-m-d');
+
+            // 1. Update piutang
+            $piutang = Piutang::findOrFail($id);
+            $piutang->update([
+                'is_complete' => $data['is_complete'],
+                'tanggal_lunas' => $tanggal,
+            ]);
+
+            // 3. Update image
+            if ($request->hasFile('image')) {
+                $images = $request->file('image'); // not empty
+                $foldername = $piutang->nama_toko . '_' . $tanggal;
+                $folderPath = 'public/images/piutang/' . $foldername;
+
+                if (!Storage::exists($folderPath)) {
+                    Storage::makeDirectory($folderPath, 0755, true); // Recursive directory creation
+                }
+
+                foreach ($images as $image) {
+                    $nameResource = Str::random(10);
+                    $extension = $image->getClientOriginalExtension();
+                    $name = $nameResource . '.' . $extension;
+
+                    $image->storeAs($folderPath, $name);
+
+                    NotaPiutang::updateOrCreate([
+                        'piutang_id' => $piutang->id,
+                    ], [
+                        'foto' => 'storage/'.$folderPath . '/' . $name, // Concatenate folder path and file name
+                    ]);
+                }
+            }
+
+
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($piutang)
+                ->event('update_piutang')
+                ->withProperties(['id' => $piutang->id])
+                ->log('User ' . auth()->user()->nama . ' update a piutang');
+
+            DB::commit();
+            return redirect()->route('piutang.index')->with('success', 'Data Berhasil Diupdate');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+            return redirect()->back()->with('error', 'Gagal menyimpan.');
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Piutang $piutang)
+    public function destroy($id)
     {
-        //
+        $piutang = Piutang::findOrFail($id);
+        $piutang->delete();
+        return redirect()->route('piutang.index')->with('success', 'Data Berhasil Dihapus');
     }
 }

@@ -33,8 +33,6 @@ class TransaksiController extends Controller
             ->search(request('search'))
             ->paginate(10);
         return view('pages.admin.transaksi.index', compact('data'));
-
-
     }
 
     public function cetakTransaksi()
@@ -61,7 +59,7 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
             'product' => 'required',
@@ -107,16 +105,23 @@ class TransaksiController extends Controller
             //! add data di tabel transakai history product
             //! id transakasi dari $trasnkasi->id
             //! id history product dapat dari HistoryProduct::where(product_id == data['product'])
-            $historyProduct = HistoryProduct::where('product_id',$data['product'])->get()->last();
+            $historyProduct = HistoryProduct::where('product_id', $data['product'])->get()->last();
             // dd($historyProduct->id);
             HistoryProductTransaksi::create([
-                "transaksi_id"=>$transaksi->id,
-                "history_product_id"=> $historyProduct->id,
+                "transaksi_id" => $transaksi->id,
+                "history_product_id" => $historyProduct->id,
             ]);
-            
+
             if ($transaksi->is_complete == 1) {
                 event(new TransaksiSelesai($transaksi->id));
             }
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($transaksi)
+                ->event('add_transaksi')
+                ->withProperties(['id' => $transaksi->id])
+                ->log('User ' . auth()->user()->nama . ' add a transaksi');
 
 
             DB::commit();
@@ -133,7 +138,7 @@ class TransaksiController extends Controller
      */
     public function show(Transaksi $transaksi)
     {
-         //! with history product transakski otomatis dapat id History product
+        //! with history product transakski otomatis dapat id History product
         //! find history procut berdsarkan id historu product dari tabel historu product transaksi
         //! simpan di variabel dan return view di product nama dan harga
 
@@ -152,7 +157,7 @@ class TransaksiController extends Controller
      */
     public function edit(Transaksi $transaksi)
     {
-         //! with history product transakski otomatis dapat id History product
+        //! with history product transakski otomatis dapat id History product
         //! find history procut berdsarkan id historu product dari tabel historu product transaksi
         //! simpan di variabel dan return view di product nama dan harga
 
@@ -199,6 +204,14 @@ class TransaksiController extends Controller
             if ($transaksi->is_complete == 1) {
                 event(new TransaksiSelesai($transaksi->id));
             }
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($transaksi)
+                ->event('update_transaksi')
+                ->withProperties(['id' => $transaksi->id])
+                ->log('User ' . auth()->user()->nama . ' update a transaksi');
+
             DB::commit();
 
             return redirect()->route('transaksis.index')->with('success', 'Transaksi has been updated successfully');
@@ -217,6 +230,12 @@ class TransaksiController extends Controller
     {
         try {
             DB::beginTransaction();
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($transaksi)
+                ->event('delete_transaksi')
+                ->withProperties(['data' => $transaksi])
+                ->log('User ' . auth()->user()->nama . ' delete a transaksi');
 
             $transaksi->delete();
 

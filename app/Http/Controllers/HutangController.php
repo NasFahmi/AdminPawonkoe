@@ -181,6 +181,7 @@ class HutangController extends Controller
             //! unfinish, jika di clear cicilan yang emiliki hutang id = id hutang, maka itu terlalu beresiko, 
             if ($validatedData['status'] == 0) {
                 $tenggatWaktu = Carbon::parse($validatedData['tenggat_waktu'], 'Asia/Jakarta')->format('Y-m-d');
+                // dd($tenggatWaktu); //2024-06-30
                 $hutang->update([
                     'nama' => $validatedData['nama'],
                     'catatan' => $validatedData['catatan'],

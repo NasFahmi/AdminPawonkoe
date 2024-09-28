@@ -237,30 +237,42 @@
 
         var options = {
             series: [{
-                name: "sales",
+                name: "Product",
                 data: [{
-                    x: '2019/01/01',
+                    x: 'Januari',
                     y: 400
                 }, {
-                    x: '2019/04/01',
+                    x: 'Februari',
                     y: 430
                 }, {
-                    x: '2019/07/01',
+                    x: 'Maret',
                     y: 448
                 }, {
-                    x: '2019/10/01',
+                    x: 'April',
                     y: 470
                 }, {
-                    x: '2020/01/01',
+                    x: 'Mei',
                     y: 540
                 }, {
-                    x: '2020/04/01',
+                    x: 'Juni',
                     y: 580
                 }, {
-                    x: '2020/07/01',
+                    x: 'Juli',
                     y: 690
                 }, {
-                    x: '2020/10/01',
+                    x: 'Agustus',
+                    y: 690
+                },{
+                    x: 'September',
+                    y: 690
+                },{
+                    x: 'Oktober',
+                    y: 690
+                },{
+                    x: 'November',
+                    y: 690
+                },{
+                    x: 'Desember',
                     y: 690
                 }]
             }],
@@ -280,19 +292,10 @@
                         fontSize: '10px',
                         fontWeight: 700
                     },
-                    groups: [{
-                            title: '2019',
-                            cols: 4
-                        },
-                        {
-                            title: '2020',
-                            cols: 4
-                        }
-                    ]
                 }
             },
             title: {
-                text: 'Grouped Labels on the X-axis',
+                text: 'Transkai product <Nama Product> Tahun 2024',
             },
             tooltip: {
                 x: {

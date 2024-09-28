@@ -1,7 +1,7 @@
 <!-- Desktop sidebar -->
-<aside class="z-20 hidden w-64 overflow-y-auto bg-white md:block flex-shrink-0 relative">
+<aside class="relative z-20 flex-shrink-0 hidden w-64 overflow-y-auto bg-white md:block">
     <div class="py-4 text-gray-500">
-        <div class="flex justify-start items-center">
+        <div class="flex items-center justify-start">
             <a href="{{ route('admin.dashboard') }}" class="ml-6">
                 <img src="{{ asset('assets/images/logo.png') }}" alt="" class="w-10 h-auto">
             </a>
@@ -256,9 +256,7 @@
         </ul>
 
     </div>
-    <div class="absolute bottom-1 w-full flex justify-center items-center mb-4">
-        <p class="text-gray-700">{{ env('APP_VERSION') }}</p>
-    </div>
+
 </aside>
 <!-- Mobile sidebar -->
 <!-- Backdrop -->
@@ -274,7 +272,7 @@
     x-transition:leave-end="opacity-0 transform -translate-x-20" @click.away="closeSideMenu"
     @keydown.escape="closeSideMenu">
     <div class="py-4 text-gray-500">
-        <div class="flex justify-start items-center">
+        <div class="flex items-center justify-start">
             <a href="" class="ml-6">
                 <img src="{{ asset('assets/images/logo.png') }}" alt="">
             </a>
@@ -533,7 +531,5 @@
 
         </ul>
     </div>
-    <div class="absolute bottom-1 w-full flex justify-center items-center mb-4">
-        <p class="text-gray-700">{{ env('APP_VERSION') }}</p>
-    </div>
+    
 </aside>

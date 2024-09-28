@@ -101,7 +101,9 @@ class PiutangController extends Controller
                 $folderPath = 'public/images/piutang/' . $foldername;
 
                 if (!Storage::exists($folderPath)) {
-                    Storage::makeDirectory($folderPath, 0755, true); // Recursive directory creation
+                    Storage::makeDirectory($folderPath); // Recursive directory creation
+                    $folderPermissions = 0755; // Atur izin sesuai kebutuhan Anda
+                    chmod(storage_path('app/' . $folderPath), $folderPermissions);
                 }
 
                 foreach ($images as $image) {
@@ -157,7 +159,7 @@ class PiutangController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
-            return redirect()->back()->with('error', 'Gagal menyimpan.');
+            // return redirect()->back()->with('error', 'Gagal menyimpan.');
         }
     }
 
@@ -217,7 +219,9 @@ class PiutangController extends Controller
                 $folderPath = 'public/images/piutang/' . $foldername;
 
                 if (!Storage::exists($folderPath)) {
-                    Storage::makeDirectory($folderPath, 0755, true); // Recursive directory creation
+                    Storage::makeDirectory($folderPath); // Recursive directory creation
+                    $folderPermissions = 0755; // Atur izin sesuai kebutuhan Anda
+                    chmod(storage_path('app/' . $folderPath), $folderPermissions);
                 }
 
                 foreach ($images as $image) {
@@ -249,7 +253,7 @@ class PiutangController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
-            return redirect()->back()->with('error', 'Gagal menyimpan.');
+            // return redirect()->back()->with('error', 'Gagal menyimpan.');
         }
     }
 

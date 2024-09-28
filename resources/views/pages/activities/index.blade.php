@@ -79,8 +79,8 @@
 
                                 <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
                                     <span>
-                                        {{-- {{ \Carbon\Carbon::parse($data[$i]->c)->locale('ID')->isoFormat('D MMMM YYYY') }} --}}
-                                        {{$data[$i]->created_at}}
+                                        {{-- {{ \Carbon\Carbon::parse($data[$i]->c, 'Europe/Lisbon')->setTimezone('Asia/Jakarta')->locale('id')->isoFormat('D MMMM YYYY HH:mm:ss') }} --}}
+                                        {{ $datetime[$i]}}
                                     </span>
                                 </td>
                             </tr>

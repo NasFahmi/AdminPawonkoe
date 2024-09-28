@@ -16,7 +16,7 @@
         </div>
 
         <h2 class="my-6 text-2xl font-semibold text-gray-700 ">
-            Dashboard 
+            Dashboard
         </h2>
         <!-- Cards -->
         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
@@ -188,7 +188,7 @@
                         <div class="bg-blue-100 rounded-md p-4 mb-4">
                             <div class="flex justify-start items-center gap-4 mb-2">
                                 <div class="rounded-full w-16 h-16 bg-cover bg-no-repeat bg-center"
-                                    style="background-image: url('{{ asset( $item->fotos->first()->foto) }}')">
+                                    style="background-image: url('{{ asset($item->fotos->first()->foto) }}')">
                                 </div>
                                 <div class="">
                                     <h1 class="text-gray-700 text-lg md:text-base lg:text-lg font-semibold">
@@ -255,16 +255,16 @@
         <script>
             function showLoginSuccessModal() {
                 var modal = document.getElementById('loginSuccessModal');
-                modal.style.display = 'flex'; 
+                modal.style.display = 'flex';
                 setTimeout(function() {
                     hideLoginSuccessModal();
-                }, 2000); 
+                }, 2000);
             }
 
             // Fungsi untuk menyembunyikan modal login berhasil
             function hideLoginSuccessModal() {
                 var modal = document.getElementById('loginSuccessModal');
-                modal.style.display = 'none'; 
+                modal.style.display = 'none';
             }
 
             // Setelah halaman selesai dimuat, tampilkan pop-up
@@ -290,7 +290,7 @@
                     document.head.appendChild(css);
                 @endif
             });
-        
+
             let chartyear = document.getElementById('chartyear');
             let judulchart = document.getElementById('judul-chart')
             let pilihanchart = document.getElementById('pilihan-chart')

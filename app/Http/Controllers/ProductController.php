@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Foto;
+use App\Models\Transaksi;
 use App\Models\Varian;
 use App\Models\Product;
 use App\Models\BeratJenis;
@@ -177,6 +178,8 @@ class ProductController extends Controller
 
     public function show($id)
     {
+        // $dataTransaksi = Transaksi::with(['pembelis', 'history_product_transaksis.history_product', 'methode_pembayaran'])
+        //     ->findOrFail($transaksi->id);
         $data = Product::with(['fotos', 'varians'])->findOrFail($id);
         $berat_jenis = $data->beratJenis;
         return view('pages.admin.product.detail', compact('data', 'berat_jenis'));

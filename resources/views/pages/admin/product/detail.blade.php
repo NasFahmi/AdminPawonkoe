@@ -161,7 +161,7 @@
                                 Total Penjualan Produk
                             </p>
                             <p class="text-4xl font-semibold text-gray-700">
-                                40
+                                {{ $totalPenjualan }}
                             </p>
                         </div>
                     </div>
@@ -174,7 +174,7 @@
                                 Total Penjualan Produk Hari ini
                             </p>
                             <p class="text-4xl font-semibold text-gray-700">
-                                40
+                                {{ $totalPenjualanHariIni }}
                             </p>
                         </div>
                     </div>
@@ -184,7 +184,7 @@
             </div>
             <div class="max-w-screen-xl p-8 bg-white shadow-lg rounded-3xl lg:w-full">
                 <div class="overflow-x-auto ">
-                    <table class="w-full text-sm text-left table-auto ">
+                    <table class="w-full text-sm text-left table-auto">
                         <thead class="text-xs text-gray-700 bg-gray-100 ">
                             <tr class="">
                                 <th scope="col" class="px-4 py-2 whitespace-nowrap">
@@ -193,10 +193,10 @@
                                 <th scope="col" class="px-4 py-2 whitespace-nowrap">
                                     Jumlah
                                 </th>
-                                <th scope="col" class="px-4 py-2 whitespace-nowrap">
-                                    Pembeli
+                                <th scope="col" class="px-4 py-2 whitespace-nowrap w-1/6">
+                                    Methode Pembayaran
                                 </th>
-                                <th scope="col" class="px-4 py-2 whitespace-nowrap">
+                                <th scope="col" class="px-4 py-2 whitespace-nowrap w-1/5">
                                     Status
                                 </th>
                                 <th scope="col" class="px-4 py-2 whitespace-nowrap">
@@ -205,31 +205,51 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
+                            @foreach ($dataTransaksi as $transaksi)
+                                <tr>
+                                    <td class="px-4 py-2 whitespace-nowrap">{{ $transaksi->tanggal }}</td>
+                                    <td class="px-4 py-2 whitespace-nowrap">{{ $transaksi->jumlah }}</td>
+                                    <td class="px-4 py-2 whitespace-nowrap">{{ $transaksi->methode_pembayaran->methode_pembayaran }}</td>
+                                    <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
+                                        @if ($transaksi->is_complete == true)
+                                            <div
+                                                class="flex items-center justify-center px-4 py-2 bg-green-200 w-fit h-fit rounded-3xl">
+                                                <span class="font-semibold text-green-500">Selesai</span>
+                                            </div>
+                                        @elseif ($transaksi->is_complete == false)
+                                            <div
+                                                class="flex items-center justify-center px-4 py-2 bg-red-200 w-fit h-fit rounded-3xl whitespace-nowrap">
+                                                <span class="font-semibold text-red-500 whitespace-nowrap">Belum
+                                                    Selesai</span>
+                                            </div>
+                                        @endif
+                                    </td>
+
+                                    <td class="px-4 py-2 whitespace-nowrap"><a href="{{ route('transaksis.detail', $transaksi->id) }}">Detail</a></td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
-                    {{-- @if ($data->lastPage() > 1)
+                    @if ($dataTransaksi->lastPage() > 1)
                         <div class="flex flex-col items-center justify-center mt-4">
                             <div class="flex items-center space-x-4">
-                                {{ $data->links('pagination::tailwind') }}
+                                {{ $dataTransaksi->links('pagination::tailwind') }}
                             </div>
                             <div class="mt-2 text-sm text-gray-700">
-                                Page {{ $data->currentPage() }} of {{ $data->lastPage() }}
+                                Page {{ $dataTransaksi->currentPage() }} of {{ $dataTransaksi->lastPage() }}
                             </div>
                         </div>
-                    @endif --}}
+                    @endif
                 </div>
             </div>
         </div>
     </div>
     {{-- <p>tests</p> --}}
     <script>
+        const dataTransaksi = @json($dataTransaksi);
+        const transaksiPerBulan = @json($transaksiPerBulan);
+        // console.log(dataTransaksi);
+        const namaProduct = @json($data->nama_product);
         let submitDelete = document.getElementById('submitDeleted')
         submitDelete.addEventListener('click', function() {
             return true;
@@ -238,43 +258,20 @@
         var options = {
             series: [{
                 name: "Product",
-                data: [{
-                    x: 'Januari',
-                    y: 400
-                }, {
-                    x: 'Februari',
-                    y: 430
-                }, {
-                    x: 'Maret',
-                    y: 448
-                }, {
-                    x: 'April',
-                    y: 470
-                }, {
-                    x: 'Mei',
-                    y: 540
-                }, {
-                    x: 'Juni',
-                    y: 580
-                }, {
-                    x: 'Juli',
-                    y: 690
-                }, {
-                    x: 'Agustus',
-                    y: 690
-                },{
-                    x: 'September',
-                    y: 690
-                },{
-                    x: 'Oktober',
-                    y: 690
-                },{
-                    x: 'November',
-                    y: 690
-                },{
-                    x: 'Desember',
-                    y: 690
-                }]
+                data: [
+                    { x: 'Januari', y: transaksiPerBulan[1] },
+                    { x: 'Februari', y: transaksiPerBulan[2] },
+                    { x: 'Maret', y: transaksiPerBulan[3] },
+                    { x: 'April', y: transaksiPerBulan[4] },
+                    { x: 'Mei', y: transaksiPerBulan[5] },
+                    { x: 'Juni', y: transaksiPerBulan[6] },
+                    { x: 'Juli', y: transaksiPerBulan[7] },
+                    { x: 'Agustus', y: transaksiPerBulan[8] },
+                    { x: 'September', y: transaksiPerBulan[9] },
+                    { x: 'Oktober', y: transaksiPerBulan[10] },
+                    { x: 'November', y: transaksiPerBulan[11] },
+                    { x: 'Desember', y: transaksiPerBulan[12] }
+                ]
             }],
             chart: {
                 type: 'bar',
@@ -295,7 +292,7 @@
                 }
             },
             title: {
-                text: 'Transkai product <Nama Product> Tahun 2024',
+                text: `Transkai product ${namaProduct} Tahun 2024`,
             },
             tooltip: {
                 x: {

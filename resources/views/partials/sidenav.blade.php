@@ -31,10 +31,34 @@
                     <span class="ml-4">Dashboard</span>
                 </a>
             </li>
-
         </ul>
 
         <ul>
+            @if (auth()->check() && auth()->user()->hasRole('superadmin'))
+                <li class="relative px-6 py-3 group">
+                    @if (Request::is('admin/rekap-keuangan*'))
+                        <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"></span>
+                    @endif
+                    <a class="inline-flex items-center w-full text-sm font-semibold 
+                @if (Request::is('admin/rekap-keuangan*')) text-gray-800
+                @else
+                    text-gray-500 @endif
+                transition-colors duration-150 group-hover:text-gray-800"
+                        href="{{ route('rekap.index') }}">
+                        <img class="w-5 h-5
+                    @if (Request::is('admin/rekap-keuangan*')) opacity-100
+                    @else
+                        opacity-60 @endif
+                    group-hover:opacity-100
+                    "
+                            src="{{ asset('assets/icon/revenue.png') }}" alt="" srcset="">
+                        <span class="ml-4">Rekap Keuangan</span>
+                    </a>
+                </li>
+                @endif
+
+            
             <li class="relative px-6 py-3 group">
                 @if (Request::is('admin/transaksi*'))
                     <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
@@ -260,6 +284,8 @@
         <p class="text-gray-700">{{ env('APP_VERSION') }}</p>
     </div>
 </aside>
+
+
 <!-- Mobile sidebar -->
 <!-- Backdrop -->
 <div x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
@@ -304,10 +330,36 @@
                     <span class="ml-4">Dashboard</span>
                 </a>
             </li>
-
         </ul>
 
+      
+
         <ul>
+
+            @if (auth()->check() && auth()->user()->hasRole('superadmin'))
+                <li class="relative px-6 py-3 group">
+                    @if (Request::is('admin/rekap-keuangan*'))
+                        <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                            aria-hidden="true"></span>
+                    @endif
+                    <a class="inline-flex items-center w-full text-sm font-semibold 
+                @if (Request::is('admin/rekap-keuangan*')) text-gray-800
+                @else
+                    text-gray-500 @endif
+                transition-colors duration-150 group-hover:text-gray-800"
+                        href="{{ route('rekap.index') }}">
+                        <img class="w-5 h-5
+                    @if (Request::is('admin/rekap-keuangan*')) opacity-100
+                    @else
+                        opacity-60 @endif
+                    group-hover:opacity-100
+                    "
+                            src="{{ asset('assets/icon/revenue.png') }}" alt="" srcset="">
+                        <span class="ml-4">Rekap Keuangan</span>
+                    </a>
+                </li>
+                @endif
+
             <li class="relative px-6 py-3 group">
                 @if (Request::is('admin/transaksi*'))
                     <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
@@ -454,7 +506,7 @@
 
             @endif
 
-@if (auth()->check() && auth()->user()->hasRole('superadmin'))
+            @if (auth()->check() && auth()->user()->hasRole('superadmin'))
 
                 <li class="relative px-6 py-3 group">
                     @if (Request::is('admin/modal*'))

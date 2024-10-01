@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Modal;
+use App\Models\Rekap;
+use App\Models\JenisModal;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreModalRequest;
 use App\Http\Requests\UpdateModalRequest;
-use App\Models\JenisModal;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class ModalController extends Controller
 {
@@ -72,6 +73,15 @@ class ModalController extends Controller
             'jumlah' => $request->jumlah,
             'tanggal' => $tanggal
         ]);
+
+        Rekap::insert([
+            'tanggal_transaksi' => $tanggal,
+            'sumber' => 'Modal',
+            'jumlah' => $validatedData['nominal'],
+            'keterangan' => 'Modal ' . $validatedData['nama'] . ' dari ' . $validatedData['penyedia'],
+            'id_tabel_asal' => $modal->id,
+            'tipe_transaksi' => 'Masuk'
+        ]);
         return redirect()->route('modal.index')->with('success', 'Data Berhasil Disimpan');
     }
 
@@ -129,6 +139,18 @@ class ModalController extends Controller
             'tanggal' => $tanggal,
         ]);
 
+        $rekap = Rekap::where('id_tabel_asal', $modal->id)->first();
+
+            $rekap->update([
+                'tanggal_transaksi' => $tanggal,
+                'sumber' => 'Modal',
+                'jumlah' => $validatedData['nominal'],
+                'keterangan' => 'Modal ' . $validatedData['nama'] . ' dari ' . $validatedData['penyedia'],
+                'id_tabel_asal' => $modal->id,
+                'tipe_transaksi' => 'Masuk'
+            ]);
+        
+
         // Redirect back to the index page with a success message
         return redirect()->route('modal.index')->with('success', 'Data Berhasil Diupdate');
     }
@@ -140,6 +162,8 @@ class ModalController extends Controller
     public function destroy(Modal $modal)
     {
         // Delete the specified modal
+        Rekap::where('id_tabel_asal', $modal->id)->delete();
+
         $modal->delete();
 
         // Redirect back to the index page with a success message

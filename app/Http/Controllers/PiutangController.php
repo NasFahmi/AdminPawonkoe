@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Rekap;
 use App\Models\Piutang;
 use App\Models\NotaPiutang;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ProdukPiutang;
 use Illuminate\Support\Facades\DB;
+use App\Models\PiutangProdukPiutang;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StorePiutangRequest;
 use App\Http\Requests\UpdatePiutangRequest;
-use App\Models\PiutangProdukPiutang;
 
 class PiutangController extends Controller
 {
@@ -151,7 +152,6 @@ class PiutangController extends Controller
                 ->event('add_piutang')
                 ->withProperties(['id' => $piutang->id])
                 ->log('User ' . auth()->user()->nama . ' add a piutang');
-
             DB::commit();
             return redirect()->route('piutang.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Throwable $th) {
@@ -237,6 +237,17 @@ class PiutangController extends Controller
 
 
 
+            if ($data['is_complete'] == 1) {
+                Rekap::insert([
+                    'tanggal_transaksi' => $tanggal,
+                    'sumber' => 'Piutang',
+                    'jumlah' => $piutang->penghasilan,
+                    'keterangan' => 'Piutang di ' . $piutang->nama_toko,
+                    'id_tabel_asal' => $piutang->id,
+                    'tipe_transaksi' => 'Masuk'
+                ]);
+            }
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($piutang)
@@ -261,6 +272,9 @@ class PiutangController extends Controller
     {
         $piutang = Piutang::findOrFail($id);
         $piutang->delete();
+
+        Rekap::where('id_tabel_asal', $piutang->id)->delete();
+
         return redirect()->route('piutang.index')->with('success', 'Data Berhasil Dihapus');
     }
 }

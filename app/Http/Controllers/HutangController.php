@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rekap;
 use App\Models\Hutang;
+use Illuminate\Http\Request;
+use App\Models\CicilanHutang;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreHutangRequest;
 use App\Http\Requests\UpdateHutangRequest;
-use Illuminate\Http\Request;
-use App\Models\CicilanHutang;
 
 class HutangController extends Controller
 {
@@ -79,7 +80,7 @@ class HutangController extends Controller
 
                 $tanggalLunas = Carbon::parse($validatedData['tanggal_lunas'], 'Asia/Jakarta')->format('Y-m-d');
                 // Membuat data hutang
-                Hutang::create([
+                $hutang = Hutang::create([
                     'nama' => $validatedData['nama'],
                     'catatan' => $validatedData['catatan'],
                     'status' => $validatedData['status'], // Sesuaikan nama kolom jika berbeda
@@ -109,9 +110,19 @@ class HutangController extends Controller
                     ]);
                 }
             }
+            $tanggal = Carbon::parse($hutang->created_at, 'Asia/Jakarta')->format('Y-m-d');
 
-
-
+            // dd($tanggal);
+            if ($validatedData['status'] == 1) {
+                Rekap::insert([
+                    'tanggal_transaksi' => $tanggal,
+                    'sumber' => 'Hutang',
+                    'jumlah' => $hutang->jumlah_hutang,
+                    'keterangan' => 'Pembayaran Hutang ke ' . $hutang->nama,
+                    'id_tabel_asal' => $hutang->id,
+                    'tipe_transaksi' => 'Keluar'
+                ]);
+            }
 
             DB::commit();
 
@@ -192,6 +203,17 @@ class HutangController extends Controller
                 CicilanHutang::where('hutangId', $hutang->id)->delete();
             }
 
+            $tanggal = Carbon::parse($hutang->created_at, 'Asia/Jakarta')->format('Y-m-d');
+            if ($validatedData['status'] == 1) {
+                Rekap::insert([
+                    'tanggal_transaksi' => $tanggal,
+                    'sumber' => 'Hutang',
+                    'jumlah' => $hutang->jumlah_hutang,
+                    'keterangan' => 'Pembayaran Hutang ke ' . $hutang->nama,
+                    'id_tabel_asal' => $hutang->id,
+                    'tipe_transaksi' => 'Keluar'
+                ]);
+            }
 
             DB::commit();
 
@@ -210,6 +232,8 @@ class HutangController extends Controller
         $hutang = Hutang::find($id);
         try {
             DB::beginTransaction();
+
+            Rekap::where('id_tabel_asal', $hutang->id)->delete();
             $hutang->delete();
             DB::commit();
             return redirect()->route('hutang.index')->with('success', 'Data Berhasil Didelete');

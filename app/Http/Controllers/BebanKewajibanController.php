@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Rekap;
+use Illuminate\Http\Request;
 use App\Models\BebanKewajiban;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreBebanKewajibanRequest;
 use App\Http\Requests\UpdateBebanKewajibanRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class BebanKewajibanController extends Controller
 {
@@ -64,6 +65,16 @@ class BebanKewajibanController extends Controller
                 'nominal' => $validatedData['nominal'],
                 'tanggal' => $tanggal
             ]);
+
+            Rekap::insert([
+                    'tanggal_transaksi' => $tanggal,
+                    'sumber' => 'Beban dan Kewajiban',
+                    'jumlah' => $validatedData['nominal'],
+                    'keterangan' => 'Pembayaran ' . $validatedData['jenis']. ' untuk ' . $validatedData['nama'],
+                    'id_tabel_asal' => $bebanKewajiban->id,
+                    'tipe_transaksi' => 'Keluar'
+                ]);
+    
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($bebanKewajiban)
@@ -75,7 +86,7 @@ class BebanKewajibanController extends Controller
             return redirect()->route('beban-kewajibans.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Throwable $th) {
             DB::rollBack();
-            // throw $th;
+            throw $th;
             return redirect()->back()->with('error', 'Gagal menyimpan.');
         }
     }
@@ -125,6 +136,17 @@ class BebanKewajibanController extends Controller
                 'tanggal' => $tanggal,
             ]);
 
+            $rekap = Rekap::where('id_tabel_asal', $bebanKewajiban->id)->first();
+
+            $rekap->update([
+                'tanggal_transaksi' => $tanggal,
+                'sumber' => 'Beban dan Kewajiban',
+                'jumlah' => $validatedData['nominal'],
+                'keterangan' => 'Pembayaran ' . $validatedData['jenis']. ' untuk ' . $validatedData['nama'],
+                'id_tabel_asal' => $bebanKewajiban->id,
+                'tipe_transaksi' => 'Keluar'
+            ]);
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($data)
@@ -156,6 +178,7 @@ class BebanKewajibanController extends Controller
                 ->withProperties(['id' => $bebanKewajiban])
                 ->log('User ' . auth()->user()->nama . ' delete a beban kewajiban');
 
+            Rekap::where('id_tabel_asal', $bebanKewajiban->id)->delete();
             $bebanKewajiban->delete();
 
             DB::commit();

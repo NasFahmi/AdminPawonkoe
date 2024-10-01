@@ -25,8 +25,6 @@ class DashboardController extends Controller
         $totalPreorder = Transaksi::where('is_complete', 1)->sum('is_Preorder');
         $dataJumlahOrder = $data->count();
 
-        $startDate = Carbon::now()->subDays(30)->startOfDay();
-        $endDate = Carbon::now()->endOfDay();
         $startDateTest = '2023-12-01';
         $endDateTest = '2024-12-30';
 
@@ -50,11 +48,14 @@ class DashboardController extends Controller
             $query->where('is_preorder', 1)->where('is_complete', 0);
         })
             ->latest()
-            ->limit(3)
+            ->limit(5)
             ->get();
+
         $productRecently = Product::with('fotos', 'transaksis')
-            ->where('tersedia', 1)
+            ->where('tersedia', operator: 1)
             ->latest()->limit(5)->get();
+
+        $productZeroStok = Product::with('fotos')->get();
 
         $foto = Foto::join('transaksis', 'fotos.product_id', '=', 'transaksis.product_id')
             ->where('transaksis.is_complete', 0)
@@ -62,32 +63,6 @@ class DashboardController extends Controller
             ->groupBy('fotos.product_id')
             ->get();
 
-        // Mengambil data total penjualan
-        $dataPenjualan = Transaksi::where('is_complete', 1)
-            ->whereBetween('tanggal', [$startDate, $endDate])
-            ->orderBy('tanggal', 'asc')
-            ->selectRaw('tanggal, sum(total_harga) as total_penjualan')
-            ->groupBy('tanggal')
-            ->pluck('total_penjualan', 'tanggal');
-        $dataPenjualanFormatted = array_values($dataPenjualan->toArray());
-        // dd($dataPenjualanFormatted);
-
-        // Mendapatkan daftar tanggal
-        $tanggalPenjualan = array_keys($dataPenjualan->toArray());
-
-
-
-        // // Format the dates as desired (e.g., "2023-12-03 10:39:37" will be converted to "3 December 2023")
-        $tanggalPenjualanFormatted = collect($tanggalPenjualan)->map(function ($tanggal) {
-            // Menggunakan Carbon untuk memanipulasi format tanggal
-            $carbonDate = Carbon::parse($tanggal);
-
-            // Set lokal untuk format bulan dalam bahasa Indonesia
-            $carbonDate->setLocale(App::getLocale());
-
-            // Format tanggal dengan nama bulan
-            return $carbonDate->translatedFormat('d F Y'); // Sesuaikan format sesuai kebutuhan
-        });
 
         // dd($tanggalPenjualanFormatted);
         // Print the results
@@ -104,8 +79,7 @@ class DashboardController extends Controller
             'namaPembeli',
             'foto',
             'productRecently',
-            'dataPenjualanFormatted',
-            'tanggalPenjualanFormatted'
+           'productZeroStok'
         ));
     }
     public function chart()

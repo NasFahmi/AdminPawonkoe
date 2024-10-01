@@ -26,7 +26,7 @@
                                 <div class="w-full">
                                     <label for="sewa_titip" class="block mb-2 text-sm font-medium text-gray-700">Sewa
                                         Titip</label>
-                                    <input type="number" placeholder="Sewa Titip" name="sewa_titip"
+                                    <input type="number" placeholder="Sewa Titip" name="sewa_titip" min="0"
                                         value="{{ old('sewa_titip', $piutang->sewa_titip) }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 "
                                         disabled />

@@ -16,7 +16,7 @@
         </div>
 
         <h2 class="my-6 text-2xl font-semibold text-gray-700 ">
-            Dashboard 
+            Dashboard
         </h2>
         <!-- Cards -->
         <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
@@ -96,8 +96,32 @@
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 md:mt-8">
+            <div class="bg-white p-4 rounded-lg w-full h-fit mt-8 md:mt-0 shadow-sm">
+                <h1 class="text-gray-800 font-semibold mb-4">Produk Terbaru</h1>
+                <div class="overflow-y-auto costumscroll  rounded-lg max-h-96">
+                    @foreach ($productRecently as $item)
+                        <div class="bg-blue-100 rounded-md p-4 mb-4">
+                            <div class="flex justify-start items-center gap-4 mb-2">
+                                <div class="rounded-full w-16 h-16 bg-cover bg-no-repeat bg-center"
+                                    style="background-image: url('{{ asset( $item->fotos->first()->foto) }}')">
+                                </div>
+                                <div class="">
+                                    <h1 class="text-gray-700 text-lg md:text-base lg:text-lg font-semibold">
+                                        {{ $item->nama_product }}</h1>
+                                    @if ($item->stok <= 0)
+                                        <p class="text-gray-700 text-sm" style="color : red">Stok Sedang Kosong</p>
+                                    @else
+                                        <p class="text-gray-700 text-sm">Stok : {{ $item->stok }}</p>
+                                    @endif
+                                    <p class="text-gray-700">Harga : {{ $item->harga }}</p>
 
-            <div class="bg-white p-4 rounded-lg w-full h-fit md:min-h-full mt-8 md:mt-0 shadow-md">
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-lg w-full h-fit mt-8 md:mt-0 shadow-sm">
                 <div class="flex justify-between items-center mb-4">
                     <h1 class="text-gray-800 font-semibold ">5 Produk Penjualan Teratas</h1>
                     <h1 class="text-gray-800 font-semibold ">30 Hari Terakhir</h1>
@@ -235,16 +259,16 @@
         <script>
             function showLoginSuccessModal() {
                 var modal = document.getElementById('loginSuccessModal');
-                modal.style.display = 'flex'; 
+                modal.style.display = 'flex';
                 setTimeout(function() {
                     hideLoginSuccessModal();
-                }, 2000); 
+                }, 2000);
             }
 
             // Fungsi untuk menyembunyikan modal login berhasil
             function hideLoginSuccessModal() {
                 var modal = document.getElementById('loginSuccessModal');
-                modal.style.display = 'none'; 
+                modal.style.display = 'none';
             }
 
             // Setelah halaman selesai dimuat, tampilkan pop-up
@@ -271,5 +295,130 @@
                 @endif
             });
         
-            </script>
+            let chartyear = document.getElementById('chartyear');
+            let judulchart = document.getElementById('judul-chart')
+            let pilihanchart = document.getElementById('pilihan-chart')
+
+            let options = {
+                chart: {
+                    height: "149%",
+                    maxWidth: "100%",
+                    type: "area",
+                    fontFamily: "Inter, sans-serif",
+                    dropShadow: {
+                        enabled: false,
+                    },
+                    toolbar: {
+                        show: false,
+                    },
+                },
+                tooltip: {
+                    enabled: true,
+                    x: {
+                        show: false,
+                    },
+                },
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        opacityFrom: 0.55,
+                        opacityTo: 0,
+                        shade: "#1C64F2",
+                        gradientToColors: ["#1C64F2"],
+                    },
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                stroke: {
+                    width: 6,
+                },
+                grid: {
+                    show: false,
+                    strokeDashArray: 4,
+                    padding: {
+                        left: 2,
+                        right: 2,
+                        top: 0
+                    },
+                },
+                series: [{
+                    name: "Pendapatan",
+                    data: [],
+                    color: "#1A56DB",
+                }, ],
+                xaxis: {
+                    categories: [],
+                    labels: {
+                        show: false,
+                    },
+                    axisBorder: {
+                        show: false,
+                    },
+                    axisTicks: {
+                        show: false,
+                    },
+                },
+                yaxis: {
+                    show: false,
+                },
+            }
+
+            var chart = new ApexCharts(document.getElementById("area-chart"), options);
+            chart.render();
+
+            chartyear.addEventListener('click', function() {
+                // Refresh the window with the #chartYear fragment
+                location.href = location.href.split('#')[0] + '#chartyear';
+
+                judulchart.innerText = 'Pendapatan 1 Tahun Terakhir'; // Ganti dengan judul yang diinginkan
+                pilihanchart.innerText = '1 Tahun';
+                fetch('{{ route('chart.1year') }}', {
+                        headers: {
+                            'Accept': 'application/json',
+                            "X-Requested-With": "XMLHttpRequest",
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json(); // Assuming the response is JSON
+                        } else {
+                            console.error('Failed to check #chartyear');
+                        }
+                    })
+                    .then(dataFecthing => {
+                        console.log(dataFecthing);
+                        var dataPenjualanSatuTahun = dataFecthing.data.data_penjualan;
+                        var dataBulanSatuTahun = dataFecthing.data.bulan;
+                        console.log(dataPenjualanSatuTahun);
+                        console.log(dataBulanSatuTahun);
+                        // Get the ApexCharts instance
+                        chart.updateOptions({
+                            xaxis: {
+                                categories: dataBulanSatuTahun
+                            },
+                            series: [{
+                                data: dataPenjualanSatuTahun
+                            }],
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+
+
+            var dataPenjualan = @json($dataPenjualanFormatted);
+            var tanggalPenjualan = @json($tanggalPenjualanFormatted);
+            chart.updateOptions({
+                xaxis: {
+                    categories: tanggalPenjualan
+                },
+                series: [{
+                    data: dataPenjualan
+                }],
+            });
+        </script>
+        <script src="{{ asset('js/chart.js') }}"></script>
     @endsection

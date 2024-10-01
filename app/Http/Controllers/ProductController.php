@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Foto;
+use App\Models\Transaksi;
 use App\Models\Varian;
 use App\Models\Product;
 use App\Models\BeratJenis;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Events\ProductCreated;
@@ -178,8 +180,29 @@ class ProductController extends Controller
     public function show($id)
     {
         $data = Product::with(['fotos', 'varians'])->findOrFail($id);
+        $dataTransaksi = Transaksi::with(['pembelis', 'history_product_transaksis.history_product', 'methode_pembayaran'])
+            ->where('product_id', $id)
+            ->latest()
+            ->paginate(10);
+        // dd($dataTransaksi); //array
+        // Dapatkan data transaksi bulanan untuk tahun ini
+        $tahunSekarang = Carbon::now()->year;
+        $transaksiPerBulan = [];
+        
+        for ($bulan = 1; $bulan <= 12; $bulan++) {
+            $jumlahTransaksi = $dataTransaksi->filter(function ($transaksi) use ($tahunSekarang, $bulan) {
+                return Carbon::parse($transaksi->tanggal)->year == $tahunSekarang && Carbon::parse($transaksi->tanggal)->month == $bulan;
+            })->sum('jumlah');
+            
+            $transaksiPerBulan[$bulan] = $jumlahTransaksi ?: 0;
+        }
+        // dd($transaksiPerBulan);
+        // dapatkan data "jumlah" dan ditotal data transaksi
+        $totalPenjualan = $dataTransaksi->sum('jumlah');
+        $tanggalHariIni = now()->format('Y-m-d');
+        $totalPenjualanHariIni = $dataTransaksi->where('tanggal', $tanggalHariIni)->sum('jumlah');
         $berat_jenis = $data->beratJenis;
-        return view('pages.admin.product.detail', compact('data', 'berat_jenis'));
+        return view('pages.admin.product.detail', compact('data', 'berat_jenis', 'totalPenjualan', 'totalPenjualanHariIni', 'dataTransaksi', 'transaksiPerBulan'));
     }
 
     public function edit($id)

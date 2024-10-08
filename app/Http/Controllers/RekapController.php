@@ -67,31 +67,38 @@ class RekapController extends Controller
     // Mencari data berdasarkan tipe transaksi 'masuk'
     $query = Rekap::where('tipe_transaksi', 'masuk');
     $type = 'masuk';
+    $month = null;
     // Jika ada istilah pencarian, tambahkan filter untuk produk
     if ($searchTerm) {
         $query->where('sumber', 'like', "%$searchTerm%");
     }
     // Ambil hasil paginasi
     $data = $query->paginate(10);
-    return view('pages.rekap.detail', compact('data','type'));
+    return view('pages.rekap.detail', compact('data','type','month'));
 }
 
-public function filter($type)
+public function filter($type, $month = null)
 {
     $searchTerm = request('search');
 
     // Membangun query berdasarkan tipe transaksi
     $query = Rekap::where('tipe_transaksi', $type);
-
+    
+    if ($month){
+        $query = Rekap::where('tipe_transaksi', $type)
+        ->whereMonth('tanggal_transaksi', $month);
+  // dd($query , $month);
+        
+    }
     // Jika ada istilah pencarian, tambahkan filter
     if ($searchTerm) {
         $query->where('sumber', 'like', "%$searchTerm%");
     }
 
     // Ambil hasil query
-    $data = $query->get();
+    $data = $query->paginate(10);
 
-    return view('pages.rekap.detail', compact('data', 'type'));
+    return view('pages.rekap.detail', compact('data', 'type','month'));
 }
 
 

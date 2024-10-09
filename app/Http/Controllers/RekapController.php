@@ -15,6 +15,21 @@ use Illuminate\Support\Facades\App;
 
 class RekapController extends Controller
 {
+
+    protected $daftarBulan = [
+        1 => 'Januari',
+        2 => 'Februari',
+        3 => 'Maret',
+        4 => 'April',
+        5 => 'Mei',
+        6 => 'Juni',
+        7 => 'Juli',
+        8 => 'Agustus',
+        9 => 'September',
+        10 => 'Oktober',
+        11 => 'November',
+        12 => 'Desember',
+    ];
     //
     public function index()
     {
@@ -68,37 +83,59 @@ class RekapController extends Controller
     $query = Rekap::where('tipe_transaksi', 'masuk');
     $type = 'masuk';
     $month = null;
+    $year = null;
     // Jika ada istilah pencarian, tambahkan filter untuk produk
     if ($searchTerm) {
         $query->where('sumber', 'like', "%$searchTerm%");
     }
+    
+    
     // Ambil hasil paginasi
     $data = $query->paginate(10);
-    return view('pages.rekap.detail', compact('data','type','month'));
+    return view('pages.rekap.detail', [
+        'data' => $data,
+        'type' => $type,
+        'month' => $month,
+        'daftarBulan' => $this->daftarBulan,
+        'year' => $year,
+        
+    ]);
 }
 
-public function filter($type, $month = null)
+public function filter($type, $year = null,$month = null)
 {
     $searchTerm = request('search');
 
-    // Membangun query berdasarkan tipe transaksi
     $query = Rekap::where('tipe_transaksi', $type);
+
     
-    if ($month){
-        $query = Rekap::where('tipe_transaksi', $type)
-        ->whereMonth('tanggal_transaksi', $month);
-  // dd($query , $month);
-        
+    $query->when($month, function ($q) use ($month) {
+        return $q->whereMonth('tanggal_transaksi', $month);
+    });
+    
+    if (!is_null($year) && $year !== 'semua') {
+        $query->whereYear('tanggal_transaksi', $year);
     }
+
     // Jika ada istilah pencarian, tambahkan filter
     if ($searchTerm) {
         $query->where('sumber', 'like', "%$searchTerm%");
     }
-
+    
+    $totalUang = $query->sum('jumlah');
+    $totalUangFormatted = 'Rp ' . number_format($totalUang, 0, ',', '.');
     // Ambil hasil query
     $data = $query->paginate(10);
+    return view('pages.rekap.detail', [
+        'data' => $data,
+        'type' => $type,
+        'month' => $month,
+        'daftarBulan' => $this->daftarBulan,
+        'totalUangFormatted' => $totalUangFormatted,
+        'year' => $year,
+        
+    ]);
 
-    return view('pages.rekap.detail', compact('data', 'type','month'));
 }
 
 

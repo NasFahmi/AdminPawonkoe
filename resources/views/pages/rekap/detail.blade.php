@@ -66,7 +66,7 @@
                     
 
                     <div class="flex items-center justify-center ">
-                        <div class="w-fit cursor-pointer" data-dropdown-toggle="dropdownBulan">
+                        <div class="w-fit cursor-pointer bg-gray-200 p-1 rounded" data-dropdown-toggle="dropdownBulan">
                             <button class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900">Bulan</button>
                         </div>
                     </div>
@@ -85,10 +85,12 @@
                     </div>
 
                     <div class="flex items-center justify-center">
-                        <div class="w-fit cursor-pointer" data-dropdown-toggle="dropdownTahun">
-                            <button class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900">Tahun</button>
+                        <div class="w-fit cursor-pointer bg-gray-200 p-1 rounded" data-dropdown-toggle="dropdownTahun">
+                            <button class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900">
+                                Tahun
+                            </button>
                         </div>
-                    </div>
+                    </div>                    
                     
                     <div id="dropdownTahun" class="z-10 hidden bg-white divide-y divide-gray-100 shadow rounded-3xl w-44 dark:bg-gray-700">
                         <ul class="text-sm text-gray-700 dark:text-gray-200 rounded-3xl" aria-labelledby="dropdownDefaultButton">

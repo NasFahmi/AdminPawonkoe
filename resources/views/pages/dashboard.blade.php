@@ -31,7 +31,7 @@
                 </div>
                 <div>
                     <p class="mb-2 text-xs font-medium text-gray-600 ">
-                        Jumlah Transaksi
+                        Total Transaksi
                     </p>
                     <p class="text-lg font-semibold text-gray-700 ">
                         {{ $dataJumlahOrder }}
@@ -49,7 +49,7 @@
                 </div>
                 <div>
                     <p class="mb-2 text-xs font-medium text-gray-600 ">
-                        Jumlah Pendapatan
+                        Total Pendapatan
                     </p>
                     <p class="text-lg font-semibold text-gray-700 ">
                         {{-- {{ number_format($items->harga_rendah, 0, ',', '.') }} --}}
@@ -68,7 +68,7 @@
                 </div>
                 <div>
                     <p class="mb-2 text-xs font-medium text-gray-600 ">
-                        Jumlah Produk Terjual
+                        Total Produk Terjual
                     </p>
                     <p class="text-lg font-semibold text-gray-700 ">
                         {{ $totalProductTerjual }}
@@ -86,7 +86,7 @@
                 </div>
                 <div>
                     <p class="mb-2 text-xs font-medium text-gray-600 ">
-                        Jumlah Preorder Selesai
+                        Total Pre-Order Selesai
                     </p>
                     <p class="text-lg font-semibold text-gray-700 ">
                         {{ $totalPreorder }}
@@ -98,7 +98,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 md:mt-8">
             <div class="bg-white p-4 rounded-lg w-full h-fit mt-8 md:mt-0 shadow-sm">
                 <div class="flex justify-between items-center mb-4">
-                    <h1 class="text-gray-800 font-semibold ">5 Produk Penjualan Teratas</h1>
+                    <h1 class="text-gray-800 font-semibold ">Produk Penjualan Teratas</h1>
                     <h1 class="text-gray-800 font-semibold ">30 Hari Terakhir</h1>
                     {{-- <a href="" class="text-sm hover:underline"><span>See Details</span></a> --}}
                 </div>
@@ -144,7 +144,7 @@
            
                 
                 <div class="bg-white p-4 rounded-lg w-full h-fit mt-8 md:mt-0 shadow-md">
-                    <h1 class="text-gray-800 font-semibold mb-4">5 Preorder Belum Selesai Terbaru</h1>
+                    <h1 class="text-gray-800 font-semibold mb-4">Pesanan Preorder Terbaru (Belum Selesai)</h1>
                     <div class="overflow-y-auto costumscroll  rounded-lg max-h-80">
                         {{-- card --}}
                         @foreach ($preorderRecently as $index => $preorder)

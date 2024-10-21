@@ -165,12 +165,10 @@ class RekapController extends Controller
         $query = Rekap::where('tipe_transaksi', 'masuk');
         $type = 'masuk';
         $month = null;
-
         // Jika ada istilah pencarian, tambahkan filter untuk produk
         if ($searchTerm) {
             $query->where('sumber', 'like', "%$searchTerm%");
         }
-
         // Ambil hasil paginasi
         $data = $query->paginate(10);
         return view('pages.rekap.detail', compact('data', 'type', 'month'));
@@ -179,19 +177,16 @@ class RekapController extends Controller
     public function filter($type, $month = null)
     {
         $searchTerm = request('search');
-        $currentMonth = $month ?? Carbon::now()->month;
-        $currentYear = Carbon::now()->year;
 
-        // Query berdasarkan tipe transaksi dan bulan
-        $query = Rekap::where('tipe_transaksi', $type)
-            ->whereMonth('tanggal_transaksi', $currentMonth)
-            ->whereYear('tanggal_transaksi', $currentYear);
+        // Membangun query berdasarkan tipe transaksi
+        $query = Rekap::where('tipe_transaksi', $type);
 
         if ($month) {
             $query = Rekap::where('tipe_transaksi', $type)
                 ->whereMonth('tanggal_transaksi', $month);
-        }
+            // dd($query , $month);
 
+        }
         // Jika ada istilah pencarian, tambahkan filter
         if ($searchTerm) {
             $query->where('sumber', 'like', "%$searchTerm%");

@@ -10,7 +10,7 @@
                     </path>
                 </svg>
             </a>
-            <h1 class="text-base md:text-2xl my-6 font-semibold text-gray-700 ">Rekap Keuangan</h1>
+            <h1 class="text-base md:text-2xl my-6 font-semibold text-gray-700 ">Rekap Keuangan <span class="uppercase text-black">uang {{$type}} </span></h1>
         </div>
 
         {{-- {{dd($data)}} --}}
@@ -63,6 +63,48 @@
                         <span class="text-sm font-semibold {{ isset($type) && $type == 'keluar' ? 'text-red-600' : '' }} hover:text-white">Uang Keluar</span>
                     </a>
 
+                    
+
+                    <div class="flex items-center justify-center ">
+                        <div class="w-fit cursor-pointer bg-gray-200 p-1 rounded" data-dropdown-toggle="dropdownBulan">
+                            <button class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900">Bulan</button>
+                        </div>
+                    </div>
+                    <div id="dropdownBulan"
+                        class="z-10 hidden bg-white divide-y divide-gray-100 shadow rounded-3xl w-44 dark:bg-gray-700">
+                        <ul class="text-sm text-gray-700 dark:text-gray-200 rounded-3xl"
+                            aria-labelledby="dropdownDefaultButton">
+                            <li>
+                                @foreach($daftarBulan as $angkaBulan => $namaBulan)
+                                <a href="{{ route('rekap.filter', ['type' => $type, 'year' => $year ?? 'semua', 'month' => $angkaBulan]) }}"
+                                   class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
+                                    <span class="font-semibold text-sky-400">{{ $namaBulan }}</span>
+                                </a>
+                            @endforeach
+                            </li>
+                    </div>
+
+                    <div class="flex items-center justify-center">
+                        <div class="w-fit cursor-pointer bg-gray-200 p-1 rounded" data-dropdown-toggle="dropdownTahun">
+                            <button class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900">
+                                Tahun
+                            </button>
+                        </div>
+                    </div>                    
+                    
+                    <div id="dropdownTahun" class="z-10 hidden bg-white divide-y divide-gray-100 shadow rounded-3xl w-44 dark:bg-gray-700">
+                        <ul class="text-sm text-gray-700 dark:text-gray-200 rounded-3xl" aria-labelledby="dropdownDefaultButton">
+                            @foreach ($daftarTahun as $tahun)
+                            <li>
+                                <a href="{{ route('rekap.filter', ['type' => $type, 'year' => $tahun]) }}"
+                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
+                                    <span class="font-semibold text-sky-400">{{ $tahun }}</span>
+                                </a>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
                     @if (auth()->check() && (auth()->user()->hasRole('superadmin')))
                         <a href="{{ route('cetak.rekap') }}"
                             class="flex items-center justify-center w-full gap-1 px-4 py-2 bg-orange-100 md:w-fit rounded-3xl ">
@@ -82,68 +124,6 @@
                             <span class="text-sm font-semibold text-orange-600">Cetak Rekapan</span>
                         </a>
                     @endif
-
-                    <div class="flex items-center justify-center ">
-                        <div class="w-fit cursor-pointer" data-dropdown-toggle="dropdown">
-                            <button class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900">Filter Per Bulan</button>
-                        </div>
-                    </div>
-                    <div id="dropdown"
-                        class="z-10 hidden bg-white divide-y divide-gray-100 shadow rounded-3xl w-44 dark:bg-gray-700">
-                        <ul class="text-sm text-gray-700 dark:text-gray-200 rounded-3xl"
-                            aria-labelledby="dropdownDefaultButton">
-                            <li>
-                                <a href="{{ route('rekap.filter', ['type' => $type, 'month' => 1]) }}"
-                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
-                                     <span class="font-semibold text-sky-400">Januari</span>
-                                 </a>
-                                 <a href="{{ route('rekap.filter', ['type' => $type, 'month' => 2]) }}"
-                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
-                                     <span class="font-semibold text-sky-400">Februari</span>
-                                 </a>
-                                 <a href="{{ route('rekap.filter', ['type' => $type, 'month' => 3]) }}"
-                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
-                                     <span class="font-semibold text-sky-400">Maret</span>
-                                 </a>
-                                 <a href="{{ route('rekap.filter', ['type' => $type, 'month' => 4]) }}"
-                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
-                                     <span class="font-semibold text-sky-400">April</span>
-                                 </a>
-                                 <a href="{{ route('rekap.filter', ['type' => $type, 'month' => 5]) }}"
-                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
-                                     <span class="font-semibold text-sky-400">Mei</span>
-                                 </a>
-                                 <a href="{{ route('rekap.filter', ['type' => $type, 'month' => 6]) }}"
-                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
-                                     <span class="font-semibold text-sky-400">Juni</span>
-                                 </a>
-                                 <a href="{{ route('rekap.filter', ['type' => $type, 'month' => 7]) }}"
-                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
-                                     <span class="font-semibold text-sky-400">Juli</span>
-                                 </a>
-                                 <a href="{{ route('rekap.filter', ['type' => $type, 'month' => 8]) }}"
-                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
-                                     <span class="font-semibold text-sky-400">Agustus</span>
-                                 </a>
-                                 <a href="{{ route('rekap.filter', ['type' => $type, 'month' => 9]) }}"
-                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
-                                     <span class="font-semibold text-sky-400">September</span>
-                                 </a>
-                                 <a href="{{ route('rekap.filter', ['type' => $type, 'month' => 10]) }}"
-                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
-                                     <span class="font-semibold text-sky-400">Oktober</span>
-                                 </a>
-                                 <a href="{{ route('rekap.filter', ['type' => $type, 'month' => 11]) }}"
-                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
-                                     <span class="font-semibold text-sky-400">November</span>
-                                 </a>
-                                 <a href="{{ route('rekap.filter', ['type' => $type, 'month' => 12]) }}"
-                                    class="block px-4 py-2 hover:bg-sky-100 bg-sky-50">
-                                     <span class="font-semibold text-sky-400">Desember</span>
-                                 </a>
-                                 
-                            </li>
-                    </div>
                 </div>
             </div>
         </div>
@@ -165,7 +145,6 @@
                             <th scope="col" class=" px-4 py-2 whitespace-nowrap">
                                 Keterangan
                             </th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -203,7 +182,7 @@
 
                     </tbody>
                 </table>
-                {{-- @if ($data->lastPage() > 1)
+                @if ($data->lastPage() > 1)
     <div class="mt-4 flex flex-col items-center justify-center">
         <div class="flex items-center space-x-4">
             {{ $data->links('pagination::tailwind') }} <!-- Menampilkan navigasi paginasi -->
@@ -212,9 +191,39 @@
             Page {{ $data->currentPage() }} of {{ $data->lastPage() }} <!-- Menampilkan info halaman -->
         </div>
     </div>
-@endif --}}
+@endif
 
             </div>
         </div>
+        @if ($month != null)
+        <div class="bg-white rounded-3xl p-8 mt-8 shadow-xl ">
+            <p class="text-base text-gray-800 font-medium mb-2">
+                Total Uang <span class="uppercase">{{ $type }}</span> untuk Bulan 
+                @if ($month && isset($daftarBulan[$month]))
+                    <span class="font-semibold text-sky-400">{{ $daftarBulan[$month] }}</span>
+                @endif
+            </p>
+            <hr>
+            <div class="flex flex-col gap-2 mt-1">
+                <div class="grid grid-cols-6 justify-start items-start">
+                    <p class="text-base col-span-2 text-gray-500">{{$totalUangFormatted}}</p>
+                </div>
+            </div>
+        </div>
+        @elseif ($year != null)
+        <div class="bg-white rounded-3xl p-8 mt-8 shadow-xl ">
+        <p class="text-base text-gray-800 font-medium mb-2">
+            Total Uang <span class="uppercase">{{ $type }}</span> untuk Tahun 
+                <span class="font-semibold text-sky-400">{{ $year}}</span>
+        </p>
+            <hr>
+            <div class="flex flex-col gap-2 mt-1">
+                <div class="grid grid-cols-6 justify-start items-start">
+                    <p class="text-base col-span-2 text-gray-500">{{$totalUangFormatted}}</p>
+                </div>
+            </div>
+        </div>
+        @endif
+
     </div>
 @endsection

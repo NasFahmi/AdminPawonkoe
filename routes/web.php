@@ -149,8 +149,9 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:superadmin'])->group(function () {
         Route::get('/admin/rekap-keuangan', [RekapController::class, 'index'])->name('rekap.index');
         Route::get('/admin/rekap-keuangan/detail', [RekapController::class, 'show'])->name('rekap.detail');
-        Route::get('/admin/rekap-keuangan/detail/{type}/{month?}', [RekapController::class, 'filter'])->name('rekap.filter');
         Route::get('/admin/cetak/rekap-keuangan', [RekapController::class, 'cetak'])->name('cetak.rekap');
+        Route::get('/admin/rekap-keuangan/detail/{type}/{year?}/{month?}', [RekapController::class, 'filter'])->name('rekap.filter');
+
     });
 
     //Beban modal

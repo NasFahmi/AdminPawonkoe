@@ -81,7 +81,7 @@ class TransaksiController extends Controller
             // dd($data);
             $dataTanggal = $request->tanggal;
             $dateTime = Carbon::parse($dataTanggal, 'Asia/Jakarta'); // Ganti 'Asia/Jakarta' sesuai dengan timezone yang sesuai
-            $tanggal = $dateTime->format('Y-m-d');
+            // $tanggal = $dateTime->format('Y-m-d');
             // dd($tanggal);
             $totalharga = $request->total;
             $totalHargaTanpaTitik = str_replace(".", "", $totalharga);
@@ -93,7 +93,7 @@ class TransaksiController extends Controller
 
             // dd($totalharga);
             $transaksi = Transaksi::create([
-                "tanggal" => $tanggal,
+                "tanggal" => $dataTanggal,
                 "product_id" => $data['product'],
                 "methode_pembayaran_id" => $data['methode_pembayaran'],
                 "jumlah" => $data['jumlah'],
@@ -128,7 +128,7 @@ class TransaksiController extends Controller
             $nama_product = $product->nama_product;
             if ($transaksi->is_complete == 1) {
                 Rekap::insert([
-                    'tanggal_transaksi' => $tanggal,
+                    'tanggal_transaksi' => $dataTanggal,
                     'sumber' => 'Transaksi',
                     'jumlah' => $totalHargaTanpaTitik,
                     'keterangan' => 'Transaksi Produk ' . $nama_product,

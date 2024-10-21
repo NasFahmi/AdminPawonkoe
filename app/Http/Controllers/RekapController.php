@@ -34,110 +34,132 @@ class RekapController extends Controller
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
 
-        $uangMasukTransaksi = Transaksi::where('is_complete', 1)
-            ->whereMonth('tanggal', $currentMonth)
-            ->whereYear('tanggal', $currentYear)
-            ->sum('total_harga');
 
-        $uangMasukModal = Modal::whereMonth('tanggal', $currentMonth)
-            ->whereYear('tanggal', $currentYear)
-            ->sum('nominal');
-
-        $jumlahUangMasuk = $uangMasukTransaksi + $uangMasukModal;
-
-        $uangKeluarHutang = Hutang::whereMonth('tanggal_lunas', $currentMonth)
-            ->whereYear('tanggal_lunas', $currentYear)
-            ->sum('jumlah_hutang');
-
-        $uangKeluarBebanKewajiban = BebanKewajiban::whereMonth('tanggal', $currentMonth)
-            ->whereYear('tanggal', $currentYear)
-            ->sum('nominal');
-
-        $jumlahUangKeluar = $uangKeluarHutang + $uangKeluarBebanKewajiban;
 
         // JANGAN DIUBAH LURR
         $data = Rekap::all();
-        $jumlahUangMasuk = $data->where('tipe_transaksi', 'masuk')->sum('jumlah');
-        $jumlahUangKeluar = $data->where('tipe_transaksi', 'keluar')->sum('jumlah');
+        $dataDanaMasuk = $data->where('tipe_transaksi', 'masuk');
+        $dataDanaKeluar = $data->where('tipe_transaksi', 'keluar');
+        $jumlahUangMasuk = $dataDanaMasuk->sum('jumlah');
+        $jumlahUangKeluar = $dataDanaKeluar->sum('jumlah');
         $saldoAkhir = $jumlahUangMasuk - $jumlahUangKeluar;
         $jumlahUangMasukFormatted = 'Rp ' . number_format($jumlahUangMasuk, 0, ',', '.');
         $jumlahUangKeluarFormatted = 'Rp ' . number_format($jumlahUangKeluar, 0, ',', '.');
         $saldoAkhirFormatted = 'Rp ' . number_format($saldoAkhir, 0, ',', '.');
-        
 
-        $currentMonthInIndo = Carbon::now()->locale('id')->translatedFormat('F');
+        // dd($dataDanaMasuk);
+        /**
+         * @var 
+         * "id" => 1
+            "tanggal_transaksi" => "2024-09-04"
+            "sumber" => "Transaksi"
+            "jumlah" => "2462.00"
+            "keterangan" => "Transaksi Produk awd"
+            "id_tabel_asal" => 1
+            "tipe_transaksi" => "masuk"
+            "created_at" => null
+            "updated_at" => null
+         */
+        // dd($dataDanaKeluar);
+        /**
+         * "id" => 4
+            "tanggal_transaksi" => "2024-10-21"
+            "sumber" => "Hutang"
+            "jumlah" => "123.00"
+            "keterangan" => "Pembayaran Hutang ke pawonkoe"
+            "id_tabel_asal" => 1
+            "tipe_transaksi" => "keluar"
+            "created_at" => null
+            "updated_at" => null
+         */
 
-        $startOfMonth = Carbon::now()->startOfMonth();
-        $endOfMonth = Carbon::now()->endOfMonth();
-        $allDates = [];
-
-        $currentDate = $startOfMonth->copy();
-        while ($currentDate->lte($endOfMonth)) {
-            $allDates[] = $currentDate->copy()->format('Y-m-d');
-            $currentDate->addDay();
-        }
-
-        $dataPenjualan = Transaksi::where('is_complete', 1)
-            ->whereMonth('tanggal', $currentMonth)
-            ->whereYear('tanggal', $currentYear)
-            ->orderBy('tanggal', 'asc')
-            ->selectRaw('tanggal, sum(total_harga) as total_penjualan')
-            ->groupBy('tanggal')
-            ->pluck('total_penjualan', 'tanggal');
-
-        $dataModal = Modal::whereMonth('tanggal', $currentMonth)
-            ->whereYear('tanggal', $currentYear)
-            ->selectRaw('tanggal, sum(nominal) as total_modal')
-            ->groupBy('tanggal')
-            ->pluck('total_modal', 'tanggal');
-
-        $dataHutang = Hutang::whereMonth('tanggal_lunas', $currentMonth)
-            ->whereYear('tanggal_lunas', $currentYear)
-            ->selectRaw('tanggal_lunas as tanggal, sum(jumlah_hutang) as total_hutang')
-            ->groupBy('tanggal')
-            ->pluck('total_hutang', 'tanggal');
-
-        $dataBebanKewajiban = BebanKewajiban::whereMonth('tanggal', $currentMonth)
-            ->whereYear('tanggal', $currentYear)
-            ->selectRaw('tanggal, sum(nominal) as total_beban_kewajiban')
-            ->groupBy('tanggal')
-            ->pluck('total_beban_kewajiban', 'tanggal');
-
-        // Menggabungkan hasil ke dalam array untuk kalkulasi
-        $dataHasil = [];
-
-        // Mengisi data hasil berdasarkan semua tanggal di bulan ini
-        foreach ($allDates as $date) {
-            $totalMasuk = ($dataPenjualan[$date] ?? 0) + ($dataModal[$date] ?? 0);
-            $totalKeluar = ($dataHutang[$date] ?? 0) + ($dataBebanKewajiban[$date] ?? 0);
-            $saldo = $totalMasuk - $totalKeluar;
-
-            $dataHasil[$date] = [
-                'total_masuk' => $totalMasuk,
-                'total_keluar' => $totalKeluar,
-                'saldo' => $saldo
-            ];
-        }
-
-        // Mengambil data untuk grafik
-        $dataSaldoFormatted = [];
-        $tanggalFormatted = [];
-
-        foreach ($dataHasil as $tanggal => $result) {
-            $tanggalFormatted[] = Carbon::parse($tanggal)->translatedFormat('d M');
-            $dataSaldoFormatted[] = $result['saldo'];
-        }
-
+        //chart pendapatan 
+        $daftarBulan = $this->daftarBulan;
         return view('pages.rekap.index', compact(
-            'currentMonthInIndo',
+
             'currentYear',
-            'tanggalFormatted',
-            'dataSaldoFormatted',
+            'daftarBulan',
+
+
             'jumlahUangMasukFormatted',
             'jumlahUangKeluarFormatted',
             'saldoAkhirFormatted'
         ));
     }
+
+    public function filterRekap(Request $request)
+    {
+        $tahun = $request->input('tahun');
+        $bulan = $request->input('bulan');
+
+        // Kondisi: Jika hanya filter berdasarkan tahun (bulan = '-')
+        if ($bulan == '-') {
+            // Array untuk menampung saldo per bulan (Januari-Desember)
+            $saldoPerBulan = [];
+
+            for ($i = 1; $i <= 12; $i++) {
+                // Filtering data per bulan
+                $dataBulan = Rekap::whereYear('tanggal_transaksi', $tahun)
+                    ->whereMonth('tanggal_transaksi', $i)
+                    ->get();
+
+                // Menghitung total uang masuk dan keluar untuk bulan tersebut
+                $dataDanaMasuk = $dataBulan->where('tipe_transaksi', 'masuk')->sum('jumlah');
+                $dataDanaKeluar = $dataBulan->where('tipe_transaksi', 'keluar')->sum('jumlah');
+
+                // Hitung saldo untuk bulan tersebut (dana masuk - dana keluar)
+                $saldoBulan = $dataDanaMasuk - $dataDanaKeluar;
+
+                // Simpan saldo bulan tersebut ke array
+                $saldoPerBulan[] = $saldoBulan;
+            }
+
+            // Response JSON saldo per bulan dari Januari sampai Desember
+            return response()->json([
+                'saldoAkhir' => $saldoPerBulan, // Misalnya: [10000, 5000, 0, 2000, ...] untuk Januari-Desember
+                'date' => $this->daftarBulan,
+            ]);
+        }
+
+        // Kondisi: Jika ada input bulan (filter berdasarkan tahun dan bulan)
+        else {
+            // Array untuk menampung saldo harian dan hari dalam bulan tersebut
+            $saldoPerHari = [];
+            $hariPerBulan = [];
+
+            // Mendapatkan jumlah hari dalam bulan tersebut
+            $jumlahHari = Carbon::create($tahun, $bulan)->daysInMonth;
+
+            for ($i = 1; $i <= $jumlahHari; $i++) {
+                // Filtering data per hari
+                $dataHari = Rekap::whereYear('tanggal_transaksi', $tahun)
+                    ->whereMonth('tanggal_transaksi', $bulan)
+                    ->whereDay('tanggal_transaksi', $i)
+                    ->get();
+
+                // Menghitung total uang masuk dan keluar untuk hari tersebut
+                $dataDanaMasuk = $dataHari->where('tipe_transaksi', 'masuk')->sum('jumlah');
+                $dataDanaKeluar = $dataHari->where('tipe_transaksi', 'keluar')->sum('jumlah');
+
+                // Hitung saldo untuk hari tersebut (dana masuk - dana keluar)
+                $saldoHari = $dataDanaMasuk - $dataDanaKeluar;
+
+                // Simpan saldo dan hari tersebut ke array
+                $saldoPerHari[] = $saldoHari;
+
+                // Menyimpan hari dalam format 'YYYY-MM-DD'
+                $hariPerBulan[] = Carbon::create($tahun, $bulan, $i)->toDateString();
+            }
+
+            // Response JSON saldo per hari dan tanggal dalam bulan tersebut
+            return response()->json([
+                'saldoAkhir' => $saldoPerHari, // Misalnya: [1000, 0, 5000, -2000, ...] untuk tanggal 1-30/31
+                'date' => $hariPerBulan,       // Misalnya: ['2024-10-01', '2024-10-02', ...]
+            ]);
+        }
+
+    }
+
 
 
     public function show()
@@ -261,7 +283,7 @@ class RekapController extends Controller
             200
         );
     }
-    
+
 
     public function cetak()
     {

@@ -14,7 +14,7 @@
                 <img width="40px" src="{{ asset('assets/icon/receive-money.png') }}" alt="">
                 <div class="p-3">
                     <p class="mb-2 text-xs font-medium text-gray-600 ">
-                        Jumlah Uang Masuk
+                        Uang Masuk Bulan Ini
                     </p>
                     <p class="text-lg font-semibold text-gray-700 ">
                       {{ $jumlahUangMasukFormatted }}
@@ -27,7 +27,7 @@
                 <img width="40px" src="{{ asset('assets/icon/send-money.png') }}" alt="">
                 <div class="p-3">
                     <p class="mb-2 text-xs font-medium text-gray-600 ">
-                        Jumlah Uang Keluar
+                        Uang Keluar Bulan Ini
                     </p>
                     <p class="text-lg font-semibold text-gray-700 ">
                        {{ $jumlahUangKeluarFormatted }}
@@ -80,7 +80,7 @@
             <div class="flex justify-between">
                 <div>
                     <h5 id="judul-chart" class="leading-none text-xl font-semibold text-gray-900 dark:text-white pb-2">
-                        Pendapatan 30 Hari Terakhir
+                        Pendapatan {{ $currentMonthInIndo }} {{ $currentYear }}
                     </h5>
                 </div>
 
@@ -125,74 +125,64 @@
     </div>
     </div>
     <script>
+        
         let chartyear = document.getElementById('chartyear');
         let judulchart = document.getElementById('judul-chart')
         let pilihanchart = document.getElementById('pilihan-chart')
 
         let options = {
-            chart: {
-                height: "149%",
-                maxWidth: "100%",
-                type: "area",
-                fontFamily: "Inter, sans-serif",
-                dropShadow: {
-                    enabled: false,
-                },
-                toolbar: {
-                    show: false,
-                },
+          series: [
+            {
+          name: 'Pendapatan',
+          data: @json($dataSaldoFormatted)
+
+          
+        }],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            colors: {
+              ranges: [{
+                from: -100,
+                to: -46,
+                color: '#F15B46'
+              }, {
+                from: -45,
+                to: 0,
+                color: '#FEB019'
+              }]
             },
-            tooltip: {
-                enabled: true,
-                x: {
-                    show: false,
-                },
-            },
-            fill: {
-                type: "gradient",
-                gradient: {
-                    opacityFrom: 0.55,
-                    opacityTo: 0,
-                    shade: "#1C64F2",
-                    gradientToColors: ["#1C64F2"],
-                },
-            },
-            dataLabels: {
-                enabled: false,
-            },
-            stroke: {
-                width: 6,
-            },
-            grid: {
-                show: false,
-                strokeDashArray: 4,
-                padding: {
-                    left: 2,
-                    right: 2,
-                    top: 0
-                },
-            },
-            series: [{
-                name: "Pendapatan",
-                data: [],
-                color: "#1A56DB",
-            }, ],
-            xaxis: {
-                categories: [],
-                labels: {
-                    show: false,
-                },
-                axisBorder: {
-                    show: false,
-                },
-                axisTicks: {
-                    show: false,
-                },
-            },
-            yaxis: {
-                show: false,
-            },
+            columnWidth: '80%',
+          }
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        yaxis: {
+          title: {
+            text: 'Jumlah (Rp)',
+          },
+          tickAmount: 4, // Jumlah ticks pada Y axis (jumlah label)
+          labels: {
+            formatter: function (value) {
+                return 'Rp ' + value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
+          }
+        },
+       
+
+         xaxis: {
+          categories: [
+            @json($tanggalFormatted)
+          ],
+          labels: {
+            rotate: -90
+          }
         }
+        };
 
         var chart = new ApexCharts(document.getElementById("area-chart"), options);
         chart.render();
@@ -201,7 +191,7 @@
             // Refresh the window with the #chartYear fragment
             location.href = location.href.split('#')[0] + '#chartyear';
 
-            judulchart.innerText = 'Pendapatan 1 Tahun Terakhir'; // Ganti dengan judul yang diinginkan
+            judulchart.innerText = 'Pendapatan Selama 1 Tahun '; // Ganti dengan judul yang diinginkan
             pilihanchart.innerText = '1 Tahun';
             fetch('{{ route('chart.1year') }}', {
                     headers: {
@@ -239,8 +229,8 @@
         });
 
 
-        var dataPenjualan = @json($dataPenjualanFormatted);
-        var tanggalPenjualan = @json($tanggalPenjualanFormatted);
+        var dataPenjualan = @json($dataSaldoFormatted);
+        var tanggalPenjualan = @json($tanggalFormatted);
         chart.updateOptions({
             xaxis: {
                 categories: tanggalPenjualan

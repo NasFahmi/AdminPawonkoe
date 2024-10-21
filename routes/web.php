@@ -51,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['role:superadmin|admin'])->group(function () {
         Route::get('/admin/dashboard', [DashboardController::class, 'indexDashboard'])->name('admin.dashboard');
-        Route::get('/chart/oneyear', [DashboardController::class, 'chart'])->name('chart.1year');
+        Route::get('/chart/oneyear', [RekapController::class, 'chart'])->name('chart.1year');
         Route::get('/admin/dashboard/logout', [AuthController::class, 'logout'])->name('logout');
     });
 
@@ -151,6 +151,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/rekap-keuangan/detail', [RekapController::class, 'show'])->name('rekap.detail');
         Route::get('/admin/cetak/rekap-keuangan', [RekapController::class, 'cetak'])->name('cetak.rekap');
         Route::get('/admin/rekap-keuangan/detail/{type}/{year?}/{month?}', [RekapController::class, 'filter'])->name('rekap.filter');
+        Route::post('/rekap-keuangan/filter', [RekapController::class, 'filterRekap'])->name('chart.filter');
+
 
     });
 

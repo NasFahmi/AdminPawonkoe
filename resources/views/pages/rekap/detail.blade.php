@@ -66,7 +66,7 @@
                     
 
                     <div class="flex items-center justify-center ">
-                        <div class="w-fit cursor-pointer bg-gray-200 p-1 rounded" data-dropdown-toggle="dropdownBulan">
+                        <div class="w-fit cursor-pointer bg-gray-200 px-4 py-2 rounded-xl" data-dropdown-toggle="dropdownBulan">
                             <button class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900">Bulan</button>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                     </div>
 
                     <div class="flex items-center justify-center">
-                        <div class="w-fit cursor-pointer bg-gray-200 p-1 rounded" data-dropdown-toggle="dropdownTahun">
+                        <div class="w-fit cursor-pointer bg-gray-200 px-4 py-2 rounded-xl" data-dropdown-toggle="dropdownTahun">
                             <button class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900">
                                 Tahun
                             </button>

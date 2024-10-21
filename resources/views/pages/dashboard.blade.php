@@ -1,7 +1,7 @@
 @extends('layout.admin_pages')
 @section('title', 'Admin Pawonkoe')
 @section('content')
-    <div class="container  px-6 pb-6 mx-auto grid">
+    <div class="container px-6 pb-6 mx-auto grid">
 
         <!-- Modal untuk Login Success -->
         <div id="loginSuccessModal"
@@ -19,9 +19,9 @@
             Dashboard
         </h2>
         <!-- Cards -->
-        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+        <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             <!-- Card -->
-            <div class="flex items-center p-4 bg-white rounded-lg shadow-xs ">
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-md ">
                 <div class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full ">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -31,7 +31,7 @@
                 </div>
                 <div>
                     <p class="mb-2 text-xs font-medium text-gray-600 ">
-                        Jumlah Transaksi
+                        Total Transaksi
                     </p>
                     <p class="text-lg font-semibold text-gray-700 ">
                         {{ $dataJumlahOrder }}
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <!-- Card -->
-            <div class="flex items-center p-4 bg-white rounded-lg shadow-xs ">
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-md ">
                 <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full ">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
@@ -49,7 +49,7 @@
                 </div>
                 <div>
                     <p class="mb-2 text-xs font-medium text-gray-600 ">
-                        Jumlah Pendapatan
+                        Total Pendapatan
                     </p>
                     <p class="text-lg font-semibold text-gray-700 ">
                         {{-- {{ number_format($items->harga_rendah, 0, ',', '.') }} --}}
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <!-- Card -->
-            <div class="flex items-center p-4 bg-white rounded-lg shadow-xs ">
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-md ">
                 <div class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -68,7 +68,7 @@
                 </div>
                 <div>
                     <p class="mb-2 text-xs font-medium text-gray-600 ">
-                        Jumlah Produk Terjual
+                        Total Produk Terjual
                     </p>
                     <p class="text-lg font-semibold text-gray-700 ">
                         {{ $totalProductTerjual }}
@@ -76,7 +76,7 @@
                 </div>
             </div>
             <!-- Card -->
-            <div class="flex items-center p-4 bg-white rounded-lg shadow-xs ">
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-md ">
                 <div class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
@@ -86,7 +86,7 @@
                 </div>
                 <div>
                     <p class="mb-2 text-xs font-medium text-gray-600 ">
-                        Jumlah Preorder Selesai
+                        Total Pre-Order Selesai
                     </p>
                     <p class="text-lg font-semibold text-gray-700 ">
                         {{ $totalPreorder }}
@@ -94,121 +94,11 @@
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
-            {{-- chart --}}
-            <div class=" w-full h-fit bg-white rounded-lg shadow-sm  p-4 md:p-6 col-span-1 lg:col-span-2">
-                <div class="flex justify-between">
-                    <div>
-                        <h5 id="judul-chart" class="leading-none text-xl font-semibold text-gray-900 dark:text-white pb-2">
-                            Pendapatan 30 Hari Terakhir
-
-                        </h5>
-                    </div>
-                </div>
-
-                <div id="area-chart"></div>
-                <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
-                    <div class="flex justify-between items-center pt-5">
-                        <!-- Button -->
-                        <button id="" data-dropdown-toggle="lastDaysdropdown" data-dropdown-placement="bottom"
-                            class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
-                            type="button">
-                            <span id="pilihan-chart">
-                                1 Bulan
-                            </span>
-
-                            <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="m1 1 4 4 4-4" />
-                            </svg>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div id="lastDaysdropdown"
-                            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                aria-labelledby="dropdownDefaultButton">
-
-                                <li>
-                                    <a href=""
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        1 Bulan</a>
-                                </li>
-                                <li>
-                                    <a href="#chartyear" id="chartyear"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        1 Tahun Terakhir</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white p-4 rounded-lg w-full h-fit mt-8 md:mt-0 shadow-sm">
-                <h1 class="text-gray-800 font-semibold mb-4">3 Preorder Belum Selesai Terbaru</h1>
-                <div class="overflow-y-auto costumscroll  rounded-lg max-h-80">
-                    {{-- card --}}
-                    @foreach ($preorderRecently as $index => $preorder)
-                        <div class="bg-teal-100 rounded-md p-4 mb-4">
-                            <div class="flex justify-start items-center gap-4 mb-2">
-                                <div class="w-10 h-10 ">
-                                    @foreach ($foto->where('product_id', $preorder->transaksis->product_id) as $item)
-                                        <div class="rounded-full w-10 h-10 bg-no-repeat bg-center"
-                                            style="background-image: url('{{ asset('storage/' . $item->first()->foto) }}');
-                                        background-size: cover;">
-                                        </div>
-                                        {{-- <img src="{{ asset('storage/' . $item->foto) }}" alt="" srcset=""
-                                            class="rounded-full"> --}}
-                                    @endforeach
-                                </div>
-                                <div class="">
-                                    <h1 class="text-gray-800 text-lg font-semibold"></h1>
-                                    <p class="text-gray-700">Total Order : {{ $preorder->transaksis->jumlah ?? 0 }}</p>
-                                </div>
-                            </div>
-
-                            @if (isset($namaPembeli[$index]))
-                                <p class="text-gray-700 font-medium">Nama : {{ $namaPembeli[$index] }}</p>
-                            @else
-                                <p class="text-gray-700 font-medium">Nama : Not Available</p>
-                            @endif
-                            <p class="text-gray-500 text-sm mb-4">Keterangan : {{ $preorder->transaksis->keterangan }}</p>
-                            <p class="text-sm text-right">{{ $preorder->created_at }}</p>
-                        </div>
-                    @endforeach
-
-                </div>
-            </div>
-        </div>
+        
         <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 md:mt-8">
             <div class="bg-white p-4 rounded-lg w-full h-fit mt-8 md:mt-0 shadow-sm">
-                <h1 class="text-gray-800 font-semibold mb-4">Produk Terbaru</h1>
-                <div class="overflow-y-auto costumscroll  rounded-lg max-h-96">
-                    @foreach ($productRecently as $item)
-                        <div class="bg-blue-100 rounded-md p-4 mb-4">
-                            <div class="flex justify-start items-center gap-4 mb-2">
-                                <div class="rounded-full w-16 h-16 bg-cover bg-no-repeat bg-center"
-                                    style="background-image: url('{{ asset($item->fotos->first()->foto) }}')">
-                                </div>
-                                <div class="">
-                                    <h1 class="text-gray-700 text-lg md:text-base lg:text-lg font-semibold">
-                                        {{ $item->nama_product }}</h1>
-                                    @if ($item->stok <= 0)
-                                        <p class="text-gray-700 text-sm" style="color : red">Stok Sedang Kosong</p>
-                                    @else
-                                        <p class="text-gray-700 text-sm">Stok : {{ $item->stok }}</p>
-                                    @endif
-                                    <p class="text-gray-700">Harga : {{ $item->harga }}</p>
-
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            <div class="bg-white p-4 rounded-lg w-full h-fit mt-8 md:mt-0 shadow-sm">
                 <div class="flex justify-between items-center mb-4">
-                    <h1 class="text-gray-800 font-semibold ">5 Produk Penjualan Teratas</h1>
+                    <h1 class="text-gray-800 font-semibold ">Produk Penjualan Teratas</h1>
                     <h1 class="text-gray-800 font-semibold ">30 Hari Terakhir</h1>
                     {{-- <a href="" class="text-sm hover:underline"><span>See Details</span></a> --}}
                 </div>
@@ -251,6 +141,95 @@
 
                 </div>
             </div>
+           
+                
+                <div class="bg-white p-4 rounded-lg w-full h-fit mt-8 md:mt-0 shadow-md">
+                    <h1 class="text-gray-800 font-semibold mb-4">Pesanan Preorder Terbaru (Belum Selesai)</h1>
+                    <div class="overflow-y-auto costumscroll  rounded-lg max-h-80">
+                        {{-- card --}}
+                        @foreach ($preorderRecently as $index => $preorder)
+                            <div class="bg-teal-100 rounded-md p-4 mb-4">
+                                <div class="flex justify-start items-center gap-4 mb-2">
+                                    <div class="w-10 h-10 ">
+                                        @foreach ($foto->where('product_id', $preorder->transaksis->product_id) as $item)
+                                            <div class="rounded-full w-10 h-10 bg-no-repeat bg-center"
+                                                style="background-image: url('{{ asset('storage/' . $item->first()->foto) }}');
+                                            background-size: cover;">
+                                            </div>
+                                            {{-- <img src="{{ asset('storage/' . $item->foto) }}" alt="" srcset=""
+                                                class="rounded-full"> --}}
+                                        @endforeach
+                                    </div>
+                                    <div class="">
+                                        <h1 class="text-gray-800 text-lg font-semibold"></h1>
+                                        <p class="text-gray-700">Total Order : {{ $preorder->transaksis->jumlah ?? 0 }}</p>
+                                    </div>
+                                </div>
+
+                                @if (isset($namaPembeli[$index]))
+                                    <p class="text-gray-700 font-medium">Nama : {{ $namaPembeli[$index] }}</p>
+                                @else
+                                    <p class="text-gray-700 font-medium">Nama : Not Available</p>
+                                @endif
+                                <p class="text-gray-500 text-sm mb-4">Keterangan : {{ $preorder->transaksis->keterangan }}</p>
+                                <p class="text-sm text-right">{{ $preorder->created_at }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+        
+                <div class="bg-white p-4 rounded-lg w-full h-fit mt-8 md:mt-0 shadow-md">
+                    <h1 class="text-gray-800 font-semibold mb-4">Produk Terbaru</h1>
+                    <div class="overflow-y-auto costumscroll  rounded-lg max-h-80">
+                        {{-- card --}}
+                        @foreach ($productRecently as $item)
+                            <div class="bg-blue-100 rounded-md p-4 mb-4">
+                                <div class="flex justify-start items-center gap-4 mb-2">
+                                    <div class="rounded-full w-16 h-16 bg-cover bg-no-repeat bg-center"
+                                        style="background-image: url('{{ asset( $item->fotos->first()->foto) }}')">
+                                    </div>
+                                    <div class="">
+                                        <h1 class="text-gray-700 text-lg md:text-base lg:text-lg font-semibold">
+                                            {{ $item->nama_product }}</h1>
+                                        @if ($item->stok <= 0)
+                                            <p class="text-gray-700 text-sm" style="color : red">Stok Sedang Kosong</p>
+                                        @else
+                                            <p class="text-gray-700 text-sm">Stok : {{ $item->stok }}</p>
+                                        @endif
+                                        <p class="text-gray-700">Harga : {{ $item->harga }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+            <div class="bg-white p-4 rounded-lg w-full h-fit mt-8 md:mt-0 shadow-md">
+                <h1 class="text-gray-800 font-semibold mb-4">Produk Stok Kosong</h1>
+                <div class="overflow-y-auto costumscroll  rounded-lg max-h-80">
+                    {{-- card --}}
+                    @foreach ($productZeroStok as $item)
+                    @if ($item->stok <= 0)
+                        <div class="bg-blue-100 rounded-md p-4 mb-4">
+                            <div class="flex justify-start items-center gap-4 mb-2">
+                                <div class="rounded-full w-16 h-16 bg-cover bg-no-repeat bg-center"
+                                    style="background-image: url('{{ asset( $item->fotos->first()->foto) }}')">
+                                </div>
+                                <div class="">
+                                    <h1 class="text-gray-700 text-lg md:text-base lg:text-lg font-semibold">
+                                        {{ $item->nama_product }}</h1>
+                                        <p class="text-gray-700 text-sm" style="color : red">Stok Sedang Kosong</p>
+                                    
+                                        <p class="text-gray-700">Harga : {{ $item->harga }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                    @endforeach
+                </div>
+            </div>
+
+
         </div>
         <script>
             function showLoginSuccessModal() {
@@ -290,131 +269,7 @@
                     document.head.appendChild(css);
                 @endif
             });
-
-            let chartyear = document.getElementById('chartyear');
-            let judulchart = document.getElementById('judul-chart')
-            let pilihanchart = document.getElementById('pilihan-chart')
-
-            let options = {
-                chart: {
-                    height: "149%",
-                    maxWidth: "100%",
-                    type: "area",
-                    fontFamily: "Inter, sans-serif",
-                    dropShadow: {
-                        enabled: false,
-                    },
-                    toolbar: {
-                        show: false,
-                    },
-                },
-                tooltip: {
-                    enabled: true,
-                    x: {
-                        show: false,
-                    },
-                },
-                fill: {
-                    type: "gradient",
-                    gradient: {
-                        opacityFrom: 0.55,
-                        opacityTo: 0,
-                        shade: "#1C64F2",
-                        gradientToColors: ["#1C64F2"],
-                    },
-                },
-                dataLabels: {
-                    enabled: false,
-                },
-                stroke: {
-                    width: 6,
-                },
-                grid: {
-                    show: false,
-                    strokeDashArray: 4,
-                    padding: {
-                        left: 2,
-                        right: 2,
-                        top: 0
-                    },
-                },
-                series: [{
-                    name: "Pendapatan",
-                    data: [],
-                    color: "#1A56DB",
-                }, ],
-                xaxis: {
-                    categories: [],
-                    labels: {
-                        show: false,
-                    },
-                    axisBorder: {
-                        show: false,
-                    },
-                    axisTicks: {
-                        show: false,
-                    },
-                },
-                yaxis: {
-                    show: false,
-                },
-            }
-
-            var chart = new ApexCharts(document.getElementById("area-chart"), options);
-            chart.render();
-
-            chartyear.addEventListener('click', function() {
-                // Refresh the window with the #chartYear fragment
-                location.href = location.href.split('#')[0] + '#chartyear';
-
-                judulchart.innerText = 'Pendapatan 1 Tahun Terakhir'; // Ganti dengan judul yang diinginkan
-                pilihanchart.innerText = '1 Tahun';
-                fetch('{{ route('chart.1year') }}', {
-                        headers: {
-                            'Accept': 'application/json',
-                            "X-Requested-With": "XMLHttpRequest",
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            return response.json(); // Assuming the response is JSON
-                        } else {
-                            console.error('Failed to check #chartyear');
-                        }
-                    })
-                    .then(dataFecthing => {
-                        console.log(dataFecthing);
-                        var dataPenjualanSatuTahun = dataFecthing.data.data_penjualan;
-                        var dataBulanSatuTahun = dataFecthing.data.bulan;
-                        console.log(dataPenjualanSatuTahun);
-                        console.log(dataBulanSatuTahun);
-                        // Get the ApexCharts instance
-                        chart.updateOptions({
-                            xaxis: {
-                                categories: dataBulanSatuTahun
-                            },
-                            series: [{
-                                data: dataPenjualanSatuTahun
-                            }],
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            });
-
-
-            var dataPenjualan = @json($dataPenjualanFormatted);
-            var tanggalPenjualan = @json($tanggalPenjualanFormatted);
-            chart.updateOptions({
-                xaxis: {
-                    categories: tanggalPenjualan
-                },
-                series: [{
-                    data: dataPenjualan
-                }],
-            });
+        
+           
         </script>
-        <script src="{{ asset('js/chart.js') }}"></script>
     @endsection

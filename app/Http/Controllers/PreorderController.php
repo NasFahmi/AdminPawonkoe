@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use App\Models\Rekap;
 use App\Models\Pembeli;
 use App\Models\Product;
 use App\Models\Preorder;
@@ -146,7 +147,7 @@ class PreorderController extends Controller
                 "history_product_id" => $historyProduct->id,
             ]);
 
-
+            
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($transaksi)
@@ -197,6 +198,7 @@ class PreorderController extends Controller
             $dataPembeli = [
                 "no_hp" => $dataInput['telepon'],
             ];
+            
 
             $preorder->pembelis->update($dataPembeli);
             $totalharga = $request->input('total');
@@ -219,7 +221,16 @@ class PreorderController extends Controller
                 event(new TransaksiSelesai($id));
             }
 
-
+            $product = Product::findOrFail($dataInput['product_id']);
+            $nama_product = $product->nama_product;
+            Rekap::insert([
+                'tanggal_transaksi' => $preorder->tanggal,
+                'sumber' => 'Transaksi',
+                'jumlah' => $preorder->total_harga,
+                'keterangan' => 'Transaksi Preorder '. $nama_product,
+                'id_tabel_asal' => $preorder->Preorder_id,
+                'tipe_transaksi' => 'Masuk'
+            ]);
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($preorder)
@@ -257,6 +268,8 @@ class PreorderController extends Controller
                 ->withProperties(['data' => $dataTransaksi])
                 ->log('User ' . auth()->user()->nama . ' delete a transaksi preorder');
 
+            Rekap::where('id_tabel_asal', $preorder->id)->delete();
+            
             $dataTransaksi->delete();
             $dataPembeli->delete();
 

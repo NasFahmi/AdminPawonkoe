@@ -25,6 +25,7 @@
                                                 {{ $product->nama_product }}</option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="product" value="{{ $dataTransaksi->product_id }}">
 
                                 </div>
                                 <div class="w-full">

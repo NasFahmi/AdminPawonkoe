@@ -23,7 +23,7 @@
                                 <span class="text-gray-700 dark:text-gray-400">Harga</span>
                             </label>
                             <div>
-                                <input type="number" placeholder="Harga" name="harga"
+                                <input type="number" placeholder="Harga" name="harga" min="0"
                                     value="{{ old('harga', $data->harga) }}"
                                     class="input input-bordered input-info w-full bg-slate-50  duration-50 " />
                             </div>
@@ -51,7 +51,7 @@
                             <label class="block text-sm mb-1">
                                 <span class="text-gray-700 dark:text-gray-400">Stok</span>
                             </label>
-                            <input type="text" placeholder="Jumlah Stok" name="stok"
+                            <input type="text" placeholder="Jumlah Stok" name="stok" min="0"
                                 value="{{ old('stok', $data->stok) }}"
                                 class="input input-bordered input-info w-full max-w-4xl duration-50 bg-slate-50 mb-3" />
                         </div>

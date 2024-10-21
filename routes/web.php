@@ -16,6 +16,7 @@ use App\Http\Controllers\HutangController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ModalController;
 use App\Http\Controllers\ProduksiController;
+use App\Http\Controllers\RekapController;
 use App\Models\CicilanHutang;
 
 /*
@@ -142,6 +143,15 @@ Route::middleware(['auth'])->group(function () {
     //Log
     Route::middleware(['role:superadmin'])->group(function () {
         Route::get('/admin/log-activities', [LogController::class, 'index'])->name('log-activities.index');
+    });
+
+    //Rekap
+    Route::middleware(['role:superadmin'])->group(function () {
+        Route::get('/admin/rekap-keuangan', [RekapController::class, 'index'])->name('rekap.index');
+        Route::get('/admin/rekap-keuangan/detail', [RekapController::class, 'show'])->name('rekap.detail');
+        Route::get('/admin/cetak/rekap-keuangan', [RekapController::class, 'cetak'])->name('cetak.rekap');
+        Route::get('/admin/rekap-keuangan/detail/{type}/{year?}/{month?}', [RekapController::class, 'filter'])->name('rekap.filter');
+
     });
 
     //Beban modal

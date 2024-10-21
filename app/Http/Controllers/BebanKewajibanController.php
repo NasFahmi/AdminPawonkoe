@@ -55,7 +55,7 @@ class BebanKewajibanController extends Controller
 
         try {
             DB::beginTransaction();
-
+            // dd($validatedData);
             $dateTime = Carbon::parse($validatedData['tanggal'], 'Asia/Jakarta');
             $tanggal = $dateTime->format('Y-m-d');
 

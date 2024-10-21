@@ -296,21 +296,23 @@
             // Attach the 'input' event listener to the jumlahInput
             jumlahInput.addEventListener('input', updateTotalHarga);
 
-            jumlah_dp.addEventListener('keyup', function(e) {
-                // console.log(this.value);
-                // console.log(totalHargaDP);
+            jumlah_dp.addEventListener('input', function(e) {
+                // Menghapus karakter non-numeric
+                this.value = this.value.replace(/[^0-9]/g, '');
 
-                // Menghapus karakter titik dari string
-                var stringWithoutDot = this.value.replace('.', '');
+                // Mengonversi ke number
+                var numberValue = Number(this.value);
 
-                // Mengonversi kembali ke number
-                var numberValue = Number(stringWithoutDot);
-                // console.log(numberValue);
-
-                if (numberValue > totalHargaDP) {
-                    this.value = formatTotalHarga(totalHargaDP);
+                // Jika nilai negatif, set ke 0
+                if (numberValue < 0) {
+                    this.value = '0';
+                } else if (numberValue > totalHargaDP) {
+                    this.value = formatTotalHarga(totalHargaDP); // Batasi nilai maksimum
+                } else {
+                    this.value = formatTotalHarga(numberValue); // Format nilai input
                 }
             });
+
         });
 
 

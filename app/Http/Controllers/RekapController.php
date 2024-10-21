@@ -55,11 +55,15 @@ class RekapController extends Controller
 
         $jumlahUangKeluar = $uangKeluarHutang + $uangKeluarBebanKewajiban;
 
+        // JANGAN DIUBAH LURR
+        $data = Rekap::all();
+        $jumlahUangMasuk = $data->where('tipe_transaksi', 'masuk')->sum('jumlah');
+        $jumlahUangKeluar = $data->where('tipe_transaksi', 'keluar')->sum('jumlah');
         $saldoAkhir = $jumlahUangMasuk - $jumlahUangKeluar;
-
         $jumlahUangMasukFormatted = 'Rp ' . number_format($jumlahUangMasuk, 0, ',', '.');
         $jumlahUangKeluarFormatted = 'Rp ' . number_format($jumlahUangKeluar, 0, ',', '.');
         $saldoAkhirFormatted = 'Rp ' . number_format($saldoAkhir, 0, ',', '.');
+        
 
         $currentMonthInIndo = Carbon::now()->locale('id')->translatedFormat('F');
 

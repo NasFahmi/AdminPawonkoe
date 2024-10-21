@@ -14,7 +14,7 @@
                 <img width="40px" src="{{ asset('assets/icon/receive-money.png') }}" alt="">
                 <div class="p-3">
                     <p class="mb-2 text-xs font-medium text-gray-600 ">
-                        Uang Masuk Bulan Ini
+                        Total Uang Masuk
                     </p>
                     <p class="text-lg font-semibold text-gray-700 ">
                       {{ $jumlahUangMasukFormatted }}
@@ -27,7 +27,7 @@
                 <img width="40px" src="{{ asset('assets/icon/send-money.png') }}" alt="">
                 <div class="p-3">
                     <p class="mb-2 text-xs font-medium text-gray-600 ">
-                        Uang Keluar Bulan Ini
+                       Total Uang Keluar
                     </p>
                     <p class="text-lg font-semibold text-gray-700 ">
                        {{ $jumlahUangKeluarFormatted }}

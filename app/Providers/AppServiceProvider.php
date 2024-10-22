@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
@@ -24,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Schema::defaultStringLength(191);
         View::composer('*', function ($view) {
             // Dapatkan daftar tahun dari transaksi
             $daftarTahun = Rekap::selectRaw('YEAR(tanggal_transaksi) as year')

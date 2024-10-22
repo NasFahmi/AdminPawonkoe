@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use App\Models\Rekap;
 use App\Models\Pembeli;
 use App\Models\Product;
 use App\Models\Preorder;
@@ -75,15 +76,16 @@ class PreorderController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $this->validate($request, [
-            'tanggal' => 'required',
+        $validatedData = $this->validate($request, [
+            'tanggal' => 'required|date',
             'jumlah' => 'required',
             'total' => 'required',
             'nama' => 'required',
             'email' => 'required',
             'alamat' => 'required',
             'telepon' => 'required|digits:12',
-            'tanggal_dp' => 'required',
+
+            'tanggal_dp' => 'required|date|after_or_equal:tanggal',
             'jumlah_dp' => 'required'
             // bisa iya bisa tidak jika iya ada tanggal_dp dan jumlah_dp
             // opsional
@@ -91,8 +93,9 @@ class PreorderController extends Controller
             // jumlah_dp
         ], [
             'telepon.digits' => 'Nomor telepon harus terdiri dari 12 digit.',
+            'tanggal_dp.after_or_equal' => 'Tanggal DP tidak boleh lebih dari tanggal transaksi.'
         ]);
-
+        dd($validatedData);
         try {
             DB::beginTransaction();
             $data = $request->all();
@@ -198,6 +201,7 @@ class PreorderController extends Controller
                 "no_hp" => $dataInput['telepon'],
             ];
 
+
             $preorder->pembelis->update($dataPembeli);
             $totalharga = $request->input('total');
             $totalHargaTanpaTitik = str_replace(".", "", $totalharga);
@@ -219,7 +223,16 @@ class PreorderController extends Controller
                 event(new TransaksiSelesai($id));
             }
 
-
+            $product = Product::findOrFail($dataInput['product_id']);
+            $nama_product = $product->nama_product;
+            Rekap::insert([
+                'tanggal_transaksi' => $preorder->tanggal,
+                'sumber' => 'Transaksi',
+                'jumlah' => $preorder->total_harga,
+                'keterangan' => 'Transaksi Preorder ' . $nama_product,
+                'id_tabel_asal' => $preorder->Preorder_id,
+                'tipe_transaksi' => 'Masuk'
+            ]);
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($preorder)
@@ -256,6 +269,8 @@ class PreorderController extends Controller
                 ->event('delete_transaksi preorder')
                 ->withProperties(['data' => $dataTransaksi])
                 ->log('User ' . auth()->user()->nama . ' delete a transaksi preorder');
+
+            Rekap::where('id_tabel_asal', $preorder->id)->delete();
 
             $dataTransaksi->delete();
             $dataPembeli->delete();

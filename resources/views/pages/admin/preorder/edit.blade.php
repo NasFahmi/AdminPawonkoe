@@ -35,6 +35,8 @@
                                         @endforeach
 
                                     </select>
+
+                                    <input type="hidden" name="product_id" value="{{ $dataTransaksi->product_id }}">
                                 </div>
                                 <div class="w-full">
                                     <label for="methode_pembayaran"

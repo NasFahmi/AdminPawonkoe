@@ -74,7 +74,7 @@
                                 <div class="w-full">
                                     <label for="jumlah"
                                         class="block mb-2 text-sm font-medium text-gray-700">Jumlah</label>
-                                    <input type="number" placeholder="Jumlah" name="jumlah" id="jumlah"
+                                    <input type="number" placeholder="Jumlah" name="jumlah" id="jumlah" min="0"
                                         value="{{ old('jumlah') }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
                                     @error('jumlah')
@@ -85,7 +85,7 @@
                                 <div class="w-full">
                                     <label for="nominal"
                                         class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
-                                    <input type="number" placeholder="Nominal" name="nominal" value="{{ old('nominal') }}"
+                                    <input type="number" placeholder="Nominal" name="nominal" value="{{ old('nominal') }}" min="0"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
                                     @error('nominal')
                                         <small class="error" style="color: red">{{ $message }}</small>

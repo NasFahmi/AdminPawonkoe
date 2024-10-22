@@ -52,4 +52,7 @@ class Transaksi extends Model
                 ->orWhere('tanggal', 'like', '%' . $search . '%');
         }
     }
+    public function rekap(){
+        return $this->hasOne(Rekap::class);
+    }
 }

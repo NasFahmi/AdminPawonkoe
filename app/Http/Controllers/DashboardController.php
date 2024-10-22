@@ -25,8 +25,6 @@ class DashboardController extends Controller
         $totalPreorder = Transaksi::where('is_complete', 1)->sum('is_Preorder');
         $dataJumlahOrder = $data->count();
 
-        $startDate = Carbon::now()->subDays(30)->startOfDay();
-        $endDate = Carbon::now()->endOfDay();
         $startDateTest = '2023-12-01';
         $endDateTest = '2024-12-30';
 
@@ -50,11 +48,14 @@ class DashboardController extends Controller
             $query->where('is_preorder', 1)->where('is_complete', 0);
         })
             ->latest()
-            ->limit(3)
+            ->limit(5)
             ->get();
+
         $productRecently = Product::with('fotos', 'transaksis')
-            ->where('tersedia', 1)
+            ->where('tersedia', operator: 1)
             ->latest()->limit(5)->get();
+
+        $productZeroStok = Product::with('fotos')->get();
 
         $foto = Foto::join('transaksis', 'fotos.product_id', '=', 'transaksis.product_id')
             ->where('transaksis.is_complete', 0)
@@ -62,32 +63,6 @@ class DashboardController extends Controller
             ->groupBy('fotos.product_id')
             ->get();
 
-        // Mengambil data total penjualan
-        $dataPenjualan = Transaksi::where('is_complete', 1)
-            ->whereBetween('tanggal', [$startDate, $endDate])
-            ->orderBy('tanggal', 'asc')
-            ->selectRaw('tanggal, sum(total_harga) as total_penjualan')
-            ->groupBy('tanggal')
-            ->pluck('total_penjualan', 'tanggal');
-        $dataPenjualanFormatted = array_values($dataPenjualan->toArray());
-        // dd($dataPenjualanFormatted);
-
-        // Mendapatkan daftar tanggal
-        $tanggalPenjualan = array_keys($dataPenjualan->toArray());
-
-
-
-        // // Format the dates as desired (e.g., "2023-12-03 10:39:37" will be converted to "3 December 2023")
-        $tanggalPenjualanFormatted = collect($tanggalPenjualan)->map(function ($tanggal) {
-            // Menggunakan Carbon untuk memanipulasi format tanggal
-            $carbonDate = Carbon::parse($tanggal);
-
-            // Set lokal untuk format bulan dalam bahasa Indonesia
-            $carbonDate->setLocale(App::getLocale());
-
-            // Format tanggal dengan nama bulan
-            return $carbonDate->translatedFormat('d F Y'); // Sesuaikan format sesuai kebutuhan
-        });
 
         // dd($tanggalPenjualanFormatted);
         // Print the results
@@ -104,67 +79,8 @@ class DashboardController extends Controller
             'namaPembeli',
             'foto',
             'productRecently',
-            'dataPenjualanFormatted',
-            'tanggalPenjualanFormatted'
+            'productZeroStok'
         ));
     }
-    public function chart()
-    {
-        $startDate = Carbon::now()->subYear()->startOfDay();
-        $endDate = Carbon::now()->endOfDay();
-
-        $dataPenjualan = Transaksi::where('is_complete', 1)
-            ->whereBetween('tanggal', [$startDate, $endDate])
-            ->orderBy('tanggal', 'asc')
-            ->selectRaw('DATE_FORMAT(tanggal, "%Y-%m") as month, sum(total_harga) as total_penjualan')
-            ->groupBy('month')
-            ->pluck('total_penjualan', 'month')
-            ->toArray();
-
-        // Create an array to map numeric months to Indonesian month names
-        $monthNames = [
-            '01' => 'Januari',
-            '02' => 'Februari',
-            '03' => 'Maret',
-            '04' => 'April',
-            '05' => 'Mei',
-            '06' => 'Juni',
-            '07' => 'Juli',
-            '08' => 'Agustus',
-            '09' => 'September',
-            '10' => 'Oktober',
-            '11' => 'November',
-            '12' => 'Desember',
-        ];
-
-        // Initialize the array with 0 values for each month as strings
-        $dataPenjualanWithMonthNames = array_fill_keys(array_values($monthNames), "0");
-
-        // Replace numeric months with Indonesian month names and update values
-        foreach ($dataPenjualan as $month => $value) {
-            $monthNumber = substr($month, 5, 2); // Extract the month part
-            $monthName = $monthNames[$monthNumber] ?? $monthNumber; // Get the Indonesian month name or use the numeric month
-            $dataPenjualanWithMonthNames[$monthName] = (string) $value;
-        }
-
-        // Extract only the values
-        $dataPenjualanValues = array_values($dataPenjualanWithMonthNames);
-
-        // Extract only the keys (months)
-        $dataBulan = array_keys($dataPenjualanWithMonthNames);
-
-        return response()->json(
-            [
-                'success' => true,
-                'data' => [
-                    'data_penjualan' => $dataPenjualanValues,
-                    'bulan' => $dataBulan,
-                    'start_date' => $startDate,
-                    'endDay' => $endDate,
-                    'tahun' => Carbon::now()->year, // Adding the current year to the response
-                ],
-            ],
-            200
-        );
-    }
+    
 }

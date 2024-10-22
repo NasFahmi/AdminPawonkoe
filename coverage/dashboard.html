@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for E:\Media\Kuliah\RPL\PBL\AdminPawonkoe\app</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="_css/bootstrap.min.css?v=10.1.15" rel="stylesheet" type="text/css">
+  <link href="_css/nv.d3.min.css?v=10.1.15" rel="stylesheet" type="text/css">
+  <link href="_css/style.css?v=10.1.15" rel="stylesheet" type="text/css">
+  <link href="_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="index.html">E:\Media\Kuliah\RPL\PBL\AdminPawonkoe\app</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Events/ProductCreated.php.html#13">App\Events\ProductCreated</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Events/TransaksiSelesai.php.html#13">App\Events\TransaksiSelesai</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/BebanKewajibanController.php.html#13">App\Http\Controllers\BebanKewajibanController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/CicilanHutangController.php.html#12">App\Http\Controllers\CicilanHutangController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/DashboardController.php.html#15">App\Http\Controllers\DashboardController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HomeController.php.html#9">App\Http\Controllers\HomeController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HutangController.php.html#13">App\Http\Controllers\HutangController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JenisModalController.php.html#9">App\Http\Controllers\JenisModalController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/LogController.php.html#9">App\Http\Controllers\LogController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ModalController.php.html#12">App\Http\Controllers\ModalController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/NotaPiutangController.php.html#9">App\Http\Controllers\NotaPiutangController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangController.php.html#17">App\Http\Controllers\PiutangController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangProdukPiutangController.php.html#9">App\Http\Controllers\PiutangProdukPiutangController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PreorderController.php.html#18">App\Http\Controllers\PreorderController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProductController.php.html#21">App\Http\Controllers\ProductController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProdukPiutangController.php.html#9">App\Http\Controllers\ProdukPiutangController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProduksiController.php.html#12">App\Http\Controllers\ProduksiController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/TemporaryImageController.php.html#12">App\Http\Controllers\TemporaryImageController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/TransaksiController.php.html#19">App\Http\Controllers\TransaksiController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreBebanKewajibanRequest.php.html#7">App\Http\Requests\StoreBebanKewajibanRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreCicilanHutangRequest.php.html#7">App\Http\Requests\StoreCicilanHutangRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreHutangRequest.php.html#7">App\Http\Requests\StoreHutangRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreJenisModalRequest.php.html#7">App\Http\Requests\StoreJenisModalRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreModalRequest.php.html#7">App\Http\Requests\StoreModalRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreNotaPiutangRequest.php.html#7">App\Http\Requests\StoreNotaPiutangRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StorePiutangProdukPiutangRequest.php.html#7">App\Http\Requests\StorePiutangProdukPiutangRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StorePiutangRequest.php.html#7">App\Http\Requests\StorePiutangRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreProdukPiutangRequest.php.html#7">App\Http\Requests\StoreProdukPiutangRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreProduksiRequest.php.html#7">App\Http\Requests\StoreProduksiRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateBebanKewajibanRequest.php.html#7">App\Http\Requests\UpdateBebanKewajibanRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateCicilanHutangRequest.php.html#7">App\Http\Requests\UpdateCicilanHutangRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateHutangRequest.php.html#7">App\Http\Requests\UpdateHutangRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateJenisModalRequest.php.html#7">App\Http\Requests\UpdateJenisModalRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateModalRequest.php.html#7">App\Http\Requests\UpdateModalRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateNotaPiutangRequest.php.html#7">App\Http\Requests\UpdateNotaPiutangRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdatePiutangProdukPiutangRequest.php.html#7">App\Http\Requests\UpdatePiutangProdukPiutangRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdatePiutangRequest.php.html#7">App\Http\Requests\UpdatePiutangRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateProdukPiutangRequest.php.html#7">App\Http\Requests\UpdateProdukPiutangRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateProduksiRequest.php.html#7">App\Http\Requests\UpdateProduksiRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Listeners/KurangiStokProduk.php.html#11">App\Listeners\KurangiStokProduk</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Listeners/ProductCreatedListener.php.html#11">App\Listeners\ProductCreatedListener</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/CicilanHutang.php.html#8">App\Models\CicilanHutang</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Foto.php.html#8">App\Models\Foto</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/HistoryProduct.php.html#8">App\Models\HistoryProduct</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/HistoryProductTransaksi.php.html#8">App\Models\HistoryProductTransaksi</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Hutang.php.html#9">App\Models\Hutang</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/JenisModal.php.html#8">App\Models\JenisModal</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/MethodePembayaran.php.html#8">App\Models\MethodePembayaran</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Modal.php.html#9">App\Models\Modal</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/NotaPiutang.php.html#8">App\Models\NotaPiutang</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Pembeli.php.html#8">App\Models\Pembeli</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Piutang.php.html#9">App\Models\Piutang</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/PiutangProdukPiutang.php.html#8">App\Models\PiutangProdukPiutang</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Preorder.php.html#8">App\Models\Preorder</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Product.php.html#8">App\Models\Product</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/ProdukPiutang.php.html#8">App\Models\ProdukPiutang</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Transaksi.php.html#10">App\Models\Transaksi</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Varian.php.html#8">App\Models\Varian</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/BebanKewajibanPolicy.php.html#9">App\Policies\BebanKewajibanPolicy</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/CicilanHutangPolicy.php.html#9">App\Policies\CicilanHutangPolicy</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/HutangPolicy.php.html#9">App\Policies\HutangPolicy</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/JenisModalPolicy.php.html#9">App\Policies\JenisModalPolicy</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ModalPolicy.php.html#9">App\Policies\ModalPolicy</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/NotaPiutangPolicy.php.html#9">App\Policies\NotaPiutangPolicy</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangPolicy.php.html#9">App\Policies\PiutangPolicy</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangProdukPiutangPolicy.php.html#9">App\Policies\PiutangProdukPiutangPolicy</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProdukPiutangPolicy.php.html#9">App\Policies\ProdukPiutangPolicy</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProduksiPolicy.php.html#9">App\Policies\ProduksiPolicy</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/AuthController.php.html#11">App\Http\Controllers\AuthController</a></td><td class="text-right">59%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Http/Controllers/ProductController.php.html#21">App\Http\Controllers\ProductController</a></td><td class="text-right">812</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangController.php.html#17">App\Http\Controllers\PiutangController</a></td><td class="text-right">306</td></tr>
+       <tr><td><a href="Http/Controllers/HutangController.php.html#13">App\Http\Controllers\HutangController</a></td><td class="text-right">272</td></tr>
+       <tr><td><a href="Http/Controllers/TransaksiController.php.html#19">App\Http\Controllers\TransaksiController</a></td><td class="text-right">272</td></tr>
+       <tr><td><a href="Http/Controllers/PreorderController.php.html#18">App\Http\Controllers\PreorderController</a></td><td class="text-right">156</td></tr>
+       <tr><td><a href="Http/Controllers/BebanKewajibanController.php.html#13">App\Http\Controllers\BebanKewajibanController</a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="Http/Controllers/CicilanHutangController.php.html#12">App\Http\Controllers\CicilanHutangController</a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="Http/Controllers/ProduksiController.php.html#12">App\Http\Controllers\ProduksiController</a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="Http/Controllers/HomeController.php.html#9">App\Http\Controllers\HomeController</a></td><td class="text-right">90</td></tr>
+       <tr><td><a href="Http/Controllers/TemporaryImageController.php.html#12">App\Http\Controllers\TemporaryImageController</a></td><td class="text-right">90</td></tr>
+       <tr><td><a href="Models/Transaksi.php.html#10">App\Models\Transaksi</a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="Models/Piutang.php.html#9">App\Models\Piutang</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Models/Product.php.html#8">App\Models\Product</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Http/Controllers/LogController.php.html#9">App\Http\Controllers\LogController</a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Http/Controllers/DashboardController.php.html#15">App\Http\Controllers\DashboardController</a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Models/Preorder.php.html#8">App\Models\Preorder</a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Http/Controllers/AuthController.php.html#11">App\Http\Controllers\AuthController</a></td><td class="text-right">8</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Events/ProductCreated.php.html#22"><abbr title="App\Events\ProductCreated::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Events/ProductCreated.php.html#34"><abbr title="App\Events\ProductCreated::broadcastOn">broadcastOn</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Events/TransaksiSelesai.php.html#21"><abbr title="App\Events\TransaksiSelesai::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Events/TransaksiSelesai.php.html#33"><abbr title="App\Events\TransaksiSelesai::broadcastOn">broadcastOn</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/AuthController.php.html#71"><abbr title="App\Http\Controllers\AuthController::logout">logout</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/BebanKewajibanController.php.html#18"><abbr title="App\Http\Controllers\BebanKewajibanController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/BebanKewajibanController.php.html#33"><abbr title="App\Http\Controllers\BebanKewajibanController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/BebanKewajibanController.php.html#41"><abbr title="App\Http\Controllers\BebanKewajibanController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/BebanKewajibanController.php.html#86"><abbr title="App\Http\Controllers\BebanKewajibanController::show">show</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/BebanKewajibanController.php.html#94"><abbr title="App\Http\Controllers\BebanKewajibanController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/BebanKewajibanController.php.html#103"><abbr title="App\Http\Controllers\BebanKewajibanController::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/BebanKewajibanController.php.html#147"><abbr title="App\Http\Controllers\BebanKewajibanController::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/CicilanHutangController.php.html#17"><abbr title="App\Http\Controllers\CicilanHutangController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/CicilanHutangController.php.html#25"><abbr title="App\Http\Controllers\CicilanHutangController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/CicilanHutangController.php.html#34"><abbr title="App\Http\Controllers\CicilanHutangController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/CicilanHutangController.php.html#77"><abbr title="App\Http\Controllers\CicilanHutangController::show">show</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/CicilanHutangController.php.html#85"><abbr title="App\Http\Controllers\CicilanHutangController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/CicilanHutangController.php.html#93"><abbr title="App\Http\Controllers\CicilanHutangController::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/CicilanHutangController.php.html#101"><abbr title="App\Http\Controllers\CicilanHutangController::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/DashboardController.php.html#20"><abbr title="App\Http\Controllers\DashboardController::indexDashboard">indexDashboard</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/DashboardController.php.html#111"><abbr title="App\Http\Controllers\DashboardController::chart">chart</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HomeController.php.html#12"><abbr title="App\Http\Controllers\HomeController::indexImage">indexImage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HomeController.php.html#33"><abbr title="App\Http\Controllers\HomeController::katalog">katalog</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HomeController.php.html#54"><abbr title="App\Http\Controllers\HomeController::productSearch">productSearch</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HomeController.php.html#63"><abbr title="App\Http\Controllers\HomeController::detailProduct">detailProduct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HutangController.php.html#18"><abbr title="App\Http\Controllers\HutangController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HutangController.php.html#34"><abbr title="App\Http\Controllers\HutangController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HutangController.php.html#42"><abbr title="App\Http\Controllers\HutangController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HutangController.php.html#128"><abbr title="App\Http\Controllers\HutangController::show">show</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HutangController.php.html#139"><abbr title="App\Http\Controllers\HutangController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HutangController.php.html#147"><abbr title="App\Http\Controllers\HutangController::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/HutangController.php.html#209"><abbr title="App\Http\Controllers\HutangController::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JenisModalController.php.html#14"><abbr title="App\Http\Controllers\JenisModalController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JenisModalController.php.html#22"><abbr title="App\Http\Controllers\JenisModalController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JenisModalController.php.html#30"><abbr title="App\Http\Controllers\JenisModalController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JenisModalController.php.html#38"><abbr title="App\Http\Controllers\JenisModalController::show">show</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JenisModalController.php.html#46"><abbr title="App\Http\Controllers\JenisModalController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JenisModalController.php.html#54"><abbr title="App\Http\Controllers\JenisModalController::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/JenisModalController.php.html#62"><abbr title="App\Http\Controllers\JenisModalController::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/LogController.php.html#11"><abbr title="App\Http\Controllers\LogController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ModalController.php.html#17"><abbr title="App\Http\Controllers\ModalController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ModalController.php.html#35"><abbr title="App\Http\Controllers\ModalController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ModalController.php.html#45"><abbr title="App\Http\Controllers\ModalController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ModalController.php.html#81"><abbr title="App\Http\Controllers\ModalController::show">show</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ModalController.php.html#89"><abbr title="App\Http\Controllers\ModalController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ModalController.php.html#99"><abbr title="App\Http\Controllers\ModalController::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ModalController.php.html#140"><abbr title="App\Http\Controllers\ModalController::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/NotaPiutangController.php.html#14"><abbr title="App\Http\Controllers\NotaPiutangController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/NotaPiutangController.php.html#22"><abbr title="App\Http\Controllers\NotaPiutangController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/NotaPiutangController.php.html#30"><abbr title="App\Http\Controllers\NotaPiutangController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/NotaPiutangController.php.html#38"><abbr title="App\Http\Controllers\NotaPiutangController::show">show</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/NotaPiutangController.php.html#46"><abbr title="App\Http\Controllers\NotaPiutangController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/NotaPiutangController.php.html#54"><abbr title="App\Http\Controllers\NotaPiutangController::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/NotaPiutangController.php.html#62"><abbr title="App\Http\Controllers\NotaPiutangController::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangController.php.html#22"><abbr title="App\Http\Controllers\PiutangController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangController.php.html#41"><abbr title="App\Http\Controllers\PiutangController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangController.php.html#50"><abbr title="App\Http\Controllers\PiutangController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangController.php.html#169"><abbr title="App\Http\Controllers\PiutangController::show">show</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangController.php.html#177"><abbr title="App\Http\Controllers\PiutangController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangController.php.html#188"><abbr title="App\Http\Controllers\PiutangController::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangController.php.html#264"><abbr title="App\Http\Controllers\PiutangController::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangProdukPiutangController.php.html#14"><abbr title="App\Http\Controllers\PiutangProdukPiutangController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangProdukPiutangController.php.html#22"><abbr title="App\Http\Controllers\PiutangProdukPiutangController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangProdukPiutangController.php.html#30"><abbr title="App\Http\Controllers\PiutangProdukPiutangController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangProdukPiutangController.php.html#38"><abbr title="App\Http\Controllers\PiutangProdukPiutangController::show">show</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangProdukPiutangController.php.html#46"><abbr title="App\Http\Controllers\PiutangProdukPiutangController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangProdukPiutangController.php.html#54"><abbr title="App\Http\Controllers\PiutangProdukPiutangController::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangProdukPiutangController.php.html#62"><abbr title="App\Http\Controllers\PiutangProdukPiutangController::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PreorderController.php.html#23"><abbr title="App\Http\Controllers\PreorderController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PreorderController.php.html#53"><abbr title="App\Http\Controllers\PreorderController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PreorderController.php.html#61"><abbr title="App\Http\Controllers\PreorderController::show">show</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PreorderController.php.html#75"><abbr title="App\Http\Controllers\PreorderController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PreorderController.php.html#171"><abbr title="App\Http\Controllers\PreorderController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PreorderController.php.html#183"><abbr title="App\Http\Controllers\PreorderController::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/PreorderController.php.html#243"><abbr title="App\Http\Controllers\PreorderController::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProductController.php.html#26"><abbr title="App\Http\Controllers\ProductController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProductController.php.html#40"><abbr title="App\Http\Controllers\ProductController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProductController.php.html#48"><abbr title="App\Http\Controllers\ProductController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProductController.php.html#180"><abbr title="App\Http\Controllers\ProductController::show">show</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProductController.php.html#208"><abbr title="App\Http\Controllers\ProductController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProductController.php.html#224"><abbr title="App\Http\Controllers\ProductController::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProductController.php.html#338"><abbr title="App\Http\Controllers\ProductController::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProdukPiutangController.php.html#14"><abbr title="App\Http\Controllers\ProdukPiutangController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProdukPiutangController.php.html#22"><abbr title="App\Http\Controllers\ProdukPiutangController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProdukPiutangController.php.html#30"><abbr title="App\Http\Controllers\ProdukPiutangController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProdukPiutangController.php.html#38"><abbr title="App\Http\Controllers\ProdukPiutangController::show">show</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProdukPiutangController.php.html#46"><abbr title="App\Http\Controllers\ProdukPiutangController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProdukPiutangController.php.html#54"><abbr title="App\Http\Controllers\ProdukPiutangController::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProdukPiutangController.php.html#62"><abbr title="App\Http\Controllers\ProdukPiutangController::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProduksiController.php.html#17"><abbr title="App\Http\Controllers\ProduksiController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProduksiController.php.html#29"><abbr title="App\Http\Controllers\ProduksiController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProduksiController.php.html#37"><abbr title="App\Http\Controllers\ProduksiController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProduksiController.php.html#83"><abbr title="App\Http\Controllers\ProduksiController::show">show</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProduksiController.php.html#91"><abbr title="App\Http\Controllers\ProduksiController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProduksiController.php.html#100"><abbr title="App\Http\Controllers\ProduksiController::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/ProduksiController.php.html#144"><abbr title="App\Http\Controllers\ProduksiController::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/TemporaryImageController.php.html#14"><abbr title="App\Http\Controllers\TemporaryImageController::uploadTemporary">uploadTemporary</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/TemporaryImageController.php.html#38"><abbr title="App\Http\Controllers\TemporaryImageController::deleteTemporary">deleteTemporary</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/TemporaryImageController.php.html#69"><abbr title="App\Http\Controllers\TemporaryImageController::uploadImageDirectlyToDB">uploadImageDirectlyToDB</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/TransaksiController.php.html#25"><abbr title="App\Http\Controllers\TransaksiController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/TransaksiController.php.html#38"><abbr title="App\Http\Controllers\TransaksiController::cetakTransaksi">cetakTransaksi</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/TransaksiController.php.html#48"><abbr title="App\Http\Controllers\TransaksiController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/TransaksiController.php.html#60"><abbr title="App\Http\Controllers\TransaksiController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/TransaksiController.php.html#139"><abbr title="App\Http\Controllers\TransaksiController::show">show</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/TransaksiController.php.html#158"><abbr title="App\Http\Controllers\TransaksiController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/TransaksiController.php.html#186"><abbr title="App\Http\Controllers\TransaksiController::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/TransaksiController.php.html#229"><abbr title="App\Http\Controllers\TransaksiController::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/TransaksiController.php.html#252"><abbr title="App\Http\Controllers\TransaksiController::cetakForm">cetakForm</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreBebanKewajibanRequest.php.html#12"><abbr title="App\Http\Requests\StoreBebanKewajibanRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreBebanKewajibanRequest.php.html#22"><abbr title="App\Http\Requests\StoreBebanKewajibanRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreCicilanHutangRequest.php.html#12"><abbr title="App\Http\Requests\StoreCicilanHutangRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreCicilanHutangRequest.php.html#22"><abbr title="App\Http\Requests\StoreCicilanHutangRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreHutangRequest.php.html#12"><abbr title="App\Http\Requests\StoreHutangRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreHutangRequest.php.html#22"><abbr title="App\Http\Requests\StoreHutangRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreJenisModalRequest.php.html#12"><abbr title="App\Http\Requests\StoreJenisModalRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreJenisModalRequest.php.html#22"><abbr title="App\Http\Requests\StoreJenisModalRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreModalRequest.php.html#12"><abbr title="App\Http\Requests\StoreModalRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreModalRequest.php.html#22"><abbr title="App\Http\Requests\StoreModalRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreNotaPiutangRequest.php.html#12"><abbr title="App\Http\Requests\StoreNotaPiutangRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreNotaPiutangRequest.php.html#22"><abbr title="App\Http\Requests\StoreNotaPiutangRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StorePiutangProdukPiutangRequest.php.html#12"><abbr title="App\Http\Requests\StorePiutangProdukPiutangRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StorePiutangProdukPiutangRequest.php.html#22"><abbr title="App\Http\Requests\StorePiutangProdukPiutangRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StorePiutangRequest.php.html#12"><abbr title="App\Http\Requests\StorePiutangRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StorePiutangRequest.php.html#22"><abbr title="App\Http\Requests\StorePiutangRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreProdukPiutangRequest.php.html#12"><abbr title="App\Http\Requests\StoreProdukPiutangRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreProdukPiutangRequest.php.html#22"><abbr title="App\Http\Requests\StoreProdukPiutangRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreProduksiRequest.php.html#12"><abbr title="App\Http\Requests\StoreProduksiRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/StoreProduksiRequest.php.html#22"><abbr title="App\Http\Requests\StoreProduksiRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateBebanKewajibanRequest.php.html#12"><abbr title="App\Http\Requests\UpdateBebanKewajibanRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateBebanKewajibanRequest.php.html#22"><abbr title="App\Http\Requests\UpdateBebanKewajibanRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateCicilanHutangRequest.php.html#12"><abbr title="App\Http\Requests\UpdateCicilanHutangRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateCicilanHutangRequest.php.html#22"><abbr title="App\Http\Requests\UpdateCicilanHutangRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateHutangRequest.php.html#12"><abbr title="App\Http\Requests\UpdateHutangRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateHutangRequest.php.html#22"><abbr title="App\Http\Requests\UpdateHutangRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateJenisModalRequest.php.html#12"><abbr title="App\Http\Requests\UpdateJenisModalRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateJenisModalRequest.php.html#22"><abbr title="App\Http\Requests\UpdateJenisModalRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateModalRequest.php.html#12"><abbr title="App\Http\Requests\UpdateModalRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateModalRequest.php.html#22"><abbr title="App\Http\Requests\UpdateModalRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateNotaPiutangRequest.php.html#12"><abbr title="App\Http\Requests\UpdateNotaPiutangRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateNotaPiutangRequest.php.html#22"><abbr title="App\Http\Requests\UpdateNotaPiutangRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdatePiutangProdukPiutangRequest.php.html#12"><abbr title="App\Http\Requests\UpdatePiutangProdukPiutangRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdatePiutangProdukPiutangRequest.php.html#22"><abbr title="App\Http\Requests\UpdatePiutangProdukPiutangRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdatePiutangRequest.php.html#12"><abbr title="App\Http\Requests\UpdatePiutangRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdatePiutangRequest.php.html#22"><abbr title="App\Http\Requests\UpdatePiutangRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateProdukPiutangRequest.php.html#12"><abbr title="App\Http\Requests\UpdateProdukPiutangRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateProdukPiutangRequest.php.html#22"><abbr title="App\Http\Requests\UpdateProdukPiutangRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateProduksiRequest.php.html#12"><abbr title="App\Http\Requests\UpdateProduksiRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/UpdateProduksiRequest.php.html#22"><abbr title="App\Http\Requests\UpdateProduksiRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Listeners/KurangiStokProduk.php.html#18"><abbr title="App\Listeners\KurangiStokProduk::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Listeners/KurangiStokProduk.php.html#26"><abbr title="App\Listeners\KurangiStokProduk::handle">handle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Listeners/ProductCreatedListener.php.html#16"><abbr title="App\Listeners\ProductCreatedListener::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Listeners/ProductCreatedListener.php.html#24"><abbr title="App\Listeners\ProductCreatedListener::handle">handle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/CicilanHutang.php.html#18"><abbr title="App\Models\CicilanHutang::cicilan_hutang">cicilan_hutang</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Foto.php.html#15"><abbr title="App\Models\Foto::product">product</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/HistoryProduct.php.html#21"><abbr title="App\Models\HistoryProduct::history_product_transaksi">history_product_transaksi</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/HistoryProductTransaksi.php.html#16"><abbr title="App\Models\HistoryProductTransaksi::transaksi">transaksi</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/HistoryProductTransaksi.php.html#21"><abbr title="App\Models\HistoryProductTransaksi::history_product">history_product</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Hutang.php.html#21"><abbr title="App\Models\Hutang::hutang_cicilan">hutang_cicilan</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Hutang.php.html#25"><abbr title="App\Models\Hutang::getRemainingDebtAttribute">getRemainingDebtAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/JenisModal.php.html#15"><abbr title="App\Models\JenisModal::modal">modal</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/MethodePembayaran.php.html#14"><abbr title="App\Models\MethodePembayaran::transaksis">transaksis</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Modal.php.html#23"><abbr title="App\Models\Modal::jenis_modal">jenis_modal</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/NotaPiutang.php.html#15"><abbr title="App\Models\NotaPiutang::piutangs">piutangs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Pembeli.php.html#17"><abbr title="App\Models\Pembeli::transaksis">transaksis</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Piutang.php.html#22"><abbr title="App\Models\Piutang::notas">notas</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Piutang.php.html#26"><abbr title="App\Models\Piutang::piutang_produk_piutangs">piutang_produk_piutangs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Piutang.php.html#30"><abbr title="App\Models\Piutang::produk_piutangs">produk_piutangs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Piutang.php.html#35"><abbr title="App\Models\Piutang::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/PiutangProdukPiutang.php.html#16"><abbr title="App\Models\PiutangProdukPiutang::piutangs">piutangs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/PiutangProdukPiutang.php.html#20"><abbr title="App\Models\PiutangProdukPiutang::produk_piutangs">produk_piutangs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Preorder.php.html#16"><abbr title="App\Models\Preorder::transaksis">transaksis</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Preorder.php.html#19"><abbr title="App\Models\Preorder::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Product.php.html#21"><abbr title="App\Models\Product::fotos">fotos</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Product.php.html#26"><abbr title="App\Models\Product::varians">varians</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Product.php.html#31"><abbr title="App\Models\Product::transaksis">transaksis</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Product.php.html#35"><abbr title="App\Models\Product::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/ProdukPiutang.php.html#18"><abbr title="App\Models\ProdukPiutang::piutang_produk_piutangs">piutang_produk_piutangs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Transaksi.php.html#25"><abbr title="App\Models\Transaksi::pembelis">pembelis</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Transaksi.php.html#29"><abbr title="App\Models\Transaksi::products">products</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Transaksi.php.html#33"><abbr title="App\Models\Transaksi::methode_pembayaran">methode_pembayaran</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Transaksi.php.html#37"><abbr title="App\Models\Transaksi::preorders">preorders</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Transaksi.php.html#41"><abbr title="App\Models\Transaksi::history_product_transaksis">history_product_transaksis</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Transaksi.php.html#46"><abbr title="App\Models\Transaksi::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Varian.php.html#13"><abbr title="App\Models\Varian::product">product</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/BebanKewajibanPolicy.php.html#14"><abbr title="App\Policies\BebanKewajibanPolicy::viewAny">viewAny</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/BebanKewajibanPolicy.php.html#22"><abbr title="App\Policies\BebanKewajibanPolicy::view">view</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/BebanKewajibanPolicy.php.html#30"><abbr title="App\Policies\BebanKewajibanPolicy::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/BebanKewajibanPolicy.php.html#38"><abbr title="App\Policies\BebanKewajibanPolicy::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/BebanKewajibanPolicy.php.html#46"><abbr title="App\Policies\BebanKewajibanPolicy::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/BebanKewajibanPolicy.php.html#54"><abbr title="App\Policies\BebanKewajibanPolicy::restore">restore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/BebanKewajibanPolicy.php.html#62"><abbr title="App\Policies\BebanKewajibanPolicy::forceDelete">forceDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/CicilanHutangPolicy.php.html#14"><abbr title="App\Policies\CicilanHutangPolicy::viewAny">viewAny</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/CicilanHutangPolicy.php.html#22"><abbr title="App\Policies\CicilanHutangPolicy::view">view</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/CicilanHutangPolicy.php.html#30"><abbr title="App\Policies\CicilanHutangPolicy::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/CicilanHutangPolicy.php.html#38"><abbr title="App\Policies\CicilanHutangPolicy::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/CicilanHutangPolicy.php.html#46"><abbr title="App\Policies\CicilanHutangPolicy::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/CicilanHutangPolicy.php.html#54"><abbr title="App\Policies\CicilanHutangPolicy::restore">restore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/CicilanHutangPolicy.php.html#62"><abbr title="App\Policies\CicilanHutangPolicy::forceDelete">forceDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/HutangPolicy.php.html#14"><abbr title="App\Policies\HutangPolicy::viewAny">viewAny</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/HutangPolicy.php.html#22"><abbr title="App\Policies\HutangPolicy::view">view</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/HutangPolicy.php.html#30"><abbr title="App\Policies\HutangPolicy::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/HutangPolicy.php.html#38"><abbr title="App\Policies\HutangPolicy::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/HutangPolicy.php.html#46"><abbr title="App\Policies\HutangPolicy::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/HutangPolicy.php.html#54"><abbr title="App\Policies\HutangPolicy::restore">restore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/HutangPolicy.php.html#62"><abbr title="App\Policies\HutangPolicy::forceDelete">forceDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/JenisModalPolicy.php.html#14"><abbr title="App\Policies\JenisModalPolicy::viewAny">viewAny</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/JenisModalPolicy.php.html#22"><abbr title="App\Policies\JenisModalPolicy::view">view</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/JenisModalPolicy.php.html#30"><abbr title="App\Policies\JenisModalPolicy::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/JenisModalPolicy.php.html#38"><abbr title="App\Policies\JenisModalPolicy::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/JenisModalPolicy.php.html#46"><abbr title="App\Policies\JenisModalPolicy::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/JenisModalPolicy.php.html#54"><abbr title="App\Policies\JenisModalPolicy::restore">restore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/JenisModalPolicy.php.html#62"><abbr title="App\Policies\JenisModalPolicy::forceDelete">forceDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ModalPolicy.php.html#14"><abbr title="App\Policies\ModalPolicy::viewAny">viewAny</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ModalPolicy.php.html#22"><abbr title="App\Policies\ModalPolicy::view">view</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ModalPolicy.php.html#30"><abbr title="App\Policies\ModalPolicy::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ModalPolicy.php.html#38"><abbr title="App\Policies\ModalPolicy::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ModalPolicy.php.html#46"><abbr title="App\Policies\ModalPolicy::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ModalPolicy.php.html#54"><abbr title="App\Policies\ModalPolicy::restore">restore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ModalPolicy.php.html#62"><abbr title="App\Policies\ModalPolicy::forceDelete">forceDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/NotaPiutangPolicy.php.html#14"><abbr title="App\Policies\NotaPiutangPolicy::viewAny">viewAny</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/NotaPiutangPolicy.php.html#22"><abbr title="App\Policies\NotaPiutangPolicy::view">view</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/NotaPiutangPolicy.php.html#30"><abbr title="App\Policies\NotaPiutangPolicy::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/NotaPiutangPolicy.php.html#38"><abbr title="App\Policies\NotaPiutangPolicy::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/NotaPiutangPolicy.php.html#46"><abbr title="App\Policies\NotaPiutangPolicy::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/NotaPiutangPolicy.php.html#54"><abbr title="App\Policies\NotaPiutangPolicy::restore">restore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/NotaPiutangPolicy.php.html#62"><abbr title="App\Policies\NotaPiutangPolicy::forceDelete">forceDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangPolicy.php.html#14"><abbr title="App\Policies\PiutangPolicy::viewAny">viewAny</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangPolicy.php.html#22"><abbr title="App\Policies\PiutangPolicy::view">view</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangPolicy.php.html#30"><abbr title="App\Policies\PiutangPolicy::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangPolicy.php.html#38"><abbr title="App\Policies\PiutangPolicy::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangPolicy.php.html#46"><abbr title="App\Policies\PiutangPolicy::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangPolicy.php.html#54"><abbr title="App\Policies\PiutangPolicy::restore">restore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangPolicy.php.html#62"><abbr title="App\Policies\PiutangPolicy::forceDelete">forceDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangProdukPiutangPolicy.php.html#14"><abbr title="App\Policies\PiutangProdukPiutangPolicy::viewAny">viewAny</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangProdukPiutangPolicy.php.html#22"><abbr title="App\Policies\PiutangProdukPiutangPolicy::view">view</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangProdukPiutangPolicy.php.html#30"><abbr title="App\Policies\PiutangProdukPiutangPolicy::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangProdukPiutangPolicy.php.html#38"><abbr title="App\Policies\PiutangProdukPiutangPolicy::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangProdukPiutangPolicy.php.html#46"><abbr title="App\Policies\PiutangProdukPiutangPolicy::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangProdukPiutangPolicy.php.html#54"><abbr title="App\Policies\PiutangProdukPiutangPolicy::restore">restore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/PiutangProdukPiutangPolicy.php.html#62"><abbr title="App\Policies\PiutangProdukPiutangPolicy::forceDelete">forceDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProdukPiutangPolicy.php.html#14"><abbr title="App\Policies\ProdukPiutangPolicy::viewAny">viewAny</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProdukPiutangPolicy.php.html#22"><abbr title="App\Policies\ProdukPiutangPolicy::view">view</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProdukPiutangPolicy.php.html#30"><abbr title="App\Policies\ProdukPiutangPolicy::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProdukPiutangPolicy.php.html#38"><abbr title="App\Policies\ProdukPiutangPolicy::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProdukPiutangPolicy.php.html#46"><abbr title="App\Policies\ProdukPiutangPolicy::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProdukPiutangPolicy.php.html#54"><abbr title="App\Policies\ProdukPiutangPolicy::restore">restore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProdukPiutangPolicy.php.html#62"><abbr title="App\Policies\ProdukPiutangPolicy::forceDelete">forceDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProduksiPolicy.php.html#14"><abbr title="App\Policies\ProduksiPolicy::viewAny">viewAny</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProduksiPolicy.php.html#22"><abbr title="App\Policies\ProduksiPolicy::view">view</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProduksiPolicy.php.html#30"><abbr title="App\Policies\ProduksiPolicy::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProduksiPolicy.php.html#38"><abbr title="App\Policies\ProduksiPolicy::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProduksiPolicy.php.html#46"><abbr title="App\Policies\ProduksiPolicy::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProduksiPolicy.php.html#54"><abbr title="App\Policies\ProduksiPolicy::restore">restore</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Policies/ProduksiPolicy.php.html#62"><abbr title="App\Policies\ProduksiPolicy::forceDelete">forceDelete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/AuthController.php.html#24"><abbr title="App\Http\Controllers\AuthController::Authlogin">Authlogin</abbr></a></td><td class="text-right">76%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Http/Controllers/ProductController.php.html#224"><abbr title="App\Http\Controllers\ProductController::update">update</abbr></a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="Http/Controllers/ProductController.php.html#48"><abbr title="App\Http\Controllers\ProductController::store">store</abbr></a></td><td class="text-right">90</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangController.php.html#50"><abbr title="App\Http\Controllers\PiutangController::store">store</abbr></a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="Http/Controllers/HutangController.php.html#42"><abbr title="App\Http\Controllers\HutangController::store">store</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="Http/Controllers/PiutangController.php.html#188"><abbr title="App\Http\Controllers\PiutangController::update">update</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Http/Controllers/TransaksiController.php.html#60"><abbr title="App\Http\Controllers\TransaksiController::store">store</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Http/Controllers/CicilanHutangController.php.html#34"><abbr title="App\Http\Controllers\CicilanHutangController::store">store</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Http/Controllers/HutangController.php.html#147"><abbr title="App\Http\Controllers\HutangController::update">update</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Http/Controllers/LogController.php.html#11"><abbr title="App\Http\Controllers\LogController::index">index</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Http/Controllers/ProductController.php.html#180"><abbr title="App\Http\Controllers\ProductController::show">show</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Http/Controllers/HomeController.php.html#12"><abbr title="App\Http\Controllers\HomeController::indexImage">indexImage</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Http/Controllers/HomeController.php.html#33"><abbr title="App\Http\Controllers\HomeController::katalog">katalog</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Http/Controllers/PreorderController.php.html#75"><abbr title="App\Http\Controllers\PreorderController::store">store</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Http/Controllers/PreorderController.php.html#183"><abbr title="App\Http\Controllers\PreorderController::update">update</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Http/Controllers/TemporaryImageController.php.html#14"><abbr title="App\Http\Controllers\TemporaryImageController::uploadTemporary">uploadTemporary</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Http/Controllers/TemporaryImageController.php.html#38"><abbr title="App\Http\Controllers\TemporaryImageController::deleteTemporary">deleteTemporary</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Http/Controllers/TemporaryImageController.php.html#69"><abbr title="App\Http\Controllers\TemporaryImageController::uploadImageDirectlyToDB">uploadImageDirectlyToDB</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Http/Controllers/TransaksiController.php.html#186"><abbr title="App\Http\Controllers\TransaksiController::update">update</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Http/Controllers/BebanKewajibanController.php.html#41"><abbr title="App\Http\Controllers\BebanKewajibanController::store">store</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/BebanKewajibanController.php.html#103"><abbr title="App\Http\Controllers\BebanKewajibanController::update">update</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/BebanKewajibanController.php.html#147"><abbr title="App\Http\Controllers\BebanKewajibanController::destroy">destroy</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/DashboardController.php.html#111"><abbr title="App\Http\Controllers\DashboardController::chart">chart</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/HomeController.php.html#63"><abbr title="App\Http\Controllers\HomeController::detailProduct">detailProduct</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/HutangController.php.html#209"><abbr title="App\Http\Controllers\HutangController::destroy">destroy</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/PreorderController.php.html#243"><abbr title="App\Http\Controllers\PreorderController::destroy">destroy</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/ProductController.php.html#338"><abbr title="App\Http\Controllers\ProductController::destroy">destroy</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/ProduksiController.php.html#37"><abbr title="App\Http\Controllers\ProduksiController::store">store</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/ProduksiController.php.html#100"><abbr title="App\Http\Controllers\ProduksiController::update">update</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/ProduksiController.php.html#144"><abbr title="App\Http\Controllers\ProduksiController::destroy">destroy</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/TransaksiController.php.html#229"><abbr title="App\Http\Controllers\TransaksiController::destroy">destroy</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Models/Piutang.php.html#35"><abbr title="App\Models\Piutang::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Models/Preorder.php.html#19"><abbr title="App\Models\Preorder::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Models/Product.php.html#35"><abbr title="App\Models\Product::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Models/Transaksi.php.html#46"><abbr title="App\Models\Transaksi::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/AuthController.php.html#24"><abbr title="App\Http\Controllers\AuthController::Authlogin">Authlogin</abbr></a></td><td class="text-right">3</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 10.1.15</a> using <a href="https://www.php.net/" target="_top">PHP 8.3.10</a> and <a href="https://phpunit.de/">PHPUnit 10.5.20</a> at Fri Oct 4 6:27:01 UTC 2024.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="_js/jquery.min.js?v=10.1.15" type="text/javascript"></script>
+  <script src="_js/d3.min.js?v=10.1.15" type="text/javascript"></script>
+  <script src="_js/nv.d3.min.js?v=10.1.15" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([68,0,0,0,0,0,1,0,0,0,0,6], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([254,0,0,0,0,0,0,0,1,0,0,4], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[0,2,"<a href=\"Events\/ProductCreated.php.html#13\">App\\Events\\ProductCreated<\/a>"],[0,2,"<a href=\"Events\/TransaksiSelesai.php.html#13\">App\\Events\\TransaksiSelesai<\/a>"],[59.45945945945946,6,"<a href=\"Http\/Controllers\/AuthController.php.html#11\">App\\Http\\Controllers\\AuthController<\/a>"],[0,10,"<a href=\"Http\/Controllers\/BebanKewajibanController.php.html#13\">App\\Http\\Controllers\\BebanKewajibanController<\/a>"],[0,10,"<a href=\"Http\/Controllers\/CicilanHutangController.php.html#12\">App\\Http\\Controllers\\CicilanHutangController<\/a>"],[100,0,"<a href=\"Http\/Controllers\/Controller.php.html#9\">App\\Http\\Controllers\\Controller<\/a>"],[0,3,"<a href=\"Http\/Controllers\/DashboardController.php.html#15\">App\\Http\\Controllers\\DashboardController<\/a>"],[0,9,"<a href=\"Http\/Controllers\/HomeController.php.html#9\">App\\Http\\Controllers\\HomeController<\/a>"],[0,16,"<a href=\"Http\/Controllers\/HutangController.php.html#13\">App\\Http\\Controllers\\HutangController<\/a>"],[0,7,"<a href=\"Http\/Controllers\/JenisModalController.php.html#9\">App\\Http\\Controllers\\JenisModalController<\/a>"],[0,4,"<a href=\"Http\/Controllers\/LogController.php.html#9\">App\\Http\\Controllers\\LogController<\/a>"],[0,7,"<a href=\"Http\/Controllers\/ModalController.php.html#12\">App\\Http\\Controllers\\ModalController<\/a>"],[0,7,"<a href=\"Http\/Controllers\/NotaPiutangController.php.html#9\">App\\Http\\Controllers\\NotaPiutangController<\/a>"],[0,17,"<a href=\"Http\/Controllers\/PiutangController.php.html#17\">App\\Http\\Controllers\\PiutangController<\/a>"],[0,7,"<a href=\"Http\/Controllers\/PiutangProdukPiutangController.php.html#9\">App\\Http\\Controllers\\PiutangProdukPiutangController<\/a>"],[0,12,"<a href=\"Http\/Controllers\/PreorderController.php.html#18\">App\\Http\\Controllers\\PreorderController<\/a>"],[0,28,"<a href=\"Http\/Controllers\/ProductController.php.html#21\">App\\Http\\Controllers\\ProductController<\/a>"],[0,7,"<a href=\"Http\/Controllers\/ProdukPiutangController.php.html#9\">App\\Http\\Controllers\\ProdukPiutangController<\/a>"],[0,10,"<a href=\"Http\/Controllers\/ProduksiController.php.html#12\">App\\Http\\Controllers\\ProduksiController<\/a>"],[0,9,"<a href=\"Http\/Controllers\/TemporaryImageController.php.html#12\">App\\Http\\Controllers\\TemporaryImageController<\/a>"],[0,16,"<a href=\"Http\/Controllers\/TransaksiController.php.html#19\">App\\Http\\Controllers\\TransaksiController<\/a>"],[0,2,"<a href=\"Http\/Requests\/StoreBebanKewajibanRequest.php.html#7\">App\\Http\\Requests\\StoreBebanKewajibanRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/StoreCicilanHutangRequest.php.html#7\">App\\Http\\Requests\\StoreCicilanHutangRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/StoreHutangRequest.php.html#7\">App\\Http\\Requests\\StoreHutangRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/StoreJenisModalRequest.php.html#7\">App\\Http\\Requests\\StoreJenisModalRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/StoreModalRequest.php.html#7\">App\\Http\\Requests\\StoreModalRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/StoreNotaPiutangRequest.php.html#7\">App\\Http\\Requests\\StoreNotaPiutangRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/StorePiutangProdukPiutangRequest.php.html#7\">App\\Http\\Requests\\StorePiutangProdukPiutangRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/StorePiutangRequest.php.html#7\">App\\Http\\Requests\\StorePiutangRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/StoreProdukPiutangRequest.php.html#7\">App\\Http\\Requests\\StoreProdukPiutangRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/StoreProduksiRequest.php.html#7\">App\\Http\\Requests\\StoreProduksiRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/UpdateBebanKewajibanRequest.php.html#7\">App\\Http\\Requests\\UpdateBebanKewajibanRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/UpdateCicilanHutangRequest.php.html#7\">App\\Http\\Requests\\UpdateCicilanHutangRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/UpdateHutangRequest.php.html#7\">App\\Http\\Requests\\UpdateHutangRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/UpdateJenisModalRequest.php.html#7\">App\\Http\\Requests\\UpdateJenisModalRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/UpdateModalRequest.php.html#7\">App\\Http\\Requests\\UpdateModalRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/UpdateNotaPiutangRequest.php.html#7\">App\\Http\\Requests\\UpdateNotaPiutangRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/UpdatePiutangProdukPiutangRequest.php.html#7\">App\\Http\\Requests\\UpdatePiutangProdukPiutangRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/UpdatePiutangRequest.php.html#7\">App\\Http\\Requests\\UpdatePiutangRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/UpdateProdukPiutangRequest.php.html#7\">App\\Http\\Requests\\UpdateProdukPiutangRequest<\/a>"],[0,2,"<a href=\"Http\/Requests\/UpdateProduksiRequest.php.html#7\">App\\Http\\Requests\\UpdateProduksiRequest<\/a>"],[0,2,"<a href=\"Listeners\/KurangiStokProduk.php.html#11\">App\\Listeners\\KurangiStokProduk<\/a>"],[0,2,"<a href=\"Listeners\/ProductCreatedListener.php.html#11\">App\\Listeners\\ProductCreatedListener<\/a>"],[100,0,"<a href=\"Models\/BebanKewajiban.php.html#9\">App\\Models\\BebanKewajiban<\/a>"],[0,1,"<a href=\"Models\/CicilanHutang.php.html#8\">App\\Models\\CicilanHutang<\/a>"],[0,1,"<a href=\"Models\/Foto.php.html#8\">App\\Models\\Foto<\/a>"],[0,1,"<a href=\"Models\/HistoryProduct.php.html#8\">App\\Models\\HistoryProduct<\/a>"],[0,2,"<a href=\"Models\/HistoryProductTransaksi.php.html#8\">App\\Models\\HistoryProductTransaksi<\/a>"],[0,2,"<a href=\"Models\/Hutang.php.html#9\">App\\Models\\Hutang<\/a>"],[0,1,"<a href=\"Models\/JenisModal.php.html#8\">App\\Models\\JenisModal<\/a>"],[0,1,"<a href=\"Models\/MethodePembayaran.php.html#8\">App\\Models\\MethodePembayaran<\/a>"],[0,1,"<a href=\"Models\/Modal.php.html#9\">App\\Models\\Modal<\/a>"],[0,1,"<a href=\"Models\/NotaPiutang.php.html#8\">App\\Models\\NotaPiutang<\/a>"],[0,1,"<a href=\"Models\/Pembeli.php.html#8\">App\\Models\\Pembeli<\/a>"],[0,5,"<a href=\"Models\/Piutang.php.html#9\">App\\Models\\Piutang<\/a>"],[0,2,"<a href=\"Models\/PiutangProdukPiutang.php.html#8\">App\\Models\\PiutangProdukPiutang<\/a>"],[0,3,"<a href=\"Models\/Preorder.php.html#8\">App\\Models\\Preorder<\/a>"],[0,5,"<a href=\"Models\/Product.php.html#8\">App\\Models\\Product<\/a>"],[0,1,"<a href=\"Models\/ProdukPiutang.php.html#8\">App\\Models\\ProdukPiutang<\/a>"],[100,0,"<a href=\"Models\/Produksi.php.html#8\">App\\Models\\Produksi<\/a>"],[100,0,"<a href=\"Models\/TemporaryImage.php.html#8\">App\\Models\\TemporaryImage<\/a>"],[0,7,"<a href=\"Models\/Transaksi.php.html#10\">App\\Models\\Transaksi<\/a>"],[100,0,"<a href=\"Models\/User.php.html#11\">App\\Models\\User<\/a>"],[0,1,"<a href=\"Models\/Varian.php.html#8\">App\\Models\\Varian<\/a>"],[0,7,"<a href=\"Policies\/BebanKewajibanPolicy.php.html#9\">App\\Policies\\BebanKewajibanPolicy<\/a>"],[0,7,"<a href=\"Policies\/CicilanHutangPolicy.php.html#9\">App\\Policies\\CicilanHutangPolicy<\/a>"],[0,7,"<a href=\"Policies\/HutangPolicy.php.html#9\">App\\Policies\\HutangPolicy<\/a>"],[0,7,"<a href=\"Policies\/JenisModalPolicy.php.html#9\">App\\Policies\\JenisModalPolicy<\/a>"],[0,7,"<a href=\"Policies\/ModalPolicy.php.html#9\">App\\Policies\\ModalPolicy<\/a>"],[0,7,"<a href=\"Policies\/NotaPiutangPolicy.php.html#9\">App\\Policies\\NotaPiutangPolicy<\/a>"],[0,7,"<a href=\"Policies\/PiutangPolicy.php.html#9\">App\\Policies\\PiutangPolicy<\/a>"],[0,7,"<a href=\"Policies\/PiutangProdukPiutangPolicy.php.html#9\">App\\Policies\\PiutangProdukPiutangPolicy<\/a>"],[0,7,"<a href=\"Policies\/ProdukPiutangPolicy.php.html#9\">App\\Policies\\ProdukPiutangPolicy<\/a>"],[0,7,"<a href=\"Policies\/ProduksiPolicy.php.html#9\">App\\Policies\\ProduksiPolicy<\/a>"],[100,2,"<a href=\"Providers\/AppServiceProvider.php.html#10\">App\\Providers\\AppServiceProvider<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[0,1,"<a href=\"Events\/ProductCreated.php.html#22\">App\\Events\\ProductCreated::__construct<\/a>"],[0,1,"<a href=\"Events\/ProductCreated.php.html#34\">App\\Events\\ProductCreated::broadcastOn<\/a>"],[0,1,"<a href=\"Events\/TransaksiSelesai.php.html#21\">App\\Events\\TransaksiSelesai::__construct<\/a>"],[0,1,"<a href=\"Events\/TransaksiSelesai.php.html#33\">App\\Events\\TransaksiSelesai::broadcastOn<\/a>"],[100,1,"<a href=\"Http\/Controllers\/AuthController.php.html#16\">App\\Http\\Controllers\\AuthController::loginview<\/a>"],[76.92307692307693,3,"<a href=\"Http\/Controllers\/AuthController.php.html#24\">App\\Http\\Controllers\\AuthController::Authlogin<\/a>"],[100,1,"<a href=\"Http\/Controllers\/AuthController.php.html#65\">App\\Http\\Controllers\\AuthController::throttle<\/a>"],[0,1,"<a href=\"Http\/Controllers\/AuthController.php.html#71\">App\\Http\\Controllers\\AuthController::logout<\/a>"],[0,1,"<a href=\"Http\/Controllers\/BebanKewajibanController.php.html#18\">App\\Http\\Controllers\\BebanKewajibanController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/BebanKewajibanController.php.html#33\">App\\Http\\Controllers\\BebanKewajibanController::create<\/a>"],[0,2,"<a href=\"Http\/Controllers\/BebanKewajibanController.php.html#41\">App\\Http\\Controllers\\BebanKewajibanController::store<\/a>"],[0,1,"<a href=\"Http\/Controllers\/BebanKewajibanController.php.html#86\">App\\Http\\Controllers\\BebanKewajibanController::show<\/a>"],[0,1,"<a href=\"Http\/Controllers\/BebanKewajibanController.php.html#94\">App\\Http\\Controllers\\BebanKewajibanController::edit<\/a>"],[0,2,"<a href=\"Http\/Controllers\/BebanKewajibanController.php.html#103\">App\\Http\\Controllers\\BebanKewajibanController::update<\/a>"],[0,2,"<a href=\"Http\/Controllers\/BebanKewajibanController.php.html#147\">App\\Http\\Controllers\\BebanKewajibanController::destroy<\/a>"],[0,1,"<a href=\"Http\/Controllers\/CicilanHutangController.php.html#17\">App\\Http\\Controllers\\CicilanHutangController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/CicilanHutangController.php.html#25\">App\\Http\\Controllers\\CicilanHutangController::create<\/a>"],[0,4,"<a href=\"Http\/Controllers\/CicilanHutangController.php.html#34\">App\\Http\\Controllers\\CicilanHutangController::store<\/a>"],[0,1,"<a href=\"Http\/Controllers\/CicilanHutangController.php.html#77\">App\\Http\\Controllers\\CicilanHutangController::show<\/a>"],[0,1,"<a href=\"Http\/Controllers\/CicilanHutangController.php.html#85\">App\\Http\\Controllers\\CicilanHutangController::edit<\/a>"],[0,1,"<a href=\"Http\/Controllers\/CicilanHutangController.php.html#93\">App\\Http\\Controllers\\CicilanHutangController::update<\/a>"],[0,1,"<a href=\"Http\/Controllers\/CicilanHutangController.php.html#101\">App\\Http\\Controllers\\CicilanHutangController::destroy<\/a>"],[0,1,"<a href=\"Http\/Controllers\/DashboardController.php.html#20\">App\\Http\\Controllers\\DashboardController::indexDashboard<\/a>"],[0,2,"<a href=\"Http\/Controllers\/DashboardController.php.html#111\">App\\Http\\Controllers\\DashboardController::chart<\/a>"],[0,3,"<a href=\"Http\/Controllers\/HomeController.php.html#12\">App\\Http\\Controllers\\HomeController::indexImage<\/a>"],[0,3,"<a href=\"Http\/Controllers\/HomeController.php.html#33\">App\\Http\\Controllers\\HomeController::katalog<\/a>"],[0,1,"<a href=\"Http\/Controllers\/HomeController.php.html#54\">App\\Http\\Controllers\\HomeController::productSearch<\/a>"],[0,2,"<a href=\"Http\/Controllers\/HomeController.php.html#63\">App\\Http\\Controllers\\HomeController::detailProduct<\/a>"],[0,1,"<a href=\"Http\/Controllers\/HutangController.php.html#18\">App\\Http\\Controllers\\HutangController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/HutangController.php.html#34\">App\\Http\\Controllers\\HutangController::create<\/a>"],[0,6,"<a href=\"Http\/Controllers\/HutangController.php.html#42\">App\\Http\\Controllers\\HutangController::store<\/a>"],[0,1,"<a href=\"Http\/Controllers\/HutangController.php.html#128\">App\\Http\\Controllers\\HutangController::show<\/a>"],[0,1,"<a href=\"Http\/Controllers\/HutangController.php.html#139\">App\\Http\\Controllers\\HutangController::edit<\/a>"],[0,4,"<a href=\"Http\/Controllers\/HutangController.php.html#147\">App\\Http\\Controllers\\HutangController::update<\/a>"],[0,2,"<a href=\"Http\/Controllers\/HutangController.php.html#209\">App\\Http\\Controllers\\HutangController::destroy<\/a>"],[0,1,"<a href=\"Http\/Controllers\/JenisModalController.php.html#14\">App\\Http\\Controllers\\JenisModalController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/JenisModalController.php.html#22\">App\\Http\\Controllers\\JenisModalController::create<\/a>"],[0,1,"<a href=\"Http\/Controllers\/JenisModalController.php.html#30\">App\\Http\\Controllers\\JenisModalController::store<\/a>"],[0,1,"<a href=\"Http\/Controllers\/JenisModalController.php.html#38\">App\\Http\\Controllers\\JenisModalController::show<\/a>"],[0,1,"<a href=\"Http\/Controllers\/JenisModalController.php.html#46\">App\\Http\\Controllers\\JenisModalController::edit<\/a>"],[0,1,"<a href=\"Http\/Controllers\/JenisModalController.php.html#54\">App\\Http\\Controllers\\JenisModalController::update<\/a>"],[0,1,"<a href=\"Http\/Controllers\/JenisModalController.php.html#62\">App\\Http\\Controllers\\JenisModalController::destroy<\/a>"],[0,4,"<a href=\"Http\/Controllers\/LogController.php.html#11\">App\\Http\\Controllers\\LogController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ModalController.php.html#17\">App\\Http\\Controllers\\ModalController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ModalController.php.html#35\">App\\Http\\Controllers\\ModalController::create<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ModalController.php.html#45\">App\\Http\\Controllers\\ModalController::store<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ModalController.php.html#81\">App\\Http\\Controllers\\ModalController::show<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ModalController.php.html#89\">App\\Http\\Controllers\\ModalController::edit<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ModalController.php.html#99\">App\\Http\\Controllers\\ModalController::update<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ModalController.php.html#140\">App\\Http\\Controllers\\ModalController::destroy<\/a>"],[0,1,"<a href=\"Http\/Controllers\/NotaPiutangController.php.html#14\">App\\Http\\Controllers\\NotaPiutangController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/NotaPiutangController.php.html#22\">App\\Http\\Controllers\\NotaPiutangController::create<\/a>"],[0,1,"<a href=\"Http\/Controllers\/NotaPiutangController.php.html#30\">App\\Http\\Controllers\\NotaPiutangController::store<\/a>"],[0,1,"<a href=\"Http\/Controllers\/NotaPiutangController.php.html#38\">App\\Http\\Controllers\\NotaPiutangController::show<\/a>"],[0,1,"<a href=\"Http\/Controllers\/NotaPiutangController.php.html#46\">App\\Http\\Controllers\\NotaPiutangController::edit<\/a>"],[0,1,"<a href=\"Http\/Controllers\/NotaPiutangController.php.html#54\">App\\Http\\Controllers\\NotaPiutangController::update<\/a>"],[0,1,"<a href=\"Http\/Controllers\/NotaPiutangController.php.html#62\">App\\Http\\Controllers\\NotaPiutangController::destroy<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PiutangController.php.html#22\">App\\Http\\Controllers\\PiutangController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PiutangController.php.html#41\">App\\Http\\Controllers\\PiutangController::create<\/a>"],[0,7,"<a href=\"Http\/Controllers\/PiutangController.php.html#50\">App\\Http\\Controllers\\PiutangController::store<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PiutangController.php.html#169\">App\\Http\\Controllers\\PiutangController::show<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PiutangController.php.html#177\">App\\Http\\Controllers\\PiutangController::edit<\/a>"],[0,5,"<a href=\"Http\/Controllers\/PiutangController.php.html#188\">App\\Http\\Controllers\\PiutangController::update<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PiutangController.php.html#264\">App\\Http\\Controllers\\PiutangController::destroy<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PiutangProdukPiutangController.php.html#14\">App\\Http\\Controllers\\PiutangProdukPiutangController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PiutangProdukPiutangController.php.html#22\">App\\Http\\Controllers\\PiutangProdukPiutangController::create<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PiutangProdukPiutangController.php.html#30\">App\\Http\\Controllers\\PiutangProdukPiutangController::store<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PiutangProdukPiutangController.php.html#38\">App\\Http\\Controllers\\PiutangProdukPiutangController::show<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PiutangProdukPiutangController.php.html#46\">App\\Http\\Controllers\\PiutangProdukPiutangController::edit<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PiutangProdukPiutangController.php.html#54\">App\\Http\\Controllers\\PiutangProdukPiutangController::update<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PiutangProdukPiutangController.php.html#62\">App\\Http\\Controllers\\PiutangProdukPiutangController::destroy<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PreorderController.php.html#23\">App\\Http\\Controllers\\PreorderController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PreorderController.php.html#53\">App\\Http\\Controllers\\PreorderController::create<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PreorderController.php.html#61\">App\\Http\\Controllers\\PreorderController::show<\/a>"],[0,3,"<a href=\"Http\/Controllers\/PreorderController.php.html#75\">App\\Http\\Controllers\\PreorderController::store<\/a>"],[0,1,"<a href=\"Http\/Controllers\/PreorderController.php.html#171\">App\\Http\\Controllers\\PreorderController::edit<\/a>"],[0,3,"<a href=\"Http\/Controllers\/PreorderController.php.html#183\">App\\Http\\Controllers\\PreorderController::update<\/a>"],[0,2,"<a href=\"Http\/Controllers\/PreorderController.php.html#243\">App\\Http\\Controllers\\PreorderController::destroy<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ProductController.php.html#26\">App\\Http\\Controllers\\ProductController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ProductController.php.html#40\">App\\Http\\Controllers\\ProductController::create<\/a>"],[0,9,"<a href=\"Http\/Controllers\/ProductController.php.html#48\">App\\Http\\Controllers\\ProductController::store<\/a>"],[0,4,"<a href=\"Http\/Controllers\/ProductController.php.html#180\">App\\Http\\Controllers\\ProductController::show<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ProductController.php.html#208\">App\\Http\\Controllers\\ProductController::edit<\/a>"],[0,10,"<a href=\"Http\/Controllers\/ProductController.php.html#224\">App\\Http\\Controllers\\ProductController::update<\/a>"],[0,2,"<a href=\"Http\/Controllers\/ProductController.php.html#338\">App\\Http\\Controllers\\ProductController::destroy<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ProdukPiutangController.php.html#14\">App\\Http\\Controllers\\ProdukPiutangController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ProdukPiutangController.php.html#22\">App\\Http\\Controllers\\ProdukPiutangController::create<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ProdukPiutangController.php.html#30\">App\\Http\\Controllers\\ProdukPiutangController::store<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ProdukPiutangController.php.html#38\">App\\Http\\Controllers\\ProdukPiutangController::show<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ProdukPiutangController.php.html#46\">App\\Http\\Controllers\\ProdukPiutangController::edit<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ProdukPiutangController.php.html#54\">App\\Http\\Controllers\\ProdukPiutangController::update<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ProdukPiutangController.php.html#62\">App\\Http\\Controllers\\ProdukPiutangController::destroy<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ProduksiController.php.html#17\">App\\Http\\Controllers\\ProduksiController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ProduksiController.php.html#29\">App\\Http\\Controllers\\ProduksiController::create<\/a>"],[0,2,"<a href=\"Http\/Controllers\/ProduksiController.php.html#37\">App\\Http\\Controllers\\ProduksiController::store<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ProduksiController.php.html#83\">App\\Http\\Controllers\\ProduksiController::show<\/a>"],[0,1,"<a href=\"Http\/Controllers\/ProduksiController.php.html#91\">App\\Http\\Controllers\\ProduksiController::edit<\/a>"],[0,2,"<a href=\"Http\/Controllers\/ProduksiController.php.html#100\">App\\Http\\Controllers\\ProduksiController::update<\/a>"],[0,2,"<a href=\"Http\/Controllers\/ProduksiController.php.html#144\">App\\Http\\Controllers\\ProduksiController::destroy<\/a>"],[0,3,"<a href=\"Http\/Controllers\/TemporaryImageController.php.html#14\">App\\Http\\Controllers\\TemporaryImageController::uploadTemporary<\/a>"],[0,3,"<a href=\"Http\/Controllers\/TemporaryImageController.php.html#38\">App\\Http\\Controllers\\TemporaryImageController::deleteTemporary<\/a>"],[0,3,"<a href=\"Http\/Controllers\/TemporaryImageController.php.html#69\">App\\Http\\Controllers\\TemporaryImageController::uploadImageDirectlyToDB<\/a>"],[0,1,"<a href=\"Http\/Controllers\/TransaksiController.php.html#25\">App\\Http\\Controllers\\TransaksiController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/TransaksiController.php.html#38\">App\\Http\\Controllers\\TransaksiController::cetakTransaksi<\/a>"],[0,1,"<a href=\"Http\/Controllers\/TransaksiController.php.html#48\">App\\Http\\Controllers\\TransaksiController::create<\/a>"],[0,5,"<a href=\"Http\/Controllers\/TransaksiController.php.html#60\">App\\Http\\Controllers\\TransaksiController::store<\/a>"],[0,1,"<a href=\"Http\/Controllers\/TransaksiController.php.html#139\">App\\Http\\Controllers\\TransaksiController::show<\/a>"],[0,1,"<a href=\"Http\/Controllers\/TransaksiController.php.html#158\">App\\Http\\Controllers\\TransaksiController::edit<\/a>"],[0,3,"<a href=\"Http\/Controllers\/TransaksiController.php.html#186\">App\\Http\\Controllers\\TransaksiController::update<\/a>"],[0,2,"<a href=\"Http\/Controllers\/TransaksiController.php.html#229\">App\\Http\\Controllers\\TransaksiController::destroy<\/a>"],[0,1,"<a href=\"Http\/Controllers\/TransaksiController.php.html#252\">App\\Http\\Controllers\\TransaksiController::cetakForm<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreBebanKewajibanRequest.php.html#12\">App\\Http\\Requests\\StoreBebanKewajibanRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreBebanKewajibanRequest.php.html#22\">App\\Http\\Requests\\StoreBebanKewajibanRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreCicilanHutangRequest.php.html#12\">App\\Http\\Requests\\StoreCicilanHutangRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreCicilanHutangRequest.php.html#22\">App\\Http\\Requests\\StoreCicilanHutangRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreHutangRequest.php.html#12\">App\\Http\\Requests\\StoreHutangRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreHutangRequest.php.html#22\">App\\Http\\Requests\\StoreHutangRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreJenisModalRequest.php.html#12\">App\\Http\\Requests\\StoreJenisModalRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreJenisModalRequest.php.html#22\">App\\Http\\Requests\\StoreJenisModalRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreModalRequest.php.html#12\">App\\Http\\Requests\\StoreModalRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreModalRequest.php.html#22\">App\\Http\\Requests\\StoreModalRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreNotaPiutangRequest.php.html#12\">App\\Http\\Requests\\StoreNotaPiutangRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreNotaPiutangRequest.php.html#22\">App\\Http\\Requests\\StoreNotaPiutangRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/StorePiutangProdukPiutangRequest.php.html#12\">App\\Http\\Requests\\StorePiutangProdukPiutangRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/StorePiutangProdukPiutangRequest.php.html#22\">App\\Http\\Requests\\StorePiutangProdukPiutangRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/StorePiutangRequest.php.html#12\">App\\Http\\Requests\\StorePiutangRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/StorePiutangRequest.php.html#22\">App\\Http\\Requests\\StorePiutangRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreProdukPiutangRequest.php.html#12\">App\\Http\\Requests\\StoreProdukPiutangRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreProdukPiutangRequest.php.html#22\">App\\Http\\Requests\\StoreProdukPiutangRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreProduksiRequest.php.html#12\">App\\Http\\Requests\\StoreProduksiRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/StoreProduksiRequest.php.html#22\">App\\Http\\Requests\\StoreProduksiRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateBebanKewajibanRequest.php.html#12\">App\\Http\\Requests\\UpdateBebanKewajibanRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateBebanKewajibanRequest.php.html#22\">App\\Http\\Requests\\UpdateBebanKewajibanRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateCicilanHutangRequest.php.html#12\">App\\Http\\Requests\\UpdateCicilanHutangRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateCicilanHutangRequest.php.html#22\">App\\Http\\Requests\\UpdateCicilanHutangRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateHutangRequest.php.html#12\">App\\Http\\Requests\\UpdateHutangRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateHutangRequest.php.html#22\">App\\Http\\Requests\\UpdateHutangRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateJenisModalRequest.php.html#12\">App\\Http\\Requests\\UpdateJenisModalRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateJenisModalRequest.php.html#22\">App\\Http\\Requests\\UpdateJenisModalRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateModalRequest.php.html#12\">App\\Http\\Requests\\UpdateModalRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateModalRequest.php.html#22\">App\\Http\\Requests\\UpdateModalRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateNotaPiutangRequest.php.html#12\">App\\Http\\Requests\\UpdateNotaPiutangRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateNotaPiutangRequest.php.html#22\">App\\Http\\Requests\\UpdateNotaPiutangRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdatePiutangProdukPiutangRequest.php.html#12\">App\\Http\\Requests\\UpdatePiutangProdukPiutangRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdatePiutangProdukPiutangRequest.php.html#22\">App\\Http\\Requests\\UpdatePiutangProdukPiutangRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdatePiutangRequest.php.html#12\">App\\Http\\Requests\\UpdatePiutangRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdatePiutangRequest.php.html#22\">App\\Http\\Requests\\UpdatePiutangRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateProdukPiutangRequest.php.html#12\">App\\Http\\Requests\\UpdateProdukPiutangRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateProdukPiutangRequest.php.html#22\">App\\Http\\Requests\\UpdateProdukPiutangRequest::rules<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateProduksiRequest.php.html#12\">App\\Http\\Requests\\UpdateProduksiRequest::authorize<\/a>"],[0,1,"<a href=\"Http\/Requests\/UpdateProduksiRequest.php.html#22\">App\\Http\\Requests\\UpdateProduksiRequest::rules<\/a>"],[0,1,"<a href=\"Listeners\/KurangiStokProduk.php.html#18\">App\\Listeners\\KurangiStokProduk::__construct<\/a>"],[0,1,"<a href=\"Listeners\/KurangiStokProduk.php.html#26\">App\\Listeners\\KurangiStokProduk::handle<\/a>"],[0,1,"<a href=\"Listeners\/ProductCreatedListener.php.html#16\">App\\Listeners\\ProductCreatedListener::__construct<\/a>"],[0,1,"<a href=\"Listeners\/ProductCreatedListener.php.html#24\">App\\Listeners\\ProductCreatedListener::handle<\/a>"],[0,1,"<a href=\"Models\/CicilanHutang.php.html#18\">App\\Models\\CicilanHutang::cicilan_hutang<\/a>"],[0,1,"<a href=\"Models\/Foto.php.html#15\">App\\Models\\Foto::product<\/a>"],[0,1,"<a href=\"Models\/HistoryProduct.php.html#21\">App\\Models\\HistoryProduct::history_product_transaksi<\/a>"],[0,1,"<a href=\"Models\/HistoryProductTransaksi.php.html#16\">App\\Models\\HistoryProductTransaksi::transaksi<\/a>"],[0,1,"<a href=\"Models\/HistoryProductTransaksi.php.html#21\">App\\Models\\HistoryProductTransaksi::history_product<\/a>"],[0,1,"<a href=\"Models\/Hutang.php.html#21\">App\\Models\\Hutang::hutang_cicilan<\/a>"],[0,1,"<a href=\"Models\/Hutang.php.html#25\">App\\Models\\Hutang::getRemainingDebtAttribute<\/a>"],[0,1,"<a href=\"Models\/JenisModal.php.html#15\">App\\Models\\JenisModal::modal<\/a>"],[0,1,"<a href=\"Models\/MethodePembayaran.php.html#14\">App\\Models\\MethodePembayaran::transaksis<\/a>"],[0,1,"<a href=\"Models\/Modal.php.html#23\">App\\Models\\Modal::jenis_modal<\/a>"],[0,1,"<a href=\"Models\/NotaPiutang.php.html#15\">App\\Models\\NotaPiutang::piutangs<\/a>"],[0,1,"<a href=\"Models\/Pembeli.php.html#17\">App\\Models\\Pembeli::transaksis<\/a>"],[0,1,"<a href=\"Models\/Piutang.php.html#22\">App\\Models\\Piutang::notas<\/a>"],[0,1,"<a href=\"Models\/Piutang.php.html#26\">App\\Models\\Piutang::piutang_produk_piutangs<\/a>"],[0,1,"<a href=\"Models\/Piutang.php.html#30\">App\\Models\\Piutang::produk_piutangs<\/a>"],[0,2,"<a href=\"Models\/Piutang.php.html#35\">App\\Models\\Piutang::scopeSearch<\/a>"],[0,1,"<a href=\"Models\/PiutangProdukPiutang.php.html#16\">App\\Models\\PiutangProdukPiutang::piutangs<\/a>"],[0,1,"<a href=\"Models\/PiutangProdukPiutang.php.html#20\">App\\Models\\PiutangProdukPiutang::produk_piutangs<\/a>"],[0,1,"<a href=\"Models\/Preorder.php.html#16\">App\\Models\\Preorder::transaksis<\/a>"],[0,2,"<a href=\"Models\/Preorder.php.html#19\">App\\Models\\Preorder::scopeSearch<\/a>"],[0,1,"<a href=\"Models\/Product.php.html#21\">App\\Models\\Product::fotos<\/a>"],[0,1,"<a href=\"Models\/Product.php.html#26\">App\\Models\\Product::varians<\/a>"],[0,1,"<a href=\"Models\/Product.php.html#31\">App\\Models\\Product::transaksis<\/a>"],[0,2,"<a href=\"Models\/Product.php.html#35\">App\\Models\\Product::scopeSearch<\/a>"],[0,1,"<a href=\"Models\/ProdukPiutang.php.html#18\">App\\Models\\ProdukPiutang::piutang_produk_piutangs<\/a>"],[0,1,"<a href=\"Models\/Transaksi.php.html#25\">App\\Models\\Transaksi::pembelis<\/a>"],[0,1,"<a href=\"Models\/Transaksi.php.html#29\">App\\Models\\Transaksi::products<\/a>"],[0,1,"<a href=\"Models\/Transaksi.php.html#33\">App\\Models\\Transaksi::methode_pembayaran<\/a>"],[0,1,"<a href=\"Models\/Transaksi.php.html#37\">App\\Models\\Transaksi::preorders<\/a>"],[0,1,"<a href=\"Models\/Transaksi.php.html#41\">App\\Models\\Transaksi::history_product_transaksis<\/a>"],[0,2,"<a href=\"Models\/Transaksi.php.html#46\">App\\Models\\Transaksi::scopeSearch<\/a>"],[0,1,"<a href=\"Models\/Varian.php.html#13\">App\\Models\\Varian::product<\/a>"],[0,1,"<a href=\"Policies\/BebanKewajibanPolicy.php.html#14\">App\\Policies\\BebanKewajibanPolicy::viewAny<\/a>"],[0,1,"<a href=\"Policies\/BebanKewajibanPolicy.php.html#22\">App\\Policies\\BebanKewajibanPolicy::view<\/a>"],[0,1,"<a href=\"Policies\/BebanKewajibanPolicy.php.html#30\">App\\Policies\\BebanKewajibanPolicy::create<\/a>"],[0,1,"<a href=\"Policies\/BebanKewajibanPolicy.php.html#38\">App\\Policies\\BebanKewajibanPolicy::update<\/a>"],[0,1,"<a href=\"Policies\/BebanKewajibanPolicy.php.html#46\">App\\Policies\\BebanKewajibanPolicy::delete<\/a>"],[0,1,"<a href=\"Policies\/BebanKewajibanPolicy.php.html#54\">App\\Policies\\BebanKewajibanPolicy::restore<\/a>"],[0,1,"<a href=\"Policies\/BebanKewajibanPolicy.php.html#62\">App\\Policies\\BebanKewajibanPolicy::forceDelete<\/a>"],[0,1,"<a href=\"Policies\/CicilanHutangPolicy.php.html#14\">App\\Policies\\CicilanHutangPolicy::viewAny<\/a>"],[0,1,"<a href=\"Policies\/CicilanHutangPolicy.php.html#22\">App\\Policies\\CicilanHutangPolicy::view<\/a>"],[0,1,"<a href=\"Policies\/CicilanHutangPolicy.php.html#30\">App\\Policies\\CicilanHutangPolicy::create<\/a>"],[0,1,"<a href=\"Policies\/CicilanHutangPolicy.php.html#38\">App\\Policies\\CicilanHutangPolicy::update<\/a>"],[0,1,"<a href=\"Policies\/CicilanHutangPolicy.php.html#46\">App\\Policies\\CicilanHutangPolicy::delete<\/a>"],[0,1,"<a href=\"Policies\/CicilanHutangPolicy.php.html#54\">App\\Policies\\CicilanHutangPolicy::restore<\/a>"],[0,1,"<a href=\"Policies\/CicilanHutangPolicy.php.html#62\">App\\Policies\\CicilanHutangPolicy::forceDelete<\/a>"],[0,1,"<a href=\"Policies\/HutangPolicy.php.html#14\">App\\Policies\\HutangPolicy::viewAny<\/a>"],[0,1,"<a href=\"Policies\/HutangPolicy.php.html#22\">App\\Policies\\HutangPolicy::view<\/a>"],[0,1,"<a href=\"Policies\/HutangPolicy.php.html#30\">App\\Policies\\HutangPolicy::create<\/a>"],[0,1,"<a href=\"Policies\/HutangPolicy.php.html#38\">App\\Policies\\HutangPolicy::update<\/a>"],[0,1,"<a href=\"Policies\/HutangPolicy.php.html#46\">App\\Policies\\HutangPolicy::delete<\/a>"],[0,1,"<a href=\"Policies\/HutangPolicy.php.html#54\">App\\Policies\\HutangPolicy::restore<\/a>"],[0,1,"<a href=\"Policies\/HutangPolicy.php.html#62\">App\\Policies\\HutangPolicy::forceDelete<\/a>"],[0,1,"<a href=\"Policies\/JenisModalPolicy.php.html#14\">App\\Policies\\JenisModalPolicy::viewAny<\/a>"],[0,1,"<a href=\"Policies\/JenisModalPolicy.php.html#22\">App\\Policies\\JenisModalPolicy::view<\/a>"],[0,1,"<a href=\"Policies\/JenisModalPolicy.php.html#30\">App\\Policies\\JenisModalPolicy::create<\/a>"],[0,1,"<a href=\"Policies\/JenisModalPolicy.php.html#38\">App\\Policies\\JenisModalPolicy::update<\/a>"],[0,1,"<a href=\"Policies\/JenisModalPolicy.php.html#46\">App\\Policies\\JenisModalPolicy::delete<\/a>"],[0,1,"<a href=\"Policies\/JenisModalPolicy.php.html#54\">App\\Policies\\JenisModalPolicy::restore<\/a>"],[0,1,"<a href=\"Policies\/JenisModalPolicy.php.html#62\">App\\Policies\\JenisModalPolicy::forceDelete<\/a>"],[0,1,"<a href=\"Policies\/ModalPolicy.php.html#14\">App\\Policies\\ModalPolicy::viewAny<\/a>"],[0,1,"<a href=\"Policies\/ModalPolicy.php.html#22\">App\\Policies\\ModalPolicy::view<\/a>"],[0,1,"<a href=\"Policies\/ModalPolicy.php.html#30\">App\\Policies\\ModalPolicy::create<\/a>"],[0,1,"<a href=\"Policies\/ModalPolicy.php.html#38\">App\\Policies\\ModalPolicy::update<\/a>"],[0,1,"<a href=\"Policies\/ModalPolicy.php.html#46\">App\\Policies\\ModalPolicy::delete<\/a>"],[0,1,"<a href=\"Policies\/ModalPolicy.php.html#54\">App\\Policies\\ModalPolicy::restore<\/a>"],[0,1,"<a href=\"Policies\/ModalPolicy.php.html#62\">App\\Policies\\ModalPolicy::forceDelete<\/a>"],[0,1,"<a href=\"Policies\/NotaPiutangPolicy.php.html#14\">App\\Policies\\NotaPiutangPolicy::viewAny<\/a>"],[0,1,"<a href=\"Policies\/NotaPiutangPolicy.php.html#22\">App\\Policies\\NotaPiutangPolicy::view<\/a>"],[0,1,"<a href=\"Policies\/NotaPiutangPolicy.php.html#30\">App\\Policies\\NotaPiutangPolicy::create<\/a>"],[0,1,"<a href=\"Policies\/NotaPiutangPolicy.php.html#38\">App\\Policies\\NotaPiutangPolicy::update<\/a>"],[0,1,"<a href=\"Policies\/NotaPiutangPolicy.php.html#46\">App\\Policies\\NotaPiutangPolicy::delete<\/a>"],[0,1,"<a href=\"Policies\/NotaPiutangPolicy.php.html#54\">App\\Policies\\NotaPiutangPolicy::restore<\/a>"],[0,1,"<a href=\"Policies\/NotaPiutangPolicy.php.html#62\">App\\Policies\\NotaPiutangPolicy::forceDelete<\/a>"],[0,1,"<a href=\"Policies\/PiutangPolicy.php.html#14\">App\\Policies\\PiutangPolicy::viewAny<\/a>"],[0,1,"<a href=\"Policies\/PiutangPolicy.php.html#22\">App\\Policies\\PiutangPolicy::view<\/a>"],[0,1,"<a href=\"Policies\/PiutangPolicy.php.html#30\">App\\Policies\\PiutangPolicy::create<\/a>"],[0,1,"<a href=\"Policies\/PiutangPolicy.php.html#38\">App\\Policies\\PiutangPolicy::update<\/a>"],[0,1,"<a href=\"Policies\/PiutangPolicy.php.html#46\">App\\Policies\\PiutangPolicy::delete<\/a>"],[0,1,"<a href=\"Policies\/PiutangPolicy.php.html#54\">App\\Policies\\PiutangPolicy::restore<\/a>"],[0,1,"<a href=\"Policies\/PiutangPolicy.php.html#62\">App\\Policies\\PiutangPolicy::forceDelete<\/a>"],[0,1,"<a href=\"Policies\/PiutangProdukPiutangPolicy.php.html#14\">App\\Policies\\PiutangProdukPiutangPolicy::viewAny<\/a>"],[0,1,"<a href=\"Policies\/PiutangProdukPiutangPolicy.php.html#22\">App\\Policies\\PiutangProdukPiutangPolicy::view<\/a>"],[0,1,"<a href=\"Policies\/PiutangProdukPiutangPolicy.php.html#30\">App\\Policies\\PiutangProdukPiutangPolicy::create<\/a>"],[0,1,"<a href=\"Policies\/PiutangProdukPiutangPolicy.php.html#38\">App\\Policies\\PiutangProdukPiutangPolicy::update<\/a>"],[0,1,"<a href=\"Policies\/PiutangProdukPiutangPolicy.php.html#46\">App\\Policies\\PiutangProdukPiutangPolicy::delete<\/a>"],[0,1,"<a href=\"Policies\/PiutangProdukPiutangPolicy.php.html#54\">App\\Policies\\PiutangProdukPiutangPolicy::restore<\/a>"],[0,1,"<a href=\"Policies\/PiutangProdukPiutangPolicy.php.html#62\">App\\Policies\\PiutangProdukPiutangPolicy::forceDelete<\/a>"],[0,1,"<a href=\"Policies\/ProdukPiutangPolicy.php.html#14\">App\\Policies\\ProdukPiutangPolicy::viewAny<\/a>"],[0,1,"<a href=\"Policies\/ProdukPiutangPolicy.php.html#22\">App\\Policies\\ProdukPiutangPolicy::view<\/a>"],[0,1,"<a href=\"Policies\/ProdukPiutangPolicy.php.html#30\">App\\Policies\\ProdukPiutangPolicy::create<\/a>"],[0,1,"<a href=\"Policies\/ProdukPiutangPolicy.php.html#38\">App\\Policies\\ProdukPiutangPolicy::update<\/a>"],[0,1,"<a href=\"Policies\/ProdukPiutangPolicy.php.html#46\">App\\Policies\\ProdukPiutangPolicy::delete<\/a>"],[0,1,"<a href=\"Policies\/ProdukPiutangPolicy.php.html#54\">App\\Policies\\ProdukPiutangPolicy::restore<\/a>"],[0,1,"<a href=\"Policies\/ProdukPiutangPolicy.php.html#62\">App\\Policies\\ProdukPiutangPolicy::forceDelete<\/a>"],[0,1,"<a href=\"Policies\/ProduksiPolicy.php.html#14\">App\\Policies\\ProduksiPolicy::viewAny<\/a>"],[0,1,"<a href=\"Policies\/ProduksiPolicy.php.html#22\">App\\Policies\\ProduksiPolicy::view<\/a>"],[0,1,"<a href=\"Policies\/ProduksiPolicy.php.html#30\">App\\Policies\\ProduksiPolicy::create<\/a>"],[0,1,"<a href=\"Policies\/ProduksiPolicy.php.html#38\">App\\Policies\\ProduksiPolicy::update<\/a>"],[0,1,"<a href=\"Policies\/ProduksiPolicy.php.html#46\">App\\Policies\\ProduksiPolicy::delete<\/a>"],[0,1,"<a href=\"Policies\/ProduksiPolicy.php.html#54\">App\\Policies\\ProduksiPolicy::restore<\/a>"],[0,1,"<a href=\"Policies\/ProduksiPolicy.php.html#62\">App\\Policies\\ProduksiPolicy::forceDelete<\/a>"],[100,1,"<a href=\"Providers\/AppServiceProvider.php.html#15\">App\\Providers\\AppServiceProvider::register<\/a>"],[100,1,"<a href=\"Providers\/AppServiceProvider.php.html#23\">App\\Providers\\AppServiceProvider::boot<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

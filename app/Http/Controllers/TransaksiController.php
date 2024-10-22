@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HistoryProduct;
-use App\Models\HistoryProductTransaksi;
 use DateTime;
+use Carbon\Carbon;
+use App\Models\Rekap;
 use App\Models\Pembeli;
 use App\Models\Product;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use App\Models\HistoryProduct;
+use App\Events\TransaksiSelesai;
 use Illuminate\Support\Facades\DB;
+use App\Models\HistoryProductTransaksi;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreTransaksiRequest;
 use App\Http\Requests\UpdateTransaksiRequest;
-use App\Events\TransaksiSelesai;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
 
 class TransaksiController extends Controller
 {
@@ -80,7 +81,7 @@ class TransaksiController extends Controller
             // dd($data);
             $dataTanggal = $request->tanggal;
             $dateTime = Carbon::parse($dataTanggal, 'Asia/Jakarta'); // Ganti 'Asia/Jakarta' sesuai dengan timezone yang sesuai
-            $tanggal = $dateTime->format('Y-m-d');
+            // $tanggal = $dateTime->format('Y-m-d');
             // dd($tanggal);
             $totalharga = $request->total;
             $totalHargaTanpaTitik = str_replace(".", "", $totalharga);
@@ -92,7 +93,7 @@ class TransaksiController extends Controller
 
             // dd($totalharga);
             $transaksi = Transaksi::create([
-                "tanggal" => $tanggal,
+                "tanggal" => $dataTanggal,
                 "product_id" => $data['product'],
                 "methode_pembayaran_id" => $data['methode_pembayaran'],
                 "jumlah" => $data['jumlah'],
@@ -123,7 +124,18 @@ class TransaksiController extends Controller
                 ->withProperties(['id' => $transaksi->id])
                 ->log('User ' . auth()->user()->nama . ' add a transaksi');
 
-
+            $product = Product::findOrFail($data['product']);
+            $nama_product = $product->nama_product;
+            if ($transaksi->is_complete == 1) {
+                Rekap::insert([
+                    'tanggal_transaksi' => $dataTanggal,
+                    'sumber' => 'Transaksi',
+                    'jumlah' => $totalHargaTanpaTitik,
+                    'keterangan' => 'Transaksi Produk ' . $nama_product,
+                    'id_tabel_asal' => $transaksi->id,
+                    'tipe_transaksi' => 'Masuk'
+                ]);
+            }
             DB::commit();
             return redirect()->route('transaksis.index')->with('success', 'Transaksi has been created successfully');
         } catch (\Throwable $th) {
@@ -205,6 +217,19 @@ class TransaksiController extends Controller
                 event(new TransaksiSelesai($transaksi->id));
             }
 
+            $product = Product::findOrFail($dataInput['product']);
+            $nama_product = $product->nama_product;
+            if ($transaksi->is_complete == 1) {
+                Rekap::insert([
+                    'tanggal_transaksi' => $transaksi->tanggal,
+                    'sumber' => 'Transaksi',
+                    'jumlah' => $transaksi->total_harga,
+                    'keterangan' => 'Transaksi Produk ' . $nama_product,
+                    'id_tabel_asal' => $transaksi->id,
+                    'tipe_transaksi' => 'Masuk'
+                ]);
+            }
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($transaksi)
@@ -238,6 +263,9 @@ class TransaksiController extends Controller
                 ->log('User ' . auth()->user()->nama . ' delete a transaksi');
 
             $transaksi->delete();
+
+            Rekap::where('id_tabel_asal', $transaksi->id)->delete();
+
 
             DB::commit();
 

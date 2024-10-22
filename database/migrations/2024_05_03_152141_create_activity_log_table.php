@@ -10,7 +10,7 @@ class CreateActivityLogTable extends Migration
     {
         Schema::connection(config('activitylog.database_connection'))->create(config('activitylog.table_name'), function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('log_name')->nullable();
+            $table->string('log_name', 191)->nullable(); // Membatasi panjang menjadi 191 karakter
             $table->text('description');
             $table->nullableMorphs('subject', 'subject');
             $table->nullableMorphs('causer', 'causer');
@@ -18,6 +18,7 @@ class CreateActivityLogTable extends Migration
             $table->timestamps();
             $table->index('log_name');
         });
+
     }
 
     public function down()

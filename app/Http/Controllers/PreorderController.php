@@ -85,7 +85,7 @@ class PreorderController extends Controller
             'alamat' => 'required',
             'telepon' => 'required|digits:12',
 
-            'tanggal_dp' => 'required|date|after_or_equal:tanggal',
+            'tanggal_dp' => 'required|date|before_or_equal:tanggal',
             'jumlah_dp' => 'required'
             // bisa iya bisa tidak jika iya ada tanggal_dp dan jumlah_dp
             // opsional

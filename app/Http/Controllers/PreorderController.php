@@ -95,7 +95,7 @@ class PreorderController extends Controller
             'telepon.digits' => 'Nomor telepon harus terdiri dari 12 digit.',
             'tanggal_dp.after_or_equal' => 'Tanggal DP tidak boleh lebih dari tanggal transaksi.'
         ]);
-        dd($validatedData);
+        // dd($validatedData);
         try {
             DB::beginTransaction();
             $data = $request->all();

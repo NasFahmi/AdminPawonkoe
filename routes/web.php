@@ -51,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['role:superadmin|admin'])->group(function () {
         Route::get('/admin/dashboard', [DashboardController::class, 'indexDashboard'])->name('admin.dashboard');
-        Route::get('/chart/oneyear', [RekapController::class, 'chart'])->name('chart.1year');
+        // Route::get('/chart/oneyear', [RekapController::class, 'chart'])->name('chart.1year');
         Route::get('/admin/dashboard/logout', [AuthController::class, 'logout'])->name('logout');
     });
 

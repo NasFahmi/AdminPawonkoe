@@ -12,11 +12,23 @@
                             <div class="flex justify-start items-start flex-col gap-3">
                                 <div class="w-full">
                                     <label for="jenis" class="block mb-2 text-sm font-medium text-gray-700">Jenis</label>
-                                    <input type="text" placeholder="Jenis" name="jenis" value="{{ old('jenis') }}"
-                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
+                                    <select name="jenis"
+                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                        <option value="" disabled selected>Pilih Jenis</option>
+                                        <option value="beban" {{ old('jenis') == 'beban' ? 'selected' : '' }}>Beban
+                                        </option>
+                                        <option value="kewajiban" {{ old('jenis') == 'kewajiban' ? 'selected' : '' }}>
+                                            Kewajiban
+                                            {{-- {{-- </option> --}}
+                                        {{-- <option value="jenis3" {{ old('jenis') == 'jenis3' ? 'selected' : '' }}>Jenis 3 
+                                        </option> --}}
+                                        <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
+                                    </select>
+
                                     @error('jenis')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
+
                                 </div>
 
                                 <div class="w-full mt-4">
@@ -34,7 +46,8 @@
                     <div class="right">
                         <div class="w-full">
                             <label for="nominal" class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
-                            <input type="number" placeholder="Nominal" name="nominal" value="{{ old('nominal') }}" min="0"
+                            <input type="number" placeholder="Nominal" name="nominal" value="{{ old('nominal') }}"
+                                min="0"
                                 class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
                             @error('nominal')
                                 <small class="error" style="color: red">{{ $message }}</small>

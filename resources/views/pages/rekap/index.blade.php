@@ -8,7 +8,7 @@
 
         {{-- cards --}}
         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 ">
-                
+
             {{-- card --}}
             <div class="flex items-center p-4 bg-white rounded-lg shadow-md">
                 <img width="40px" src="{{ asset('assets/icon/receive-money.png') }}" alt="">
@@ -17,7 +17,7 @@
                         Total Uang Masuk
                     </p>
                     <p class="text-lg font-semibold text-gray-700 ">
-                      {{ $jumlahUangMasukFormatted }}
+                        {{ $jumlahUangMasukFormatted }}
                     </p>
                 </div>
             </div>
@@ -27,10 +27,10 @@
                 <img width="40px" src="{{ asset('assets/icon/send-money.png') }}" alt="">
                 <div class="p-3">
                     <p class="mb-2 text-xs font-medium text-gray-600 ">
-                       Total Uang Keluar
+                        Total Uang Keluar
                     </p>
                     <p class="text-lg font-semibold text-gray-700 ">
-                       {{ $jumlahUangKeluarFormatted }}
+                        {{ $jumlahUangKeluarFormatted }}
                     </p>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                     </p>
                 </div>
             </div>
-            
+
 
             {{-- card --}}
             <div class="flex items-center p-4 bg-blue-100 rounded-lg shadow-md hover:bg-white">
@@ -80,12 +80,12 @@
             <div class="flex justify-between">
                 <div>
                     <h5 id="judul-chart" class="leading-none text-xl font-semibold text-gray-900 dark:text-white pb-2">
-                        Pendapatan {{ $currentMonthInIndo }} {{ $currentYear }}
+                        Pendapatan
                     </h5>
                 </div>
 
                 {{-- <div iv class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between"> --}}
-                <div class="flex justify-between items-center">
+                {{-- <div class="flex justify-between items-center">
                     <!-- Button -->
                     <button id="" data-dropdown-toggle="lastDaysdropdown" data-dropdown-placement="bottom"
                         class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
@@ -117,7 +117,29 @@
                             </li>
                         </ul>
                     </div>
+                </div> --}}
+                <div class="flex justify-between items-center">
+                    <select id="tahun" class="form-select mr-2">
+                        @for ($year = 2020; $year <= now()->year; $year++)
+                            <option value="{{ $year }}" {{ $year == $currentYear ? 'selected' : '' }}>
+                                {{ $year }}
+                            </option>
+                        @endfor
+                    </select>
+
+                    <select id="bulan" class="form-select mr-2">
+                        <option value="-">-</option>
+                        @foreach ($daftarBulan as $key => $bulan)
+                            <option value="{{ $key }}">
+                                {{ $bulan }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    <button id="filter-chart" class="bg-blue-500 text-white px-4 py-2 rounded">Filter</button>
                 </div>
+
+
 
             </div>
             <div id="area-chart"></div>
@@ -125,120 +147,100 @@
     </div>
     </div>
     <script>
-        
-        let chartyear = document.getElementById('chartyear');
-        let judulchart = document.getElementById('judul-chart')
-        let pilihanchart = document.getElementById('pilihan-chart')
-
         let options = {
-          series: [
-            {
-          name: 'Pendapatan',
-          data: @json($dataSaldoFormatted)
-
-          
-        }],
-          chart: {
-          type: 'bar',
-          height: 350
-        },
-        plotOptions: {
-          bar: {
+    series: [{
+        name: 'Saldo Akhir',
+        data: []
+    }],
+    chart: {
+        type: 'bar',
+        height: 500
+    },
+    plotOptions: {
+        bar: {
             colors: {
-              ranges: [{
-                from: -100,
-                to: -46,
-                color: '#F15B46'
-              }, {
-                from: -45,
-                to: 0,
-                color: '#FEB019'
-              }]
+                ranges: [{
+                    from: -100,
+                    to: -46,
+                    color: '#F15B46'
+                }, {
+                    from: -45,
+                    to: 0,
+                    color: '#FEB019'
+                }]
             },
             columnWidth: '80%',
-          }
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        yaxis: {
-          title: {
+        }
+    },
+    dataLabels: {
+        enabled: false,
+    },
+    yaxis: {
+        title: {
             text: 'Jumlah (Rp)',
-          },
-          tickAmount: 4, // Jumlah ticks pada Y axis (jumlah label)
-          labels: {
-            formatter: function (value) {
+        },
+        tickAmount: 4,
+        labels: {
+            formatter: function(value) {
                 return 'Rp ' + value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
             }
-          }
-        },
-       
-
-         xaxis: {
-          categories: [
-            @json($tanggalFormatted)
-          ],
-          labels: {
-            rotate: -90
-          }
         }
-        };
+    },
+    xaxis: {
+        categories: [],
+        labels: {
+            rotate: -90
+        }
+    }
+};
 
-        var chart = new ApexCharts(document.getElementById("area-chart"), options);
-        chart.render();
+var chart = new ApexCharts(document.getElementById("area-chart"), options);
+chart.render();
 
-        chartyear.addEventListener('click', function() {
-            // Refresh the window with the #chartYear fragment
-            location.href = location.href.split('#')[0] + '#chartyear';
+document.getElementById('filter-chart').addEventListener('click', function() {
+    var tahun = document.getElementById('tahun').value;
+    var bulan = document.getElementById('bulan').value;
 
-            judulchart.innerText = 'Pendapatan Selama 1 Tahun '; // Ganti dengan judul yang diinginkan
-            pilihanchart.innerText = '1 Tahun';
-            fetch('{{ route('chart.1year') }}', {
-                    headers: {
-                        'Accept': 'application/json',
-                        "X-Requested-With": "XMLHttpRequest",
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json(); // Assuming the response is JSON
-                    } else {
-                        console.error('Failed to check #chartyear');
-                    }
-                })
-                .then(dataFecthing => {
-                    console.log(dataFecthing);
-                    var dataPenjualanSatuTahun = dataFecthing.data.data_penjualan;
-                    var dataBulanSatuTahun = dataFecthing.data.bulan;
-                    console.log(dataPenjualanSatuTahun);
-                    console.log(dataBulanSatuTahun);
-                    // Get the ApexCharts instance
-                    chart.updateOptions({
-                        xaxis: {
-                            categories: dataBulanSatuTahun
-                        },
-                        series: [{
-                            data: dataPenjualanSatuTahun
-                        }],
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        });
-
-
-        var dataPenjualan = @json($dataSaldoFormatted);
-        var tanggalPenjualan = @json($tanggalFormatted);
+    fetch('{{ route('chart.filter') }}', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            "X-Requested-With": "XMLHttpRequest",
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            tahun: tahun,
+            bulan: bulan
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // For monthly data, data.date is an object
+        // For daily data, data.date is an array
+        const categories = Array.isArray(data.date) ? data.date : Object.values(data.date);
+        
         chart.updateOptions({
-            xaxis: {
-                categories: tanggalPenjualan
-            },
             series: [{
-                data: dataPenjualan
+                name: 'Saldo Akhir',
+                data: data.saldoAkhir
             }],
+            xaxis: {
+                categories: categories,
+                labels: {
+                    rotate: -90,
+                    formatter: function(value) {
+                        // Format daily dates to show only the day
+                        if (bulan !== '-') {
+                            return value.split('-')[2]; // Returns only the day part
+                        }
+                        return value;
+                    }
+                }
+            }
         });
+    })
+    .catch(error => console.error('Error:', error));
+});
     </script>
-    <script src="{{ asset('js/chart.js') }}"></script>
 @endsection

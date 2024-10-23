@@ -17,6 +17,9 @@
                             <input type="text" placeholder="nama product" name="nama_product"
                                 value="{{ old('nama_product', $data->nama_product) }}"
                                 class="input input-bordered input-info bg-slate-50 w-full max-w-4xl duration-50 mb-3" />
+                                @error('nama_product')
+                                <small class="error" style="color: red">{{ $message }}</small>
+                            @enderror
                         </div>
                         <div class="">
                             <label class="block text-sm mb-1">
@@ -27,15 +30,21 @@
                                     value="{{ old('harga', $data->harga) }}"
                                     class="input input-bordered input-info w-full bg-slate-50  duration-50 " />
                             </div>
+                            @error('harga')
+                                <small class="error" style="color: red">{{ $message }}</small>
+                            @enderror
                         </div>
-                        <div class="">
+                        
+                        <div class="mt-3">
                             <label class="block text-sm mb-1">
                                 <span class="text-gray-700 dark:text-gray-400">Deskripsi</span>
                             </label>
                             <textarea class="textarea textarea-info w-full max-w-4xl bg-slate-50" placeholder="Deskripsi Product" name="deskripsi"
                                 rows="4">{{ old('deskripsi', $data->deskripsi) }}</textarea>
+                                @error('deskripsi')
+                                <small class="error" style="color: red">{{ $message }}</small>
+                            @enderror
                         </div>
-
 
                     </div>
                     <div class="right">
@@ -46,6 +55,9 @@
                             <input type="text" placeholder="Link Shopee" name="link_shopee"
                                 value="{{ old('link_shopee', $data->link_shopee) }}"
                                 class="input input-bordered input-info w-full max-w-4xl duration-50 bg-slate-50  mb-3" />
+                                @error('link_shopee')
+                                        <small class="error" style="color: red">{{ $message }}</small>
+                                    @enderror
                         </div>
                         <div class="">
                             <label class="block text-sm mb-1">
@@ -54,6 +66,9 @@
                             <input type="text" placeholder="Jumlah Stok" name="stok" min="0"
                                 value="{{ old('stok', $data->stok) }}"
                                 class="input input-bordered input-info w-full max-w-4xl duration-50 bg-slate-50 mb-3" />
+                                @error('stok')
+                                        <small class="error" style="color: red">{{ $message }}</small>
+                                    @enderror
                         </div>
                         <div class="">
                             <label class="block text-sm mb-1">
@@ -61,8 +76,10 @@
                             </label>
                             <textarea class="textarea textarea-info w-full max-w-4xl bg-slate-50" placeholder="Spesifikasi Product"
                                 name="spesifikasi_product" rows="4">{{ old('spesifikasi_product', $data->spesifikasi_product) }}</textarea>
+                                @error('spesifikasi_product')
+                                <small class="error" style="color: red">{{ $message }}</small>
+                            @enderror
                         </div>
-
                         <!-- Prefill Varians input fields -->
                         <div id="form-container">
                             @foreach ($data->varians as $index => $varian)
@@ -97,7 +114,12 @@
                         <label for="images" class="text-gray-700 font-semibold text-left  mb-2">Pilih Gambar</label>
                         <input type="file" class="border border-gray-300 px-4 py-2 w-full" id="images" name="images[]"
                             multiple>
-
+                            @error('image')
+                            <small class="error" style="color: red">{{ $message }}</small>
+                        @enderror
+                        @error('image.*')
+                            <small class="error" style="color: red">{{ $message }}</small>
+                        @enderror
                     </div>
                 </div>
 

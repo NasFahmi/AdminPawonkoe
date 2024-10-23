@@ -50,19 +50,21 @@ class ProductController extends Controller
         // dd($request->all()); 
         $validator = Validator::make($request->all(), [
             'nama_product' => 'required',
-            'harga' => 'required',
+            'harga' => ['required','regex:/^[1-9][0-9]*$/'],
             'deskripsi' => 'required',
             'link_shopee' => 'required',
-            'stok' => 'required',
+            'stok' => ['required','regex:/^[1-9][0-9]*$/'],
             'spesifikasi_product' => 'required',
             'images' => 'required',
             'images.*' => 'required'
         ], [
             'nama_product.required' => 'Nama produk wajib diisi.',
             'harga.required' => 'Harga wajib diisi.',
+            'harga.regex' => 'Harga tidak boleh dimulai dengan angka 0.',
             'deskripsi.required' => 'Deskripsi wajib diisi.',
             'link_shopee.required' => 'Link Shopee wajib diisi.',
             'stok.required' => 'Stok wajib diisi.',
+            'stok.regex' => 'Stok tidak boleh dimulai dengan angka 0.',
             'spesifikasi_product.required' => 'Spesifikasi produk wajib diisi.',
             'images.required' => 'Setiap Produk harus memiliki foto.',
         ]);
@@ -226,23 +228,24 @@ class ProductController extends Controller
         // dd($request->all()); 
         $validator = Validator::make($request->all(), [
             'nama_product' => 'required',
-            'harga' => 'required',
+            'harga' => ['required','regex:/^[1-9][0-9]*$/'],
             'deskripsi' => 'required',
             'link_shopee' => 'required',
-            'stok' => 'required',
+            'stok' => ['required','regex:/^[1-9][0-9]*$/'],
             'spesifikasi_product' => 'required',
             'images' => 'required',
             'images.*' => 'required'
         ], [
             'nama_product.required' => 'Nama produk wajib diisi.',
             'harga.required' => 'Harga wajib diisi.',
+            'harga.regex' => 'Harga tidak boleh dimulai dengan angka 0.',
             'deskripsi.required' => 'Deskripsi wajib diisi.',
             'link_shopee.required' => 'Link Shopee wajib diisi.',
             'stok.required' => 'Stok wajib diisi.',
+            'stok.regex' => 'Stok tidak boleh dimulai dengan angka 0.',
             'spesifikasi_product.required' => 'Spesifikasi produk wajib diisi.',
             'images.required' => 'Setiap Produk harus memiliki foto.',
         ]);
-
 
         try {
             DB::beginTransaction();
@@ -330,7 +333,7 @@ class ProductController extends Controller
             DB::rollBack();
             throw $e;
             // Handle the error as needed
-            // return redirect()->back()->with('error', 'Failed to update product data.');
+            return redirect()->back()->with('error', 'Failed to update product data.');
         }
     }
 

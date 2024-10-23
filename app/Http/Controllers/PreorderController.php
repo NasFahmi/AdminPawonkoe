@@ -101,8 +101,8 @@ class PreorderController extends Controller
             $data = $request->all();
 
             $dataTanggal = $request->tanggal;
-            $dateTime = DateTime::createFromFormat('d/m/Y', $dataTanggal);
-            $tanggal = $dateTime->format('Y-m-d');
+            // $dateTime = DateTime::createFromFormat('d/m/Y', $dataTanggal);
+            // $tanggal = $dateTime->format('Y-m-d');
 
             $totalharga = $request->total;
             $totalHargaTanpaTitik = str_replace(".", "", $totalharga);
@@ -111,8 +111,8 @@ class PreorderController extends Controller
             $jumlahDPTanpaTitik = $jumlahDP ? str_replace(".", "", $jumlahDP) : 0;
 
             $dataTanggalDP = $request->tanggal_dp;
-            $dateTimeTanggalDp = DateTime::createFromFormat('d/m/Y', strval($dataTanggalDP));
-            $tanggalDP = $dateTimeTanggalDp->format('Y-m-d');
+            // $dateTimeTanggalDp = DateTime::createFromFormat('d/m/Y', strval($dataTanggalDP));
+            // $tanggalDP = $dateTimeTanggalDp->format('Y-m-d');
 
 
             $dataPembeli = Pembeli::create([
@@ -126,12 +126,12 @@ class PreorderController extends Controller
             $dataPreorder = Preorder::create([
                 'is_DP' => '1',
                 'down_payment' => $jumlahDPTanpaTitik,
-                'tanggal_pembayaran_down_payment' => $tanggalDP,
+                'tanggal_pembayaran_down_payment' => $dataTanggalDP,
             ]);
             $idPreorder = $dataPreorder->id;
 
             $transaksi = Transaksi::create([
-                "tanggal" => $tanggal,
+                "tanggal" => $dataTanggal,
                 "pembeli_id" => $idPembeli,
                 "product_id" => $data['product'],
                 "methode_pembayaran_id" => $data['methode_pembayaran'],
@@ -162,7 +162,7 @@ class PreorderController extends Controller
             return redirect()->route('preorders.index')->with('success', 'Transaksi has been created successfully');
         } catch (\Throwable $th) {
             DB::rollBack();
-            // throw $th;
+            throw $th;
             return redirect()->back()->with('error', 'Failed to create transaksi data.');
         }
     }

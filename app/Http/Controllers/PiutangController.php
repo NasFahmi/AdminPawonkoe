@@ -23,8 +23,8 @@ class PiutangController extends Controller
     public function index()
     {
         $data = Piutang::with(['piutang_produk_piutangs.produk_piutangs'])
-        ->search(request('search'))
-        ->paginate(10);
+            ->search(request('search'))
+            ->paginate(10);
         // foreach ($data as $items) {
         //     foreach ($items->piutang_produk_piutangs as $products ) {
         //         foreach ($products->produk_piutangs as $product) {
@@ -51,40 +51,44 @@ class PiutangController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        // Validasi input data
         $validatedData = $request->validate([
             'nama_toko' => 'required|string',
-            'sewa_titip' => 'required|numeric',
-            'tanggal_disetorkan' => 'required|date_format:m/d/Y',
+            'sewa_titip' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
+            'tanggal_disetorkan' => 'required|',
             'catatan' => 'nullable|string',
             'product.*.product' => 'required|string',
-            'product.*.quantity' => 'required|numeric',
-            'product.*.price' => 'required|numeric',
-            'image.*' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Adjust max file size as needed
-
+            'product.*.quantity' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
+            'product.*.price' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
+            'image.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ], [
-
             'required' => 'The :attribute field is required.',
             'string' => 'The :attribute must be a string.',
             'numeric' => 'The :attribute must be a number.',
-            'date_format' => 'The :attribute must be in the format mm/dd/yyyy.',
+            'date_format' => 'The :attribute must be in the format.',
             'image' => 'The :attribute must be an image.',
             'mimes' => 'The :attribute must be a file of type: :values.',
             'max' => 'The :attribute may not be greater than :max kilobytes.',
         ]);
-
         try {
             DB::beginTransaction();
-            $data = $request->all();
+            // $data = $request->all();
             // dd($data['nama_toko']);
-            $dateTime = Carbon::parse($data['tanggal_disetorkan'], 'Asia/Jakarta');
+            // Tambahkan pengecekan apakah ada product yang dikirim
+            $productData = $request->input('product');
+            if (empty($productData) || count($productData) == 0) {
+                return redirect()->back()->withErrors(['product' => 'At least one product is required.'])->withInput();
+            }
+
+            $dateTime = Carbon::parse($validatedData['tanggal_disetorkan'], 'Asia/Jakarta');
             $tanggal = $dateTime->format('Y-m-d');
             // 1. store piutang
             // Piutang
             $piutang = Piutang::create([
-                'nama_toko' => $data['nama_toko'],
-                'sewa_titip' => $data['sewa_titip'],
-                'tanggal_disetorkan' => $tanggal,
-                'catatan' => $data['catatan'],
+                'nama_toko' => $validatedData['nama_toko'],
+                'sewa_titip' => $validatedData['sewa_titip'],
+                'tanggal_disetorkan' => $validatedData['tanggal_disetorkan'],
+                'catatan' => $validatedData['catatan'],
             ]);
             // 2. store piutang product piutang
 
@@ -98,7 +102,7 @@ class PiutangController extends Controller
                 $images = $request->file('image'); // not empty
                 // dd($images); // Check if $images is not empty
 
-                $foldername = $data['nama_toko'] . '_' . $tanggal;
+                $foldername = $validatedData['nama_toko'] . '_' . $tanggal;
                 $folderPath = 'public/images/piutang/' . $foldername;
 
                 if (!Storage::exists($folderPath)) {
@@ -116,7 +120,7 @@ class PiutangController extends Controller
 
                     NotaPiutang::create([
                         'piutang_id' => $piutang->id,
-                        'foto' => 'storage/images/piutang/'.$foldername . '/' . $name, // Concatenate folder path and file name
+                        'foto' => 'storage/images/piutang/' . $foldername . '/' . $name, // Concatenate folder path and file name
                     ]);
                 }
             }
@@ -145,7 +149,7 @@ class PiutangController extends Controller
             $piutangProductPiutang->total = $total;
             $piutangProductPiutang->save();
 
-            $piutang->penghasilan = $total - $data['sewa_titip'];
+            $piutang->penghasilan = $total - $validatedData['sewa_titip'];
             $piutang->save();
 
             activity()
@@ -176,10 +180,10 @@ class PiutangController extends Controller
      */
     public function edit($id)
     {
-        $piutang = Piutang::with('piutang_produk_piutangs','notas')->findorFail($id);
+        $piutang = Piutang::with('piutang_produk_piutangs', 'notas')->findorFail($id);
         $data = ProdukPiutang::where('produk_piutang_id', $piutang->id)->get();
         $dataNota = NotaPiutang::where('piutang_id', $piutang->id)->get();
-        return view('pages.piutang.edit', compact('piutang','data','dataNota'));
+        return view('pages.piutang.edit', compact('piutang', 'data', 'dataNota'));
     }
 
     /**
@@ -188,11 +192,10 @@ class PiutangController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'tanggal_lunas' => 'required|date_format:m/d/Y',
+            'tanggal_lunas' => 'required',
             'image.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Adjust max file size as needed
         ], [
             'required' => 'The :attribute field is required.',
-            'date_format' => 'The :attribute must be in the format mm/dd/yyyy.',
             'image' => 'The :attribute must be an image.',
             'mimes' => 'The :attribute must be a file of type: :values.',
             'max' => 'The :attribute may not be greater than :max kilobytes.',
@@ -201,9 +204,10 @@ class PiutangController extends Controller
         try {
             DB::beginTransaction();
             $data = $request->all();
+            // dd($validatedData);
             // dd($data);
-            $dateTime = Carbon::parse($data['tanggal_lunas'], 'Asia/Jakarta');
-            $tanggal = $dateTime->format('Y-m-d');
+            $tanggal = $validatedData['tanggal_lunas'];
+            // $tanggal = $dateTime->format('Y-m-d');
 
             // 1. Update piutang
             $piutang = Piutang::findOrFail($id);
@@ -234,7 +238,7 @@ class PiutangController extends Controller
                     NotaPiutang::updateOrCreate([
                         'piutang_id' => $piutang->id,
                     ], [
-                        'foto' => 'storage/'.$folderPath . '/' . $name, // Concatenate folder path and file name
+                        'foto' => 'storage/' . $folderPath . '/' . $name, // Concatenate folder path and file name
                     ]);
                 }
             }

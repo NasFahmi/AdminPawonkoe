@@ -11,8 +11,10 @@
                         <div class="max-w-lg">
                             <div class="flex justify-start items-start flex-col gap-3">
                                 <div class="w-full">
-                                    <label for="nama_toko" class="block mb-2 text-sm font-medium text-gray-700">Nama Toko</label>
-                                    <input type="text" placeholder="Nama Toko" name="nama_toko" value="{{ old('nama_toko') }}"
+                                    <label for="nama_toko" class="block mb-2 text-sm font-medium text-gray-700">Nama
+                                        Toko</label>
+                                    <input type="text" placeholder="Nama Toko" name="nama_toko"
+                                        value="{{ old('nama_toko') }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
                                     @error('nama_toko')
                                         <small class="error" style="color: red">{{ $message }}</small>
@@ -20,9 +22,10 @@
                                 </div>
 
                                 <div class="w-full">
-                                    <label for="sewa_titip"
-                                        class="block mb-2 text-sm font-medium text-gray-700">Sewa Titip</label>
-                                    <input type="number" min="0" placeholder="Sewa Titip" name="sewa_titip" value="{{ old('sewa_titip') }}"
+                                    <label for="sewa_titip" class="block mb-2 text-sm font-medium text-gray-700">Sewa
+                                        Titip</label>
+                                    <input type="number" min="0" placeholder="Sewa Titip" name="sewa_titip"
+                                        value="{{ old('sewa_titip') }}" oninput="this.value = this.value.replace(/^0+(?!$)/, '')"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
                                     @error('sewa_titip')
                                         <small class="error" style="color: red">{{ $message }}</small>
@@ -41,7 +44,8 @@
                                                     d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                             </svg>
                                         </div>
-                                        <input datepicker type="text" name="tanggal_disetorkan" value="{{ old('tanggal_disetorkan') }}"
+                                        <input id="datepicker-format" datepicker datepicker-format="yyyy-mm-dd"  type="text" name="tanggal_disetorkan"
+                                            value="{{ old('tanggal_disetorkan') }}"
                                             class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Select date">
                                     </div>
@@ -84,9 +88,14 @@
                             </label>
                         </div>
                         <div id="form-container">
-                            <!-- Formulir input awal -->
-                            <div class="form-group flex justify-center items-center gap-2">
-
+                            <!-- Formulir input awal yang tidak bisa dihapus -->
+                            <div class="form-group flex flex-col justify-center items-center gap-2">
+                                <input type="text" name="product[0][product]" placeholder="Product"
+                                    class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                                <input type="number" min="1" name="product[0][quantity]" placeholder="Quantity" oninput="this.value = this.value.replace(/^0+(?!$)/, '')"
+                                    class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                                <input type="number" min="0" name="product[0][price]" placeholder="Price" oninput="this.value = this.value.replace(/^0+(?!$)/, '')"
+                                    class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
                             </div>
                         </div>
 
@@ -137,7 +146,7 @@
         </div>
     </div>
     <script>
-        let product = 1;
+        let product = 1; // Mulai dari 1 karena 0 sudah digunakan oleh form pertama
 
         function addInput() {
             var formContainer = document.getElementById('form-container');
@@ -145,19 +154,18 @@
             newFormGroup.className = 'form-group';
             newFormGroup.innerHTML = '<div class="form-group flex-cols mb-4 justify-center items-center">' +
                 '<input type="text" name="product[' + product + '][product]" placeholder="Product" ' +
-                'class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />' +
-                '<input type="number" name="product[' + product + '][quantity]" placeholder="Quantity" ' +
-                'class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />' +
-                '<input type="number" name="product[' + product + '][price]" placeholder="Price" ' +
-                'class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />' +
-                '<div class="cursor-pointer" onclick="removeInput(this)" >' +
-                    '<p class="text-red-400 text-sm">delete product</p>'+
+                'class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />' +
+                '<input oninput="this.value = this.value.replace(/^0+(?!$)/, '')" type="number" name="product[' + product + '][quantity]" placeholder="Quantity" ' +
+                'class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />' +
+                '<input oninput="this.value = this.value.replace(/^0+(?!$)/, '')" type="number" name="product[' + product + '][price]" placeholder="Price" ' +
+                'class="bg-gray-50 mb-2 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />' +
+                '<div class="cursor-pointer" onclick="removeInput(this)">' +
+                '<p class="text-red-400 text-sm">delete product</p>' +
                 '</div>' +
                 '</div>';
             formContainer.appendChild(newFormGroup);
             product++;
         }
-
 
         function removeInput(element) {
             var formGroup = element.parentElement;

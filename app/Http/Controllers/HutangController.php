@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\CicilanHutang;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use App\Http\Requests\StoreHutangRequest;
 use App\Http\Requests\UpdateHutangRequest;
 
@@ -63,10 +64,10 @@ class HutangController extends Controller
         $validatedData = $request->validate([
             'nama' => 'required|string|max:255',
             'catatan' => 'nullable|string',
-            'jumlahHutang' => 'required|numeric|min:1',
+            'jumlahHutang' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
             'tanggal_lunas' => 'nullable',
             'tenggat_waktu' => 'nullable',
-            'nominal' => 'nullable|numeric|min:1',
+            'nominal' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
             'status' => 'required|in:0,1',
         ]);
         if ($request->nominal > $request->jumlahHutang) {
@@ -78,7 +79,7 @@ class HutangController extends Controller
             // lunas
             if ($validatedData['tanggal_lunas'] != null) {
 
-                $tanggalLunas = Carbon::parse($validatedData['tanggal_lunas'], 'Asia/Jakarta')->format('Y-m-d');
+                // $tanggalLunas = Carbon::parse($validatedData['tanggal_lunas'], 'Asia/Jakarta')->format('Y-m-d');
                 // Membuat data hutang
                 $hutang = Hutang::create([
                     'nama' => $validatedData['nama'],
@@ -86,21 +87,21 @@ class HutangController extends Controller
                     'status' => $validatedData['status'], // Sesuaikan nama kolom jika berbeda
                     'jumlah_hutang' => $validatedData['jumlahHutang'],
                     'tenggat_waktu' => null,
-                    'tanggal_lunas' => $tanggalLunas,
+                    'tanggal_lunas' => $validatedData['tanggal_lunas'],
                 ]);
             }
 
 
 
             if ($validatedData['tenggat_waktu'] != null) {
-                $tenggatWaktu = Carbon::parse($validatedData['tenggat_waktu'], 'Asia/Jakarta')->format('Y-m-d');
+                // $tenggatWaktu = Carbon::parse($validatedData['tenggat_waktu'], 'Asia/Jakarta')->format('Y-m-d');
                 // Membuat data cicilan
                 $hutang = Hutang::create([
                     'nama' => $validatedData['nama'],
                     'catatan' => $validatedData['catatan'],
                     'status' => $validatedData['status'], // Sesuaikan nama kolom jika berbeda
                     'jumlah_hutang' => $validatedData['jumlahHutang'],
-                    'tenggat_waktu' => $tenggatWaktu,
+                    'tenggat_waktu' => $validatedData['tenggat_waktu'],
                     'tanggal_lunas' => null,
                 ]);
                 if (isset($request->nominal)) {
@@ -157,54 +158,62 @@ class HutangController extends Controller
      */
     public function update(Request $request, Hutang $hutang)
     {
-
         $validatedData = $request->validate([
             'nama' => 'required|string|max:255',
             'catatan' => 'nullable|string',
-            'jumlahHutang' => 'required|numeric|min:1',
-            'tanggal_lunas' => 'nullable',
-            'tenggat_waktu' => 'nullable',
+            'jumlahHutang' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
+            'tanggal_lunas' => 'nullable|date',
+            'tenggat_waktu' => 'nullable|date',
             'status' => 'required|in:0,1',
         ]);
+
         try {
             DB::beginTransaction();
-            // lunas
-            //! skenario pertama ketika belum selesai -> selesai nanti akan ngaruh ke data ciclan
+
+            // Validasi tanggal_lunas harus lebih besar atau sama dengan created_at
+            if ($validatedData['status'] == 1 && isset($validatedData['tanggal_lunas'])) {
+                $tanggalLunas = Carbon::parse($validatedData['tanggal_lunas']);
+                $createdAt = Carbon::parse($hutang->created_at);
+
+                if ($tanggalLunas->lt($createdAt)) {
+                    throw ValidationException::withMessages([
+                        'tanggal_lunas' => 'Tanggal lunas tidak boleh lebih awal dari tanggal pembuatan (' . $createdAt->format('Y-m-d') . ').',
+                    ]);
+                }
+            }
+
+            // Lanjutkan proses update berdasarkan status
             if ($validatedData['status'] == 1) {
-                $tanggalLunas = Carbon::parse($validatedData['tanggal_lunas'], 'Asia/Jakarta')->format('Y-m-d');
                 $hutang->update([
                     'nama' => $validatedData['nama'],
                     'catatan' => $validatedData['catatan'],
                     'jumlah_hutang' => $validatedData['jumlahHutang'],
-                    'status' => $validatedData['status'], // Sesuaikan nama kolom jika berbeda
-                    'tanggal_lunas' => $tanggalLunas,
+                    'status' => $validatedData['status'],
+                    'tanggal_lunas' => $validatedData['tanggal_lunas'],
                     'tenggat_waktu' => null,
                 ]);
+
                 $cicilan = CicilanHutang::where('hutangId', $hutang->id)->get();
                 $totalNominalHutang = $cicilan->sum('nominal');
                 CicilanHutang::create([
                     'hutangId' => $hutang->id,
                     'nominal' => $hutang->jumlah_hutang - $totalNominalHutang,
                 ]);
-            }
-
-            //! skenario kedua ketika selesai -> belum selesai
-            //! unfinish, jika di clear cicilan yang emiliki hutang id = id hutang, maka itu terlalu beresiko, 
-            if ($validatedData['status'] == 0) {
-                $tenggatWaktu = Carbon::parse($validatedData['tenggat_waktu'], 'Asia/Jakarta')->format('Y-m-d');
-                // dd($tenggatWaktu); //2024-06-30
+            } elseif ($validatedData['status'] == 0) {
                 $hutang->update([
                     'nama' => $validatedData['nama'],
                     'catatan' => $validatedData['catatan'],
                     'jumlah_hutang' => $validatedData['jumlahHutang'],
-                    'status' => $validatedData['status'], // Sesuaikan nama kolom jika berbeda
+                    'status' => $validatedData['status'],
                     'tanggal_lunas' => null,
-                    'tenggat_waktu' => $tenggatWaktu,
+                    'tenggat_waktu' => $validatedData['tenggat_waktu'],
                 ]);
+
                 CicilanHutang::where('hutangId', $hutang->id)->delete();
             }
 
-            $tanggal = Carbon::parse($hutang->created_at, 'Asia/Jakarta')->format('Y-m-d');
+            // Simpan rekap jika status selesai
+            $tanggal = Carbon::parse($hutang->created_at)->format('Y-m-d');
             if ($validatedData['status'] == 1) {
                 Rekap::insert([
                     'tanggal_transaksi' => $tanggal,

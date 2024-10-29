@@ -49,9 +49,9 @@ class ModalController extends Controller
         $validatedData = $request->validate([
             'jenis' => 'required',
             'nama' => 'required',
-            'nominal' => 'required|numeric',
+            'nominal' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
             'penyedia' => 'required',
-            'jumlah' => 'numeric',
+            'jumlah' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
             'tanggal' => 'required',
         ], [
             'jenis.required' => 'Jenis harus diisi.',
@@ -112,9 +112,9 @@ class ModalController extends Controller
         $validatedData = $request->validate([
             'jenis' => 'required',
             'nama' => 'required',
-            'nominal' => 'required|numeric',
+            'nominal' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
             'penyedia' => 'required',
-            'jumlah' => 'required|numeric',
+            'jumlah' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
             'tanggal' => 'required',
         ], [
             'jenis.required' => 'Jenis harus diisi.',

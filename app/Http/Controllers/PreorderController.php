@@ -78,7 +78,7 @@ class PreorderController extends Controller
         // dd($request->all());
         $validatedData = $this->validate($request, [
             'tanggal' => 'required|date',
-            'jumlah' => 'required',
+            'jumlah' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
             'total' => 'required',
             'nama' => 'required',
             'email' => 'required',
@@ -93,24 +93,25 @@ class PreorderController extends Controller
             // jumlah_dp
         ], [
             'telepon.digits' => 'Nomor telepon harus terdiri dari 12 digit.',
-            'tanggal_dp.after_or_equal' => 'Tanggal DP tidak boleh lebih dari tanggal transaksi.'
+            'tanggal_dp.before_or_equal' => 'Tanggal DP tidak boleh lebih dari tanggal transaksi.'
         ]);
         // dd($validatedData);
         try {
             DB::beginTransaction();
             $data = $request->all();
 
-            $dataTanggal = $request->tanggal;
+            $dataTanggal = $validatedData['tanggal'];
+            // dd($dataTanggal);
             // $dateTime = DateTime::createFromFormat('d/m/Y', $dataTanggal);
             // $tanggal = $dateTime->format('Y-m-d');
 
-            $totalharga = $request->total;
+            $totalharga = $validatedData['total'];
             $totalHargaTanpaTitik = str_replace(".", "", $totalharga);
 
-            $jumlahDP = $request->jumlah_dp;
+            $jumlahDP = $validatedData['jumlah_dp'];
             $jumlahDPTanpaTitik = $jumlahDP ? str_replace(".", "", $jumlahDP) : 0;
 
-            $dataTanggalDP = $request->tanggal_dp;
+            $dataTanggalDP = $validatedData['tanggal_dp'];
             // $dateTimeTanggalDp = DateTime::createFromFormat('d/m/Y', strval($dataTanggalDP));
             // $tanggalDP = $dateTimeTanggalDp->format('Y-m-d');
 

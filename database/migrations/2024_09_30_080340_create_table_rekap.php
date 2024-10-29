@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Rekap_keuangan', function (Blueprint $table) {
+        Schema::create('rekap_keuangan', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal_transaksi'); // Tanggal transaksi uang keluar
             $table->string('sumber'); // Kategori atau jenis pengeluaran (Hutang, Beban Operasional, dll)

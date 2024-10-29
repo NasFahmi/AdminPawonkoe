@@ -60,7 +60,7 @@
                             <label class="block text-sm mb-1 mt-3">
                                 <span class="text-gray-700 dark:text-gray-400">Stok</span>
                             </label>
-                            <input type="number" placeholder="Jumlah Stok" name="stok" value="{{ old('stok') }}" min="0"
+                            <input type="number" placeholder="Jumlah Stok" name="stok" value="{{ old('stok') }}" min="1" pattern="[1-9][0-9]*"
                                 class="input input-bordered input-info w-full max-w-4xl duration-50 bg-slate-50 " />
                             @error('stok')
                                 <small class="error" style="color: red">{{ $message }}</small>

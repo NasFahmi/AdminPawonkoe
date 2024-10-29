@@ -115,7 +115,11 @@
 
                                 <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
                                     <span>
-                                        {{ \Carbon\Carbon::parse($items->tanggal_lunas)->locale('ID')->isoFormat('D MMMM YYYY') }}
+                                        @if ($items->tanggal_lunas)
+                                            {{ \Carbon\Carbon::parse($items->tanggal_lunas)->locale('ID')->isoFormat('D MMMM YYYY') }}
+                                        @else
+                                            -
+                                        @endif
                                     </span>
                                 </td>
 

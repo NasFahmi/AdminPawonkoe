@@ -78,14 +78,14 @@ class PreorderController extends Controller
         // dd($request->all());
         $validatedData = $this->validate($request, [
             'tanggal' => 'required|date',
-            'jumlah' => 'required',
+            'jumlah' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
             'total' => 'required',
             'nama' => 'required',
             'email' => 'required',
             'alamat' => 'required',
             'telepon' => 'required|digits:12',
 
-            'tanggal_dp' => 'required|date|after_or_equal:tanggal',
+            'tanggal_dp' => 'required|date|before_or_equal:tanggal',
             'jumlah_dp' => 'required'
             // bisa iya bisa tidak jika iya ada tanggal_dp dan jumlah_dp
             // opsional
@@ -93,26 +93,27 @@ class PreorderController extends Controller
             // jumlah_dp
         ], [
             'telepon.digits' => 'Nomor telepon harus terdiri dari 12 digit.',
-            'tanggal_dp.after_or_equal' => 'Tanggal DP tidak boleh lebih dari tanggal transaksi.'
+            'tanggal_dp.before_or_equal' => 'Tanggal DP tidak boleh lebih dari tanggal transaksi.'
         ]);
-        dd($validatedData);
+        // dd($validatedData);
         try {
             DB::beginTransaction();
             $data = $request->all();
 
-            $dataTanggal = $request->tanggal;
-            $dateTime = DateTime::createFromFormat('d/m/Y', $dataTanggal);
-            $tanggal = $dateTime->format('Y-m-d');
+            $dataTanggal = $validatedData['tanggal'];
+            // dd($dataTanggal);
+            // $dateTime = DateTime::createFromFormat('d/m/Y', $dataTanggal);
+            // $tanggal = $dateTime->format('Y-m-d');
 
-            $totalharga = $request->total;
+            $totalharga = $validatedData['total'];
             $totalHargaTanpaTitik = str_replace(".", "", $totalharga);
 
-            $jumlahDP = $request->jumlah_dp;
+            $jumlahDP = $validatedData['jumlah_dp'];
             $jumlahDPTanpaTitik = $jumlahDP ? str_replace(".", "", $jumlahDP) : 0;
 
-            $dataTanggalDP = $request->tanggal_dp;
-            $dateTimeTanggalDp = DateTime::createFromFormat('d/m/Y', strval($dataTanggalDP));
-            $tanggalDP = $dateTimeTanggalDp->format('Y-m-d');
+            $dataTanggalDP = $validatedData['tanggal_dp'];
+            // $dateTimeTanggalDp = DateTime::createFromFormat('d/m/Y', strval($dataTanggalDP));
+            // $tanggalDP = $dateTimeTanggalDp->format('Y-m-d');
 
 
             $dataPembeli = Pembeli::create([
@@ -126,12 +127,12 @@ class PreorderController extends Controller
             $dataPreorder = Preorder::create([
                 'is_DP' => '1',
                 'down_payment' => $jumlahDPTanpaTitik,
-                'tanggal_pembayaran_down_payment' => $tanggalDP,
+                'tanggal_pembayaran_down_payment' => $dataTanggalDP,
             ]);
             $idPreorder = $dataPreorder->id;
 
             $transaksi = Transaksi::create([
-                "tanggal" => $tanggal,
+                "tanggal" => $dataTanggal,
                 "pembeli_id" => $idPembeli,
                 "product_id" => $data['product'],
                 "methode_pembayaran_id" => $data['methode_pembayaran'],
@@ -162,7 +163,7 @@ class PreorderController extends Controller
             return redirect()->route('preorders.index')->with('success', 'Transaksi has been created successfully');
         } catch (\Throwable $th) {
             DB::rollBack();
-            // throw $th;
+            throw $th;
             return redirect()->back()->with('error', 'Failed to create transaksi data.');
         }
     }

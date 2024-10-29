@@ -27,5 +27,4 @@ class Hutang extends Model
         $totalCicilan = $this->hutang_cicilan()->sum('nominal');
         return $this->jumlah_hutang - $totalCicilan;
     }
-    public $timestamps = false;
 }

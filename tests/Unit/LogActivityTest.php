@@ -7,6 +7,7 @@ use App\Models\BebanKewajiban;
 use App\Models\Hutang;
 use App\Models\Piutang;
 use App\Models\Product;
+use App\Models\Produksi;
 use App\Models\TemporaryImage;
 use App\Models\Transaksi;
 use Carbon\Carbon;
@@ -572,7 +573,7 @@ class LogActivityTest extends TestCase
 
 
         // Assert that the activity was logged
-        $this->assertDatabaseHas('activities', [
+        $this->assertDatabaseHas('activity_log', [
             'log_name' => 'default',
             'description' => 'User pawonkoe add a new beban kewajiban',
         ]);
@@ -600,7 +601,7 @@ class LogActivityTest extends TestCase
             'jumlah' => 2000,
         ]);
         // Assert that the activity was logged
-        $this->assertDatabaseHas('activities', [
+        $this->assertDatabaseHas('activity_log', [
             'log_name' => 'default',
             'description' => 'User pawonkoe add a update a beban kewajiban',
         ]);
@@ -619,9 +620,87 @@ class LogActivityTest extends TestCase
         $this->assertDeleted($bebanKewajiban);
         $this->assertDeleted('rekaps', ['id_tabel_asal' => $bebanKewajiban->id]);
 
-        $this->assertDatabaseHas('activities', [
+        $this->assertDatabaseHas('activity_log', [
             'log_name' => 'default',
             'description' => 'User pawonkoe add a delete a beban kewajiban',
         ]);
     }
+
+    public function test_create_data_log_activities_when_successful_create_produksi()
+{
+    // Authenticate the user
+    $this->post(route('authentication'), [
+        'nama' => 'pawonkoe',
+        'password' => 'pawonkoe',
+    ]);
+
+    // Create a new Produksi
+    $data = [
+        'produk' => 'Produk Test',
+        'volume' => 10.5,
+        'jumlah' => 5,
+        'tanggal' => now()->format('Y-m-d'),
+    ];
+    $this->post(route('produksi.store'), $data);
+
+    // Assert that the log activity has been created
+    $this->assertDatabaseHas('activity_log', [
+        'log_name' => 'default',
+        'description' => 'User pawonkoe add a produksi',
+    ]);
+}
+
+public function test_create_data_log_activities_when_successful_edit_produksi()
+{
+    // Authenticate the user
+    $this->post(route('authentication'), [
+        'nama' => 'pawonkoe',
+        'password' => 'pawonkoe',
+    ]);
+
+    // Create a Produksi to edit
+    $produksi = Produksi::factory()->create([
+        'produk' => 'Old Product',
+        'volume' => 8.0,
+        'jumlah' => 2,
+        'tanggal' => now()->format('Y-m-d'),
+    ]);
+
+    // Update the Produksi
+    $data = [
+        'produk' => 'Updated Product',
+        'volume' => 12.0,
+        'jumlah' => 3,
+        'tanggal' => now()->format('Y-m-d'),
+    ];
+    $this->put(route('produksi.update', $produksi), $data);
+
+    // Assert that the log activity has been created
+    $this->assertDatabaseHas('activity_log', [
+        'log_name' => 'default',
+        'description' => 'User pawonkoe update a produksi',
+    ]);
+}
+
+public function test_create_data_log_activities_when_successful_delete_produksi()
+{
+    // Authenticate the user
+    $this->post(route('authentication'), [
+        'nama' => 'pawonkoe',
+        'password' => 'pawonkoe',
+    ]);
+
+    // Create a Produksi to delete
+    $produksi = Produksi::factory()->create();
+
+    // Delete the Produksi
+    $this->delete(route('produksi.destroy', $produksi));
+
+    // Assert that the log activity has been created
+    $this->assertDatabaseHas('activity_log', [
+        'log_name' => 'default',
+        'description' => 'User pawonkoe delete a produksi',
+    ]);
+}
+
 }

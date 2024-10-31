@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for E:\Media\Kuliah\RPL\PBL\AdminPawonkoe\app\Models</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../_css/bootstrap.min.css?v=10.1.15" rel="stylesheet" type="text/css">
+  <link href="../_css/nv.d3.min.css?v=10.1.15" rel="stylesheet" type="text/css">
+  <link href="../_css/style.css?v=10.1.15" rel="stylesheet" type="text/css">
+  <link href="../_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="../index.html">E:\Media\Kuliah\RPL\PBL\AdminPawonkoe\app</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Models</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="CicilanHutang.php.html#8">App\Models\CicilanHutang</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Foto.php.html#8">App\Models\Foto</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HistoryProduct.php.html#8">App\Models\HistoryProduct</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HistoryProductTransaksi.php.html#8">App\Models\HistoryProductTransaksi</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Hutang.php.html#9">App\Models\Hutang</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="JenisModal.php.html#8">App\Models\JenisModal</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MethodePembayaran.php.html#8">App\Models\MethodePembayaran</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Modal.php.html#9">App\Models\Modal</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotaPiutang.php.html#8">App\Models\NotaPiutang</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Pembeli.php.html#8">App\Models\Pembeli</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Piutang.php.html#9">App\Models\Piutang</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PiutangProdukPiutang.php.html#8">App\Models\PiutangProdukPiutang</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Preorder.php.html#8">App\Models\Preorder</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Product.php.html#8">App\Models\Product</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProdukPiutang.php.html#8">App\Models\ProdukPiutang</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Transaksi.php.html#10">App\Models\Transaksi</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Varian.php.html#8">App\Models\Varian</a></td><td class="text-right">0%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Transaksi.php.html#10">App\Models\Transaksi</a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="Piutang.php.html#9">App\Models\Piutang</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Product.php.html#8">App\Models\Product</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Preorder.php.html#8">App\Models\Preorder</a></td><td class="text-right">12</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="CicilanHutang.php.html#18"><abbr title="App\Models\CicilanHutang::cicilan_hutang">cicilan_hutang</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Foto.php.html#15"><abbr title="App\Models\Foto::product">product</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HistoryProduct.php.html#21"><abbr title="App\Models\HistoryProduct::history_product_transaksi">history_product_transaksi</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HistoryProductTransaksi.php.html#16"><abbr title="App\Models\HistoryProductTransaksi::transaksi">transaksi</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="HistoryProductTransaksi.php.html#21"><abbr title="App\Models\HistoryProductTransaksi::history_product">history_product</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Hutang.php.html#21"><abbr title="App\Models\Hutang::hutang_cicilan">hutang_cicilan</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Hutang.php.html#25"><abbr title="App\Models\Hutang::getRemainingDebtAttribute">getRemainingDebtAttribute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="JenisModal.php.html#15"><abbr title="App\Models\JenisModal::modal">modal</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="MethodePembayaran.php.html#14"><abbr title="App\Models\MethodePembayaran::transaksis">transaksis</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Modal.php.html#23"><abbr title="App\Models\Modal::jenis_modal">jenis_modal</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NotaPiutang.php.html#15"><abbr title="App\Models\NotaPiutang::piutangs">piutangs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Pembeli.php.html#17"><abbr title="App\Models\Pembeli::transaksis">transaksis</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Piutang.php.html#22"><abbr title="App\Models\Piutang::notas">notas</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Piutang.php.html#26"><abbr title="App\Models\Piutang::piutang_produk_piutangs">piutang_produk_piutangs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Piutang.php.html#30"><abbr title="App\Models\Piutang::produk_piutangs">produk_piutangs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Piutang.php.html#35"><abbr title="App\Models\Piutang::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PiutangProdukPiutang.php.html#16"><abbr title="App\Models\PiutangProdukPiutang::piutangs">piutangs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PiutangProdukPiutang.php.html#20"><abbr title="App\Models\PiutangProdukPiutang::produk_piutangs">produk_piutangs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Preorder.php.html#16"><abbr title="App\Models\Preorder::transaksis">transaksis</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Preorder.php.html#19"><abbr title="App\Models\Preorder::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Product.php.html#21"><abbr title="App\Models\Product::fotos">fotos</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Product.php.html#26"><abbr title="App\Models\Product::varians">varians</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Product.php.html#31"><abbr title="App\Models\Product::transaksis">transaksis</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Product.php.html#35"><abbr title="App\Models\Product::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProdukPiutang.php.html#18"><abbr title="App\Models\ProdukPiutang::piutang_produk_piutangs">piutang_produk_piutangs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Transaksi.php.html#25"><abbr title="App\Models\Transaksi::pembelis">pembelis</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Transaksi.php.html#29"><abbr title="App\Models\Transaksi::products">products</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Transaksi.php.html#33"><abbr title="App\Models\Transaksi::methode_pembayaran">methode_pembayaran</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Transaksi.php.html#37"><abbr title="App\Models\Transaksi::preorders">preorders</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Transaksi.php.html#41"><abbr title="App\Models\Transaksi::history_product_transaksis">history_product_transaksis</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Transaksi.php.html#46"><abbr title="App\Models\Transaksi::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Varian.php.html#13"><abbr title="App\Models\Varian::product">product</abbr></a></td><td class="text-right">0%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Piutang.php.html#35"><abbr title="App\Models\Piutang::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Preorder.php.html#19"><abbr title="App\Models\Preorder::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Product.php.html#35"><abbr title="App\Models\Product::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Transaksi.php.html#46"><abbr title="App\Models\Transaksi::scopeSearch">scopeSearch</abbr></a></td><td class="text-right">6</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 10.1.15</a> using <a href="https://www.php.net/" target="_top">PHP 8.3.10</a> and <a href="https://phpunit.de/">PHPUnit 10.5.20</a> at Fri Oct 4 6:27:01 UTC 2024.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../_js/jquery.min.js?v=10.1.15" type="text/javascript"></script>
+  <script src="../_js/d3.min.js?v=10.1.15" type="text/javascript"></script>
+  <script src="../_js/nv.d3.min.js?v=10.1.15" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([17,0,0,0,0,0,0,0,0,0,0,4], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([32,0,0,0,0,0,0,0,0,0,0,0], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[100,0,"<a href=\"BebanKewajiban.php.html#9\">App\\Models\\BebanKewajiban<\/a>"],[0,1,"<a href=\"CicilanHutang.php.html#8\">App\\Models\\CicilanHutang<\/a>"],[0,1,"<a href=\"Foto.php.html#8\">App\\Models\\Foto<\/a>"],[0,1,"<a href=\"HistoryProduct.php.html#8\">App\\Models\\HistoryProduct<\/a>"],[0,2,"<a href=\"HistoryProductTransaksi.php.html#8\">App\\Models\\HistoryProductTransaksi<\/a>"],[0,2,"<a href=\"Hutang.php.html#9\">App\\Models\\Hutang<\/a>"],[0,1,"<a href=\"JenisModal.php.html#8\">App\\Models\\JenisModal<\/a>"],[0,1,"<a href=\"MethodePembayaran.php.html#8\">App\\Models\\MethodePembayaran<\/a>"],[0,1,"<a href=\"Modal.php.html#9\">App\\Models\\Modal<\/a>"],[0,1,"<a href=\"NotaPiutang.php.html#8\">App\\Models\\NotaPiutang<\/a>"],[0,1,"<a href=\"Pembeli.php.html#8\">App\\Models\\Pembeli<\/a>"],[0,5,"<a href=\"Piutang.php.html#9\">App\\Models\\Piutang<\/a>"],[0,2,"<a href=\"PiutangProdukPiutang.php.html#8\">App\\Models\\PiutangProdukPiutang<\/a>"],[0,3,"<a href=\"Preorder.php.html#8\">App\\Models\\Preorder<\/a>"],[0,5,"<a href=\"Product.php.html#8\">App\\Models\\Product<\/a>"],[0,1,"<a href=\"ProdukPiutang.php.html#8\">App\\Models\\ProdukPiutang<\/a>"],[100,0,"<a href=\"Produksi.php.html#8\">App\\Models\\Produksi<\/a>"],[100,0,"<a href=\"TemporaryImage.php.html#8\">App\\Models\\TemporaryImage<\/a>"],[0,7,"<a href=\"Transaksi.php.html#10\">App\\Models\\Transaksi<\/a>"],[100,0,"<a href=\"User.php.html#11\">App\\Models\\User<\/a>"],[0,1,"<a href=\"Varian.php.html#8\">App\\Models\\Varian<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[0,1,"<a href=\"CicilanHutang.php.html#18\">App\\Models\\CicilanHutang::cicilan_hutang<\/a>"],[0,1,"<a href=\"Foto.php.html#15\">App\\Models\\Foto::product<\/a>"],[0,1,"<a href=\"HistoryProduct.php.html#21\">App\\Models\\HistoryProduct::history_product_transaksi<\/a>"],[0,1,"<a href=\"HistoryProductTransaksi.php.html#16\">App\\Models\\HistoryProductTransaksi::transaksi<\/a>"],[0,1,"<a href=\"HistoryProductTransaksi.php.html#21\">App\\Models\\HistoryProductTransaksi::history_product<\/a>"],[0,1,"<a href=\"Hutang.php.html#21\">App\\Models\\Hutang::hutang_cicilan<\/a>"],[0,1,"<a href=\"Hutang.php.html#25\">App\\Models\\Hutang::getRemainingDebtAttribute<\/a>"],[0,1,"<a href=\"JenisModal.php.html#15\">App\\Models\\JenisModal::modal<\/a>"],[0,1,"<a href=\"MethodePembayaran.php.html#14\">App\\Models\\MethodePembayaran::transaksis<\/a>"],[0,1,"<a href=\"Modal.php.html#23\">App\\Models\\Modal::jenis_modal<\/a>"],[0,1,"<a href=\"NotaPiutang.php.html#15\">App\\Models\\NotaPiutang::piutangs<\/a>"],[0,1,"<a href=\"Pembeli.php.html#17\">App\\Models\\Pembeli::transaksis<\/a>"],[0,1,"<a href=\"Piutang.php.html#22\">App\\Models\\Piutang::notas<\/a>"],[0,1,"<a href=\"Piutang.php.html#26\">App\\Models\\Piutang::piutang_produk_piutangs<\/a>"],[0,1,"<a href=\"Piutang.php.html#30\">App\\Models\\Piutang::produk_piutangs<\/a>"],[0,2,"<a href=\"Piutang.php.html#35\">App\\Models\\Piutang::scopeSearch<\/a>"],[0,1,"<a href=\"PiutangProdukPiutang.php.html#16\">App\\Models\\PiutangProdukPiutang::piutangs<\/a>"],[0,1,"<a href=\"PiutangProdukPiutang.php.html#20\">App\\Models\\PiutangProdukPiutang::produk_piutangs<\/a>"],[0,1,"<a href=\"Preorder.php.html#16\">App\\Models\\Preorder::transaksis<\/a>"],[0,2,"<a href=\"Preorder.php.html#19\">App\\Models\\Preorder::scopeSearch<\/a>"],[0,1,"<a href=\"Product.php.html#21\">App\\Models\\Product::fotos<\/a>"],[0,1,"<a href=\"Product.php.html#26\">App\\Models\\Product::varians<\/a>"],[0,1,"<a href=\"Product.php.html#31\">App\\Models\\Product::transaksis<\/a>"],[0,2,"<a href=\"Product.php.html#35\">App\\Models\\Product::scopeSearch<\/a>"],[0,1,"<a href=\"ProdukPiutang.php.html#18\">App\\Models\\ProdukPiutang::piutang_produk_piutangs<\/a>"],[0,1,"<a href=\"Transaksi.php.html#25\">App\\Models\\Transaksi::pembelis<\/a>"],[0,1,"<a href=\"Transaksi.php.html#29\">App\\Models\\Transaksi::products<\/a>"],[0,1,"<a href=\"Transaksi.php.html#33\">App\\Models\\Transaksi::methode_pembayaran<\/a>"],[0,1,"<a href=\"Transaksi.php.html#37\">App\\Models\\Transaksi::preorders<\/a>"],[0,1,"<a href=\"Transaksi.php.html#41\">App\\Models\\Transaksi::history_product_transaksis<\/a>"],[0,2,"<a href=\"Transaksi.php.html#46\">App\\Models\\Transaksi::scopeSearch<\/a>"],[0,1,"<a href=\"Varian.php.html#13\">App\\Models\\Varian::product<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

@@ -2,7 +2,13 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\View;
+use App\Models\Rekap;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +25,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Schema::defaultStringLength(191);
+        View::composer('*', function ($view) {
+            // Dapatkan daftar tahun dari transaksi
+            $daftarTahun = Rekap::selectRaw('YEAR(tanggal_transaksi) as year')
+                ->groupBy('year')
+                ->orderBy('year', 'desc')
+                ->get()
+                ->pluck('year');
+            
+            // Berbagi variabel daftarTahun ke semua view
+            $view->with('daftarTahun', $daftarTahun);
+        });
     }
 }

@@ -65,7 +65,7 @@ class TransaksiController extends Controller
             'tanggal' => 'required|date',
             'product' => 'required',
             'methode_pembayaran' => 'required',
-            'jumlah' => 'required',
+            'jumlah' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
             // 'total' => 'required',
             'is_complete' => 'required',
         ]);

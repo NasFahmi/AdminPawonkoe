@@ -39,7 +39,7 @@
                                             class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Selesai</label>
                                     </div>
                                     <div class="flex items-center">
-                                        <input id="radioStatus0" type="radio" value="0" name="status"
+                                        <input id="radioStatus0" type="radio" value="0" name="status" checked
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ">
                                         <label for="radioStatus0"
                                             class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Belum
@@ -55,7 +55,7 @@
                             <label for="jumlahHutang" class="block mb-2 text-sm font-medium text-gray-700">Jumlah
                                 Hutang</label>
                             <input type="number" placeholder="Jumlah Hutang" name="jumlahHutang" min="0"
-                                value="{{ old('jumlahHutang') }}"
+                                value="{{ old('jumlahHutang') }}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
                                 class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
                             @error('jumlahHutang')
                                 <small class="error" style="color: red">{{ $message }}</small>
@@ -72,7 +72,7 @@
                                             d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                     </svg>
                                 </div>
-                                <input datepicker type="text" name="tanggal_lunas" value="{{ old('tanggal_lunas') }}"
+                                <input id="datepicker-format" datepicker datepicker-format="yyyy-mm-dd"   type="text" name="tanggal_lunas" value="{{ old('tanggal_lunas') }}"
                                     class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Select date">
                             </div>
@@ -92,7 +92,7 @@
                                             d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                     </svg>
                                 </div>
-                                <input datepicker type="text" name="tenggat_waktu" value="{{ old('tenggat_waktu') }}"
+                                <input id="datepicker-format" datepicker datepicker-format="yyyy-mm-dd"   type="text" name="tenggat_waktu" value="{{ old('tenggat_waktu') }}"
                                     class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Select date">
                             </div>
@@ -114,7 +114,8 @@
                         <div class="left">
                             <div class="w-full">
                                 <label for="nominal" class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
-                                <input type="number" placeholder="Nominal" name="nominal" value="{{ old('nominal') }}" min="0"
+                                <input type="number" placeholder="Nominal" name="nominal" value="{{ old('nominal') }}"
+                                    min="0" oninput="this.value = this.value.replace(/^0+(?!$)/, '')"
                                     class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
                                 @error('nominal')
                                     <small class="error" style="color: red">{{ $message }}</small>
@@ -138,40 +139,28 @@
         const tanggalLunas = document.getElementById('tanggalLunas');
         const tenggatWaktu = document.getElementById('tenggatWaktu');
         const cicilanAwal = document.getElementById('cicilanAwal');
-        console.log(statusFalse.checked);
-        console.log(statusTrue.checked);
-        console.log(tanggalLunas);
-        console.log(tenggatWaktu);
-        statusTrue.addEventListener('change', function() {
-            if (statusTrue.checked) {
-                console.log('radioStatus 1 checked');
+
+        // Function to toggle the display based on status
+        function toggleFields() {
+            if (statusFalse.checked) {
+                tanggalLunas.style.display = 'none';
+                tenggatWaktu.style.display = 'block';
+                cicilanAwal.style.display = 'block';
+            } else {
                 tanggalLunas.style.display = 'block';
                 tenggatWaktu.style.display = 'none';
                 cicilanAwal.style.display = 'none';
             }
+        }
+
+        // Add event listeners for radio button changes
+        statusTrue.addEventListener('change', toggleFields);
+        statusFalse.addEventListener('change', toggleFields);
+
+        // Initialize display when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            toggleFields();
         });
-
-        statusFalse.addEventListener('change', function() {
-            if (statusFalse.checked) {
-                console.log('radioStatus 0 checked');
-                console.log('radioStatus 1 unchecked'); // Since they're mutually exclusive
-                tanggalLunas.style.display = 'none';
-                tenggatWaktu.style.display = 'block';
-                cicilanAwal.style.display = 'block';
-            }
-        });
-        // if (selectedStatus === '1') {
-        //     tanggalLunas.style.display = 'block';
-        //     tenggatWaktu.style.display = 'none';
-        // } else {
-        //     tanggalLunas.style.display = 'none';
-        //     tenggatWaktu.style.display = 'block';
-        // }
-
-
-        // // Inisialisasi tampilan saat halaman pertama kali dimuat
-        // document.addEventListener('DOMContentLoaded', () => {
-        //     toggleFields();
-        // });
     </script>
+
 @endsection

@@ -13,7 +13,6 @@
                             <div class="flex justify-start items-start flex-col gap-3">
                                 <div class="w-full">
                                     <label for="jenis" class="block mb-2 text-sm font-medium text-gray-700">Jenis</label>
-                                    {{-- <p>{{ $data }}</p> --}}
                                     <select id="jenis" name="jenis"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         @foreach ($dataJenis as $items)
@@ -27,17 +26,19 @@
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
+
                                 <div class="w-full ">
-                                    <label for="nama" class="block mb-2 text-sm font-medium  text-gray-700">Nama</label>
+                                    <label for="nama" class="block mb-2 text-sm font-medium text-gray-700">Nama</label>
                                     <input type="text" placeholder="Nama" name="nama"
                                         value="{{ old('nama', $data->nama) }}"
-                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
+                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
                                     @error('nama')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
+
                                 <div class="w-full">
-                                    <label for=""
+                                    <label for="tanggal"
                                         class="block pt-2 text-sm font-medium text-gray-800">Tanggal</label>
                                     <div class="relative max-w-lg mt-2">
                                         <div
@@ -48,8 +49,8 @@
                                                     d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                             </svg>
                                         </div>
-                                        <input datepicker type="text" name="tanggal"
-                                            value="{{ \Carbon\Carbon::parse($data->tanggal)->format('m/d/Y') }}"
+                                        <input id="datepicker-format" datepicker datepicker-format="yyyy-mm-dd"
+                                            type="text" name="tanggal" value="{{ $data->tanggal }}"
                                             class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Select date">
                                     </div>
@@ -66,11 +67,11 @@
                             <div class="flex justify-start items-start flex-col gap-3">
 
                                 <div class="w-full">
-                                    <label for="Penyedia"
+                                    <label for="penyedia"
                                         class="block mb-2 text-sm font-medium text-gray-700">Penyedia</label>
                                     <input type="text" placeholder="Penyedia" name="penyedia"
                                         value="{{ old('penyedia', $data->penyedia) }}"
-                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
+                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
                                     @error('penyedia')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
@@ -78,10 +79,10 @@
 
                                 <div class="w-full">
                                     <label for="jumlah"
-                                        class="block mb-2 text-sm font-medium text-gray-700">jumlah</label>
-                                    <input type="text" placeholder="Jumlah" name="jumlah" id="jumlah" min="0"
-                                        value="{{ old('jumlah', $data->jumlah) }}"
-                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 " />
+                                        class="block mb-2 text-sm font-medium text-gray-700">Jumlah</label>
+                                    <input type="text" placeholder="Jumlah" name="jumlah" id="jumlah" min="0" 
+                                        value="{{ old('jumlah', $data->jumlah) }}" oninput="this.value = this.value.replace(/^0+(?!$)/, '')" 
+                                        class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
                                     @error('jumlah')
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
@@ -94,7 +95,6 @@
                                         value="{{ old('jumlah', $data->nominal) }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
                                     @error('nominal')
-                                        test
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
@@ -109,23 +109,29 @@
             </form>
         </div>
     </div>
-    <script>
-        document.getElementById('jenis').addEventListener('change', function() {
-            var jenis = this.value;
-            console.log(jenis);
-            var jumlah = document.getElementById('jumlah');
-            console.log(jumlah);
 
-            // Ganti 'specificValue' dengan nilai yang Anda inginkan untuk memicu kondisi
-            if (jenis == 2) {
-                // alert('value 2');
+    <script>
+        // Function to handle the enable/disable of jumlah input based on jenis
+        function toggleJumlahInput() {
+            var jenis = document.getElementById('jenis').value;
+            var jumlah = document.getElementById('jumlah');
+
+            if (jenis == 2) { // Assuming '2' is the ID for "finansial"
                 jumlah.value = 1;
                 jumlah.disabled = true;
             } else {
-                // alert('value bukan 2');
                 jumlah.disabled = false;
                 jumlah.value = '';
             }
-        });
+        }
+
+        // Initial check when the page loads
+        window.onload = function() {
+            toggleJumlahInput();
+        };
+
+        // Listen for changes in the jenis select
+        document.getElementById('jenis').addEventListener('change', toggleJumlahInput);
+    </script>
     </script>
 @endsection

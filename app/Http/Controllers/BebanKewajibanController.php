@@ -44,7 +44,7 @@ class BebanKewajibanController extends Controller
         $validatedData = $request->validate([
             'jenis' => 'required',
             'nama' => 'required',
-            'nominal' => 'required',
+            'nominal' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
             'tanggal' => 'required',
         ], [
             'jenis.required' => 'Jenis harus diisi.',
@@ -116,7 +116,7 @@ class BebanKewajibanController extends Controller
         $validatedData = $request->validate([
             'jenis' => 'required',
             'nama' => 'required',
-            'nominal' => 'required',
+            'nominal' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
             'tanggal' => 'required',
         ], [
             'jenis.required' => 'Jenis harus diisi.',

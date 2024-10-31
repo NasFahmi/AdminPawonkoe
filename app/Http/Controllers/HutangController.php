@@ -42,24 +42,6 @@ class HutangController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        //selesai
-        // "nama" => "Ariq"
-        // "catatan" => "awdwad"
-        // "status" => "1"
-        // "jumlahHutang" => "200000"
-        // "tanggal_lunas" => "06/14/2024"
-        // "tenggat_waktu" => null
-        // "nominal" => null
-        //belum selesai
-        // "nama" => "Ariq"
-        // "catatan" => "ad"
-        // "status" => "0"
-        // "jumlahHutang" => "200000"
-        // "tanggal_lunas" => null
-        // "tenggat_waktu" => "06/14/2024"
-        // "nominal" => "100000"
-        // Validasi input
         $validatedData = $request->validate([
             'nama' => 'required|string|max:255',
             'catatan' => 'nullable|string',
@@ -69,8 +51,15 @@ class HutangController extends Controller
             'nominal' => 'nullable|numeric|min:1',
             'status' => 'required|in:0,1',
         ]);
+        
         if ($request->nominal > $request->jumlahHutang) {
             return back()->withErrors(['nominal' => 'Nominal cicilan awal tidak boleh lebih dari jumlah hutang.'])->withInput();
+        }
+        if ($request->status == 0) {
+            $request->validate([
+                'nominal' => 'required|numeric|min:1',
+                'tenggat_waktu' => 'required',
+            ]);
         }
 
         try {
@@ -89,8 +78,6 @@ class HutangController extends Controller
                     'tanggal_lunas' => $tanggalLunas,
                 ]);
             }
-
-
 
             if ($validatedData['tenggat_waktu'] != null) {
                 $tenggatWaktu = Carbon::parse($validatedData['tenggat_waktu'], 'Asia/Jakarta')->format('Y-m-d');

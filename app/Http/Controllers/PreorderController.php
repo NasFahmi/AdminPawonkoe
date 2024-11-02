@@ -154,7 +154,7 @@ class PreorderController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($transaksi)
-                ->event('add_transaksi preorder')
+                ->event('add_transaksi_preorder')
                 ->withProperties(['id' => $transaksi->id])
                 ->log('User ' . auth()->user()->nama . ' add a transaksi preorder');
 
@@ -163,6 +163,7 @@ class PreorderController extends Controller
             return redirect()->route('preorders.index')->with('success', 'Transaksi has been created successfully');
         } catch (\Throwable $th) {
             DB::rollBack();
+            dd($th->getMessage());
             throw $th;
             return redirect()->back()->with('error', 'Failed to create transaksi data.');
         }
@@ -189,7 +190,6 @@ class PreorderController extends Controller
         $this->validate($request, [
             'is_complete' => 'required',
             'jumlah_dp' => 'required',
-            'telepon' => 'required|digits:12',
         ], [
             'telepon.digits' => 'Nomor telepon harus terdiri dari 12 digit.',
         ]);
@@ -238,7 +238,7 @@ class PreorderController extends Controller
                 ->causedBy(auth()->user())
                 ->performedOn($preorder)
                 ->withProperties(['id' => $preorder->id])
-                ->event('update_transaksi preorder')
+                ->event('update_transaksi_preorder')
                 ->log('User ' . auth()->user()->nama . ' update a transaksi preorder');
 
             DB::commit();
@@ -246,6 +246,7 @@ class PreorderController extends Controller
         } catch (\Throwable $th) {
 
             DB::rollBack();
+            dd($th->getMessage());
             // throw $th;
             return redirect()->back()->with('error', 'Failed to update transaksi data.');
         }
@@ -281,6 +282,7 @@ class PreorderController extends Controller
             return redirect()->route('preorders.index')->with('success', 'Transaksi has been deleted successfully');
         } catch (\Throwable $th) {
             DB::rollBack();
+            dd($th->getMessage());
             // throw $th;
             return redirect()->back()->with('error', 'Failed to delete transaksi data.');
         }

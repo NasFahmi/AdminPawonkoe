@@ -62,7 +62,7 @@ class TransaksiController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'tanggal' => 'required|date',
+            'tanggal' => 'required|date|before_or_equal:today',
             'product' => 'required',
             'methode_pembayaran' => 'required',
             'jumlah' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
@@ -140,7 +140,8 @@ class TransaksiController extends Controller
             return redirect()->route('transaksis.index')->with('success', 'Transaksi has been created successfully');
         } catch (\Throwable $th) {
             DB::rollBack();
-            // throw $th;
+            dd($th->getMessage());
+            throw $th;
             return redirect()->back()->with('error', 'Failed to create transaksi data.');
         }
     }

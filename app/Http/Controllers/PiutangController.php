@@ -281,6 +281,14 @@ class PiutangController extends Controller
         $piutang = Piutang::findOrFail($id);
         $piutang->delete();
 
+        activity()
+            ->causedBy(auth()->user())
+            ->performedOn($piutang)
+            ->event('delete_piutang')
+            ->withProperties(['id' => $piutang->id])
+            ->log('User ' . auth()->user()->nama . ' deleted a piutang');
+
+
         Rekap::where('id_tabel_asal', $piutang->id)->delete();
 
         return redirect()->route('piutang.index')->with('success', 'Data Berhasil Dihapus');

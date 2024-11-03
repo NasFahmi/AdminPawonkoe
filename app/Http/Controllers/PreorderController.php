@@ -86,7 +86,7 @@ class PreorderController extends Controller
             'telepon' => 'required|digits:12',
 
             'tanggal_dp' => 'required|date|before_or_equal:tanggal',
-            'jumlah_dp' => 'required'
+            'jumlah_dp' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/'
             // bisa iya bisa tidak jika iya ada tanggal_dp dan jumlah_dp
             // opsional
             // tanggal_dp
@@ -95,6 +95,32 @@ class PreorderController extends Controller
             'telepon.digits' => 'Nomor telepon harus terdiri dari 12 digit.',
             'tanggal_dp.before_or_equal' => 'Tanggal DP tidak boleh lebih dari tanggal transaksi.'
         ]);
+        // Menambahkan pengecekan stok
+        $product = Product::find($request->product);
+        if (!$product || $product->stok <= 0) {
+            return redirect()->back()->withErrors(['product' => 'Stok produk tidak tersedia.'])->withInput();
+        }
+
+        if ($request->jumlah > $product->stok) {
+            return redirect()->back()->withErrors(['jumlah' => 'Jumlah yang diminta melebihi stok yang tersedia.'])->withInput();
+        }
+
+        // Menghitung total harga otomatis
+        $hargaSatuan = $product->harga; // Mengambil harga satuan dari produk
+        $totalHargaCalculated = $hargaSatuan * $request->jumlah;
+        // dd($totalHargaCalculated);
+        // Validasi apakah total harga yang dihitung sama dengan total harga yang dikirim
+        if ($totalHargaCalculated != $request->total) {
+            return redirect()->back()->withErrors(['total' => 'Total harga tidak cocok. Harap hitung ulang.'])->withInput();
+        }
+        // dd($request->jumlah_dp); //424
+        // dd($totalHargaCalculated); //
+        $jumlahDp = intval($request->jumlah_dp);
+        if ($jumlahDp > $totalHargaCalculated) {
+            return redirect()->back()
+                ->withErrors(['jumlah_dp' => 'Jumlah DP tidak boleh lebih dari total harga.'])
+                ->withInput();
+        }
         // dd($validatedData);
         try {
             DB::beginTransaction();
@@ -189,7 +215,7 @@ class PreorderController extends Controller
     {
         $this->validate($request, [
             'is_complete' => 'required',
-            'jumlah_dp' => 'required',
+            'jumlah_dp' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
         ], [
             'telepon.digits' => 'Nomor telepon harus terdiri dari 12 digit.',
         ]);

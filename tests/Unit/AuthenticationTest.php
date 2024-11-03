@@ -20,6 +20,15 @@ class AuthenticationTest extends TestCase
      * gagal login username valid password salah terkena limiter setelah attempt x3
      * login berhasil setelah menunggu rate limiter selesai
      */
+    use RefreshDatabase;
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Refresh database and run all seeders
+        $this->artisan('db:seed');
+    }
+
     public function test_successful_login()
     {
         $response = $this->post(route('authentication'), [
@@ -69,7 +78,7 @@ class AuthenticationTest extends TestCase
             'login' => 'Nama Atau Password Salah'
         ]);
         $response->assertRedirect(route('login'));
-    
+
     }
     public function test_failed_login_with_empty_password()
     {
@@ -137,13 +146,13 @@ class AuthenticationTest extends TestCase
         // Simulasikan 3 percobaan login yang gagal
         for ($i = 0; $i < 3; $i++) {
             $this->post(route('authentication'), [
-                'nama' => 'admin',
+                'nama' => 'pawonkoe',
                 'password' => 'passwordsalah',
             ]);
         }
         // Percobaan login ke-4 seharusnya memicu rate limiter
         $response = $this->post(route('authentication'), [
-            'nama' => 'admin',
+            'nama' => 'pawonkoe',
             'password' => 'passwordsalah',
         ]);
 
@@ -152,8 +161,8 @@ class AuthenticationTest extends TestCase
 
         // Percobaan login ke-4 seharusnya tidak memicu rate limiter
         $response = $this->post(route('authentication'), [
-            'nama' => 'admin',
-            'password' => 'admin',
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
         ]);
 
         $response->assertStatus(302);

@@ -111,67 +111,67 @@ class AuthenticationTest extends TestCase
         ]);
         $response->assertRedirect(route('login'));
     }
-    // public function test_failed_login_with_valid_username_and_invalid_password_trigger_rate_limiter()
-    // {
-    //     // Simulasikan 3 percobaan login yang gagal
-    //     for ($i = 0; $i < 3; $i++) {
-    //         $this->post(route('authentication'), [
-    //             'nama' => 'admin',
-    //             'password' => 'passwordsalah',
-    //         ]);
-    //     }
+    public function test_failed_login_with_valid_username_and_invalid_password_trigger_rate_limiter()
+    {
+        // Simulasikan 3 percobaan login yang gagal
+        for ($i = 0; $i < 3; $i++) {
+            $this->post(route('authentication'), [
+                'nama' => 'admin',
+                'password' => 'passwordsalah',
+            ]);
+        }
 
-    //     // Percobaan login ke-4 seharusnya memicu rate limiter
-    //     $response = $this->post(route('authentication'), [
-    //         'nama' => 'admin',
-    //         'password' => 'passwordsalah',
-    //     ]);
-    //     // dd($response);
-    //     $response->assertStatus(302);
-    //     $response->assertSessionHasErrors(['login']);
-    //     $this->assertStringContainsString('Login Terlalu Cepat', session('errors')->first('login'));
-    //     $response->assertRedirect(route('login'));
-    // }
-    // public function test_successful_login_after_rate_limiter_expires()
-    // {
-    //     // Simulasikan 3 percobaan login yang gagal
-    //     for ($i = 0; $i < 3; $i++) {
-    //         $this->post(route('authentication'), [
-    //             'nama' => 'admin',
-    //             'password' => 'passwordsalah',
-    //         ]);
-    //     }
-    //     // Percobaan login ke-4 seharusnya memicu rate limiter
-    //     $response = $this->post(route('authentication'), [
-    //         'nama' => 'admin',
-    //         'password' => 'passwordsalah',
-    //     ]);
+        // Percobaan login ke-4 seharusnya memicu rate limiter
+        $response = $this->post(route('authentication'), [
+            'nama' => 'admin',
+            'password' => 'passwordsalah',
+        ]);
+        // dd($response);
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors(['login']);
+        $this->assertStringContainsString('Login Terlalu Cepat', session('errors')->first('login'));
+        $response->assertRedirect(route('login'));
+    }
+    public function test_successful_login_after_rate_limiter_expires()
+    {
+        // Simulasikan 3 percobaan login yang gagal
+        for ($i = 0; $i < 3; $i++) {
+            $this->post(route('authentication'), [
+                'nama' => 'admin',
+                'password' => 'passwordsalah',
+            ]);
+        }
+        // Percobaan login ke-4 seharusnya memicu rate limiter
+        $response = $this->post(route('authentication'), [
+            'nama' => 'admin',
+            'password' => 'passwordsalah',
+        ]);
 
-    //     // Tunggu 60 detik untuk rate limiter berlaku
-    //     sleep(65);
+        // Tunggu 60 detik untuk rate limiter berlaku
+        sleep(65);
 
-    //     // Percobaan login ke-4 seharusnya tidak memicu rate limiter
-    //     $response = $this->post(route('authentication'), [
-    //         'nama' => 'admin',
-    //         'password' => 'admin',
-    //     ]);
+        // Percobaan login ke-4 seharusnya tidak memicu rate limiter
+        $response = $this->post(route('authentication'), [
+            'nama' => 'admin',
+            'password' => 'admin',
+        ]);
 
-    //     $response->assertStatus(302);
-    //     // $response->assertSessionHasErrors(['login']);
-    //     // $this->assertStringContainsString('Login Terlalu Cepat', session('errors')->first('login'));
-    //     $response->assertRedirect(route('admin.dashboard'));
-    // }
-    // public function test_successful_logout()
-    // {
-    //     // login 
-    //     $response = $this->post(route('authentication'), [
-    //         'nama' => 'admin',
-    //         'password' => 'admin',
-    //     ]);
-    //     // logout
-    //     $response = $this->get(route('logout'));
-    //     $response->assertStatus(302);
-    //     $response->assertRedirect(route('login'));
-    // }
+        $response->assertStatus(302);
+        // $response->assertSessionHasErrors(['login']);
+        // $this->assertStringContainsString('Login Terlalu Cepat', session('errors')->first('login'));
+        $response->assertRedirect(route('admin.dashboard'));
+    }
+    public function test_successful_logout()
+    {
+        // login 
+        $response = $this->post(route('authentication'), [
+            'nama' => 'admin',
+            'password' => 'admin',
+        ]);
+        // logout
+        $response = $this->get(route('logout'));
+        $response->assertStatus(302);
+        $response->assertRedirect(route('login'));
+    }
 }
 //! php artisan test --coverage-html coverage

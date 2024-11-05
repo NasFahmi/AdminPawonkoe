@@ -50,10 +50,10 @@ class ProductController extends Controller
         // dd($request->all()); 
         $validator = Validator::make($request->all(), [
             'nama_product' => 'required',
-            'harga' => ['required','regex:/^[1-9][0-9]*$/'],
+            'harga' => ['required', 'regex:/^[1-9][0-9]*$/'],
             'deskripsi' => 'required',
             'link_shopee' => 'required',
-            'stok' => ['required','regex:/^[1-9][0-9]*$/'],
+            'stok' => ['required', 'regex:/^[1-9][0-9]*$/'],
             'spesifikasi_product' => 'required',
             'images' => 'required',
             'images.*' => 'required'
@@ -132,7 +132,7 @@ class ProductController extends Controller
                 $extensionTemp = pathinfo($imageTemp->file, PATHINFO_EXTENSION); // Mendapatkan ekstensi file
                 $folderNameTemp = $imageTemp->folder;
                 $fileNameTemp = $imageTemp->file;
-                $fileNameProductImage =  Str::random(20) . '.' . $extensionTemp;
+                $fileNameProductImage = Str::random(20) . '.' . $extensionTemp;
                 // dd($fileNameProductImage); //GdomcXRDdftRq30MjJPz.jpeg
                 // copy file image from storage\app\public\images\tmp\image-660a77aaf10368.27307606\WhatsApp Image 2024-03-18 at 9.29.38 PM.jpeg to storage\app\public\images\GdomcXRDdftRq30MjJPz.jpeg
                 // Membuat folder produk jika belum ada
@@ -170,8 +170,9 @@ class ProductController extends Controller
             return redirect()->route('products.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Exception $e) {
             // Jika ada kesalahan, rollback transaksi
+            dd($e->getMessage());
             DB::rollBack();
-            // throw $e;
+            throw $e;
             // dd('gagal ');
             // Handle kesalahan sesuai kebutuhan Anda, misalnya:
             return redirect()->back()->with('error', 'Gagal menyimpan data Product.');
@@ -190,12 +191,12 @@ class ProductController extends Controller
         // Dapatkan data transaksi bulanan untuk tahun ini
         $tahunSekarang = Carbon::now()->year;
         $transaksiPerBulan = [];
-        
+
         for ($bulan = 1; $bulan <= 12; $bulan++) {
             $jumlahTransaksi = $dataTransaksi->filter(function ($transaksi) use ($tahunSekarang, $bulan) {
                 return Carbon::parse($transaksi->tanggal)->year == $tahunSekarang && Carbon::parse($transaksi->tanggal)->month == $bulan;
             })->sum('jumlah');
-            
+
             $transaksiPerBulan[$bulan] = $jumlahTransaksi ?: 0;
         }
         // dd($transaksiPerBulan);
@@ -228,10 +229,10 @@ class ProductController extends Controller
         // dd($request->all()); 
         $validator = Validator::make($request->all(), [
             'nama_product' => 'required',
-            'harga' => ['required','regex:/^[1-9][0-9]*$/'],
+            'harga' => ['required', 'regex:/^[1-9][0-9]*$/'],
             'deskripsi' => 'required',
             'link_shopee' => 'required',
-            'stok' => ['required','regex:/^[1-9][0-9]*$/'],
+            'stok' => ['required', 'regex:/^[1-9][0-9]*$/'],
             'spesifikasi_product' => 'required',
             'images' => 'required',
             'images.*' => 'required'
@@ -305,7 +306,7 @@ class ProductController extends Controller
             }
 
             if (isset($combinedImage)) {
-                $allOldPhotos = Foto::where('product_id', (int)$id)->pluck('foto')->toArray();
+                $allOldPhotos = Foto::where('product_id', (int) $id)->pluck('foto')->toArray();
 
                 $photosToDelete = array_diff($allOldPhotos, $combinedImage); //array
 
@@ -323,7 +324,7 @@ class ProductController extends Controller
                 ->performedOn($product)
                 ->withProperties(['id' => $product->id])
                 ->event('update_product')
-                ->log('User ' . auth()->user()->nama . ' edit a product ');
+                ->log('User ' . auth()->user()->nama . ' edit a product');
 
             DB::commit();
 
@@ -348,7 +349,7 @@ class ProductController extends Controller
                 ->performedOn($data)
                 ->event('delete_product')
                 ->withProperties(['data' => $data])
-                ->log('User ' . auth()->user()->nama . ' delete a product ');
+                ->log('User ' . auth()->user()->nama . ' delete a product');
 
             // Update the 'tersedia' column to false
             $data->update(['tersedia' => false]);

@@ -187,7 +187,7 @@
                                 </div>
                                 <div class="w-full">
                                     <label for="email" class="text-sm font-medium text-gray-800">Email</label>
-                                    <input type="email" id="email" name="email" readonly
+                                    <input type="email" id="email" name="email" readonly disabled
                                         class="  w-full max-w-4xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="pembeli@pembeli.com" value="{{ $dataTransaksi->pembelis->email }}">
                                     @error('email')
@@ -196,7 +196,7 @@
                                 </div>
                                 <div class="w-full">
                                     <label for="alamat" class="text-sm font-medium text-gray-800">Alamat</label>
-                                    <input type="text" id="alamat" name="alamat"
+                                    <input type="text" id="alamat" name="alamat" readonly disabled
                                         class="  w-full max-w-4xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Masukkan alamat Anda"
                                         value="{{ $dataTransaksi->pembelis->alamat }}">
@@ -207,7 +207,7 @@
                                 <div class="w-full">
                                     <label for="telepon" class="text-sm font-medium text-gray-800">Telepon /
                                         WhatsApp</label>
-                                    <input type="tel" id="telepon" name="telepon"
+                                    <input type="tel" id="telepon" name="telepon" readonly 
                                         class="  w-full max-w-4xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="081234567890" value="{{ $dataTransaksi->pembelis->no_hp }}">
                                     @error('telepon')
@@ -216,7 +216,7 @@
                                 </div>
                                 <div class="w-full">
                                     <label for="" class="text-sm font-medium text-gray-800">Keterangan</label>
-                                    <textarea
+                                    <textarea readonly 
                                         class="w-full max-w-4xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Keterangan" name="keterangan" rows="5">{{ $dataTransaksi->keterangan }}</textarea>
                                 </div>

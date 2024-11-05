@@ -62,11 +62,11 @@ class TransaksiController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'tanggal' => 'required|date',
+            'tanggal' => 'required|date|before_or_equal:today',
             'product' => 'required',
             'methode_pembayaran' => 'required',
             'jumlah' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
-            // 'total' => 'required',
+            'total' => 'required|numeric',
             'is_complete' => 'required',
         ]);
 
@@ -74,6 +74,25 @@ class TransaksiController extends Controller
             // dd($validator->errors() ); // Mencetak pesan kesalahan
             return redirect()->back()->withErrors($validator)->withInput();
         }
+        // Menambahkan pengecekan stok
+        $product = Product::find($request->product);
+        if (!$product || $product->stok <= 0) {
+            return redirect()->back()->withErrors(['product' => 'Stok produk tidak tersedia.'])->withInput();
+        }
+
+        if ($request->jumlah > $product->stok) {
+            return redirect()->back()->withErrors(['jumlah' => 'Jumlah yang diminta melebihi stok yang tersedia.'])->withInput();
+        }
+
+        // Menghitung total harga otomatis
+        $hargaSatuan = $product->harga; // Mengambil harga satuan dari produk
+        $totalHargaCalculated = $hargaSatuan * $request->jumlah;
+        // dd($totalHargaCalculated);
+        // Validasi apakah total harga yang dihitung sama dengan total harga yang dikirim
+        if ($totalHargaCalculated != $request->total) {
+            return redirect()->back()->withErrors(['total' => 'Total harga tidak cocok. Harap hitung ulang.'])->withInput();
+        }
+
         // dd($request->all());
         try {
             DB::beginTransaction();
@@ -140,7 +159,8 @@ class TransaksiController extends Controller
             return redirect()->route('transaksis.index')->with('success', 'Transaksi has been created successfully');
         } catch (\Throwable $th) {
             DB::rollBack();
-            // throw $th;
+            // dd($th->getMessage());
+            throw $th;
             return redirect()->back()->with('error', 'Failed to create transaksi data.');
         }
     }
@@ -204,6 +224,15 @@ class TransaksiController extends Controller
             // dd($request->all());
             // Update Pembeli information
 
+            // Menambahkan pengecekan stok
+            $product = Product::find($request->product);
+            if (!$product || $product->stok <= 0) {
+                return redirect()->back()->withErrors(['product' => 'Stok produk tidak tersedia.'])->withInput();
+            }
+
+            if ($request->jumlah > $product->stok) {
+                return redirect()->back()->withErrors(['jumlah' => 'Jumlah yang diminta melebihi stok yang tersedia.'])->withInput();
+            }
 
             $dataTransaksi = [
                 "is_Preorder" => '0',

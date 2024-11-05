@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('nominal');
             $table->timestamp('tanggal');
+            $table->timestamps(); // This adds created_at and updated_at as datetime fields
             $table->softDeletes();
         });
     }

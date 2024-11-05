@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Hutang extends Model
 {
+    
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'nama',
@@ -17,7 +18,7 @@ class Hutang extends Model
         'tenggat_waktu',
         'tanggal_lunas',
     ];
-
+    public $timestamps = false;
     public function hutang_cicilan()
     {
         return $this->hasMany(CicilanHutang::class, 'hutangId', 'id');

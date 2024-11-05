@@ -33,52 +33,53 @@ class HutangController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        return view('pages.hutang.create');
-    }
-
+    public function create(Request $request)
+{
+    $request->validate([
+        'status' => 'required|string', // Validasi bahwa status harus ada dan berupa boolean
+    ]);
+    // Dapatkan status dari query string
+    $status = $request->query('status','Belum selesai');
+    // dd($status);
+    // Tampilkan view dengan status
+    return view('pages.hutang.create', compact('status'));
+}
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        //selesai
-        // "nama" => "Ariq"
-        // "catatan" => "awdwad"
-        // "status" => "1"
-        // "jumlahHutang" => "200000"
-        // "tanggal_lunas" => "06/14/2024"
-        // "tenggat_waktu" => null
-        // "nominal" => null
-        //belum selesai
-        // "nama" => "Ariq"
-        // "catatan" => "ad"
-        // "status" => "0"
-        // "jumlahHutang" => "200000"
-        // "tanggal_lunas" => null
-        // "tenggat_waktu" => "06/14/2024"
-        // "nominal" => "100000"
-        // Validasi input
-        $validatedData = $request->validate([
-            'nama' => 'required|string|max:255',
-            'catatan' => 'nullable|string',
-            'jumlahHutang' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
-            'tanggal_lunas' => 'nullable',
-            'tenggat_waktu' => 'nullable',
-            'nominal' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
-            'status' => 'required|in:0,1',
-        ]);
-        if ($request->nominal > $request->jumlahHutang) {
-            return back()->withErrors(['nominal' => 'Nominal cicilan awal tidak boleh lebih dari jumlah hutang.'])->withInput();
-        }
 
         try {
+            
             DB::beginTransaction();
-            // lunas
-            if ($validatedData['tanggal_lunas'] != null) {
 
+            $status = $request->input('status');
+            // dd(vars: $request->all());
+            $validatedData = $request->validate([
+                'nama' => 'required|string|max:255|regex:/^[A-Za-z\s]+$/',
+                'catatan' => 'nullable|string',
+                'jumlahHutang' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
+                'tanggal_lunas' => $status == 1 ? 'required|date' : 'nullable',
+                'tenggat_waktu' => $status == 0 ? 'required|date' : 'nullable',
+                'nominal' => $status == 1 ? 'nullable' : 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
+                'status' => 'required|in:1,0',
+            ],
+            [
+                'nama.regex' => 'Nama hanya boleh mengandung huruf dan spasi.',
+                'jumlahHutang.regex' => 'Jumlah hutang harus berupa angka.',
+                'nominal.regex' => 'Nominal cicilan awal harus berupa angka.',
+                'tanggal_lunas.date' => 'Tanggal lunas harus berupa tanggal dengan format YYYY-MM-DD.',
+                'tenggat_waktu.date' => 'Tenggat waktu harus berupa tanggal dengan format YYYY-MM-DD.',
+            ]);
+            // dd($status);
+    
+            if ($request->nominal > $request->jumlahHutang) {
+                return back()->withErrors(['nominal' => 'Nominal cicilan awal tidak boleh lebih dari jumlah hutang.'])->withInput();
+            }
+
+            // lunas
+            if ($status == 1) {
                 // $tanggalLunas = Carbon::parse($validatedData['tanggal_lunas'], 'Asia/Jakarta')->format('Y-m-d');
                 // Membuat data hutang
                 $hutang = Hutang::create([
@@ -91,9 +92,7 @@ class HutangController extends Controller
                 ]);
             }
 
-
-
-            if ($validatedData['tenggat_waktu'] != null) {
+            if ($status == 0) {
                 // $tenggatWaktu = Carbon::parse($validatedData['tenggat_waktu'], 'Asia/Jakarta')->format('Y-m-d');
                 // Membuat data cicilan
                 $hutang = Hutang::create([
@@ -128,9 +127,10 @@ class HutangController extends Controller
             DB::commit();
 
             return redirect()->route('hutang.index')->with('success', 'Data Berhasil Disimpan');
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
+            // dd($e->getMessage());
             DB::rollBack();
-            throw $th;
+            throw $e;
         }
     }
 
@@ -150,7 +150,10 @@ class HutangController extends Controller
      */
     public function edit(Hutang $hutang)
     {
-        return view('pages.hutang.edit', compact('hutang'));
+        // dd($hutang);
+        $cicilanHutang = CicilanHutang::where('hutangId', $hutang->id)->get();
+        // dd($cicilanHutang);
+        return view('pages.hutang.edit', compact('hutang', 'cicilanHutang'));
     }
 
     /**
@@ -158,18 +161,30 @@ class HutangController extends Controller
      */
     public function update(Request $request, Hutang $hutang)
     {
+        $status = $request->input('status');
+        // dd($request->all());
         $validatedData = $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama' => 'required|string|max:255|regex:/^[A-Za-z\s]+$/',
             'catatan' => 'nullable|string',
+            'status' => 'required|in:1,0',
             'jumlahHutang' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
-            'tanggal_lunas' => 'nullable|date',
-            'tenggat_waktu' => 'nullable|date',
-            'status' => 'required|in:0,1',
+            'tenggat_waktu' =>  $status == 0 ? 'required|date' : 'nullable',
+            'nominal' =>  $status == 1 ? 'nullable':'numeric|min:1|regex:/^[1-9][0-9]*$/',
+            'tanggal_lunas' =>   $status == 1 ? 'required|date' : 'nullable',
+            
+        ],
+        [
+            'nama.regex' => 'Nama hanya boleh mengandung huruf dan spasi.',
+            'jumlahHutang.regex' => 'Jumlah hutang harus berupa angka.',
+            'nominal.regex' => 'Nominal cicilan awal harus berupa angka.',
+            'tanggal_lunas.date' => 'Tanggal lunas harus berupa tanggal dengan format YYYY-MM-DD.',
+            'tenggat_waktu.date' => 'Tenggat waktu harus berupa tanggal dengan format YYYY-MM-DD.',
         ]);
+
 
         try {
             DB::beginTransaction();
-
+            // dd($validatedData);
             // Validasi tanggal_lunas harus lebih besar atau sama dengan created_at
             if ($validatedData['status'] == 1 && isset($validatedData['tanggal_lunas'])) {
                 $tanggalLunas = Carbon::parse($validatedData['tanggal_lunas']);
@@ -183,23 +198,7 @@ class HutangController extends Controller
             }
 
             // Lanjutkan proses update berdasarkan status
-            if ($validatedData['status'] == 1) {
-                $hutang->update([
-                    'nama' => $validatedData['nama'],
-                    'catatan' => $validatedData['catatan'],
-                    'jumlah_hutang' => $validatedData['jumlahHutang'],
-                    'status' => $validatedData['status'],
-                    'tanggal_lunas' => $validatedData['tanggal_lunas'],
-                    'tenggat_waktu' => null,
-                ]);
-
-                $cicilan = CicilanHutang::where('hutangId', $hutang->id)->get();
-                $totalNominalHutang = $cicilan->sum('nominal');
-                CicilanHutang::create([
-                    'hutangId' => $hutang->id,
-                    'nominal' => $hutang->jumlah_hutang - $totalNominalHutang,
-                ]);
-            } elseif ($validatedData['status'] == 0) {
+            if ($validatedData['status'] == 0) {
                 $hutang->update([
                     'nama' => $validatedData['nama'],
                     'catatan' => $validatedData['catatan'],
@@ -209,28 +208,50 @@ class HutangController extends Controller
                     'tenggat_waktu' => $validatedData['tenggat_waktu'],
                 ]);
 
+                // $cicilan = CicilanHutang::where('hutangId', $hutang->id)->get();
+                // $totalNominalHutang = $cicilan->sum('nominal');
+                // Find the CicilanHutang record by ID; throw an error if not found
+                $idCH = CicilanHutang::where('hutangId', $hutang->id);
+
+                // Update the 'nominal' field with the validated data
+                $idCH->update([
+                    'nominal' => $validatedData['nominal'],
+                ]);
+
+            } elseif ($validatedData['status'] == 1) {
+                $hutang->update([
+                    'nama' => $validatedData['nama'],
+                    'catatan' => $validatedData['catatan'],
+                    'jumlah_hutang' => $validatedData['jumlahHutang'],
+                    'status' => $validatedData['status'],
+                    'tanggal_lunas' => $validatedData['tanggal_lunas'],
+                    'tenggat_waktu' => null,
+                ]);
                 CicilanHutang::where('hutangId', $hutang->id)->delete();
             }
+            DB::commit();
 
+            $id = $request->id;
+            // dd($request->id);
             // Simpan rekap jika status selesai
             $tanggal = Carbon::parse($hutang->created_at)->format('Y-m-d');
             if ($validatedData['status'] == 1) {
                 Rekap::insert([
                     'tanggal_transaksi' => $tanggal,
                     'sumber' => 'Hutang',
-                    'jumlah' => $hutang->jumlah_hutang,
-                    'keterangan' => 'Pembayaran Hutang ke ' . $hutang->nama,
-                    'id_tabel_asal' => $hutang->id,
+                    'jumlah' => $validatedData['jumlahHutang'],
+                    'keterangan' => 'Pembayaran Hutang ke ' . $validatedData['nama'],
+                    'id_tabel_asal' => $id,
                     'tipe_transaksi' => 'Keluar'
                 ]);
             }
 
-            DB::commit();
 
             return redirect()->route('hutang.index')->with('success', 'Data Berhasil Disimpan');
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
+            // throw $e;
             DB::rollBack();
-            throw $th;
+            // dd($e->getMessage());
         }
     }
 
@@ -247,8 +268,9 @@ class HutangController extends Controller
             $hutang->delete();
             DB::commit();
             return redirect()->route('hutang.index')->with('success', 'Data Berhasil Didelete');
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             // throw $th;
+            dd($e->getMessage());
             DB::rollBack();
         }
     }

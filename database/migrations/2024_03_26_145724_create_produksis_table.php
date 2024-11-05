@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigInteger('jumlah');
             $table->float('volume', precision: 53);
             $table->timestamp('tanggal');
+            $table->timestamps();
         });
     }
 

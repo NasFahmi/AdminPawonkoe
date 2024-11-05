@@ -20,6 +20,7 @@
                                         <small class="error" style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
+                                <input type="hidden" name="id" value="{{ $hutang->id }}">
 
                                 <div class="w-full">
                                     <label for="message"
@@ -48,6 +49,25 @@
                                             class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Belum
                                             Selesai</label>
                                     </div>
+                                </div>
+                                <div id="cicilanAwal" class="w-full">
+                                    <h1 class="text-lg font-medium text-gray-800">Cicilan Hutang Awal</h1>
+                                    <p class="text-gray-700 mb-2 font-normal text-xs">Isi nominal dengan jumlah cicilan
+                                        pertama Anda.</p>
+                                        @foreach ($cicilanHutang as $data)
+                                    <div class="w-full">
+                                        <label for="nominal"
+                                            class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
+                                                
+                                            <input type="number" placeholder="Nominal" name="nominal"
+                                            value="{{ $data->nominal }}" min="0"
+                                            oninput="this.value = this.value.replace(/^0+(?!$)/, '')"
+                                            class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                                            @error('nominal')
+                                            <small class="error" style="color: red">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        @endforeach
                                 </div>
 
                             </div>
@@ -99,7 +119,7 @@
                                             d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                     </svg>
                                 </div>
-                                <input disabled readonly id="datepicker-format" datepicker datepicker-format="yyyy-mm-dd" type="text" name="tenggat_waktu" value="{{ $hutang->tenggat_waktu }}"
+                                <input id="datepicker-format" datepicker datepicker-format="yyyy-mm-dd" type="text" name="tenggat_waktu" value="{{ $hutang->tenggat_waktu }}"
                                     class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Select date">
                             </div>

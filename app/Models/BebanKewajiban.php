@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class BebanKewajiban extends Model
 {
     use HasFactory;
+    
     use SoftDeletes;
     protected $fillable = [
         'jenis',

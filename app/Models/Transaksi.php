@@ -46,13 +46,20 @@ class Transaksi extends Model
     public function scopeSearch($query, $search)
     {
         if ($search) {
-            $query->whereHas('products', function ($query) use ($search) {
-                $query->where('nama_product', 'like', '%' . $search . '%');
-            })
-                ->orWhere('tanggal', 'like', '%' . $search . '%');
+            return $query->where(function ($q) use ($search) {
+                $q->whereHas('products', function ($query) use ($search) {
+                    $query->where('nama_product', 'like', '%' . $search . '%');
+                })
+                    ->orWhere('tanggal', 'like', '%' . $search . '%')
+                    ->orWhereHas('pembelis', function ($query) use ($search) {
+                        $query->where('nama', 'like', '%' . $search . '%');
+                    });
+            });
         }
+        return $query;
     }
-    public function rekap(){
+    public function rekap()
+    {
         return $this->hasOne(Rekap::class);
     }
 }

@@ -216,6 +216,7 @@ class PreorderController extends Controller
         $this->validate($request, [
             'is_complete' => 'required',
             'jumlah_dp' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
+            'telepon'=>''
         ], [
             'telepon.digits' => 'Nomor telepon harus terdiri dari 12 digit.',
         ]);
@@ -272,8 +273,8 @@ class PreorderController extends Controller
         } catch (\Throwable $th) {
 
             DB::rollBack();
-            dd($th->getMessage());
-            // throw $th;
+            // dd($th->getMessage());
+            throw $th;
             return redirect()->back()->with('error', 'Failed to update transaksi data.');
         }
     }

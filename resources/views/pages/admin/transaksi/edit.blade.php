@@ -52,7 +52,8 @@
                                 <div class="w-full">
                                     <label for="jumlah"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah</label>
-                                    <input type="number" id="jumlah" name="jumlah" readonly oninput="this.value = this.value.replace(/^0+(?!$)/, '')"
+                                    <input type="number" id="jumlah" name="jumlah" readonly
+                                        oninput="this.value = this.value.replace(/^0+(?!$)/, '')"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="0" required value="{{ $dataTransaksi->jumlah }}">
 
@@ -110,10 +111,11 @@
                             <!-- Carousel wrapper -->
                             <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
                                 @if ($datafotoProduct->fotos->count() > 1)
+                                    {{-- {{$datafotoProduct->fotos}} --}}
                                     <!-- Gunakan carousel jika ada lebih dari satu foto -->
                                     @foreach ($datafotoProduct->fotos as $index => $foto)
                                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                            <img src="{{ asset('storage/' . $foto->foto) }}"
+                                            <img src="{{ asset($foto->foto) }}"
                                                 class="absolute z-10 block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
                                                 alt="...">
                                         </div>
@@ -121,7 +123,7 @@
                                 @elseif ($datafotoProduct->fotos->count() === 1)
                                     <!-- Tampilkan gambar langsung jika hanya ada satu foto -->
                                     <div class="block w-full h-full">
-                                        <img src="{{ asset('storage/' . $datafotoProduct->fotos[0]->foto) }}"
+                                        <img src="{{ asset($datafotoProduct->fotos[0]->foto) }}"
                                             class="w-full h-full object-cover" alt="...">
                                     </div>
                                 @else
@@ -141,8 +143,9 @@
                                     data-carousel-prev>
                                     <span
                                         class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                        <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                        <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
+                                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 6 10">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                                 stroke-width="2" d="M5 1 1 5l4 4" />
                                         </svg>
@@ -170,11 +173,12 @@
                     </div>
 
                 </div>
+                <div class="flex justify-center items-center mt-8">
+                    <button type="submit"
+                        class="bg-green-400 text-gray-100 px-4 py-2 w-full lg:w-fit rounded-lg hover:bg-green-500 duration-300">Simpan</button>
+                </div>
         </div>
-        <div class="flex justify-center items-center mt-8">
-            <button type="submit"
-                class="bg-green-400 text-gray-100 px-4 py-2 w-full lg:w-fit rounded-lg hover:bg-green-500 duration-300">Simpan</button>
-        </div>
+
         </form>
     </div>
     </div>

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\Rekap;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -837,10 +838,10 @@ class RekapUnitTest extends TestCase
     public function test_finding_rekap_by_sumber(): void
     { 
         $response = $this->post(route('authentication'), [
-        'nama' => 'pawonkoe',
-        'password' => 'pawonkoe',
-    ]);
-    $response->assertStatus(302);
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+        $response->assertStatus(302);
     Rekap::insert([
         [
             'tanggal_transaksi' => '2024-11-08',
@@ -910,4 +911,180 @@ class RekapUnitTest extends TestCase
         $response->assertSee('Pendapatan Bulanan'); 
         $response->assertSee('Transaksi produk A'); 
     }
+
+    public function test_see_rekap_expenses_kategori_by_year_and_month_search(): void
+    {
+        $response = $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+        $response->assertStatus(302);
+        
+        Rekap::insert([
+            [
+                'tanggal_transaksi' => '2024-11-08',
+                'sumber' => 'Beban',
+                'jumlah' => 1000,
+                'keterangan' => 'Listrik',
+                'id_tabel_asal' => 1,
+                'tipe_transaksi' => 'keluar',
+            ],
+            [
+                'tanggal_transaksi' => '2024-11-18',
+                'sumber' => 'Beban',
+                'jumlah' => 1000,
+                'keterangan' => 'WiFi',
+                'id_tabel_asal' => 2,
+                'tipe_transaksi' => 'keluar',
+            ],[
+                'tanggal_transaksi' => '2024-10-18',
+                'sumber' => 'Kewajiban',
+                'jumlah' => 1000,
+                'keterangan' => 'Gaji karyawan',
+                'id_tabel_asal' => 2,
+                'tipe_transaksi' => 'keluar',
+            ],
+            [
+                'tanggal_transaksi' => '2025-10-18',
+                'sumber' => 'Hutang',
+                'jumlah' => 1000,
+                'keterangan' => 'Hutang Toko A',
+                'id_tabel_asal' => 3,
+                'tipe_transaksi' => 'keluar',
+            ]
+        ]);
+
+        $response = $this->get(route('rekap.filter', ['keluar','2024','11']));
+        $response->assertStatus(200);
+        $response->assertSeeText('Listrik');  
+        $response->assertSeeText('WiFi'); 
+        $response->assertDontSeeText('Gaji karyawan'); 
+        $response->assertDontSeeText('Hutang Toko A');  
+        $this->assertDatabaseHas('rekap_keuangan', [
+            'sumber' => 'Beban',
+            'keterangan' => 'Listrik',
+            'tipe_transaksi' => 'keluar'
+        ]);
+        $this->assertDatabaseHas('rekap_keuangan', [
+            'sumber' => 'Beban',
+            'keterangan' => 'WiFi',
+            'tipe_transaksi' => 'keluar'
+        ]);
+        $this->assertDatabaseHas('rekap_keuangan', [
+            'sumber' => 'Kewajiban',
+            'keterangan' => 'Gaji karyawan',
+            'tipe_transaksi' => 'keluar'
+        ]);
+        $this->assertDatabaseHas('rekap_keuangan', [
+            'sumber' => 'Hutang',
+            'keterangan' => 'Hutang Toko A',
+            'tipe_transaksi' => 'keluar'
+        ]);
+
+        $response = $this->get('admin/rekap-keuangan/detail/keluar/semua/11?search=Beban');
+        $response->assertOk();
+        $response->assertSee('WiFi'); 
+        $response->assertSee('Listrik'); 
+    }
+
+   
+
+// Fungsi untuk memasukkan data dummy Rekap
+    private function insertRekapData()
+    {
+        Rekap::insert([
+            [
+                'tanggal_transaksi' => '2024-11-15',
+                'sumber' => 'Modal',
+                'jumlah' => 2000,
+                'keterangan' => 'Modal dari Owner',
+                'id_tabel_asal' => 1,
+                'tipe_transaksi' => 'masuk',
+            ],
+            [
+                'tanggal_transaksi' => '2024-11-15',
+                'sumber' => 'Pendapatan',
+                'jumlah' => 3000,
+                'keterangan' => 'Pendapatan Bulanan',
+                'id_tabel_asal' => 2,
+                'tipe_transaksi' => 'masuk',
+            ],
+            [
+                'tanggal_transaksi' => '2024-11-15',
+                'sumber' => 'Beban',
+                'jumlah' => 1000,
+                'keterangan' => 'Pembayaran Listrik',
+                'id_tabel_asal' => 3,
+                'tipe_transaksi' => 'keluar',
+            ],
+            [
+                'tanggal_transaksi' => '2024-04-15',
+                'sumber' => 'Piutang',
+                'jumlah' => 1500,
+                'keterangan' => 'Piutang Toko A',
+                'id_tabel_asal' => 4,
+                'tipe_transaksi' => 'masuk',
+            ],
+            // Data transaksi lainnya bisa ditambahkan sesuai kebutuhan
+        ]);
+    }
+    public function test_filter_rekap_tahun()
+    {
+        // Autentikasi terlebih dahulu jika diperlukan
+        $response = $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+
+        $tahun = 2024;
+        $this->insertRekapData(); 
+
+        // Memanggil API untuk filter berdasarkan tahun (bulan = '-')
+        $response = $this->json('post', route('chart.filter'), [
+            'tahun' => $tahun,
+            'bulan' => '-',
+        ]);
+
+        $response->assertStatus(200)
+                ->assertJsonStructure([
+                    'saldoAkhir',
+                    'date'
+                ])
+                ->assertJson([
+                    'saldoAkhir' => [
+                    ]
+                ]);
+        
+    }
+
+    public function test_filter_rekap_by_year_and_month()
+    {
+        $response = $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+        // Prepare mock data for Rekap
+        Carbon::setTestNow(Carbon::create(2024, 11, 16)); // Set current date
+
+        $this->insertRekapData(); 
+        // Simulate a request with year and month filter
+        $response = $this->postJson(route('chart.filter', [
+            'tahun' => 2024,
+            'bulan' => 11,
+        ]));
+
+        // Assert the response is successful and contains the expected structure
+        $response->assertStatus(200)
+                ->assertJsonStructure([
+                    'saldoAkhir',
+                    'date'
+                ])
+                ->assertJson([
+                    'saldoAkhir' => [
+                    ]
+                ]);
+    }
+// Test untuk filter berdasarkan tahun dan bulan
+
+
 }

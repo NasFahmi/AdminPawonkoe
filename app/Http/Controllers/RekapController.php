@@ -194,7 +194,7 @@ class RekapController extends Controller
         $searchTerm = request('search');
 
         $query = Rekap::where('tipe_transaksi', $type);
-
+        // dd($query);
 
         $query->when($month, function ($q) use ($month) {
             return $q->whereMonth('tanggal_transaksi', $month);
@@ -220,7 +220,6 @@ class RekapController extends Controller
             'daftarBulan' => $this->daftarBulan,
             'totalUangFormatted' => $totalUangFormatted,
             'year' => $year,
-
         ]);
 
     }

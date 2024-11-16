@@ -48,8 +48,8 @@
                                             </svg>
                                         </div>
                                         {{-- Tanggal dalam format Y-m-d untuk datepicker --}}
-                                        <input datepicker type="text" name="tanggal_disetorkan"
-                                        value="{{ old('tanggal_disetorkan', \Carbon\Carbon::parse($piutang->tanggal_disetorkan)->format('m/d/Y')) }}"
+                                        <input datepicker datepicker-format="yyyy-mm-dd" type="text" name="tanggal_disetorkan"
+                                        value="{{ old('tanggal_disetorkan', \Carbon\Carbon::parse($piutang->tanggal_disetorkan)->format('Y/m/d')) }}"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Pilih tanggal" autocomplete="off" disabled>
                                     </div>
@@ -178,7 +178,7 @@
                                 </svg>
                             </div>
                             <input id="datepicker-format" datepicker datepicker-format="yyyy-mm-dd" type="text" name="tanggal_lunas"
-                                value="{{ old('tanggal_lunas', \Carbon\Carbon::parse($piutang->tanggal_lunas)->format('m/d/Y'))  }}"
+                                value="{{ old('tanggal_lunas', \Carbon\Carbon::parse($piutang->tanggal_lunas)->format('Y/m/d'))  }}"
                                 class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Select date">
                         </div>

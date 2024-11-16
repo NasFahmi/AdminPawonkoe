@@ -100,7 +100,7 @@ class ProductController extends Controller
             $data = $request->all();
             $namaProduct = $data['nama_product'];
             $slug = Str::of($namaProduct)->slug('-')->__toString();
-
+            // dd($slug);
             $product = Product::create([
                 'nama_product' => $data['nama_product'],
                 'slug' => $slug,
@@ -112,7 +112,7 @@ class ProductController extends Controller
                 'tersedia' => '1',
             ]);
             $productID = $product->id;
-
+            // dd($productID);
             event(new ProductCreated($product, $productID));
 
             if (isset($data['varian'])) {
@@ -170,7 +170,7 @@ class ProductController extends Controller
             return redirect()->route('products.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Exception $e) {
             // Jika ada kesalahan, rollback transaksi
-            dd($e->getMessage());
+            // dd($e->getMessage());
             DB::rollBack();
             throw $e;
             // dd('gagal ');

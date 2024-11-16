@@ -143,7 +143,7 @@ class TransaksiController extends Controller
                 ->withProperties(['id' => $transaksi->id])
                 ->log('User ' . auth()->user()->nama . ' add a transaksi');
 
-            $product = Product::findOrFail($data['product']);
+            // $product = Product::findOrFail($data['product']);
             $nama_product = $product->nama_product;
             if ($transaksi->is_complete == 1) {
                 Rekap::insert([

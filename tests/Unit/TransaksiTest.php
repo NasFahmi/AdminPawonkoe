@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Http\Controllers\TransaksiController;
 use App\Models\MethodePembayaran;
 use App\Models\Product;
 use App\Models\TemporaryImage;

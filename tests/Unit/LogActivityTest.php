@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\Models\BebanKewajiban;
 use App\Models\Foto;
@@ -25,6 +25,7 @@ class LogActivityTest extends TestCase
 {
     use RefreshDatabase;
     protected $ipAddr = '127.0.0.1';
+
     protected function setUp(): void
     {
         parent::setUp();

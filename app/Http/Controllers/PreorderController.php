@@ -216,7 +216,7 @@ class PreorderController extends Controller
         $this->validate($request, [
             'is_complete' => 'required',
             'jumlah_dp' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
-            'telepon'=>''
+            'telepon'=>'nullable'
         ], [
             'telepon.digits' => 'Nomor telepon harus terdiri dari 12 digit.',
         ]);
@@ -229,11 +229,11 @@ class PreorderController extends Controller
                 "no_hp" => $dataInput['telepon'],
             ];
 
-
             $preorder->pembelis->update($dataPembeli);
             $totalharga = $request->input('total');
             $totalHargaTanpaTitik = str_replace(".", "", $totalharga);
             //    Belum selesai
+            // dd($dataInput['is_complete']);
             if ($dataInput['is_complete'] == 0) {
                 $dataPreorder = [
                     "keterangan" => $dataInput['keterangan'],
@@ -273,7 +273,7 @@ class PreorderController extends Controller
         } catch (\Throwable $th) {
 
             DB::rollBack();
-            // dd($th->getMessage());
+            dd($th->getMessage());
             throw $th;
             return redirect()->back()->with('error', 'Failed to update transaksi data.');
         }

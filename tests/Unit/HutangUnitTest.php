@@ -1099,5 +1099,6 @@ class HutangUnitTest extends TestCase
             'nominal' => 'Nominal cicilan awal tidak boleh lebih dari jumlah hutang.',
         ]);
     }
+
 }
 

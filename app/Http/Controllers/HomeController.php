@@ -51,15 +51,6 @@ class HomeController extends Controller
         return response()->json($responseData);
     }
 
-    public function productSearch($search)
-    {
-        $data = Product::with(['fotos', 'varians',])
-            ->where('tersedia', 1)
-            ->where('nama', $search)
-            ->get();
-        return response()->json($data);
-    }
-
     public function detailProduct($slug)
     {
         $product = Product::with(['fotos', 'varians'])

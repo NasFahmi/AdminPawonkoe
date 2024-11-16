@@ -4,6 +4,7 @@
 namespace Tests\Unit;
 
 use App\Models\BebanKewajiban;
+use App\Models\CicilanHutang;
 use App\Models\Foto;
 use App\Models\Hutang;
 use App\Models\MethodePembayaran;
@@ -852,19 +853,22 @@ class LogActivityTest extends TestCase
     }
     public function test_create_data_log_activities_when_succesfull_create_hutang()
     {
+
         $this->post(route('authentication'), [
             'nama' => 'pawonkoe',
             'password' => 'pawonkoe',
         ]);
+        
         $data = [
-            'nama' => 'Ariq',
-            'catatan' => 'Test catatan',
-            'jumlahHutang' => 200000,
-            'tenggat_waktu' => null,
-            'tanggal_lunas' => now(),
+            'nama' => 'Bank BRI',
+            'catatan' => 'Hutang buat bahan',
+            'jumlahHutang' => 1000000,
+            'tanggal_lunas' => null,
+            'tenggat_waktu' => '2024-10-25',
             'nominal' => 100000,
             'status' => 0,
         ];
+
         $response = $this->post(route('hutang.store'), $data);
         $hutang = Hutang::latest()->first();
 
@@ -877,32 +881,41 @@ class LogActivityTest extends TestCase
     }
     public function test_create_data_log_activities_when_succesfull_edit_hutang()
     {
-        $this->post(route('authentication'), [
+        $response = $this->post(route('authentication'), [
             'nama' => 'pawonkoe',
             'password' => 'pawonkoe',
         ]);
-        $data = [
-            'nama' => 'Ariq',
-            'catatan' => 'Test catatan',
-            'jumlahHutang' => 200000,
-            'tenggat_waktu' => now(),
-            'tanggal_lunas' => null,
-            'nominal' => 100000,
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('admin.dashboard'));
+        
+        $hutang = Hutang::create([
+            'nama' => 'Bank ABC',
+            'catatan' => 'Catatan hutang',
             'status' => 0,
-        ];
-        $response = $this->post(route('hutang.store'), $data);
-        $hutang = Hutang::latest()->first();
+            'jumlah_hutang' => 500000,
+            'tenggat_waktu' => '2024-10-30',
+            'tanggal_lunas' => null,
+        ]);
+        $id = $hutang->id;
 
-        $dataUpdate = [
-            'nama' => 'Ariq Updated',
-            'catatan' => 'Updated catatan',
-            'jumlahHutang' => 300000,
-            // 'tenggat_waktu' => null,
-            'tanggal_lunas' => now(),
-            'status' => 1,
+        CicilanHutang::create([
+            'nominal' => 50000,
+            'hutangId' => $id,
+        ]);
+
+        $updatedData = [
+            'nama' => 'Bank XYZ',
+            'id' => $id,
+            'catatan' => 'Catatan hutang diperbarui',
+            'status' => 0,
+            'jumlahHutang' => 600000,
+            'tenggat_waktu' => '2024-10-31',
+            'tanggal_lunas' => null,
+            'nominal' => 60000, 
         ];
 
-        $response = $this->patch(route('hutang.update', $hutang->id), $dataUpdate);
+        $response = $this->patch(route('hutang.update', $id), $updatedData);
 
         // dd($hutang);
         $log = Activity::where('event', 'edit_hutang')
@@ -913,24 +926,26 @@ class LogActivityTest extends TestCase
     }
     public function test_create_data_log_activities_when_succesfull_delete_hutang()
     {
-        $this->post(route('authentication'), [
+        $response = $this->post(route('authentication'), [
             'nama' => 'pawonkoe',
             'password' => 'pawonkoe',
         ]);
-        $data = [
-            'nama' => 'Ariq',
-            'catatan' => 'Test catatan',
-            'jumlahHutang' => 200000,
-            'tenggat_waktu' => null,
-            'tanggal_lunas' => now(),
-            'nominal' => 100000,
+
+        $hutang = Hutang::create([
+            'nama' => 'Bank ABC',
+            'catatan' => 'Catatan hutang',
             'status' => 0,
-        ];
-        $response = $this->post(route('hutang.store'), $data);
-        $hutang = Hutang::latest()->first();
+            'jumlah_hutang' => 500000,
+            'tenggat_waktu' => '2024-10-30',
+            'tanggal_lunas' => null,
+        ]);
+
+        $this->assertDatabaseHas('hutangs', [
+            'id' => $hutang->id,
+            'nama' => 'Bank ABC',
+        ]);
 
         $response = $this->delete(route('hutang.destroy', $hutang->id));
-
         $log = Activity::where('event', 'delete_hutang')
             ->where('description', 'User pawonkoe delete a hutang')
             ->first();

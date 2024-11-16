@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\HistoryProduct;
 use App\Models\MethodePembayaran;
 use App\Models\Product;
 use App\Models\TemporaryImage;
@@ -107,6 +108,18 @@ class TransaksiTest extends TestCase
             'varian' => ['Red', 'Blue']
         ];
         $product = Product::create($productData);
+        $productId = $product->id;
+        $productHistoryData = [
+            'nama_product' => 'Test Product',
+            'product_id' => $productId,
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+        ];
+        $productHistory= HistoryProduct::create($productHistoryData);
         $transaksi = Transaksi::create(
             [
                 'tanggal' => Carbon::now(),
@@ -116,7 +129,7 @@ class TransaksiTest extends TestCase
                 'total_harga' => 100000,
                 'keterangan' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, recusandae.',
                 'is_Preorder' => false,
-                'Preorder_id' =>null,
+                'Preorder_id' => null,
                 'is_complete' => false,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -145,6 +158,7 @@ class TransaksiTest extends TestCase
         $response = $this->get(route('cetak.transaksi'));
         $response->assertStatus(200);
     }
+
     public function test_user_cannot_create_transaksi_with_empty_date()
     {
         $response = $this->post(route('authentication'), [
@@ -177,12 +191,20 @@ class TransaksiTest extends TestCase
             'images' => [json_encode([$temporaryFolder])],
             'varian' => ['Red', 'Blue']
         ];
-
-        $this->post(route('products.store'), $productData);
-
-        // Ambil ID produk terakhir
-        $product = Product::latest()->first();
+        $product = Product::create($productData);
+        // dd($product);
         $productId = $product->id;
+        $productHistoryData = [
+            'nama_product' => 'Test Product',
+            'product_id' => $productId,
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+        ];
+        $productHistory= HistoryProduct::create($productHistoryData);
         // dd($productId);// 1 ->exsisting product
 
         // Pastikan metode pembayaran ada
@@ -249,12 +271,19 @@ class TransaksiTest extends TestCase
             'images' => [json_encode([$temporaryFolder])],
             'varian' => ['Red', 'Blue']
         ];
-
-        $this->post(route('products.store'), $productData);
-
-        // Ambil ID produk terakhir
-        $product = Product::latest()->first();
+        $product = Product::create($productData);
         $productId = $product->id;
+        $productHistoryData = [
+            'nama_product' => 'Test Product',
+            'product_id' => $productId,
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+        ];
+        $productHistory= HistoryProduct::create($productHistoryData);
         // dd($productId);// 1 ->exsisting product
 
         // Pastikan metode pembayaran ada
@@ -309,6 +338,7 @@ class TransaksiTest extends TestCase
         );
 
         // Create Product
+        // Create Product
         $productData = [
             'nama_product' => 'Test Product',
             'slug' => 'Test-Product',
@@ -321,12 +351,19 @@ class TransaksiTest extends TestCase
             'images' => [json_encode([$temporaryFolder])],
             'varian' => ['Red', 'Blue']
         ];
-
-        $this->post(route('products.store'), $productData);
-
-        // Ambil ID produk terakhir
-        $product = Product::latest()->first();
+        $product = Product::create($productData);
         $productId = $product->id;
+        $productHistoryData = [
+            'nama_product' => 'Test Product',
+            'product_id' => $productId,
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+        ];
+        $productHistory= HistoryProduct::create($productHistoryData);
         // dd($productId);// 1 ->exsisting product
 
         // Pastikan metode pembayaran ada
@@ -393,12 +430,19 @@ class TransaksiTest extends TestCase
             'images' => [json_encode([$temporaryFolder])],
             'varian' => ['Red', 'Blue']
         ];
-
-        $this->post(route('products.store'), $productData);
-
-        // Ambil ID produk terakhir
-        $product = Product::latest()->first();
+        $product = Product::create($productData);
         $productId = $product->id;
+        $productHistoryData = [
+            'nama_product' => 'Test Product',
+            'product_id' => $productId,
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+        ];
+        $productHistory= HistoryProduct::create($productHistoryData);
         // dd($productId);// 1 ->exsisting product
 
         // Pastikan metode pembayaran ada
@@ -454,19 +498,25 @@ class TransaksiTest extends TestCase
             'harga' => '100000',
             'deskripsi' => 'Test Description',
             'link_shopee' => 'https://shopee.com/test',
-            'stok' => '10',
-            'tersedia' => '1',
+            'stok' => '0',
+            'tersedia' => '0',
             'spesifikasi_product' => 'Test Specifications',
             'images' => [json_encode([$temporaryFolder])],
             'varian' => ['Red', 'Blue']
         ];
-
-        $this->post(route('products.store'), $productData);
-
-        // Ambil ID produk terakhir
-        $product = Product::latest()->first();
+        $product = Product::create($productData);
         $productId = $product->id;
-        // dd($productId);// 1 ->exsisting product
+        $productHistoryData = [
+            'nama_product' => 'Test Product',
+            'product_id' => $productId,
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+        ];
+        $productHistory= HistoryProduct::create($productHistoryData);
 
         // Pastikan metode pembayaran ada
         $methodePembayaran = MethodePembayaran::first();
@@ -475,45 +525,32 @@ class TransaksiTest extends TestCase
                 'methode_pembayaran' => 'Transfer'
             ]);
         }
+
         // dd($methodePembayaran); //Transfer
         $transaksiData = [
             'tanggal' => Carbon::now()->format('Y-m-d'),
             'product' => $productId, // Pastikan ini product_id
             'methode_pembayaran' => $methodePembayaran->id,
-            'total' => $product->harga * 10,
-            'keterangan' => null,
-            'jumlah' => 10,
-            'is_complete' => 1
-        ];
-
-        // Menyimpan transaksi
-        $response = $this->post(route('transaksis.store'), $transaksiData);
-        $product->refresh();
-
-        // dd($methodePembayaran); //Transfer
-        $transaksiData2 = [
-            'tanggal' => Carbon::now()->format('Y-m-d'),
-            'product' => $productId, // Pastikan ini product_id
-            'methode_pembayaran' => $methodePembayaran->id,
             'total' => $product->harga * 1,
             'keterangan' => null,
-            'jumlah' => 1,
+            'jumlah' => 2,
             'is_complete' => 1
         ];
 
         // Menyimpan transaksi
-        $responseTransaksi2 = $this->post(route('transaksis.store'), $transaksiData2);
-
-        $responseTransaksi2->assertStatus(302);
-        $responseTransaksi2->assertSessionHasErrors([
+        $responseTransaksi = $this->post(route('transaksis.store'), $transaksiData);
+        // dd($responseTransaksi);
+        $responseTransaksi->assertStatus(302);
+        $responseTransaksi->assertSessionHasErrors([
             'product' => 'Stok produk tidak tersedia.'
         ]);
     }
-    public function test_user_cannot_create_transaksi_when_total_harga_calculated_not_same_with_request_total(){
+    public function test_user_cannot_create_transaksi_when_total_harga_calculated_not_same_with_request_total()
+    {
         $response = $this->post(route('authentication'), [
             'nama' => 'pawonkoe',
             'password' => 'pawonkoe',
-        ]); 
+        ]);
         Storage::fake('public');
 
         $temporaryFolder = uniqid('image-', true);
@@ -554,6 +591,18 @@ class TransaksiTest extends TestCase
             'varian' => ['Red', 'Blue']
         ];
         $product = Product::create($productData);
+        $productId = $product->id;
+        $productHistoryData = [
+            'nama_product' => 'Test Product',
+            'product_id' => $productId,
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+        ];
+        $productHistory= HistoryProduct::create($productHistoryData);
         $transaksiData = [
             'tanggal' => Carbon::now()->format('Y-m-d'),
             'product' => $product->id, // Pastikan ini product_id
@@ -597,6 +646,7 @@ class TransaksiTest extends TestCase
         );
 
         // Create Product
+        // Create Product
         $productData = [
             'nama_product' => 'Test Product',
             'slug' => 'Test-Product',
@@ -609,26 +659,39 @@ class TransaksiTest extends TestCase
             'images' => [json_encode([$temporaryFolder])],
             'varian' => ['Red', 'Blue']
         ];
-
-        $this->post(route('products.store'), $productData);
-
-        // Ambil ID produk terakhir
-        $product = Product::latest()->first();
+        $product = Product::create($productData);
         $productId = $product->id;
-        // dd($productId);// 1 ->exsisting product
+        $productHistoryData = [
+            'nama_product' => 'Test Product',
+            'product_id' => $productId,
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+        ];
+        $productHistory= HistoryProduct::create($productHistoryData);
 
-        // Pastikan metode pembayaran ada
-        $methodePembayaran = MethodePembayaran::first();
-        if (!$methodePembayaran) {
-            $methodePembayaran = MethodePembayaran::create([
-                'methode_pembayaran' => 'Transfer'
-            ]);
-        }
+        // dd($productId);// 1 ->exsist ing product
+
+        $methodePembayaranTransfer = MethodePembayaran::create([
+            'methode_pembayaran' => 'transfer'
+        ]);
+        $methodePembayaranShopee = MethodePembayaran::create([
+            'methode_pembayaran' => 'shopee'
+        ]);
+        $methodePembayaranOffline = MethodePembayaran::create([
+            'methode_pembayaran' => 'offline'
+        ]);
+        $methodePembayaranLainnya = MethodePembayaran::create([
+            'methode_pembayaran' => 'lainnya'
+        ]);
         // dd($methodePembayaran); //Transfer
         $transaksiData = [
             'tanggal' => Carbon::now()->format('Y-m-d'),
             'product' => $productId, // Pastikan ini product_id
-            'methode_pembayaran' => $methodePembayaran->id,
+            'methode_pembayaran' => $methodePembayaranTransfer->id,
             'total' => $product->harga,
             'keterangan' => null,
             'jumlah' => 1,
@@ -637,7 +700,9 @@ class TransaksiTest extends TestCase
 
         // Menyimpan transaksi
         $response = $this->post(route('transaksis.store'), $transaksiData);
+        // dd($response);
         $transaksi = Transaksi::latest()->first();
+        // dd($transaksi);
         $transaksiId = $transaksi->id;
         // Pastikan respons berhasil dan memastikan is_complete = 0
         $this->assertDatabaseHas('transaksis', [
@@ -678,12 +743,19 @@ class TransaksiTest extends TestCase
             'images' => [json_encode([$temporaryFolder])],
             'varian' => ['Red', 'Blue']
         ];
-
-        $this->post(route('products.store'), $productData);
-
-        // Ambil ID produk terakhir
-        $product = Product::latest()->first();
+        $product = Product::create($productData);
         $productId = $product->id;
+        $productHistoryData = [
+            'nama_product' => 'Test Product',
+            'product_id' => $productId,
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+        ];
+        $productHistory= HistoryProduct::create($productHistoryData);
         // dd($productId);// 1 ->exsisting product
 
         // Pastikan metode pembayaran ada
@@ -749,12 +821,19 @@ class TransaksiTest extends TestCase
             'images' => [json_encode([$temporaryFolder])],
             'varian' => ['Red', 'Blue']
         ];
-
-        $this->post(route('products.store'), $productData);
-
-        // Ambil ID produk terakhir
-        $product = Product::latest()->first();
+        $product = Product::create($productData);
         $productId = $product->id;
+        $productHistoryData = [
+            'nama_product' => 'Test Product',
+            'product_id' => $productId,
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+        ];
+        $productHistory= HistoryProduct::create($productHistoryData);
         // dd($productId);// 1 ->exsisting product
 
         // Pastikan metode pembayaran ada
@@ -814,12 +893,19 @@ class TransaksiTest extends TestCase
             'images' => [json_encode([$temporaryFolder])],
             'varian' => ['Red', 'Blue']
         ];
-
-        $this->post(route('products.store'), $productData);
-
-        // Ambil ID produk terakhir
-        $product = Product::latest()->first();
+        $product = Product::create($productData);
         $productId = $product->id;
+        $productHistoryData = [
+            'nama_product' => 'Test Product',
+            'product_id' => $productId,
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+        ];
+        $productHistory= HistoryProduct::create($productHistoryData);
         // dd($productId);// 1 ->exsisting product
 
         // Pastikan metode pembayaran ada

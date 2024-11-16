@@ -85,11 +85,11 @@ class TransaksiController extends Controller
         }
 
         // Menghitung total harga otomatis
-        $hargaSatuan = $product->harga; // Mengambil harga satuan dari produk
-        $totalHargaCalculated = $hargaSatuan * $request->jumlah;
+        $hargaSatuan = (int) $product->harga; // Mengambil harga satuan dari produk
+        $totalHargaCalculated  = (int)  $hargaSatuan * $request->jumlah;
         // dd($totalHargaCalculated);
         // Validasi apakah total harga yang dihitung sama dengan total harga yang dikirim
-        if ($totalHargaCalculated != $request->total) {
+        if ($totalHargaCalculated != (int)  $request->total) {
             return redirect()->back()->withErrors(['total' => 'Total harga tidak cocok. Harap hitung ulang.'])->withInput();
         }
 
@@ -126,6 +126,7 @@ class TransaksiController extends Controller
             //! id transakasi dari $trasnkasi->id
             //! id history product dapat dari HistoryProduct::where(product_id == data['product'])
             $historyProduct = HistoryProduct::where('product_id', $data['product'])->get()->last();
+            // dd($transaksi->id);
             // dd($historyProduct->id);
             HistoryProductTransaksi::create([
                 "transaksi_id" => $transaksi->id,
@@ -135,7 +136,7 @@ class TransaksiController extends Controller
             if ($transaksi->is_complete == 1) {
                 event(new TransaksiSelesai($transaksi->id));
             }
-
+        
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($transaksi)

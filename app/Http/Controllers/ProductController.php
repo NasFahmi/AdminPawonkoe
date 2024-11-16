@@ -170,7 +170,7 @@ class ProductController extends Controller
             return redirect()->route('products.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Exception $e) {
             // Jika ada kesalahan, rollback transaksi
-            // dd($e->getMessage());
+            dd($e->getMessage());
             DB::rollBack();
             throw $e;
             // dd('gagal ');

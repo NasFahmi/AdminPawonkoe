@@ -34,16 +34,16 @@ class HutangController extends Controller
      * Show the form for creating a new resource.
      */
     public function create(Request $request)
-{
-    $request->validate([
-        'status' => 'required|string', // Validasi bahwa status harus ada dan berupa boolean
-    ]);
-    // Dapatkan status dari query string
-    $status = $request->query('status','Belum selesai');
-    // dd($status);
-    // Tampilkan view dengan status
-    return view('pages.hutang.create', compact('status'));
-}
+    {
+        $request->validate([
+            'status' => 'required|string', // Validasi bahwa status harus ada dan berupa boolean
+        ]);
+        // Dapatkan status dari query string
+        $status = $request->query('status','Belum selesai');
+        // dd($status);
+        // Tampilkan view dengan status
+        return view('pages.hutang.create', compact('status'));
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -249,9 +249,9 @@ class HutangController extends Controller
 
             return redirect()->route('hutang.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Exception $e) {
-            // throw $e;
-            DB::rollBack();
             // dd($e->getMessage());
+            throw $e;
+            DB::rollBack();
         }
     }
 

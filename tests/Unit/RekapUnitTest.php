@@ -15,11 +15,11 @@ class RekapUnitTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        
+
         // $this->withoutExceptionHandling();
         $this->artisan('db:seed');
     }
-    
+
     public function test_see_detail_rekap_income(): void
     {
         $response = $this->post(route('authentication'), [
@@ -27,7 +27,7 @@ class RekapUnitTest extends TestCase
             'password' => 'pawonkoe',
         ]);
         $response->assertStatus(302);
-        
+
         Rekap::insert([
             [
                 'tanggal_transaksi' => '2024-11-08',
@@ -54,10 +54,10 @@ class RekapUnitTest extends TestCase
                 'tipe_transaksi' => 'keluar',
             ]
         ]);
-    
+
         $response = $this->get(route('rekap.filter', 'masuk'));
         $response->assertStatus(200);
-        $response->assertDontSeeText('Hutanghhhhh'); 
+        $response->assertDontSeeText('Hutanghhhhh');
 
         $this->assertDatabaseHas('rekap_keuangan', [
             'sumber' => 'Modal',
@@ -68,14 +68,15 @@ class RekapUnitTest extends TestCase
             'tipe_transaksi' => 'masuk'
         ]);
     }
-    
-    public function test_see_detail_rekap_expenses(): void{
-         $response = $this->post(route('authentication'), [
+
+    public function test_see_detail_rekap_expenses(): void
+    {
+        $response = $this->post(route('authentication'), [
             'nama' => 'pawonkoe',
             'password' => 'pawonkoe',
         ]);
         $response->assertStatus(302);
-        
+
         Rekap::insert([
             [
                 'tanggal_transaksi' => '2024-11-08',
@@ -112,7 +113,7 @@ class RekapUnitTest extends TestCase
         ]);
         $response = $this->get(route('rekap.filter', 'keluar'));
         $response->assertStatus(200);
-        $response->assertDontSeeText('Modalss');  
+        $response->assertDontSeeText('Modalss');
     }
     public function test_see_rekap_income_kategori_by_month(): void
     {
@@ -121,7 +122,7 @@ class RekapUnitTest extends TestCase
             'password' => 'pawonkoe',
         ]);
         $response->assertStatus(302);
-        
+
         Rekap::insert([
             [
                 'tanggal_transaksi' => '2024-11-08',
@@ -148,10 +149,10 @@ class RekapUnitTest extends TestCase
                 'tipe_transaksi' => 'masuk',
             ]
         ]);
-    
-        $response = $this->get(route('rekap.filter', ['masuk','semua', '11']));
-        $response->assertStatus(200);    
-        $response->assertDontSeeText('Piutangdd');  
+
+        $response = $this->get(route('rekap.filter', ['masuk', 'semua', '11']));
+        $response->assertStatus(200);
+        $response->assertDontSeeText('Piutangdd');
 
         $this->assertDatabaseHas('rekap_keuangan', [
             'sumber' => 'Modal',
@@ -174,7 +175,7 @@ class RekapUnitTest extends TestCase
             'password' => 'pawonkoe',
         ]);
         $response->assertStatus(302);
-        
+
         Rekap::insert([
             [
                 'tanggal_transaksi' => '2024-11-08',
@@ -202,9 +203,9 @@ class RekapUnitTest extends TestCase
             ]
         ]);
 
-        $response = $this->get(route('rekap.filter', ['masuk','2024']));
+        $response = $this->get(route('rekap.filter', ['masuk', '2024']));
         $response->assertStatus(200);
-        $response->assertDontSeeText('Piutangdd'); 
+        $response->assertDontSeeText('Piutangdd');
 
         $this->assertDatabaseHas('rekap_keuangan', [
             'sumber' => 'Modal',
@@ -227,7 +228,7 @@ class RekapUnitTest extends TestCase
             'password' => 'pawonkoe',
         ]);
         $response->assertStatus(302);
-        
+
         Rekap::insert([
             [
                 'tanggal_transaksi' => '2024-11-08',
@@ -244,7 +245,8 @@ class RekapUnitTest extends TestCase
                 'keterangan' => 'Pendapatan Bulanan',
                 'id_tabel_asal' => 2,
                 'tipe_transaksi' => 'masuk',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2024-10-18',
                 'sumber' => 'Transaksi',
                 'jumlah' => 1000,
@@ -262,11 +264,11 @@ class RekapUnitTest extends TestCase
             ]
         ]);
 
-        $response = $this->get(route('rekap.filter', ['masuk','2024','11']));
+        $response = $this->get(route('rekap.filter', ['masuk', '2024', '11']));
         $response->assertStatus(200);
         $response->assertSeeText('Modal');
-        $response->assertDontSeeText('Piutangdd');  
-        $response->assertDontSeeText('Transaksi produk A');  
+        $response->assertDontSeeText('Piutangdd');
+        $response->assertDontSeeText('Transaksi produk A');
 
         $this->assertDatabaseHas('rekap_keuangan', [
             'sumber' => 'Modal',
@@ -297,7 +299,7 @@ class RekapUnitTest extends TestCase
             'password' => 'pawonkoe',
         ]);
         $response->assertStatus(302);
-        
+
         Rekap::insert([
             [
                 'tanggal_transaksi' => '2024-11-08',
@@ -324,10 +326,10 @@ class RekapUnitTest extends TestCase
                 'tipe_transaksi' => 'keluar',
             ]
         ]);
-    
-        $response = $this->get(route('rekap.filter', ['keluar','semua', '11']));
-        $response->assertStatus(200);    
-        $response->assertDontSeeText('Hutang Bank A'); 
+
+        $response = $this->get(route('rekap.filter', ['keluar', 'semua', '11']));
+        $response->assertStatus(200);
+        $response->assertDontSeeText('Hutang Bank A');
         $this->assertDatabaseHas('rekap_keuangan', [
             'sumber' => 'Beban',
             'tipe_transaksi' => 'keluar'
@@ -350,7 +352,7 @@ class RekapUnitTest extends TestCase
             'password' => 'pawonkoe',
         ]);
         $response->assertStatus(302);
-        
+
         Rekap::insert([
             [
                 'tanggal_transaksi' => '2024-11-08',
@@ -377,9 +379,9 @@ class RekapUnitTest extends TestCase
                 'tipe_transaksi' => 'keluar',
             ]
         ]);
-        $response = $this->get(route('rekap.filter', ['keluar','2024']));
+        $response = $this->get(route('rekap.filter', ['keluar', '2024']));
         $response->assertStatus(200);
-        $response->assertDontSeeText('Hutang Bank A');  
+        $response->assertDontSeeText('Hutang Bank A');
         $this->assertDatabaseHas('rekap_keuangan', [
             'sumber' => 'Beban',
             'tipe_transaksi' => 'keluar'
@@ -401,7 +403,7 @@ class RekapUnitTest extends TestCase
             'password' => 'pawonkoe',
         ]);
         $response->assertStatus(302);
-        
+
         Rekap::insert([
             [
                 'tanggal_transaksi' => '2024-11-08',
@@ -418,7 +420,8 @@ class RekapUnitTest extends TestCase
                 'keterangan' => 'WiFi',
                 'id_tabel_asal' => 2,
                 'tipe_transaksi' => 'keluar',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2024-10-18',
                 'sumber' => 'Kewajiban',
                 'jumlah' => 1000,
@@ -436,12 +439,12 @@ class RekapUnitTest extends TestCase
             ]
         ]);
 
-        $response = $this->get(route('rekap.filter', ['keluar','2024','11']));
+        $response = $this->get(route('rekap.filter', ['keluar', '2024', '11']));
         $response->assertStatus(200);
-        $response->assertSeeText('Listrik');  
-        $response->assertSeeText('WiFi'); 
-        $response->assertDontSeeText('Gaji karyawan'); 
-        $response->assertDontSeeText('Hutang Toko A');  
+        $response->assertSeeText('Listrik');
+        $response->assertSeeText('WiFi');
+        $response->assertDontSeeText('Gaji karyawan');
+        $response->assertDontSeeText('Hutang Toko A');
         $this->assertDatabaseHas('rekap_keuangan', [
             'sumber' => 'Beban',
             'keterangan' => 'Listrik',
@@ -471,7 +474,7 @@ class RekapUnitTest extends TestCase
             'password' => 'pawonkoe',
         ]);
         $response->assertStatus(302);
-        
+
         Rekap::insert([
             [
                 'tanggal_transaksi' => '2024-11-08',
@@ -488,7 +491,8 @@ class RekapUnitTest extends TestCase
                 'keterangan' => 'Pendapatan Bulanan',
                 'id_tabel_asal' => 2,
                 'tipe_transaksi' => 'masuk',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2024-10-18',
                 'sumber' => 'Transaksi',
                 'jumlah' => 1000,
@@ -508,8 +512,8 @@ class RekapUnitTest extends TestCase
 
         $response = $this->get(route('rekap.index'));
         $response->assertStatus(200);
-        $response->assertSeeText('Total Uang Masuk');  
-        $response->assertSeeText('Rp 4.000'); 
+        $response->assertSeeText('Total Uang Masuk');
+        $response->assertSeeText('Rp 4.000');
         $this->assertDatabaseHas('rekap_keuangan', [
             'sumber' => 'Modal',
             'keterangan' => 'Modal dari Owner',
@@ -539,7 +543,7 @@ class RekapUnitTest extends TestCase
             'password' => 'pawonkoe',
         ]);
         $response->assertStatus(302);
-            Rekap::insert([
+        Rekap::insert([
             [
                 'tanggal_transaksi' => '2024-11-08',
                 'sumber' => 'Beban',
@@ -555,7 +559,8 @@ class RekapUnitTest extends TestCase
                 'keterangan' => 'WiFi',
                 'id_tabel_asal' => 2,
                 'tipe_transaksi' => 'keluar',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2024-10-18',
                 'sumber' => 'Kewajiban',
                 'jumlah' => 1000,
@@ -574,8 +579,8 @@ class RekapUnitTest extends TestCase
         ]);
         $response = $this->get(route('rekap.index'));
         $response->assertStatus(200);
-        $response->assertSeeText('Total Uang Keluar');  
-        $response->assertSeeText('Rp 16.000');  
+        $response->assertSeeText('Total Uang Keluar');
+        $response->assertSeeText('Rp 16.000');
         $this->assertDatabaseHas('rekap_keuangan', [
             'sumber' => 'Beban',
             'keterangan' => 'Listrik',
@@ -605,72 +610,81 @@ class RekapUnitTest extends TestCase
             'password' => 'pawonkoe',
         ]);
         $response->assertStatus(302);
-        
-        Rekap::insert([[
+
+        Rekap::insert([
+            [
                 'tanggal_transaksi' => '2024-11-08',
                 'sumber' => 'Modal',
                 'jumlah' => 3000,
                 'keterangan' => 'Modal dari Owner',
                 'id_tabel_asal' => 1,
                 'tipe_transaksi' => 'masuk',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2024-11-18',
                 'sumber' => 'Transaksi',
                 'jumlah' => 1000,
                 'keterangan' => 'Pendapatan Bulanan',
                 'id_tabel_asal' => 2,
                 'tipe_transaksi' => 'masuk',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2024-10-18',
                 'sumber' => 'Transaksi',
                 'jumlah' => 1000,
                 'keterangan' => 'Transaksi produk A',
                 'id_tabel_asal' => 2,
                 'tipe_transaksi' => 'masuk',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2025-10-18',
                 'sumber' => 'Piutangdd',
                 'jumlah' => 10000,
                 'keterangan' => 'Piutang Toko A',
                 'id_tabel_asal' => 3,
                 'tipe_transaksi' => 'masuk',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2024-11-08',
                 'sumber' => 'Beban',
                 'jumlah' => 1000,
                 'keterangan' => 'Listrik',
                 'id_tabel_asal' => 1,
                 'tipe_transaksi' => 'keluar',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2024-11-18',
                 'sumber' => 'Beban',
                 'jumlah' => 1000,
                 'keterangan' => 'WiFi',
                 'id_tabel_asal' => 2,
                 'tipe_transaksi' => 'keluar',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2024-10-18',
                 'sumber' => 'Kewajiban',
                 'jumlah' => 1000,
                 'keterangan' => 'Gaji karyawan',
                 'id_tabel_asal' => 2,
                 'tipe_transaksi' => 'keluar',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2025-10-18',
                 'sumber' => 'Hutang',
                 'jumlah' => 1000,
                 'keterangan' => 'Hutang Toko A',
                 'id_tabel_asal' => 3,
                 'tipe_transaksi' => 'keluar',
-            ]]);
+            ]
+        ]);
         $response = $this->get(route('rekap.index'));
         $response->assertStatus(200);
-        $response->assertSeeText('Total Uang Masuk');  
-        $response->assertSeeText('Rp 15.000');  
-        $response->assertSeeText('Total Uang Keluar');  
-        $response->assertSeeText('Rp 4.000'); 
-        $response->assertSeeText('Saldo Akhir');  
-        $response->assertSeeText('Rp 11.000'); 
+        $response->assertSeeText('Total Uang Masuk');
+        $response->assertSeeText('Rp 15.000');
+        $response->assertSeeText('Total Uang Keluar');
+        $response->assertSeeText('Rp 4.000');
+        $response->assertSeeText('Saldo Akhir');
+        $response->assertSeeText('Rp 11.000');
 
         $this->assertDatabaseHas('rekap_keuangan', [
             'sumber' => 'Modal',
@@ -722,7 +736,7 @@ class RekapUnitTest extends TestCase
             'password' => 'pawonkoe',
         ]);
         $response->assertStatus(302);
-        
+
         Rekap::insert([
             [
                 'tanggal_transaksi' => '2024-11-08',
@@ -739,7 +753,8 @@ class RekapUnitTest extends TestCase
                 'keterangan' => 'Pendapatan Bulanan',
                 'id_tabel_asal' => 2,
                 'tipe_transaksi' => 'masuk',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2024-10-18',
                 'sumber' => 'Transaksi',
                 'jumlah' => 1000,
@@ -754,7 +769,8 @@ class RekapUnitTest extends TestCase
                 'keterangan' => 'Piutang Toko A',
                 'id_tabel_asal' => 3,
                 'tipe_transaksi' => 'masuk',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2024-11-08',
                 'sumber' => 'Beban',
                 'jumlah' => 1000,
@@ -769,7 +785,8 @@ class RekapUnitTest extends TestCase
                 'keterangan' => 'WiFi',
                 'id_tabel_asal' => 2,
                 'tipe_transaksi' => 'keluar',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2024-10-18',
                 'sumber' => 'Kewajiban',
                 'jumlah' => 1000,
@@ -788,10 +805,10 @@ class RekapUnitTest extends TestCase
         ]);
         $response = $this->get(route('cetak.rekap'));
         $response->assertStatus(200);
-        $response->assertSeeText('Total Uang Masuk: Rp. 15.000'); 
-        $response->assertSeeText('Total Uang Keluar: Rp. 4.000'); 
-        $response->assertSeeText('Sisa Saldo Akhir: Rp. 11.000'); 
-        $response->assertSeeText('window.print();'); 
+        $response->assertSeeText('Total Uang Masuk: Rp. 15.000');
+        $response->assertSeeText('Total Uang Keluar: Rp. 4.000');
+        $response->assertSeeText('Sisa Saldo Akhir: Rp. 11.000');
+        $response->assertSeeText('window.print();');
         $this->assertDatabaseHas('rekap_keuangan', [
             'sumber' => 'Modal',
             'keterangan' => 'Modal dari Owner',
@@ -836,80 +853,83 @@ class RekapUnitTest extends TestCase
     }
 
     public function test_finding_rekap_by_sumber(): void
-    { 
+    {
         $response = $this->post(route('authentication'), [
             'nama' => 'pawonkoe',
             'password' => 'pawonkoe',
         ]);
         $response->assertStatus(302);
-    Rekap::insert([
-        [
-            'tanggal_transaksi' => '2024-11-08',
-            'sumber' => 'Modal',
-            'jumlah' => 3000,
-            'keterangan' => 'Modal dari Owner',
-            'id_tabel_asal' => 1,
-            'tipe_transaksi' => 'masuk',
-        ],
-        [
-            'tanggal_transaksi' => '2024-11-18',
-            'sumber' => 'Transaksi',
-            'jumlah' => 1000,
-            'keterangan' => 'Pendapatan Bulanan',
-            'id_tabel_asal' => 2,
-            'tipe_transaksi' => 'masuk',
-        ],[
-            'tanggal_transaksi' => '2024-10-18',
-            'sumber' => 'Transaksi',
-            'jumlah' => 1000,
-            'keterangan' => 'Transaksi produk A',
-            'id_tabel_asal' => 2,
-            'tipe_transaksi' => 'masuk',
-        ],
-        [
-            'tanggal_transaksi' => '2025-10-18',
-            'sumber' => 'Piutangdd',
-            'jumlah' => 10000,
-            'keterangan' => 'Piutang Toko A',
-            'id_tabel_asal' => 3,
-            'tipe_transaksi' => 'masuk',
-        ],[
-            'tanggal_transaksi' => '2024-11-08',
-            'sumber' => 'Beban',
-            'jumlah' => 1000,
-            'keterangan' => 'Listrik',
-            'id_tabel_asal' => 1,
-            'tipe_transaksi' => 'keluar',
-        ],
-        [
-            'tanggal_transaksi' => '2024-11-18',
-            'sumber' => 'Beban',
-            'jumlah' => 1000,
-            'keterangan' => 'WiFi',
-            'id_tabel_asal' => 2,
-            'tipe_transaksi' => 'keluar',
-        ],[
-            'tanggal_transaksi' => '2024-10-18',
-            'sumber' => 'Kewajiban',
-            'jumlah' => 1000,
-            'keterangan' => 'Gaji karyawan',
-            'id_tabel_asal' => 2,
-            'tipe_transaksi' => 'keluar',
-        ],
-        [
-            'tanggal_transaksi' => '2025-10-18',
-            'sumber' => 'Hutang',
-            'jumlah' => 1000,
-            'keterangan' => 'Hutang Toko A',
-            'id_tabel_asal' => 3,
-            'tipe_transaksi' => 'keluar',
-        ]
-    ]);
+        Rekap::insert([
+            [
+                'tanggal_transaksi' => '2024-11-08',
+                'sumber' => 'Modal',
+                'jumlah' => 3000,
+                'keterangan' => 'Modal dari Owner',
+                'id_tabel_asal' => 1,
+                'tipe_transaksi' => 'masuk',
+            ],
+            [
+                'tanggal_transaksi' => '2024-11-18',
+                'sumber' => 'Transaksi',
+                'jumlah' => 1000,
+                'keterangan' => 'Pendapatan Bulanan',
+                'id_tabel_asal' => 2,
+                'tipe_transaksi' => 'masuk',
+            ],
+            [
+                'tanggal_transaksi' => '2024-10-18',
+                'sumber' => 'Transaksi',
+                'jumlah' => 1000,
+                'keterangan' => 'Transaksi produk A',
+                'id_tabel_asal' => 2,
+                'tipe_transaksi' => 'masuk',
+            ],
+            [
+                'tanggal_transaksi' => '2025-10-18',
+                'sumber' => 'Piutangdd',
+                'jumlah' => 10000,
+                'keterangan' => 'Piutang Toko A',
+                'id_tabel_asal' => 3,
+                'tipe_transaksi' => 'masuk',
+            ],
+            [
+                'tanggal_transaksi' => '2024-11-08',
+                'sumber' => 'Beban',
+                'jumlah' => 1000,
+                'keterangan' => 'Listrik',
+                'id_tabel_asal' => 1,
+                'tipe_transaksi' => 'keluar',
+            ],
+            [
+                'tanggal_transaksi' => '2024-11-18',
+                'sumber' => 'Beban',
+                'jumlah' => 1000,
+                'keterangan' => 'WiFi',
+                'id_tabel_asal' => 2,
+                'tipe_transaksi' => 'keluar',
+            ],
+            [
+                'tanggal_transaksi' => '2024-10-18',
+                'sumber' => 'Kewajiban',
+                'jumlah' => 1000,
+                'keterangan' => 'Gaji karyawan',
+                'id_tabel_asal' => 2,
+                'tipe_transaksi' => 'keluar',
+            ],
+            [
+                'tanggal_transaksi' => '2025-10-18',
+                'sumber' => 'Hutang',
+                'jumlah' => 1000,
+                'keterangan' => 'Hutang Toko A',
+                'id_tabel_asal' => 3,
+                'tipe_transaksi' => 'keluar',
+            ]
+        ]);
         $response = $this->get('admin/rekap-keuangan/detail?search=Transaksi');
         $response->assertOk();
-        $response->assertSee('Transaksi'); 
-        $response->assertSee('Pendapatan Bulanan'); 
-        $response->assertSee('Transaksi produk A'); 
+        $response->assertSee('Transaksi');
+        $response->assertSee('Pendapatan Bulanan');
+        $response->assertSee('Transaksi produk A');
     }
 
     public function test_see_rekap_expenses_kategori_by_year_and_month_search(): void
@@ -919,7 +939,7 @@ class RekapUnitTest extends TestCase
             'password' => 'pawonkoe',
         ]);
         $response->assertStatus(302);
-        
+
         Rekap::insert([
             [
                 'tanggal_transaksi' => '2024-11-08',
@@ -936,7 +956,8 @@ class RekapUnitTest extends TestCase
                 'keterangan' => 'WiFi',
                 'id_tabel_asal' => 2,
                 'tipe_transaksi' => 'keluar',
-            ],[
+            ],
+            [
                 'tanggal_transaksi' => '2024-10-18',
                 'sumber' => 'Kewajiban',
                 'jumlah' => 1000,
@@ -954,12 +975,12 @@ class RekapUnitTest extends TestCase
             ]
         ]);
 
-        $response = $this->get(route('rekap.filter', ['keluar','2024','11']));
+        $response = $this->get(route('rekap.filter', ['keluar', '2024', '11']));
         $response->assertStatus(200);
-        $response->assertSeeText('Listrik');  
-        $response->assertSeeText('WiFi'); 
-        $response->assertDontSeeText('Gaji karyawan'); 
-        $response->assertDontSeeText('Hutang Toko A');  
+        $response->assertSeeText('Listrik');
+        $response->assertSeeText('WiFi');
+        $response->assertDontSeeText('Gaji karyawan');
+        $response->assertDontSeeText('Hutang Toko A');
         $this->assertDatabaseHas('rekap_keuangan', [
             'sumber' => 'Beban',
             'keterangan' => 'Listrik',
@@ -983,13 +1004,13 @@ class RekapUnitTest extends TestCase
 
         $response = $this->get('admin/rekap-keuangan/detail/keluar/semua/11?search=Beban');
         $response->assertOk();
-        $response->assertSee('WiFi'); 
-        $response->assertSee('Listrik'); 
+        $response->assertSee('WiFi');
+        $response->assertSee('Listrik');
     }
 
-   
 
-// Fungsi untuk memasukkan data dummy Rekap
+
+    // Fungsi untuk memasukkan data dummy Rekap
     private function insertRekapData()
     {
         Rekap::insert([
@@ -1037,7 +1058,7 @@ class RekapUnitTest extends TestCase
         ]);
 
         $tahun = 2024;
-        $this->insertRekapData(); 
+        $this->insertRekapData();
 
         // Memanggil API untuk filter berdasarkan tahun (bulan = '-')
         $response = $this->json('post', route('chart.filter'), [
@@ -1046,15 +1067,15 @@ class RekapUnitTest extends TestCase
         ]);
 
         $response->assertStatus(200)
-                ->assertJsonStructure([
-                    'saldoAkhir',
-                    'date'
-                ])
-                ->assertJson([
-                    'saldoAkhir' => [
-                    ]
-                ]);
-        
+            ->assertJsonStructure([
+                'saldoAkhir',
+                'date'
+            ])
+            ->assertJson([
+                'saldoAkhir' => [
+                ]
+            ]);
+
     }
 
     public function test_filter_rekap_by_year_and_month()
@@ -1066,7 +1087,7 @@ class RekapUnitTest extends TestCase
         // Prepare mock data for Rekap
         Carbon::setTestNow(Carbon::create(2024, 11, 16)); // Set current date
 
-        $this->insertRekapData(); 
+        $this->insertRekapData();
         // Simulate a request with year and month filter
         $response = $this->postJson(route('chart.filter', [
             'tahun' => 2024,
@@ -1075,16 +1096,18 @@ class RekapUnitTest extends TestCase
 
         // Assert the response is successful and contains the expected structure
         $response->assertStatus(200)
-                ->assertJsonStructure([
-                    'saldoAkhir',
-                    'date'
-                ])
-                ->assertJson([
-                    'saldoAkhir' => [
-                    ]
-                ]);
+            ->assertJsonStructure([
+                'saldoAkhir',
+                'date'
+            ])
+            ->assertJson([
+                'saldoAkhir' => [
+                ]
+            ]);
     }
-// Test untuk filter berdasarkan tahun dan bulan
+    // Test untuk filter berdasarkan tahun dan bulan
 
 
 }
+
+

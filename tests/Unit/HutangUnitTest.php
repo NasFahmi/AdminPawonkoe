@@ -977,5 +977,26 @@ class HutangUnitTest extends TestCase
             Carbon::parse($hutang->tanggal_lunas)->eq(Carbon::parse($viewHutangData->tanggal_lunas))
         );    
     }
+
+    public function test_see_edit_hutang_done_success(): void
+    {
+        $response = $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+
+        $hutang = Hutang::create([
+            'nama' => 'Bank ABC',
+            'catatan' => 'Catatan hutang',
+            'status' => 1,
+            'jumlah_hutang' => 500000,
+            'tenggat_waktu' => '2024-10-30',
+            'tanggal_lunas' => null,
+        ]); 
+
+        $response = $this->get(route('hutang.edit', $hutang->id));
+        $response->assertStatus(200);
+        $response->assertViewIs('pages.hutang.edit');    
+    }
 }
 

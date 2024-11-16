@@ -1,0 +1,164 @@
+
+
+[1;37;40mCode Coverage Report:        [0m
+[1;37;40m  2024-11-16 23:27:36        [0m
+[1;37;40m                             [0m
+[1;37;40m Summary:                    [0m
+[37;41m  Classes:  8.33% (6/72)     [0m
+[37;41m  Methods: 16.48% (43/261)   [0m
+[30;43m  Lines:   65.04% (1053/1619)[0m
+
+App\Events\ProductCreated
+  [37;41mMethods:  50.00% ( 1/ 2)[0m   [37;41mLines:  40.00% (  2/  5)[0m
+App\Events\TransaksiSelesai
+  [37;41mMethods:  50.00% ( 1/ 2)[0m   [37;41mLines:  25.00% (  1/  4)[0m
+App\Http\Controllers\AuthController
+  [30;42mMethods: 100.00% ( 4/ 4)[0m   [30;42mLines: 100.00% ( 37/ 37)[0m
+App\Http\Controllers\BebanKewajibanController
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [30;43mLines:  84.16% ( 85/101)[0m
+App\Http\Controllers\CicilanHutangController
+  [37;41mMethods:  14.29% ( 1/ 7)[0m   [30;43mLines:  68.97% ( 20/ 29)[0m
+App\Http\Controllers\Controller
+  [30;42mMethods:  ( 0/ 0)[0m   [30;42mLines:  (  0/  0)[0m
+App\Http\Controllers\DashboardController
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [37;41mLines:   0.00% (  0/ 47)[0m
+App\Http\Controllers\HomeController
+  [37;41mMethods:   0.00% ( 0/ 4)[0m   [37;41mLines:   0.00% (  0/ 46)[0m
+App\Http\Controllers\HutangController
+  [30;43mMethods:  85.71% ( 6/ 7)[0m   [30;42mLines:  97.86% (137/140)[0m
+App\Http\Controllers\JenisModalController
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:   0.00% (  0/  7)[0m
+App\Http\Controllers\LogController
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [37;41mLines:   0.00% (  0/ 19)[0m
+App\Http\Controllers\ModalController
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:  28.24% ( 24/ 85)[0m
+App\Http\Controllers\NotaPiutangController
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:   0.00% (  0/  7)[0m
+App\Http\Controllers\PiutangController
+  [37;41mMethods:  14.29% ( 1/ 7)[0m   [30;43mLines:  84.97% (130/153)[0m
+App\Http\Controllers\PiutangProdukPiutangController
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:   0.00% (  0/  7)[0m
+App\Http\Controllers\PreorderController
+  [37;41mMethods:  33.33% ( 2/ 6)[0m   [30;43mLines:  88.20% (142/161)[0m
+App\Http\Controllers\ProductController
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [30;43mLines:  73.79% (152/206)[0m
+App\Http\Controllers\ProdukPiutangController
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:   0.00% (  0/  7)[0m
+App\Http\Controllers\ProduksiController
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [30;43mLines:  81.71% ( 67/ 82)[0m
+App\Http\Controllers\RekapController
+  [30;42mMethods: 100.00% ( 5/ 5)[0m   [30;42mLines: 100.00% ( 92/ 92)[0m
+App\Http\Controllers\TemporaryImageController
+  [37;41mMethods:   0.00% ( 0/ 3)[0m   [37;41mLines:   0.00% (  0/ 39)[0m
+App\Http\Controllers\TransaksiController
+  [30;43mMethods:  71.43% ( 5/ 7)[0m   [30;42mLines:  95.04% (115/121)[0m
+App\Http\Requests\StoreBebanKewajibanRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\StoreCicilanHutangRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\StoreHutangRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\StoreJenisModalRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\StoreModalRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\StoreNotaPiutangRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\StorePiutangProdukPiutangRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\StorePiutangRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\StoreProdukPiutangRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\StoreProduksiRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\UpdateBebanKewajibanRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\UpdateCicilanHutangRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\UpdateHutangRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\UpdateJenisModalRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\UpdateModalRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\UpdateNotaPiutangRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\UpdatePiutangProdukPiutangRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\UpdatePiutangRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\UpdateProdukPiutangRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Http\Requests\UpdateProduksiRequest
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  4)[0m
+App\Listeners\KurangiStokProduk
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% (  5/  5)[0m
+App\Listeners\ProductCreatedListener
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 12/ 12)[0m
+App\Models\BebanKewajiban
+  [30;42mMethods:  ( 0/ 0)[0m   [30;42mLines:  (  0/  0)[0m
+App\Models\CicilanHutang
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [37;41mLines:   0.00% (  0/  1)[0m
+App\Models\Foto
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [37;41mLines:   0.00% (  0/  1)[0m
+App\Models\HistoryProduct
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [37;41mLines:   0.00% (  0/  1)[0m
+App\Models\HistoryProductTransaksi
+  [37;41mMethods:  50.00% ( 1/ 2)[0m   [37;41mLines:  50.00% (  1/  2)[0m
+App\Models\Hutang
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% (  3/  3)[0m
+App\Models\JenisModal
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [37;41mLines:   0.00% (  0/  1)[0m
+App\Models\MethodePembayaran
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [37;41mLines:   0.00% (  0/  1)[0m
+App\Models\Modal
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [37;41mLines:   0.00% (  0/  1)[0m
+App\Models\NotaPiutang
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [37;41mLines:   0.00% (  0/  1)[0m
+App\Models\Pembeli
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [37;41mLines:   0.00% (  0/  1)[0m
+App\Models\Piutang
+  [37;41mMethods:   0.00% ( 0/ 4)[0m   [37;41mLines:   0.00% (  0/  5)[0m
+App\Models\PiutangProdukPiutang
+  [37;41mMethods:   0.00% ( 0/ 2)[0m   [37;41mLines:   0.00% (  0/  2)[0m
+App\Models\Preorder
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [37;41mLines:   0.00% (  0/  1)[0m
+App\Models\Product
+  [37;41mMethods:  50.00% ( 2/ 4)[0m   [37;41mLines:  33.33% (  2/  6)[0m
+App\Models\ProdukPiutang
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [37;41mLines:   0.00% (  0/  1)[0m
+App\Models\Produksi
+  [30;42mMethods:  ( 0/ 0)[0m   [30;42mLines:  (  0/  0)[0m
+App\Models\Rekap
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [37;41mLines:   0.00% (  0/  1)[0m
+App\Models\TemporaryImage
+  [30;42mMethods:  ( 0/ 0)[0m   [30;42mLines:  (  0/  0)[0m
+App\Models\Transaksi
+  [30;43mMethods:  85.71% ( 6/ 7)[0m   [30;42mLines:  94.12% ( 16/ 17)[0m
+App\Models\User
+  [30;42mMethods:  ( 0/ 0)[0m   [30;42mLines:  (  0/  0)[0m
+App\Models\Varian
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [37;41mLines:   0.00% (  0/  1)[0m
+App\Policies\BebanKewajibanPolicy
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:   0.00% (  0/  7)[0m
+App\Policies\CicilanHutangPolicy
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:   0.00% (  0/  7)[0m
+App\Policies\HutangPolicy
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:   0.00% (  0/  7)[0m
+App\Policies\JenisModalPolicy
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:   0.00% (  0/  7)[0m
+App\Policies\ModalPolicy
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:   0.00% (  0/  7)[0m
+App\Policies\NotaPiutangPolicy
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:   0.00% (  0/  7)[0m
+App\Policies\PiutangPolicy
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:   0.00% (  0/  7)[0m
+App\Policies\PiutangProdukPiutangPolicy
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:   0.00% (  0/  7)[0m
+App\Policies\ProdukPiutangPolicy
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:   0.00% (  0/  7)[0m
+App\Policies\ProduksiPolicy
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:   0.00% (  0/  7)[0m
+App\Providers\AppServiceProvider
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 10/ 10)[0m

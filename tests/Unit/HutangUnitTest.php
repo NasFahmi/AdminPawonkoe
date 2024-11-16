@@ -1069,7 +1069,7 @@ class HutangUnitTest extends TestCase
         $hutang = Hutang::create([
             'nama' => 'Bank asd',
             'catatan' => 'Catatan hutang',
-            'status' => 0,
+            'status' => 1,
             'jumlah_hutang' => 500000,
             'tenggat_waktu' => '2024-10-30',
         ]);

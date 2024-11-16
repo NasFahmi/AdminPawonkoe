@@ -217,27 +217,31 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, Transaksi $transaksi)
     {
-
+        
         try {
             DB::beginTransaction();
             $dataInput = $request->all();
+            $validatedData = $request->validate([
+                'is_complete' => 'required|boolean',  // Ensures it is either 0 or 1
+            ]);
+            
             // dd($request->all());
             // Update Pembeli information
 
             // Menambahkan pengecekan stok
-            $product = Product::find($request->product);
-            if (!$product || $product->stok <= 0) {
-                return redirect()->back()->withErrors(['product' => 'Stok produk tidak tersedia.'])->withInput();
-            }
+            // $product = Product::find($request->product);
+            // if (!$product || $product->stok <= 0) {
+            //     return redirect()->back()->withErrors(['product' => 'Stok produk tidak tersedia.'])->withInput();
+            // }
 
-            if ($request->jumlah > $product->stok) {
-                return redirect()->back()->withErrors(['jumlah' => 'Jumlah yang diminta melebihi stok yang tersedia.'])->withInput();
-            }
+            // if ($request->jumlah > $product->stok) {
+            //     return redirect()->back()->withErrors(['jumlah' => 'Jumlah yang diminta melebihi stok yang tersedia.'])->withInput();
+            // }
 
             $dataTransaksi = [
                 "is_Preorder" => '0',
                 "Preorder_id" => null,
-                "is_complete" => $dataInput['is_complete'],
+                "is_complete" => $validatedData['is_complete'],
             ];
 
             $transaksi->update($dataTransaksi);
@@ -280,34 +284,31 @@ class TransaksiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Transaksi $transaksi)
-    {
-        try {
-            DB::beginTransaction();
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($transaksi)
-                ->event('delete_transaksi')
-                ->withProperties(['data' => $transaksi])
-                ->log('User ' . auth()->user()->nama . ' delete a transaksi');
+    // public function destroy(Transaksi $transaksi)
+    // {
+    //     try {
+    //         DB::beginTransaction();
+    //         activity()
+    //             ->causedBy(auth()->user())
+    //             ->performedOn($transaksi)
+    //             ->event('delete_transaksi')
+    //             ->withProperties(['data' => $transaksi])
+    //             ->log('User ' . auth()->user()->nama . ' delete a transaksi');
 
-            $transaksi->delete();
+    //         $transaksi->delete();
 
-            Rekap::where('id_tabel_asal', $transaksi->id)->delete();
+    //         Rekap::where('id_tabel_asal', $transaksi->id)->delete();
 
 
-            DB::commit();
+    //         DB::commit();
 
-            return redirect()->route('transaksis.index')->with('success', 'Transaksi has been deleted successfully');
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            // throw $th;
-            return redirect()->back()->with('error', 'Failed to delete transaksi data.');
-        }
-    }
+    //         return redirect()->route('transaksis.index')->with('success', 'Transaksi has been deleted successfully');
+    //     } catch (\Throwable $th) {
+    //         DB::rollBack();
+    //         // throw $th;
+    //         return redirect()->back()->with('error', 'Failed to delete transaksi data.');
+    //     }
+    // }
 
-    public function cetakForm()
-    {
-        return view('pages.admin.transaksi.cetak-transaksi-form');
-    }
+  
 }

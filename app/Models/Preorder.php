@@ -16,16 +16,4 @@ class Preorder extends Model
     public function transaksis(){
         return $this->hasOne(Transaksi::class);
     }
-    public function scopeSearch($query, $search)
-    {
-        if ($search) {
-            $query->whereHas('products', function ($query) use ($search) {
-                $query->where('nama_product', 'like', '%' . $search . '%');
-            })
-                ->orWhereHas('pembelis', function ($query) use ($search) {
-                    $query->where('nama', 'like', '%' . $search . '%');
-                });
-        }
-
-    }
 }

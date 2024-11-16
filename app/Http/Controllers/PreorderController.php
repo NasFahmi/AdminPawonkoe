@@ -282,36 +282,36 @@ class PreorderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($preorder)
-    {
-        try {
+    // public function destroy($preorder)
+    // {
+    //     try {
 
-            DB::beginTransaction();
-            $dataTransaksi = Transaksi::with(['pembelis', 'products', 'methode_pembayaran', 'preorders'])
-                ->findOrFail($preorder);
+    //         DB::beginTransaction();
+    //         $dataTransaksi = Transaksi::with(['pembelis', 'products', 'methode_pembayaran', 'preorders'])
+    //             ->findOrFail($preorder);
 
-            $dataPembeli = $dataTransaksi->pembelis;
+    //         $dataPembeli = $dataTransaksi->pembelis;
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($dataTransaksi)
-                ->event('delete_transaksi preorder')
-                ->withProperties(['data' => $dataTransaksi])
-                ->log('User ' . auth()->user()->nama . ' delete a transaksi preorder');
+    //         activity()
+    //             ->causedBy(auth()->user())
+    //             ->performedOn($dataTransaksi)
+    //             ->event('delete_transaksi preorder')
+    //             ->withProperties(['data' => $dataTransaksi])
+    //             ->log('User ' . auth()->user()->nama . ' delete a transaksi preorder');
 
-            Rekap::where('id_tabel_asal', $preorder->id)->delete();
+    //         Rekap::where('id_tabel_asal', $preorder->id)->delete();
 
-            $dataTransaksi->delete();
-            $dataPembeli->delete();
+    //         $dataTransaksi->delete();
+    //         $dataPembeli->delete();
 
-            DB::commit();
+    //         DB::commit();
 
-            return redirect()->route('preorders.index')->with('success', 'Transaksi has been deleted successfully');
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            dd($th->getMessage());
-            // throw $th;
-            return redirect()->back()->with('error', 'Failed to delete transaksi data.');
-        }
-    }
+    //         return redirect()->route('preorders.index')->with('success', 'Transaksi has been deleted successfully');
+    //     } catch (\Throwable $th) {
+    //         DB::rollBack();
+    //         dd($th->getMessage());
+    //         // throw $th;
+    //         return redirect()->back()->with('error', 'Failed to delete transaksi data.');
+    //     }
+    // }
 }

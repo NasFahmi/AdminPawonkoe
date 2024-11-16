@@ -7,7 +7,14 @@ use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Refresh database and run all seeders
+        $this->artisan('db:seed');
+    }
 
     /**
      * berhasil login username dan password valid
@@ -20,13 +27,11 @@ class AuthenticationTest extends TestCase
      * gagal login username valid password salah terkena limiter setelah attempt x3
      * login berhasil setelah menunggu rate limiter selesai
      */
-    use RefreshDatabase;
-    protected function setUp(): void
-    {
-        parent::setUp();
 
-        // Refresh database and run all seeders
-        $this->artisan('db:seed');
+
+    public function test_view_login_page(){
+        $response = $this->get(route('login'));
+        $response->assertStatus(200);
     }
 
     public function test_successful_login()

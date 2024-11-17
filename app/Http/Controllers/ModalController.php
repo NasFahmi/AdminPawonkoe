@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Modal;
 use App\Models\Rekap;
 use App\Models\JenisModal;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreModalRequest;
 use App\Http\Requests\UpdateModalRequest;
@@ -73,7 +74,12 @@ class ModalController extends Controller
             'jumlah' => $request->jumlah,
             'tanggal' => $tanggal
         ]);
-
+        activity()
+            ->causedBy(auth()->user())
+            ->performedOn($modal)
+            ->event('add_modal')
+            ->withProperties(['id' => $modal->id])
+            ->log('User ' . auth()->user()->nama . ' add a modal ');
         Rekap::insert([
             'tanggal_transaksi' => $tanggal,
             'sumber' => 'Modal',
@@ -124,23 +130,23 @@ class ModalController extends Controller
             'jumlah.required' => 'Jumlah harus diisi.',
             'tanggal.required' => 'Tanggal harus diisi.',
         ]);
-
-        // Parse and format the date
-        $dateTime = Carbon::parse($validatedData['tanggal'], 'Asia/Jakarta');
-        $tanggal = $dateTime->format('Y-m-d');
-
-        // Update the Modal instance with the validated data
-        $modal->update([
-            'jenis_modal_id' => $validatedData['jenis'],
-            'nama' => $validatedData['nama'],
-            'nominal' => $validatedData['nominal'],
-            'penyedia' => $validatedData['penyedia'],
-            'jumlah' => $validatedData['jumlah'],
-            'tanggal' => $tanggal,
-        ]);
-
-        $rekap = Rekap::where('id_tabel_asal', $modal->id)->first();
-
+        try {
+            DB::beginTransaction();
+            $dateTime = Carbon::parse($validatedData['tanggal'], 'Asia/Jakarta');
+            $tanggal = $dateTime->format('Y-m-d');
+    
+            // Update the Modal instance with the validated data
+            $modal->update([
+                'jenis_modal_id' => $validatedData['jenis'],
+                'nama' => $validatedData['nama'],
+                'nominal' => $validatedData['nominal'],
+                'penyedia' => $validatedData['penyedia'],
+                'jumlah' => $validatedData['jumlah'],
+                'tanggal' => $tanggal,
+            ]);
+    
+            $rekap = Rekap::where('id_tabel_asal', $modal->id)->first();
+    
             $rekap->update([
                 'tanggal_transaksi' => $tanggal,
                 'sumber' => 'Modal',
@@ -149,10 +155,24 @@ class ModalController extends Controller
                 'id_tabel_asal' => $modal->id,
                 'tipe_transaksi' => 'Masuk'
             ]);
-        
+    
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($modal)
+                ->event('edit_modal')
+                ->withProperties(['id' => $modal->id])
+                ->log('User ' . auth()->user()->nama . ' edit a modal ');
+            // Redirect back to the index page with a success message
+            DB::commit();
+            return redirect()->route('modal.index')->with('success', 'Data Berhasil Diupdate');
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            DB::rollBack();
+            // throw $th;
 
-        // Redirect back to the index page with a success message
-        return redirect()->route('modal.index')->with('success', 'Data Berhasil Diupdate');
+        }
+        // Parse and format the date
+      
     }
 
 
@@ -165,7 +185,12 @@ class ModalController extends Controller
         Rekap::where('id_tabel_asal', $modal->id)->delete();
 
         $modal->delete();
-
+        activity()
+            ->causedBy(auth()->user())
+            ->performedOn($modal)
+            ->event('delete_modal')
+            ->withProperties(['id' => $modal->id])
+            ->log('User ' . auth()->user()->nama . ' delete a modal ');
         // Redirect back to the index page with a success message
         return redirect()->route('modal.index')->with('success', 'Data Berhasil Dihapus');
     }

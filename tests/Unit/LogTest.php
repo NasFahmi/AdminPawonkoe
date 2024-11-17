@@ -22,12 +22,12 @@ class LogTest extends TestCase
     }
     public function test_user_can_serching_log_activity_using_event(): void
     {
+        
         // Authenticate the user
         $this->post(route('authentication'), [
             'nama' => 'pawonkoe',
             'password' => 'pawonkoe',
         ]);
-
 
         Activity::create([
             'log_name' => 'Produksi',

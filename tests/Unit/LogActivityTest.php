@@ -22,6 +22,10 @@ use Storage;
 use Tests\TestCase;
 use Spatie\Activitylog\Models\Activity;
 
+// ! ATTENTION PEOPLE
+// ! THIS IS INTEGRATION TESTING, NOT UNIT TEST
+
+
 class LogActivityTest extends TestCase
 {
     use RefreshDatabase;

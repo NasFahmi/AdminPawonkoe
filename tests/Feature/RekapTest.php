@@ -12,6 +12,7 @@ use App\Models\Piutang;
 use App\Models\Product;
 use App\Models\Transaksi;
 use App\Models\BebanKewajiban;
+use App\Models\JenisModal;
 use App\Models\TemporaryImage;
 use App\Models\MethodePembayaran;
 use Illuminate\Http\UploadedFile;
@@ -31,9 +32,32 @@ class RekapTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware();
-        $this->artisan('db:seed');
         
+        $this->artisan('db:seed');
+
+        $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+        
+    }
+    public function test_list_rekap():  void
+    {
+        $response = $this->get(route('rekap.index'));
+        $response->assertStatus(200);
+
+        $response = $this->get(route('rekap.detail'));
+        $response->assertStatus(200);
+
+        $response = $this->get(route('cetak.rekap'));
+        $response->assertStatus(200);
+
+        $response = $this->get(route('rekap.filter', [
+            'type' => 'masuk',
+            'year' => 'semua',
+            'month' => '11',
+        ]));
+        $response->assertStatus(200);
     }
 
     public function test_make_rekap_from_transaksi_successfully(): void
@@ -69,11 +93,10 @@ class RekapTest extends TestCase
             'varian' => ['Red', 'Blue']
         ];
 
-        $responsePostProduct = $this->post(route('products.store'), $productData);
+        $this->post(route('products.store'), $productData);
 
         // Ambil ID produk terakhir
-        // dd($responsePostProduct);
-        $product = Product::all();
+        $product = Product::latest()->first();
         $productId = $product->id;
         // dd($productId);// 1 ->exsisting product
 
@@ -84,7 +107,7 @@ class RekapTest extends TestCase
                 'methode_pembayaran' => 'Transfer'
             ]);
         }
-        // dd($methodePembayaran); //Transfer
+
         $transaksiData = [
             'tanggal' => Carbon::now()->format('Y-m-d'),
             'product' => $productId, // Pastikan ini product_id
@@ -92,26 +115,35 @@ class RekapTest extends TestCase
             'total' => $product->harga,
             'keterangan' => 'Test Keterangan',
             'jumlah' => 1,
-            'is_complete' => 1
+            'is_complete' => 0
         ];
 
         // Menyimpan transaksi
         $response = $this->post(route('transaksis.store'), $transaksiData);
         $transaksi = Transaksi::latest()->first();
         $product->refresh();
+        // Update data transaksi
         $transaksiUpdateData = [
             'product' => $productId,
             'total' => $product->total_harga,
             'jumlah' => $product->jumlah,
             'is_complete' => 1 
         ];
-        $responseUpdate = $this->patch(route('transaksis.update', $transaksi->id), $transaksiUpdateData); 
+
+        $responseUpdate = $this->patch(route('transaksis.update', $transaksi->id), $transaksiUpdateData); // Ganti post dengan patch
         $product->refresh();
-        $this->assertDatabaseHas('rekap_keuangan', [
-            'id_tabel_asal' => $transaksi->id,
-            'sumber' => 'Transaksi',
-            'tipe_transaksi' => 'masuk'
+        $this->assertDatabaseHas('transaksis', [
+            'id' => $transaksi->id,
+            'is_complete' => 1,
         ]);
+        
+        $response = $this->get(route('rekap.index'));
+        $response->assertStatus(200);
+
+        $response = $this->get(route('rekap.filter', ['type' => 'masuk']));
+        $response->assertStatus(200);
+        $response->assertSeeText('Test Product');
+        
     }
 
     public function test_make_rekap_from_piutang_successfully(): void
@@ -156,6 +188,13 @@ class RekapTest extends TestCase
             'id_tabel_asal' => $piutang->id,
             'tipe_transaksi' => 'Masuk',
         ]);
+
+        $response = $this->get(route('rekap.index'));
+        $response->assertStatus(200);
+
+        $response = $this->get(route('rekap.filter', ['type' => 'masuk']));
+        $response->assertStatus(200);
+        $response->assertSeeText('TokoTest');
     }
 
     public function test_make_rekap_from_modal_successfully(): void
@@ -167,8 +206,14 @@ class RekapTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect(route('admin.dashboard'));
         
+        $jenisModal = JenisModal::factory()->create([
+            'jenis_modal' => 'Modal Test',
+            'created_at' => now()->format('Y-m-d'),
+            'updated_at' => now()->format('Y-m-d'),
+        ]);
+        // $idJenisModal = $jenisModal->id;
         $data = [
-            'jenis' => 1, 
+            'jenis' => $jenisModal->id, 
             'nama' => 'Modal Test',
             'nominal' => 1000,
             'penyedia' => 'Penyedia Test',
@@ -177,30 +222,35 @@ class RekapTest extends TestCase
         ];
         $response = $this->post(route('modal.store'), $data);
         // $response->dump();
+        $response->assertRedirect(route('modal.index'));
+        $response->assertSessionHas('success', 'Data Berhasil Disimpan');
     
-        $response->assertStatus(500);
-        // $response->assertRedirect(route('modal.index'));
-        // $response->assertSessionHas('success', 'Data Berhasil Disimpan');
+        $this->assertDatabaseHas('modals', [
+            'jenis_modal_id' => $data['jenis'],
+            'nama' => $data['nama'],
+            'nominal' => $data['nominal'],
+            'penyedia' => $data['penyedia'],
+            'jumlah' => $data['jumlah'],
+            'tanggal' => Carbon::parse($data['tanggal'])->format('Y-m-d'),
+        ]);
     
-        // $this->assertDatabaseHas('modals', [
-        //     'jenis_modal_id' => $data['jenis'],
-        //     'nama' => $data['nama'],
-        //     'nominal' => $data['nominal'],
-        //     'penyedia' => $data['penyedia'],
-        //     'jumlah' => $data['jumlah'],
-        //     'tanggal' => Carbon::parse($data['tanggal'])->format('Y-m-d'),
-        // ]);
+        $modal = Modal::where('nama', $data['nama'])->first();
     
-        // $modal = Modal::where('nama', $data['nama'])->first();
-    
-        // $this->assertDatabaseHas('rekap_keuangan', [
-        //     'tanggal_transaksi' => Carbon::parse($data['created_at'])->format('Y-m-d'),
-        //     'sumber' => 'Modal',
-        //     'jumlah' => $data['nominal'],
-        //     'keterangan' => 'Modal ' . $data['nama'] . ' dari ' . $data['penyedia'],
-        //     'id_tabel_asal' => $modal->id,
-        //     'tipe_transaksi' => 'Masuk',
-        // ]);
+        $this->assertDatabaseHas('rekap_keuangan', [
+            'tanggal_transaksi' => Carbon::parse($data['tanggal'])->format('Y-m-d'),
+            'sumber' => 'Modal',
+            'jumlah' => $data['nominal'],
+            'keterangan' => 'Modal ' . $data['nama'] . ' dari ' . $data['penyedia'],
+            'id_tabel_asal' => $modal->id,
+            'tipe_transaksi' => 'Masuk',
+        ]);
+
+        $response = $this->get(route('rekap.index'));
+        $response->assertStatus(200);
+
+        $response = $this->get(route('rekap.filter', ['type' => 'masuk']));
+        $response->assertStatus(200);
+        $response->assertSeeText('Modal Test');
     }
 
     public function test_make_rekap_from_hutang_successfully(): void
@@ -239,6 +289,13 @@ class RekapTest extends TestCase
             'id_tabel_asal' => $hutang->id,
             'tipe_transaksi' => 'Keluar',
         ]);
+
+        $response = $this->get(route('rekap.index'));
+        $response->assertStatus(200);
+
+        $response = $this->get(route('rekap.filter', ['type' => 'keluar']));
+        $response->assertStatus(200);
+        $response->assertSeeText('Pembayaran Hutang ke John Doe');
     
     }
 
@@ -278,6 +335,13 @@ class RekapTest extends TestCase
             'id_tabel_asal' => $bebanKewajiban->id,
             'tipe_transaksi' => 'Keluar',
         ]);
+
+        $response = $this->get(route('rekap.index'));
+        $response->assertStatus(200);
+
+        $response = $this->get(route('rekap.filter', ['type' => 'keluar']));
+        $response->assertStatus(200);
+        $response->assertSeeText('Pembayaran Utilities untuk Electricity Bill');
     }
 
 }

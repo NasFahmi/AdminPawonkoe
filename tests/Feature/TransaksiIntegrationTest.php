@@ -11,7 +11,7 @@ use App\Models\Transaksi;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class TransaksiIntegrationTest extends TestCase

@@ -20,6 +20,52 @@ class RekapUnitTest extends TestCase
         $this->artisan('db:seed');
     }
     
+    private function insertRekapData()
+    {
+        Rekap::insert([
+            [
+                'tanggal_transaksi' => '2024-11-15',
+                'sumber' => 'Modal',
+                'jumlah' => 2000,
+                'keterangan' => 'Modal dari Owner',
+                'id_tabel_asal' => 1,
+                'tipe_transaksi' => 'masuk',
+            ],
+            [
+                'tanggal_transaksi' => '2024-11-15',
+                'sumber' => 'Pendapatan',
+                'jumlah' => 3000,
+                'keterangan' => 'Pendapatan Bulanan',
+                'id_tabel_asal' => 2,
+                'tipe_transaksi' => 'masuk',
+            ],
+            [
+                'tanggal_transaksi' => '2024-11-15',
+                'sumber' => 'Beban',
+                'jumlah' => 1000,
+                'keterangan' => 'Pembayaran Listrik',
+                'id_tabel_asal' => 3,
+                'tipe_transaksi' => 'keluar',
+            ],
+            [
+                'tanggal_transaksi' => '2024-04-15',
+                'sumber' => 'Piutang',
+                'jumlah' => 1500,
+                'keterangan' => 'Piutang Toko A',
+                'id_tabel_asal' => 4,
+                'tipe_transaksi' => 'masuk',
+            ],
+            [
+                'tanggal_transaksi' => '2024-11-15',
+                'sumber' => 'Kewajiban',
+                'jumlah' => 1000,
+                'keterangan' => 'Gaji Karyawan',
+                'id_tabel_asal' => 5,
+                'tipe_transaksi' => 'keluar',
+            ],
+            // Data transaksi lainnya bisa ditambahkan sesuai kebutuhan
+        ]);
+    }
     public function test_see_detail_rekap_income(): void
     {
         $response = $this->post(route('authentication'), [
@@ -340,7 +386,6 @@ class RekapUnitTest extends TestCase
             'sumber' => 'Hutang',
             'tipe_transaksi' => 'keluar'
         ]);
-
     }
 
     public function test_see_rekap_expenses_kategori_by_year(): void
@@ -812,7 +857,6 @@ class RekapUnitTest extends TestCase
             'keterangan' => 'Piutang Toko A',
             'tipe_transaksi' => 'masuk'
         ]);
-
         $this->assertDatabaseHas('rekap_keuangan', [
             'sumber' => 'Beban',
             'keterangan' => 'Listrik',
@@ -987,48 +1031,7 @@ class RekapUnitTest extends TestCase
         $response->assertSee('Listrik'); 
     }
 
-   
-
-// Fungsi untuk memasukkan data dummy Rekap
-    private function insertRekapData()
-    {
-        Rekap::insert([
-            [
-                'tanggal_transaksi' => '2024-11-15',
-                'sumber' => 'Modal',
-                'jumlah' => 2000,
-                'keterangan' => 'Modal dari Owner',
-                'id_tabel_asal' => 1,
-                'tipe_transaksi' => 'masuk',
-            ],
-            [
-                'tanggal_transaksi' => '2024-11-15',
-                'sumber' => 'Pendapatan',
-                'jumlah' => 3000,
-                'keterangan' => 'Pendapatan Bulanan',
-                'id_tabel_asal' => 2,
-                'tipe_transaksi' => 'masuk',
-            ],
-            [
-                'tanggal_transaksi' => '2024-11-15',
-                'sumber' => 'Beban',
-                'jumlah' => 1000,
-                'keterangan' => 'Pembayaran Listrik',
-                'id_tabel_asal' => 3,
-                'tipe_transaksi' => 'keluar',
-            ],
-            [
-                'tanggal_transaksi' => '2024-04-15',
-                'sumber' => 'Piutang',
-                'jumlah' => 1500,
-                'keterangan' => 'Piutang Toko A',
-                'id_tabel_asal' => 4,
-                'tipe_transaksi' => 'masuk',
-            ],
-            // Data transaksi lainnya bisa ditambahkan sesuai kebutuhan
-        ]);
-    }
-    public function test_filter_rekap_tahun()
+    public function test_graph_filter_rekap_tahun()
     {
         // Autentikasi terlebih dahulu jika diperlukan
         $response = $this->post(route('authentication'), [
@@ -1057,7 +1060,7 @@ class RekapUnitTest extends TestCase
         
     }
 
-    public function test_filter_rekap_by_year_and_month()
+    public function test_graph_filter_rekap_by_year_and_month()
     {
         $response = $this->post(route('authentication'), [
             'nama' => 'pawonkoe',
@@ -1084,7 +1087,5 @@ class RekapUnitTest extends TestCase
                     ]
                 ]);
     }
-// Test untuk filter berdasarkan tahun dan bulan
-
 
 }

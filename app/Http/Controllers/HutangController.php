@@ -39,7 +39,7 @@ class HutangController extends Controller
             'status' => 'required|string', // Validasi bahwa status harus ada dan berupa boolean
         ]);
         // Dapatkan status dari query string
-        $status = $request->query('status', 'Belum selesai');
+        $status = $request->query('status', '0');
         // dd($status);
         // Tampilkan view dengan status
         return view('pages.hutang.create', compact('status'));

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('tanggal');
             $table->unsignedBigInteger('jenis_modal_id');
             $table->softDeletes();
+            $table->timestamps(); // Menambahkan created_at dan updated_at
             $table->foreign('jenis_modal_id')->references('id')->on('jenis_modals')->onDelete('cascade')->onUpdate('cascade');
         });
     }

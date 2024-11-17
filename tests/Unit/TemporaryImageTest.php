@@ -249,4 +249,29 @@ class TemporaryImageTest extends TestCase
         $response2->assertStatus(200);
     }
 
+    public function test_return_noting_in_delete_temporary_image_when_has_no_image()
+    {
+        $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+        $response = $this->postJson(route('delete.temporary'), [uniqid('image-', true)]);
+        $response->assertStatus(404);
+    }
+    public function test_return_noting_in_upload_temporary_image_when_has_no_image(){
+        $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+        $response = $this->postJson(route('upload.temporary'), [uniqid('image-', true)]);
+        $response->assertStatus(200);
+    }
+    public function test_return_noting_in_upload_image_direct_to_db_when_has_no_image(){
+        $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+        $response = $this->postJson(route('upload.directtoDB',2), [uniqid('image-', true)]);
+        $response->assertStatus(404);
+    }
 }

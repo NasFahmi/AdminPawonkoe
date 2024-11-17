@@ -223,65 +223,6 @@ class RekapController extends Controller
         ]);
 
     }
-    public function chart()
-    {
-        $startDate = Carbon::now()->subYear()->startOfDay();
-        $endDate = Carbon::now()->endOfDay();
-
-        $dataPenjualan = Transaksi::where('is_complete', 1)
-            ->whereBetween('tanggal', [$startDate, $endDate])
-            ->selectRaw('DATE_FORMAT(tanggal, "%Y-%m") as month, sum(total_harga) as total_penjualan')
-            ->groupBy('month')
-            ->orderBy('month', 'asc') // Ganti 'tanggal' dengan 'month' untuk ORDER BY
-            ->pluck('total_penjualan', 'month')
-            ->toArray();
-
-        // Buat array untuk memetakan bulan numerik ke nama bulan dalam bahasa Indonesia
-        $monthNames = [
-            '01' => 'Januari',
-            '02' => 'Februari',
-            '03' => 'Maret',
-            '04' => 'April',
-            '05' => 'Mei',
-            '06' => 'Juni',
-            '07' => 'Juli',
-            '08' => 'Agustus',
-            '09' => 'September',
-            '10' => 'Oktober',
-            '11' => 'November',
-            '12' => 'Desember',
-        ];
-
-        // Inisialisasi array dengan nilai 0 untuk setiap bulan
-        $dataPenjualanWithMonthNames = array_fill_keys(array_values($monthNames), "0");
-
-        // Gantikan bulan numerik dengan nama bulan dalam bahasa Indonesia dan perbarui nilainya
-        foreach ($dataPenjualan as $month => $value) {
-            $monthNumber = substr($month, 5, 2); // Ambil bagian bulan
-            $monthName = $monthNames[$monthNumber] ?? $monthNumber; // Dapatkan nama bulan Indonesia atau gunakan bulan numerik
-            $dataPenjualanWithMonthNames[$monthName] = (string) $value;
-        }
-
-        // Ekstrak hanya nilainya
-        $dataPenjualanValues = array_values($dataPenjualanWithMonthNames);
-
-        // Ekstrak hanya kunci (bulan)
-        $dataBulan = array_keys($dataPenjualanWithMonthNames);
-
-        return response()->json(
-            [
-                'success' => true,
-                'data' => [
-                    'data_penjualan' => $dataPenjualanValues,
-                    'bulan' => $dataBulan,
-                    'start_date' => $startDate,
-                    'endDay' => $endDate,
-                    'tahun' => Carbon::now()->year, // Tambahkan tahun saat ini ke respons
-                ],
-            ],
-            200
-        );
-    }
 
 
     public function cetak()

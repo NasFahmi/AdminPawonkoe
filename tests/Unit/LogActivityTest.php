@@ -7,7 +7,9 @@ use App\Models\BebanKewajiban;
 use App\Models\CicilanHutang;
 use App\Models\Foto;
 use App\Models\Hutang;
+use App\Models\JenisModal;
 use App\Models\MethodePembayaran;
+use App\Models\Modal;
 use App\Models\Piutang;
 use App\Models\Preorder;
 use App\Models\Product;
@@ -862,7 +864,7 @@ class LogActivityTest extends TestCase
             'nama' => 'pawonkoe',
             'password' => 'pawonkoe',
         ]);
-        
+
         $data = [
             'nama' => 'Bank BRI',
             'catatan' => 'Hutang buat bahan',
@@ -892,7 +894,7 @@ class LogActivityTest extends TestCase
 
         $response->assertStatus(302);
         $response->assertRedirect(route('admin.dashboard'));
-        
+
         $hutang = Hutang::create([
             'nama' => 'Bank ABC',
             'catatan' => 'Catatan hutang',
@@ -916,7 +918,7 @@ class LogActivityTest extends TestCase
             'jumlahHutang' => 600000,
             'tenggat_waktu' => '2024-10-31',
             'tanggal_lunas' => null,
-            'nominal' => 60000, 
+            'nominal' => 60000,
         ];
 
         $response = $this->patch(route('hutang.update', $id), $updatedData);
@@ -1118,6 +1120,120 @@ class LogActivityTest extends TestCase
         // Assert that the log activity has been created
         $log = Activity::where('event', 'delete_produksi')
             ->where('description', 'User pawonkoe delete a produksi')
+            ->first();
+
+        $this->assertNotNull($log);
+    }
+    public function test_create_data_log_activities_when_succesful_create_modal()
+    {
+        $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+        $modalFisik = JenisModal::create([
+            'jenis_modal' => 'Fisik'
+        ]);
+        $modalFinansial = JenisModal::create([
+            'jenis_modal' => 'Finansial'
+        ]);
+        // Create modal data
+        $data = [
+            'jenis' => $modalFisik->id, // Assuming valid `jenis_modal_id` exists
+            'nama' => 'Test Modal',
+            'nominal' => 5000,
+            'penyedia' => 'Test Provider',
+            'jumlah' => 10,
+            'tanggal' => now()->format('Y-m-d'),
+        ];
+        $this->post(route('modal.store'), $data);
+        $modal = Modal::latest()->first();
+
+        $log = Activity::where('event', 'add_modal')
+            ->where('description', 'User pawonkoe add a modal')
+            ->first();
+
+        $this->assertNotNull($log);
+
+    }
+    public function test_create_data_log_activities_when_succesful_edit_modal()
+    {
+        // Authenticate the user
+        $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+
+        // Create modal types
+        $modalFisik = JenisModal::create([
+            'jenis_modal' => 'Fisik',
+        ]);
+        $modalFinansial = JenisModal::create([
+            'jenis_modal' => 'Finansial',
+        ]);
+
+        // Create initial modal data
+        $data = [
+            'jenis' => $modalFisik->id, // Assuming valid `jenis_modal_id` exists
+            'nama' => 'Test Modal',
+            'nominal' => 5000,
+            'penyedia' => 'Test Provider',
+            'jumlah' => 10,
+            'tanggal' => now()->format('Y-m-d'),
+        ];
+        $this->post(route('modal.store'), $data);
+        $modal = Modal::latest()->first(); // Fetch the latest modal after creation
+
+        // Prepare data for updating the modal
+        $dataUpdated = [
+            'jenis' => $modalFinansial->id, // Updated to a new valid `jenis_modal_id`
+            'nama' => 'Updated Test Modal',
+            'nominal' => 5000,
+            'penyedia' => 'Updated Test Provider',
+            'jumlah' => 100,
+            'tanggal' => now()->format('Y-m-d'),
+        ];
+
+        // Perform the update via PUT request (use the correct HTTP method for updating)
+        $response = $this->patch(route('modal.update', $modal->id), $dataUpdated);
+        // dd($response);
+        // Retrieve the log for the update action
+        $log = Activity::where('event', 'edit_modal')
+            ->where('description', 'User pawonkoe edit a modal')
+            ->first();
+
+        // Assert that the log entry exists
+        $this->assertNotNull($log);
+    }
+
+    public function test_create_data_log_activities_when_succesful_delete_modal()
+    {
+        $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+
+        $modalFisik = JenisModal::create([
+            'jenis_modal' => 'Fisik'
+        ]);
+        $modalFinansial = JenisModal::create([
+            'jenis_modal' => 'Finansial'
+        ]);
+        // Create modal data
+        $data = [
+            'jenis' => $modalFisik->id, // Assuming valid `jenis_modal_id` exists
+            'nama' => 'Test Modal',
+            'nominal' => 5000,
+            'penyedia' => 'Test Provider',
+            'jumlah' => 10,
+            'tanggal' => now()->format('Y-m-d'),
+        ];
+        $this->post(route('modal.store'), $data);
+        $modal = Modal::latest()->first();
+
+        $this->delete(route('modal.destroy', $modal->id));
+
+        $log = Activity::where('event', 'delete_modal')
+            ->where('description', 'User pawonkoe delete a modal')
             ->first();
 
         $this->assertNotNull($log);

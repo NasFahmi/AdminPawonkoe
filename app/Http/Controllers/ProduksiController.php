@@ -37,15 +37,21 @@ class ProduksiController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'produk' => 'required|string|max:255',
-            'volume' => 'required|numeric',  // Ensure volume is numeric
-            'jumlah' => 'required|integer',
+            'produk' => 'required|string|max:20|min:3',
+            'volume' => 'required|numeric|min:1',  // Ensure volume is numeric
+            'jumlah' => 'required|integer|min:1',
             'tanggal' => 'required',
         ], [
             'produk.required' => 'Produk harus diisi.',
             'volume.required' => 'Volume harus diisi.',
             'jumlah.required' => 'Jumlah harus diisi.',
             'tanggal.required' => 'Tanggal harus diisi.',
+            'produk.min' => 'Produk minimal 3 karakter.',
+            'produk.max' => 'Produk maksimal 20 karakter.',
+            'volume.numeric' => 'Volume harus berupa angka.',
+            'volume.min' => 'Volume minimal 1.',
+            'jumlah.integer' => 'Jumlah harus berupa angka.',
+            'jumlah.min' => 'Jumlah minimal 1.',
         ]);
 
         try {
@@ -78,14 +84,6 @@ class ProduksiController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Produksi $produksi)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Produksi $produksi)
@@ -100,15 +98,21 @@ class ProduksiController extends Controller
     public function update(Request $request, Produksi $produksi)
     {
         $validatedData = $request->validate([
-            'produk' => 'required',
-            'volume' => 'required',
-            'jumlah' => 'required',
+            'produk' => 'required|string|max:20|min:4',
+            'volume' => 'required|numeric|min:1',  // Ensure volume is numeric
+            'jumlah' => 'required|integer|min:1',
             'tanggal' => 'required',
         ], [
             'produk.required' => 'Produk harus diisi.',
             'volume.required' => 'Volume harus diisi.',
             'jumlah.required' => 'Jumlah harus diisi.',
             'tanggal.required' => 'Tanggal harus diisi.',
+            'produk.min' => 'Produk minimal 4 karakter.',
+            'produk.max' => 'Produk maksimal 20 karakter.',
+            'volume.numeric' => 'Volume harus berupa angka.',
+            'volume.min' => 'Volume minimal 1.',
+            'jumlah.integer' => 'Jumlah harus berupa angka.',
+            'jumlah.min' => 'Jumlah minimal 1.',
         ]);
         try {
             DB::beginTransaction();

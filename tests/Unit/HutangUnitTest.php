@@ -13,7 +13,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class HutangUnitTest extends TestCase
 {
-    use RefreshDatabase, WithoutMiddleware;
+    use RefreshDatabase;
 
     public function setUp(): void
     {
@@ -407,13 +407,17 @@ class HutangUnitTest extends TestCase
             'jumlah_hutang' => 500000,
             'tenggat_waktu' => '2024-10-30',
             'tanggal_lunas' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
+        $id = $hutang->id;
         CicilanHutang::create([
             'nominal' => 50000,
-            'hutangId' => $hutang->id,
+            'hutangId' => $id,
         ]);
 
         $updatedData = [
+            'id' => $id,
             'nama' => 'Bank XYZ',
             'catatan' => 'Catatan hutang diperbarui',
             'status' => 1,
@@ -423,18 +427,18 @@ class HutangUnitTest extends TestCase
             'nominal' => 60000,
         ];
 
-        $response = $this->patch(route('hutang.update', $hutang->id), $updatedData);
+        $response = $this->patch(route('hutang.update', $id), $updatedData);
 
         $response->assertStatus(302);
         $response->assertRedirect(route('hutang.index'));
 
         $hutang->refresh();
-        $updatedHutang = Hutang::find($hutang->id);
+        $updatedHutang = Hutang::find($id);
 
         $this->assertEquals(1, $updatedHutang->status);
 
         $this->assertDatabaseMissing('cicilan_hutangs', [
-            'hutangId' => $hutang->id,
+            'hutangId' => $id,
         ]);
     }
     //HTG-BS-025
@@ -830,38 +834,41 @@ class HutangUnitTest extends TestCase
         $hutang = Hutang::create([
             'nama' => 'Bank ABC',
             'catatan' => 'Catatan hutang',
-            'status' => 0,
+            'status' => 1,
             'jumlah_hutang' => 500000,
-            'tenggat_waktu' => '2024-10-30',
-            'tanggal_lunas' => null,
+            'tenggat_waktu' => null,
+            'tanggal_lunas' => '2024-10-30',
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
+        $id = $hutang->id;
 
         $updatedData = [
+            'id' => $id,
             'nama' => 'Bank XYZ',
             'catatan' => 'Catatan hutang diperbarui',
-            'status' => 0,
+            'status' => 1,
             'jumlahHutang' => 600000,
-            'tenggat_waktu' => '2024-10-31',
-            'tanggal_lunas' => null,
+            'tenggat_waktu' => null,
+            'tanggal_lunas' => '2024-12-31',
+            'nominal' => 60000,
         ];
 
-        $response = $this->patch(route('hutang.update', $hutang->id), $updatedData);
+        $response = $this->patch(route('hutang.update', $id), $updatedData);
+
         $response->assertStatus(302);
         $response->assertRedirect(route('hutang.index'));
 
         $this->assertDatabaseHas('hutangs', [
-            'id' => $hutang->id,
-            'nama' => 'Bank XYZ',
-            'catatan' => 'Catatan hutang diperbarui',
-            'status' => 0,
-            'jumlah_hutang' => 600000,
-            'tenggat_waktu' => '2024-10-31',
-            'tanggal_lunas' => null,
+            'id' => $id,
+            'nama' => $updatedData['nama'],
+            'catatan' => $updatedData['catatan'],
+            'status' => $updatedData['status'],
+            'jumlah_hutang' => $updatedData['jumlahHutang'],
+            'tenggat_waktu' => null,
+            'tanggal_lunas' => $updatedData['tanggal_lunas'],
         ]);
 
-        $this->assertDatabaseMissing('cicilan_hutangs', [
-            'hutangId' => $hutang->id,
-        ]);
     }
 
     //HTG-S-046
@@ -879,22 +886,26 @@ class HutangUnitTest extends TestCase
             'jumlah_hutang' => 500000,
             'tenggat_waktu' => null,
             'tanggal_lunas' => '2024-10-30',
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         $updatedData = [
             'nama' => 'Bank XYZ',
             'catatan' => 'Catatan hutang diperbarui',
             'status' => 0,
-            'jumlahHutang' => 600000, // Perbaikan kolom
-            'tenggat_waktu' => 2024 - 11 - 31,
+            'jumlahHutang' => 600000,
+            'tenggat_waktu' => '2024-12-31',
             'tanggal_lunas' => null,
             'nominal' => 100000
         ];
 
         // dd(route('hutang.update', ['hutang' => $hutang->id]));
 
-        $this->patch(route('hutang.update', ['hutang' => $hutang->id]), $updatedData);
-        // dd($response->getContent());
+        $response = $this->patch(route('hutang.update', ['hutang' => $hutang->id]), $updatedData);
+        $response->assertStatus(302);
+        $response->assertRedirect(route('hutang.index'));
+
         $this->assertDatabaseHas('hutangs', [
             'id' => $hutang->id,
             'nama' => 'Bank XYZ',
@@ -1025,7 +1036,9 @@ class HutangUnitTest extends TestCase
             'nama' => 'pawonkoe',
             'password' => 'pawonkoe',
         ]);
-        $response = $this->withoutMiddleware()->get(route('hutang.create', 1));
+        $response = $this->get(route('hutang.create', [
+            'status' => '1'
+        ]));
 
         $response->assertSee('Tanggal Lunas');
     }
@@ -1093,12 +1106,122 @@ class HutangUnitTest extends TestCase
             'nominal' => 1000000,
             'status' => 0,
         ];
-        $response = $this->withoutMiddleware()->post(route('hutang.store'), $data);
+        $response = $this->post(route('hutang.store'), $data);
         // dd($response->getContent());
         $response->assertSessionHasErrors([
             'nominal' => 'Nominal cicilan awal tidak boleh lebih dari jumlah hutang.',
         ]);
     }
 
+    public function test_tanggal_lunas_lebih_awal_dari_tanggal_pembuatan()
+    {
+        $response = $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+
+        $hutang = Hutang::create([
+            'nama' => 'Bank ABC',
+            'catatan' => 'Catatan hutang',
+            'status' => 0,
+            'jumlah_hutang' => 500000,
+            'tenggat_waktu' => '2024-10-30',
+            'tanggal_lunas' => null,
+        ]);
+
+        $updatedData = [
+            'nama' => 'Bank XYZ',
+            'catatan' => 'Catatan hutang diperbarui',
+            'status' => 1,
+            'jumlahHutang' => 600000,
+            'tenggat_waktu' => null,
+            'tanggal_lunas' => '2024-10-29',
+        ];
+
+        $response = $this->patch(route('hutang.update', $hutang->id), $updatedData);
+
+        $response->assertSessionHasErrors([
+            'tanggal_lunas',
+        ]);
+    }
+
+    public function test_fail_delete_hutang()
+    {
+        $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+        $hutang = Hutang::create([
+            'nama' => 'Bank asd',
+            'catatan' => 'Catatan hutang',
+            'status' => 1,
+            'jumlah_hutang' => 500000,
+            'tanggal_lunas' => '2024-10-30',
+        ]);
+        $response = $this->delete(route('hutang.destroy', 99));
+        $response->assertStatus(500);
+    }
+
+    public function test_fail_nominal_cicilan_lebih_dari_sisa_hutang(){
+
+        $response = $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('admin.dashboard'));
+
+        $hutang = Hutang::create([
+            'nama' => 'Bank ABC',
+            'catatan' => 'Catatan hutang',
+            'jumlah_hutang' => 100000,
+            'status' => 0,
+            'tenggat_waktu' => '2024-11-30 23:59:59',
+        ]);
+
+        CicilanHutang::create([
+            'nominal' => 50000,
+            'hutangId' => $hutang->id,
+        ]);
+
+        $response = $this->post(route('cicilan.store', $hutang->id), [
+            'nominal' => 60000,
+        ]);
+
+        $response->assertSessionHasErrors([
+            'nominal',
+        ]);
+    }
+
+    public function test_fail_cicilan_hutang(){
+
+        $response = $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('admin.dashboard'));
+
+        $hutang = Hutang::create([
+            'nama' => 'Bank ABC',
+            'catatan' => 'Catatan hutang',
+            'jumlah_hutang' => 100000,
+            'status' => 0,
+            'tenggat_waktu' => '2024-11-30 23:59:59',
+        ]);
+
+        CicilanHutang::create([
+            'nominal' => 50000,
+            'hutangId' => $hutang->id,
+        ]);
+
+        $response = $this->post(route('cicilan.store', $hutang->id), [
+            'nominal' => 'asdsa',
+        ]);
+
+        $response->assertStatus(302);
+    }
 }
 

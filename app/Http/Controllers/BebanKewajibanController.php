@@ -43,14 +43,23 @@ class BebanKewajibanController extends Controller
     {
         $validatedData = $request->validate([
             'jenis' => 'required',
-            'nama' => 'required',
-            'nominal' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
-            'tanggal' => 'required',
+            'nama' => 'required|min:3|max:20|regex:/^[a-zA-Z\s]*$/',
+            'nominal' => 'required|numeric|min:1|min_digits:4|max_digits:13|regex:/^[1-9][0-9]*$/',
+            'tanggal' => 'required|date_format:Y-m-d',
         ], [
             'jenis.required' => 'Jenis harus diisi.',
             'nama.required' => 'Nama harus diisi.',
             'nominal.required' => 'Nominal harus diisi.',
             'tanggal.required' => 'Tanggal harus diisi.',
+            'nama.min' => 'Nama minimal 3 karakter.',
+            'nama.max' => 'Nama maksimal 20 karakter.',
+            'nama.regex' => 'Nama harus berupa huruf.',
+            'nominal.regex' => 'Nominal harus berupa angka.',
+            'tanggal.date_format' => 'Format tanggal harus YYYY-MM-DD.',
+            'nominal.numeric' => 'Nominal harus berupa angka.',
+            'nominal.min' => 'Nominal harus lebih besar dari 0.',
+            'nominal.min_digits' => 'Nominal minimal 4 digit.',
+            'nominal.max_digits' => 'Nominal maksimal 13 digit.',
         ]);
 
         try {
@@ -115,14 +124,23 @@ class BebanKewajibanController extends Controller
     {
         $validatedData = $request->validate([
             'jenis' => 'required',
-            'nama' => 'required',
-            'nominal' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
-            'tanggal' => 'required',
+            'nama' => 'required|min:3|max:20|regex:/^[a-zA-Z\s]*$/',
+            'nominal' => 'required|numeric|min:1|min_digits:4|max_digits:13|regex:/^[1-9][0-9]*$/',
+            'tanggal' => 'required|date_format:Y-m-d',
         ], [
             'jenis.required' => 'Jenis harus diisi.',
             'nama.required' => 'Nama harus diisi.',
             'nominal.required' => 'Nominal harus diisi.',
             'tanggal.required' => 'Tanggal harus diisi.',
+            'nama.min' => 'Nama minimal 3 karakter.',
+            'nama.max' => 'Nama maksimal 20 karakter.',
+            'nama.regex' => 'Nama harus berupa huruf.',
+            'nominal.regex' => 'Nominal harus berupa angka.',
+            'tanggal.date_format' => 'Format tanggal harus YYYY-MM-DD.',
+            'nominal.numeric' => 'Nominal harus berupa angka.',
+            'nominal.min' => 'Nominal harus lebih besar dari 0.',
+            'nominal.min_digits' => 'Nominal minimal 4 digit.',
+            'nominal.max_digits' => 'Nominal maksimal 13 digit.',
         ]);
         try {
             DB::beginTransaction();

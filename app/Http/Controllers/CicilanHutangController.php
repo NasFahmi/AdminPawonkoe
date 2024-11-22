@@ -6,6 +6,7 @@ use App\Models\Hutang;
 use Illuminate\Http\Request;
 use App\Models\CicilanHutang;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Validator;
 use App\Http\Requests\StoreCicilanHutangRequest;
 use App\Http\Requests\UpdateCicilanHutangRequest;
 
@@ -39,6 +40,9 @@ class CicilanHutangController extends Controller
         try {
             DB::beginTransaction();
 
+            $request->validate([
+                'nominal' => 'required|numeric',
+            ]);
             // Menambahkan cicilan hutang baru
             CicilanHutang::create([
                 'nominal' => $request->nominal,
@@ -60,7 +64,8 @@ class CicilanHutangController extends Controller
 
             DB::commit();
             return redirect()->back()->with('success', 'Data Berhasil Disimpan');
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
+            dd($e->getMessage());
             DB::rollBack();
             return redirect()->back()->with('error', 'Data Tidak Berhasil Disimpan');
         }

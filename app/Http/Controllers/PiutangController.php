@@ -41,7 +41,6 @@ class PiutangController extends Controller
      */
     public function create()
     {
-        // dd('awdw');
         return view('pages.piutang.create');
     }
 
@@ -167,17 +166,6 @@ class PiutangController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Piutang $piutang)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $piutang = Piutang::with('piutang_produk_piutangs', 'notas')->findorFail($id);
@@ -272,10 +260,6 @@ class PiutangController extends Controller
         }
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $piutang = Piutang::findOrFail($id);

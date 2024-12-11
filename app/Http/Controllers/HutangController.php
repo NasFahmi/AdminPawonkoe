@@ -238,10 +238,10 @@ class HutangController extends Controller
                 $idCH = CicilanHutang::where('hutangId', $hutang->id)->first();
 
                 if ($idCH) {
-                    // Jika cicilan hutang ditemukan, lakukan update
                     $idCH->update([
                         'nominal' => $validatedData['nominal'],
                     ]);
+                    // Jika cicilan hutang ditemukan, lakukan update
                 } else {
                     // Jika cicilan hutang tidak ditemukan, buat entri baru
                     CicilanHutang::create([
@@ -295,7 +295,7 @@ class HutangController extends Controller
 
             return redirect()->route('hutang.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            // dd($e->getMessage());
             throw $e;
             DB::rollBack();
         }

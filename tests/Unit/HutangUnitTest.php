@@ -164,11 +164,8 @@ class HutangUnitTest extends TestCase
             'status' => 0,
         ];
 
-        // Send POST request
         $response = $this->post(route('hutang.store'), $data);
-        // dd($response->status(), $response->getContent());
 
-        // Assert status code
         $response->assertStatus(302);
         $response->assertSessionHasErrors([
             'nama' => 'The nama field is required.',
@@ -899,8 +896,6 @@ class HutangUnitTest extends TestCase
             'tanggal_lunas' => null,
             'nominal' => 100000
         ];
-
-        // dd(route('hutang.update', ['hutang' => $hutang->id]));
 
         $response = $this->patch(route('hutang.update', ['hutang' => $hutang->id]), $updatedData);
         $response->assertStatus(302);

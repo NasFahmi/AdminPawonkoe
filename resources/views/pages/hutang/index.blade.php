@@ -90,7 +90,7 @@
                                             Cancel
                                         </button>
                                         <button type="submit" 
-                                            class="py-2.5 px-5 ms-3 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none rounded-lg border border-blue-600 hover:text-white focus:z-10 focus:ring-4 focus:ring-blue-100">
+                                            class="py-2.5 px-5 ms-3 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none rounded-lg border border-blue-600 hover:text-white focus:z-10 focus:ring-4 focus:ring-blue-100 mr-5">
                                             Next
                                         </button>
                                     </div>

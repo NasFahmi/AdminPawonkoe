@@ -234,12 +234,21 @@ class HutangController extends Controller
                 // $cicilan = CicilanHutang::where('hutangId', $hutang->id)->get();
                 // $totalNominalHutang = $cicilan->sum('nominal');
                 // Find the CicilanHutang record by ID; throw an error if not found
-                $idCH = CicilanHutang::where('hutangId', $hutang->id);
+                // Cari cicilan hutang berdasarkan hutangId
+                $idCH = CicilanHutang::where('hutangId', $hutang->id)->first();
 
-                // Update the 'nominal' field with the validated data
-                $idCH->update([
-                    'nominal' => $validatedData['nominal'],
-                ]);
+                if ($idCH) {
+                    $idCH->update([
+                        'nominal' => $validatedData['nominal'],
+                    ]);
+                    // Jika cicilan hutang ditemukan, lakukan update
+                } else {
+                    // Jika cicilan hutang tidak ditemukan, buat entri baru
+                    CicilanHutang::create([
+                        'hutangId' => $hutang->id,
+                        'nominal' => $validatedData['nominal'],
+                    ]);
+                }
 
                 activity()
                     ->causedBy(auth()->user())
@@ -312,9 +321,9 @@ class HutangController extends Controller
             DB::commit();
             return redirect()->route('hutang.index')->with('success', 'Data Berhasil Didelete');
         } catch (\Exception $e) {
-            // throw $th;
-            dd($e->getMessage());
+            // dd($e->getMessage());
             DB::rollBack();
+            throw $e;
         }
     }
 }

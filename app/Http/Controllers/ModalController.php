@@ -49,17 +49,31 @@ class ModalController extends Controller
         // dd($request->all());
         $validatedData = $request->validate([
             'jenis' => 'required',
-            'nama' => 'required',
-            'nominal' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
-            'penyedia' => 'required',
+            'nama' => 'required|min:3|max:20|regex:/^[a-zA-Z\s]*$/',
+            'nominal' => 'required|numeric|min:1|min_digits:4|max_digits:13|regex:/^[1-9][0-9]*$/',
+            'penyedia' => 'required|min:3|max:20|regex:/^[a-zA-Z\s]*$/',
             'jumlah' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
-            'tanggal' => 'required',
+            'tanggal' => 'required|date|date_format:Y-m-d',
         ], [
             'jenis.required' => 'Jenis harus diisi.',
             'nama.required' => 'Nama harus diisi.',
             'nominal.required' => 'Nominal harus diisi.',
             'Penyedia.required' => 'penyedia harus diisi.',
             'tanggal.required' => 'Tanggal harus diisi.',
+            'nama.min' => 'Nama minimal 3 karakter.',
+            'nama.max' => 'Nama maksimal 20 karakter.',
+            'nama.regex' => 'Nama hanya boleh mengandung huruf dan spasi.',
+            'nominal.min' => 'Nominal minimal 1.',
+            'nominal.regex' => 'Nominal hanya boleh mengandung angka.',
+            'nominal.min_digits' => 'Nominal minimal 4 digit.',
+            'nominal.max_digits' => 'Nominal maksimal 13 digit.',
+            'penyedia.min' => 'Penyedia minimal 3 karakter.',
+            'penyedia.max' => 'Penyedia maksimal 20 karakter.',
+            'penyedia.regex' => 'Penyedia hanya boleh mengandung huruf dan spasi.',
+            'jumlah.required' => 'Jumlah harus diisi.',
+            'jumlah.min' => 'Jumlah minimal 1.',
+            'jumlah.regex' => 'Jumlah hanya boleh mengandung angka.',
+            'tanggal.date_format' => 'Format tanggal harus YYYY-MM-DD.',
         ]);
 
         $dateTime = Carbon::parse($validatedData['tanggal'], 'Asia/Jakarta');
@@ -117,18 +131,31 @@ class ModalController extends Controller
         // Validate the request data
         $validatedData = $request->validate([
             'jenis' => 'required',
-            'nama' => 'required',
-            'nominal' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
-            'penyedia' => 'required',
+            'nama' => 'required|min:3|max:20|regex:/^[a-zA-Z\s]*$/',
+            'nominal' => 'required|numeric|min:1|min_digits:4|max_digits:13|regex:/^[1-9][0-9]*$/',
+            'penyedia' => 'required|min:3|max:20|regex:/^[a-zA-Z\s]*$/',
             'jumlah' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
-            'tanggal' => 'required',
+            'tanggal' => 'required|date|date_format:Y-m-d',
         ], [
             'jenis.required' => 'Jenis harus diisi.',
             'nama.required' => 'Nama harus diisi.',
             'nominal.required' => 'Nominal harus diisi.',
-            'penyedia.required' => 'Penyedia harus diisi.',
-            'jumlah.required' => 'Jumlah harus diisi.',
+            'Penyedia.required' => 'penyedia harus diisi.',
             'tanggal.required' => 'Tanggal harus diisi.',
+            'nama.min' => 'Nama minimal 3 karakter.',
+            'nama.max' => 'Nama maksimal 20 karakter.',
+            'nama.regex' => 'Nama hanya boleh mengandung huruf dan spasi.',
+            'nominal.min' => 'Nominal minimal 1.',
+            'nominal.regex' => 'Nominal hanya boleh mengandung angka.',
+            'nominal.min_digits' => 'Nominal minimal 4 digit.',
+            'nominal.max_digits' => 'Nominal maksimal 13 digit.',
+            'penyedia.min' => 'Penyedia minimal 3 karakter.',
+            'penyedia.max' => 'Penyedia maksimal 20 karakter.',
+            'penyedia.regex' => 'Penyedia hanya boleh mengandung huruf dan spasi.',
+            'jumlah.required' => 'Jumlah harus diisi.',
+            'jumlah.min' => 'Jumlah minimal 1.',
+            'jumlah.regex' => 'Jumlah hanya boleh mengandung angka.',
+            'tanggal.date_format' => 'Format tanggal harus YYYY-MM-DD.',
         ]);
         try {
             DB::beginTransaction();

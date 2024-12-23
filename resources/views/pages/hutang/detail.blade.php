@@ -83,7 +83,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="text-xs font-semibold text-green-600">Tambah Hutang</span>
+                        <span class="text-xs font-semibold text-green-600">Tambah Cicilan</span>
                     </a>
                 </div>
                 <table class="w-full mt-8 text-sm text-left table-auto ">

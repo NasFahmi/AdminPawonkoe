@@ -1055,7 +1055,7 @@ class RekapUnitTest extends TestCase
    
 
 
-    public function test_filter_rekap_tahun()
+    public function test_graph_filter_rekap_tahun()
     {
         // Autentikasi terlebih dahulu jika diperlukan
         $response = $this->post(route('authentication'), [

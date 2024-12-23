@@ -49,12 +49,12 @@ class ProductController extends Controller
     {
         // dd($request->all()); 
         $validator = Validator::make($request->all(), [
-            'nama_product' => 'required',
-            'harga' => ['required', 'regex:/^[1-9][0-9]*$/'],
-            'deskripsi' => 'required',
+            'nama_product' => 'required|min:3|max:20|regex:/^[a-zA-Z\s]*$/',
+            'harga' => ['required', 'regex:/^[1-9][0-9]*$/', 'min_digits:4', 'max_digits:13', 'min:1'],
+            'deskripsi' => 'required|min:3|max:50|regex:/^[a-zA-Z\s]*$/',
             'link_shopee' => 'required',
             'stok' => ['required', 'regex:/^[1-9][0-9]*$/'],
-            'spesifikasi_product' => 'required',
+            'spesifikasi_product' => 'required|min:3|max:30|regex:/^[a-zA-Z\s]*$/',
             'images' => 'required',
             'images.*' => 'required'
         ], [
@@ -67,6 +67,19 @@ class ProductController extends Controller
             'stok.regex' => 'Stok tidak boleh dimulai dengan angka 0.',
             'spesifikasi_product.required' => 'Spesifikasi produk wajib diisi.',
             'images.required' => 'Setiap Produk harus memiliki foto.',
+            'images.*.required' => 'Setiap Produk harus memiliki foto.',
+            'nama_product.min' => 'Nama minimal 3 karakter.',
+            'nama_product.max' => 'Nama maksimal 20 karakter.',
+            'deskripsi.min' => 'Deskripsi minimal 3 karakter.',
+            'deskripsi.max' => 'Deskripsi maksimal 50 karakter.',
+            'spesifikasi_product.min' => 'Spesifikasi minimal 3 karakter.',
+            'spesifikasi_product.max' => 'Spesifikasi maksimal 30 karakter.',
+            'harga.min_digits' => 'Harga minimal 4 digit.',
+            'harga.max_digits' => 'Harga maksimal 13 digit.',
+            'harga.min' => 'Harga harus lebih besar dari 0.',
+            'nama_product.regex' => 'Nama hanya boleh mengandung huruf dan spasi.',
+            'deskripsi.regex' => 'Deskripsi hanya boleh mengandung huruf dan spasi.',
+            'spesifikasi_product.regex' => 'Spesifikasi hanya boleh mengandung huruf dan spasi.',
         ]);
         // dd($request->all());
 
@@ -228,12 +241,12 @@ class ProductController extends Controller
     {
         // dd($request->all()); 
         $validator = Validator::make($request->all(), [
-            'nama_product' => 'required',
-            'harga' => ['required', 'regex:/^[1-9][0-9]*$/'],
-            'deskripsi' => 'required',
+           'nama_product' => 'required|min:3|max:20|regex:/^[a-zA-Z\s]*$/',
+            'harga' => ['required', 'regex:/^[1-9][0-9]*$/', 'min_digits:4', 'max_digits:13', 'min:1'],
+            'deskripsi' => 'required|min:3|max:50|regex:/^[a-zA-Z\s]*$/',
             'link_shopee' => 'required',
             'stok' => ['required', 'regex:/^[1-9][0-9]*$/'],
-            'spesifikasi_product' => 'required',
+            'spesifikasi_product' => 'required|min:3|max:30|regex:/^[a-zA-Z\s]*$/',
             'images' => 'required',
             'images.*' => 'required'
         ], [
@@ -246,6 +259,19 @@ class ProductController extends Controller
             'stok.regex' => 'Stok tidak boleh dimulai dengan angka 0.',
             'spesifikasi_product.required' => 'Spesifikasi produk wajib diisi.',
             'images.required' => 'Setiap Produk harus memiliki foto.',
+            'images.*.required' => 'Setiap Produk harus memiliki foto.',
+            'nama_product.min' => 'Nama minimal 3 karakter.',
+            'nama_product.max' => 'Nama maksimal 20 karakter.',
+            'deskripsi.min' => 'Deskripsi minimal 3 karakter.',
+            'deskripsi.max' => 'Deskripsi maksimal 50 karakter.',
+            'spesifikasi_product.min' => 'Spesifikasi minimal 3 karakter.',
+            'spesifikasi_product.max' => 'Spesifikasi maksimal 30 karakter.',
+            'harga.min_digits' => 'Harga minimal 4 digit.',
+            'harga.max_digits' => 'Harga maksimal 13 digit.',
+            'harga.min' => 'Harga harus lebih besar dari 0.',
+            'nama_product.regex' => 'Nama hanya boleh mengandung huruf dan spasi.',
+            'deskripsi.regex' => 'Deskripsi hanya boleh mengandung huruf dan spasi.',
+            'spesifikasi_product.regex' => 'Spesifikasi hanya boleh mengandung huruf dan spasi.',
         ]);
 
         try {

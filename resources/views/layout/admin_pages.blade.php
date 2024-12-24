@@ -12,6 +12,8 @@
             height: 100%;
         }
     </style>
+    <meta name="_token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}" type="image/x-icon">
     @include('partials.link')

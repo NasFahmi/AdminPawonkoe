@@ -7,7 +7,8 @@
     @vite('resources/css/app.css')
     <title>@yield('title')</title>
     <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}" type="image/x-icon">
-
+    <meta name="_token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @extends('partials.head')
 </head>
 <body>

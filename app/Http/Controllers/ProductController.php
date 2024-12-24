@@ -49,12 +49,12 @@ class ProductController extends Controller
     {
         // dd($request->all()); 
         $validator = Validator::make($request->all(), [
-            'nama_product' => 'required|min:3|max:255|regex:/^[a-zA-Z\s]*$/',
+            'nama_product' => 'required|min:3|max:100|regex:/^[a-zA-Z\s]*$/',
             'harga' => ['required', 'regex:/^[1-9][0-9]*$/', 'min_digits:4', 'max_digits:13', 'min:1'],
-            'deskripsi' => 'required|min:3|max:50|regex:/^[a-zA-Z\s]*$/',
+            'deskripsi' => 'required|min:3|max:255|regex:/^[a-zA-Z\s]*$/',
             'link_shopee' => 'required',
             'stok' => ['required', 'regex:/^[1-9][0-9]*$/'],
-            'spesifikasi_product' => 'required|min:3|max:30|regex:/^[a-zA-Z\s]*$/',
+            'spesifikasi_product' => 'required|min:3|max:255|regex:/^[a-zA-Z\s]*$/',
             'images' => 'required',
             'images.*' => 'required'
         ], [
@@ -241,12 +241,12 @@ class ProductController extends Controller
     {
         // dd($request->all()); 
         $validator = Validator::make($request->all(), [
-           'nama_product' => 'required|min:3|max:20|regex:/^[a-zA-Z\s]*$/',
+           'nama_product' => 'required|min:3|max:100|regex:/^[a-zA-Z\s]*$/',
             'harga' => ['required', 'regex:/^[1-9][0-9]*$/', 'min_digits:4', 'max_digits:13', 'min:1'],
-            'deskripsi' => 'required|min:3|max:50|regex:/^[a-zA-Z\s]*$/',
+            'deskripsi' => 'required|min:3|regex:/^[a-zA-Z\s]*$/',
             'link_shopee' => 'required',
             'stok' => ['required', 'regex:/^[1-9][0-9]*$/'],
-            'spesifikasi_product' => 'required|min:3|max:30|regex:/^[a-zA-Z\s]*$/',
+            'spesifikasi_product' => 'required|min:3|regex:/^[a-zA-Z\s]*$/',
             'images' => 'required',
             'images.*' => 'required'
         ], [

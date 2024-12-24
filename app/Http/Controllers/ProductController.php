@@ -49,12 +49,12 @@ class ProductController extends Controller
     {
         // dd($request->all()); 
         $validator = Validator::make($request->all(), [
-            'nama_product' => 'required|min:3|max:100|regex:/^[a-zA-Z\s]*$/',
+            'nama_product' => 'required|min:3',
             'harga' => ['required', 'regex:/^[1-9][0-9]*$/', 'min_digits:4', 'max_digits:13', 'min:1'],
-            'deskripsi' => 'required|min:3|max:255|regex:/^[a-zA-Z\s]*$/',
+            'deskripsi' => 'required|min:3|',
             'link_shopee' => 'required',
             'stok' => ['required', 'regex:/^[1-9][0-9]*$/'],
-            'spesifikasi_product' => 'required|min:3|max:255|regex:/^[a-zA-Z\s]*$/',
+            'spesifikasi_product' => 'required|min:3',
             'images' => 'required',
             'images.*' => 'required'
         ], [
@@ -69,9 +69,7 @@ class ProductController extends Controller
             'images.required' => 'Setiap Produk harus memiliki foto.',
             'images.*.required' => 'Setiap Produk harus memiliki foto.',
             'nama_product.min' => 'Nama minimal 3 karakter.',
-            'nama_product.max' => 'Nama maksimal 20 karakter.',
             'deskripsi.min' => 'Deskripsi minimal 3 karakter.',
-            'deskripsi.max' => 'Deskripsi maksimal 50 karakter.',
             'spesifikasi_product.min' => 'Spesifikasi minimal 3 karakter.',
             'spesifikasi_product.max' => 'Spesifikasi maksimal 30 karakter.',
             'harga.min_digits' => 'Harga minimal 4 digit.',
@@ -241,12 +239,12 @@ class ProductController extends Controller
     {
         // dd($request->all()); 
         $validator = Validator::make($request->all(), [
-           'nama_product' => 'required|min:3|max:100|regex:/^[a-zA-Z\s]*$/',
+           'nama_product' => 'required|min:3',
             'harga' => ['required', 'regex:/^[1-9][0-9]*$/', 'min_digits:4', 'max_digits:13', 'min:1'],
-            'deskripsi' => 'required|min:3|regex:/^[a-zA-Z\s]*$/',
+            'deskripsi' => 'required|min:3|',
             'link_shopee' => 'required',
             'stok' => ['required', 'regex:/^[1-9][0-9]*$/'],
-            'spesifikasi_product' => 'required|min:3|regex:/^[a-zA-Z\s]*$/',
+            'spesifikasi_product' => 'required|min:3',
             'images' => 'required',
             'images.*' => 'required'
         ], [
@@ -261,9 +259,7 @@ class ProductController extends Controller
             'images.required' => 'Setiap Produk harus memiliki foto.',
             'images.*.required' => 'Setiap Produk harus memiliki foto.',
             'nama_product.min' => 'Nama minimal 3 karakter.',
-            'nama_product.max' => 'Nama maksimal 20 karakter.',
             'deskripsi.min' => 'Deskripsi minimal 3 karakter.',
-            'deskripsi.max' => 'Deskripsi maksimal 50 karakter.',
             'spesifikasi_product.min' => 'Spesifikasi minimal 3 karakter.',
             'spesifikasi_product.max' => 'Spesifikasi maksimal 30 karakter.',
             'harga.min_digits' => 'Harga minimal 4 digit.',

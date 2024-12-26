@@ -66,7 +66,7 @@ class TransaksiController extends Controller
             'product' => 'required',
             'methode_pembayaran' => 'required',
             'jumlah' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
-            'total' => 'required|numeric',
+            'total' => 'required',
             'is_complete' => 'required',
         ]);
 
@@ -85,11 +85,16 @@ class TransaksiController extends Controller
         }
 
         // Menghitung total harga otomatis
+        // Menghapus tanda titik (.) dari input 'total' sebelum validasi
+        $request->merge([
+            'total' => str_replace('.', '', $request->total),
+        ]);
         $hargaSatuan = (int) $product->harga; // Mengambil harga satuan dari produk
-        $totalHargaCalculated  = (int)  $hargaSatuan * $request->jumlah;
+        $totalHargaCalculated = (int) $hargaSatuan * $request->jumlah;
+        // dd((int) $request->total);
         // dd($totalHargaCalculated);
         // Validasi apakah total harga yang dihitung sama dengan total harga yang dikirim
-        if ($totalHargaCalculated != (int)  $request->total) {
+        if ($totalHargaCalculated != (int) $request->total) {
             return redirect()->back()->withErrors(['total' => 'Total harga tidak cocok. Harap hitung ulang.'])->withInput();
         }
 
@@ -136,7 +141,7 @@ class TransaksiController extends Controller
             if ($transaksi->is_complete == 1) {
                 event(new TransaksiSelesai($transaksi->id));
             }
-        
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($transaksi)
@@ -218,14 +223,14 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, Transaksi $transaksi)
     {
-        
+
         try {
             DB::beginTransaction();
             $dataInput = $request->all();
             $validatedData = $request->validate([
                 'is_complete' => 'required|boolean',  // Ensures it is either 0 or 1
             ]);
-            
+
             // dd($request->all());
             // Update Pembeli information
 
@@ -311,5 +316,5 @@ class TransaksiController extends Controller
     //     }
     // }
 
-  
+
 }

@@ -87,7 +87,13 @@
                                 Product
                             </th>
                             <th scope="col" class="px-4 py-2 whitespace-nowrap">
-                                Harga
+                                Harga Product
+                            </th>
+                            <th scope="col" class="px-4 py-2 whitespace-nowrap">
+                                Jumlah Transaksi
+                            </th>
+                            <th scope="col" class="px-4 py-2 whitespace-nowrap">
+                                Nominal Transaksi
                             </th>
                             <th scope="col" class="px-4 py-2 whitespace-nowrap">
                                 Tanggal
@@ -117,7 +123,14 @@
                                             {{ number_format($history_product->history_product->harga, 0, ',', '.') }}</span>
                                     </td>
                                 @endforeach
-
+                                <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
+                                    <span>
+                                        {{ $items->jumlah }}</span>
+                                </td>
+                                <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
+                                    <span>Rp.
+                                        {{ number_format($items->total_harga, 0, ',', '.') }}</span>
+                                </td>
 
                                 <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
                                     <span>{{ $items->tanggal }}</span>

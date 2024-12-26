@@ -21,12 +21,11 @@ class TransaksiFactory extends Factory
         // Mendapatkan product random
         $product = Product::inRandomOrder()->first();
 
-        // Jika tidak ada produk, factory gagal
         if (!$product) {
             return [];
         }
 
-        $jumlah = $this->faker->numberBetween(1, $product->stok);
+        $jumlah = $this->faker->numberBetween(1, 3);
         $totalHarga = $jumlah * $product->harga;
 
         return [

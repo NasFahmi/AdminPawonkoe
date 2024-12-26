@@ -110,7 +110,7 @@ class ProductController extends Controller
 
             $data = $request->all();
             $namaProduct = $data['nama_product'];
-            $slug = Str::of($namaProduct)->slug('-')->__toString();
+            $slug = Str::of($namaProduct)->slug('-')->__toString() . '-' . Str::random(10);
             // dd($slug);
             $product = Product::create([
                 'nama_product' => $data['nama_product'],
@@ -239,7 +239,7 @@ class ProductController extends Controller
     {
         // dd($request->all()); 
         $validator = Validator::make($request->all(), [
-           'nama_product' => 'required|min:3',
+            'nama_product' => 'required|min:3',
             'harga' => ['required', 'regex:/^[1-9][0-9]*$/', 'min_digits:4', 'max_digits:13', 'min:1'],
             'deskripsi' => 'required|min:3|',
             'link_shopee' => 'required',

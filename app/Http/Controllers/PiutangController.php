@@ -101,7 +101,7 @@ class PiutangController extends Controller
                 $images = $request->file('image'); // not empty
                 // dd($images); // Check if $images is not empty
 
-                $foldername = $validatedData['nama_toko'] . '_' . $tanggal;
+                $foldername = $validatedData['nama_toko'] . '_' . $tanggal . Str::random(10);
                 $folderPath = 'public/images/piutang/' . $foldername;
 
                 if (!Storage::exists($folderPath)) {
@@ -207,7 +207,7 @@ class PiutangController extends Controller
             // 3. Update image
             if ($request->hasFile('image')) {
                 $images = $request->file('image'); // not empty
-                $foldername = $piutang->nama_toko . '_' . $tanggal;
+                $foldername = $piutang->nama_toko . '_' . $tanggal . Str::random(10);
                 $folderPath = 'public/images/piutang/' . $foldername;
 
                 if (!Storage::exists($folderPath)) {

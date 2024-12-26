@@ -2,15 +2,15 @@
 @section('title', 'modal')
 @section('content')
     <div class="container px-6 pb-6 mx-auto">
-        <h1 class="text-2xl my-6 font-semibold text-gray-700">Edit modal</h1>
-        <div class="bg-white px-8 py-8 shadow-lg rounded-3xl">
+        <h1 class="my-6 text-2xl font-semibold text-gray-700">Edit modal</h1>
+        <div class="px-8 py-8 bg-white shadow-lg rounded-3xl">
             <form action="{{ route('modal.update', $data->id) }}" method="post">
                 @method('PATCH')
                 @csrf
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
                     <div class="left">
                         <div class="max-w-lg">
-                            <div class="flex justify-start items-start flex-col gap-3">
+                            <div class="flex flex-col items-start justify-start gap-3">
                                 <div class="w-full">
                                     <label for="jenis" class="block mb-2 text-sm font-medium text-gray-700">Jenis</label>
                                     <select id="jenis" name="jenis"
@@ -64,7 +64,7 @@
 
                     <div class="right">
                         <div class="max-w-lg">
-                            <div class="flex justify-start items-start flex-col gap-3">
+                            <div class="flex flex-col items-start justify-start gap-3">
 
                                 <div class="w-full">
                                     <label for="penyedia"
@@ -80,8 +80,9 @@
                                 <div class="w-full">
                                     <label for="jumlah"
                                         class="block mb-2 text-sm font-medium text-gray-700">Jumlah</label>
-                                    <input type="text" placeholder="Jumlah" name="jumlah" id="jumlah" min="0" 
-                                        value="{{ old('jumlah', $data->jumlah) }}" oninput="this.value = this.value.replace(/^0+(?!$)/, '')" 
+                                    <input type="text" placeholder="Jumlah" name="jumlah" id="jumlah" min="0"
+                                        value="{{ old('jumlah', $data->jumlah) }}"
+                                        oninput="this.value = this.value.replace(/^0+(?!$)/, '')"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
                                     @error('jumlah')
                                         <small class="error" style="color: red">{{ $message }}</small>
@@ -102,26 +103,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-center items-center mt-8">
+                <div class="flex items-center justify-center mt-8">
                     <button type="submit"
-                        class="bg-green-400 text-gray-100 px-4 py-2 w-full lg:w-fit rounded-lg hover:bg-green-500 duration-300">Submit</button>
+                        class="w-full px-4 py-2 text-gray-100 duration-300 bg-green-400 rounded-lg lg:w-fit hover:bg-green-500">Submit</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
+        let dataJumlah = @json($data->jumlah);
         // Function to handle the enable/disable of jumlah input based on jenis
         function toggleJumlahInput() {
             var jenis = document.getElementById('jenis').value;
             var jumlah = document.getElementById('jumlah');
+
+            console.log('Jenis yang dipilih:', jenis); // Debugging untuk memastikan jenis yang dipilih
 
             if (jenis == 2) { // Assuming '2' is the ID for "finansial"
                 jumlah.value = 1;
                 jumlah.disabled = true;
             } else {
                 jumlah.disabled = false;
-                jumlah.value = '';
+                jumlah.value = dataJumlah;
             }
         }
 
@@ -133,5 +137,5 @@
         // Listen for changes in the jenis select
         document.getElementById('jenis').addEventListener('change', toggleJumlahInput);
     </script>
-    </script>
+
 @endsection

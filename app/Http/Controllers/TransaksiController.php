@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\HistoryProduct;
 use App\Events\TransaksiSelesai;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models\HistoryProductTransaksi;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreTransaksiRequest;
@@ -23,13 +24,19 @@ class TransaksiController extends Controller
      * Display a listing of the resource.
      */
     // TransaksiController.php
-    public function index()
+    public function index(Request $request)
     {
         //! add realasi transkasi dan history product transaksi .
         //! with history product transakski otomatis dapat id History product
         //! find history procut berdsarkan id historu product dari tabel historu product transaksi
         //! simpan di variabel dan return view di product nama dan harga
 
+        $user = Auth::user();
+        // dd($user);
+        $successLogin = Auth::attempt([
+            'nama' => $user->nama,
+            'password' => $request->password
+        ]);
         $data = Transaksi::with(['pembelis', 'history_product_transaksis.history_product', 'methode_pembayaran'])
             ->search(request('search'))
             ->paginate(10);
@@ -290,31 +297,31 @@ class TransaksiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy(Transaksi $transaksi)
-    // {
-    //     try {
-    //         DB::beginTransaction();
-    //         activity()
-    //             ->causedBy(auth()->user())
-    //             ->performedOn($transaksi)
-    //             ->event('delete_transaksi')
-    //             ->withProperties(['data' => $transaksi])
-    //             ->log('User ' . auth()->user()->nama . ' delete a transaksi');
+    public function destroy(Transaksi $transaksi)
+    {
+        try {
+            DB::beginTransaction();
+            activity()
+                ->causedBy(Auth::user())
+                ->performedOn($transaksi)
+                ->event('delete_transaksi')
+                ->withProperties(['data' => $transaksi])
+                ->log('User ' . Auth::user()->nama . ' delete a transaksi');
 
-    //         $transaksi->delete();
+            $transaksi->delete();
 
-    //         Rekap::where('id_tabel_asal', $transaksi->id)->delete();
+            Rekap::where('id_tabel_asal', $transaksi->id)->delete();
 
 
-    //         DB::commit();
+            DB::commit();
 
-    //         return redirect()->route('transaksis.index')->with('success', 'Transaksi has been deleted successfully');
-    //     } catch (\Throwable $th) {
-    //         DB::rollBack();
-    //         // throw $th;
-    //         return redirect()->back()->with('error', 'Failed to delete transaksi data.');
-    //     }
-    // }
+            return redirect()->route('transaksis.index')->with('success', 'Transaksi has been deleted successfully');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            // throw $th;
+            return redirect()->back()->with('error', 'Failed to delete transaksi data.');
+        }
+    }
 
 
 }

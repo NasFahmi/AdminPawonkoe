@@ -60,6 +60,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/transaksi/{transaksi}/edit', [TransaksiController::class, 'edit'])->name('transaksis.edit');
         Route::get('/admin/cetak/transaksi', [TransaksiController::class, 'cetakTransaksi'])->name('cetak.transaksi');
         Route::patch('/admin/transaksi/{transaksi}', [TransaksiController::class, 'update'])->name('transaksis.update');
+        Route::delete('/admin/transaksi/{transaksi}', [TransaksiController::class, 'destroy'])->name('transaksis.destroy');
     });
     Route::middleware(['role:superadmin|admin', 'permission:tambah-transaksi'])->group(function () {
         Route::post('/admin/transaksi', [TransaksiController::class, 'store'])->name('transaksis.store');

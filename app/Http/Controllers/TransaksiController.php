@@ -31,12 +31,7 @@ class TransaksiController extends Controller
         //! find history procut berdsarkan id historu product dari tabel historu product transaksi
         //! simpan di variabel dan return view di product nama dan harga
 
-        $user = Auth::user();
-        // dd($user);
-        $successLogin = Auth::attempt([
-            'nama' => $user->nama,
-            'password' => $request->password
-        ]);
+        
         $data = Transaksi::with(['pembelis', 'history_product_transaksis.history_product', 'methode_pembayaran'])
             ->search(request('search'))
             ->paginate(10);
@@ -297,8 +292,21 @@ class TransaksiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Transaksi $transaksi)
+    public function destroy(Transaksi $transaksi, Request $request)
     {
+        // dd($transaksi);
+        $request->validate([
+            'password' => 'required', // Validasi input password
+        ]);
+        $user = Auth::user();
+        // dd($user);
+        $succesVerify = Auth::attempt([
+            'nama' => $user->nama,
+            'password' => $request->password
+        ]);
+        if (!$succesVerify) {
+            return redirect()->back()->with('error', 'Password salah');
+        }
         try {
             DB::beginTransaction();
             activity()

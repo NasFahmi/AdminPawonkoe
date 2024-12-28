@@ -1,9 +1,41 @@
 @extends('layout.admin_pages')
+
 @section('title', 'Admin Transaksi')
+
 @section('content')
     <div class="container px-6 pb-6 mx-auto ">
         <p class="my-6 text-2xl font-semibold text-gray-700">Transaksi</p>
-        {{-- <p>{{$data}}</p> --}}
+
+        @if (session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ session('error') }}</span>
+                <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3"
+                    onclick="this.parentElement.style.display='none';">
+                    <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20">
+                        <title>Close</title>
+                        <path
+                            d="M14.348 14.849a1 1 0 01-1.414 0L10 11.414l-2.934 2.935a1 1 0 01-1.414-1.414l2.935-2.934-2.935-2.934a1 1 0 011.414-1.414L10 8.586l2.934-2.935a1 1 0 011.414 1.414L11.414 10l2.935 2.934a1 1 0 010 1.415z" />
+                    </svg>
+                </button>
+            </div>
+        @endif
+
+        @if (session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ session('success') }}</span>
+                <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3"
+                    onclick="this.parentElement.style.display='none';">
+                    <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20">
+                        <title>Close</title>
+                        <path
+                            d="M14.348 14.849a1 1 0 01-1.414 0L10 11.414l-2.934 2.935a1 1 0 01-1.414-1.414l2.935-2.934-2.935-2.934a1 1 0 011.414-1.414L10 8.586l2.934-2.935a1 1 0 011.414 1.414L11.414 10l2.935 2.934a1 1 0 010 1.415z" />
+                    </svg>
+                </button>
+            </div>
+        @endif
+
         <div
             class="flex items-center justify-start w-full max-w-screen-xl px-8 py-4 mb-4 bg-white shadow-md rounded-3xl lg:w-full">
             <div class="flex flex-col items-start justify-start w-full gap-4 md:items-center lg:flex-row ">
@@ -22,10 +54,9 @@
                                 </g>
                             </svg>
                         </div>
-                        <form action="" method="GET">
-                            <input type="search" id="default-search" name="search"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Cari Product Atau Tanggal">
+                        <input type="search" id="default-search" name="search"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Cari Product Atau Tanggal">
                     </div>
                     <button type="submit"
                         class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -37,7 +68,7 @@
                         <span class="sr-only">Search</span>
                     </button>
                 </form>
-                </form>
+
                 <div class="flex flex-col items-center justify-center w-full gap-4 md:flex-row md:w-fit ">
                     <a href="{{ route('transaksis.create') }}"
                         class="flex items-center justify-center w-full gap-1 px-4 py-2 bg-sky-200 md:w-fit rounded-3xl ">
@@ -64,47 +95,29 @@
                                         <path
                                             d="M7 17H5C3.89543 17 3 16.1046 3 15V11C3 9.34315 4.34315 8 6 8H7M7 17V14H17V17M7 17V18C7 19.1046 7.89543 20 9 20H15C16.1046 20 17 19.1046 17 18V17M17 17H19C20.1046 17 21 16.1046 21 15V11C21 9.34315 19.6569 8 18 8H17M7 8V6C7 4.89543 7.89543 4 9 4H15C16.1046 4 17 4.89543 17 6V8M7 8H17M15 11H17"
                                             stroke="#d97706" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                        </path>
+                                            stroke-linejoin="round"></path>
                                     </g>
                                 </svg>
                             </div>
                             <span class="text-sm font-semibold text-orange-600">Cetak Transaksi</span>
                         </a>
                     @endif
-
                 </div>
-
             </div>
-
         </div>
 
         <div class="max-w-screen-xl p-8 bg-white shadow-lg rounded-3xl lg:w-full">
             <div class="overflow-x-auto ">
                 <table class="w-full text-sm text-left table-auto ">
                     <thead class="text-xs text-gray-700 bg-gray-100 ">
-                        <tr class="">
-                            <th scope="col" class="w-1/4 px-4 py-2 whitespace-nowrap">
-                                Product
-                            </th>
-                            <th scope="col" class="px-4 py-2 whitespace-nowrap">
-                                Harga Product
-                            </th>
-                            <th scope="col" class="px-4 py-2 whitespace-nowrap">
-                                Jumlah Transaksi
-                            </th>
-                            <th scope="col" class="px-4 py-2 whitespace-nowrap">
-                                Nominal Transaksi
-                            </th>
-                            <th scope="col" class="px-4 py-2 whitespace-nowrap">
-                                Tanggal
-                            </th>
-                            <th scope="col" class="px-4 py-2 whitespace-nowrap">
-                                Status
-                            </th>
-                            <th class="px-4 py-2 whitespace-nowrap">
-
-                            </th>
+                        <tr>
+                            <th scope="col" class="w-1/4 px-4 py-2 whitespace-nowrap">Product</th>
+                            <th scope="col" class="px-4 py-2 whitespace-nowrap">Harga Product</th>
+                            <th scope="col" class="px-4 py-2 whitespace-nowrap">Jumlah Transaksi</th>
+                            <th scope="col" class="px-4 py-2 whitespace-nowrap">Nominal Transaksi</th>
+                            <th scope="col" class="px-4 py-2 whitespace-nowrap">Tanggal</th>
+                            <th scope="col" class="px-4 py-2 whitespace-nowrap">Status</th>
+                            <th class="px-4 py-2 whitespace-nowrap"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -113,36 +126,29 @@
                                 class="px-4 py-2 odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-">
                                 @foreach ($items->history_product_transaksis as $history_product)
                                     <th scope="row" class="pl-3 text-sm font-medium lg:whitespace-nowrap">
-                                        <span class="text-sm">
-                                            {{ $history_product->history_product->nama_product }}
-
-                                        </span>
+                                        <span class="text-sm">{{ $history_product->history_product->nama_product }}</span>
                                     </th>
-
-                                    <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
+                                    <td scope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
                                         <span>Rp.
                                             {{ number_format($history_product->history_product->harga, 0, ',', '.') }}</span>
                                     </td>
                                 @endforeach
-                                <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
-                                    <span>
-                                        {{ $items->jumlah }}</span>
+                                <td scope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
+                                    <span>{{ $items->jumlah }}</span>
                                 </td>
-                                <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
-                                    <span>Rp.
-                                        {{ number_format($items->total_harga, 0, ',', '.') }}</span>
+                                <td scope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
+                                    <span>Rp. {{ number_format($items->total_harga, 0, ',', '.') }}</span>
                                 </td>
-
-                                <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
+                                <td scope="row" class="w-10 h- 16 px-4 py-2 lg:whitespace-nowrap">
                                     <span>{{ $items->tanggal }}</span>
                                 </td>
-                                <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
-                                    @if ($items->is_complete == true)
+                                <td scope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
+                                    @if ($items->is_complete)
                                         <div
                                             class="flex items-center justify-center px-4 py-2 bg-green-200 w-fit h-fit rounded-3xl">
                                             <span class="font-semibold text-green-500">Selesai</span>
                                         </div>
-                                    @elseif ($items->is_complete == false)
+                                    @else
                                         <div
                                             class="flex items-center justify-center px-4 py-2 bg-red-200 w-fit h-fit rounded-3xl whitespace-nowrap">
                                             <span class="font-semibold text-red-500 whitespace-nowrap">Belum Selesai</span>
@@ -158,8 +164,7 @@
                                                 transform="rotate(90)">
                                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                </g>
+                                                    stroke-linejoin="round"></g>
                                                 <g id="SVGRepo_iconCarrier">
                                                     <g id="Kebab-Menu" stroke="none" stroke-width="1" fill="none"
                                                         fill-rule="evenodd">
@@ -168,15 +173,15 @@
                                                         <path
                                                             d="M12,6 C12.5522847,6 13,5.55228475 13,5 C13,4.44771525 12.5522847,4 12,4 C11.4477153,4 11,4.44771525 11,5 C11,5.55228475 11.4477153,6 12,6 Z"
                                                             id="shape-03" stroke="#94a3b8" stroke-width="2"
-                                                            stroke-linecap="round" stroke-dasharray="0,0"> </path>
+                                                            stroke-linecap="round" stroke-dasharray="0,0"></path>
                                                         <path
                                                             d="M12,13 C12.5522847,13 13,12.5522847 13,12 C13,11.4477153 12.5522847,11 12,11 C11.4477153,11 11,11.4477153 11,12 C11,12.5522847 11.4477153,13 12,13 Z"
                                                             id="shape-03" stroke="#94a3b8" stroke-width="2"
-                                                            stroke-linecap="round" stroke-dasharray="0,0"> </path>
+                                                            stroke-linecap="round" stroke-dasharray="0,0"></path>
                                                         <path
                                                             d="M12,20 C12.5522847,20 13,19.5522847 13,19 C13,18.4477153 12.5522847,18 12,18 C11.4477153,18 11,18.4477153 11,19 C11,19.5522847 11.4477153,20 12,20 Z"
                                                             id="shape-03" stroke="#94a3b8" stroke-width="2"
-                                                            stroke-linecap="round" stroke-dasharray="0,0"> </path>
+                                                            stroke-linecap="round" stroke-dasharray="0,0"></path>
                                                     </g>
                                                 </g>
                                             </svg>
@@ -194,7 +199,7 @@
                                                             <svg viewBox="0 0 24 24" fill="none"
                                                                 xmlns="http://www.w3.org/2000/svg">
                                                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                <g id="SVG Repo_tracerCarrier" stroke-linecap="round"
                                                                     stroke-linejoin="round"></g>
                                                                 <g id="SVGRepo_iconCarrier">
                                                                     <path
@@ -206,7 +211,7 @@
                                                                 </g>
                                                             </svg>
                                                         </div>
-                                                        <span class="font-semibold text-sky-400 ">Details</span>
+                                                        <span class="font-semibold text-sky-400">Details</span>
                                                     </div>
                                                 </a>
                                             </li>
@@ -242,8 +247,9 @@
                                             @endif
 
                                             <li>
-                                                <button id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal"
-                                                class="flex justify-start items-center gap-2 w-full text-left block px-4 py-2 hover:bg-gray-100 bg-green-50">
+                                                <button id="deleteButton" data-modal-target="deleteModal"
+                                                    data-modal-toggle="deleteModal"
+                                                    class="flex justify-start items-center gap-2 w-full text-left block px-4 py-2 hover:bg-gray-100 bg-green-50">
                                                     <div class="w-4 h-4">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                             height="16" fill="currentColor" class="bi bi-trash"
@@ -259,71 +265,71 @@
                                                     <span class="font-semibold text-red-400">Hapus</span>
                                                 </button>
                                             </li>
-
-
-
                                         </ul>
                                     </div>
                                 </td>
                             </tr>
 
-
                             <!-- Main modal -->
-        <div id="deleteModal" tabindex="-1" aria-hidden="true"
-        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
-        <div class="relative p-4 w-full max-w-md h-full md:h-auto">
-            <form action="{{ route('transaksis.destroy', $items->id) }}" method="POST"
-                @csrf
-                @method('DELETE')
-            <!-- Modal content -->
-            <div class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-                <button type="button"
-                    class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                    data-modal-toggle="deleteModal">
-                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-                <svg class="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" aria-hidden="true"
-                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                        clip-rule="evenodd"></path>
-                </svg>
-                <p class="mb-4 text-gray-500 dark:text-gray-300">Apakah anda yakin ingin menghapus produk ini?</p>
+                            <div id="deleteModal" tabindex="-1" aria-hidden="true"
+                                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+                                <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+                                    <form action="{{ route('transaksis.destroy', $items->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div
+                                            class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                                            <button type="button"
+                                                class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                data-modal-toggle="deleteModal">
+                                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
+                                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd"
+                                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                        clip-rule="evenodd"></path>
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                            <svg class="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto"
+                                                aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                            <p class="mb-4 text-gray-500 dark:text-gray-300">Apakah anda yakin ingin
+                                                menghapus produk ini?</p>
+                                            <!-- Modal Content -->
+                                            <label for="password" class="text-sm font-medium text-gray-800">Masukkan
+                                                Password</label>
+                                            <input type="password" id="password" name="password"
+                                                value="{{ old('password') }}"
+                                                class="w-full max-w-4xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="*******">
+                                            @error('password')
+                                                <small class="error" style="color: red">{{ $message }}</small>
+                                            @enderror
 
-                <label for="password" class="text-sm font-medium text-gray-800">Masukkan Password</label>
-                <input type="password" id="password" name="password" value="{{ old('password') }}"
-                    class="w-full max-w-4xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="*******">
-                @error('password')
-                    <small class="error" style="color: red">{{ $message }}</small>
-                @enderror
-                
-                <div class="flex justify-center items-center space-x-4 mt-4">
-                        <button data-modal-toggle="deleteModal" type="button"
-                            class="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-                            Tidak, batal
-                        </button>
+                                            <div class="flex justify-center items-center space-x-4 mt-4">
+                                                <button data-modal-toggle="deleteModal" type="button"
+                                                    class="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                                                    Tidak, batal
+                                                </button>
+                                                <button type="submit"
+                                                    class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
+                                                    Ya, Saya yakin
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
 
-                        <button type="submit"
-                            class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
-                            Ya, Saya yakin
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+                                </div>
+                            </div>
                         @endforeach
-
                     </tbody>
                 </table>
-                <div class="flex flex-col items-center justify-center mt-4">
+                <div class="flex flex-col items-center justify ```blade
+                <div class="mt-4">
                     <div class="flex items-center space-x-4">
                         {{ $data->links('pagination::tailwind') }}
                     </div>

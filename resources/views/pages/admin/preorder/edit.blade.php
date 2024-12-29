@@ -233,65 +233,53 @@
         </div>
     </div>
     <script>
-        /* Tanpa Rupiah */
         document.addEventListener('DOMContentLoaded', function() {
             let isCompleteRadios = document.getElementsByName('is_complete');
             let jumlahDpInput = document.getElementById('jumlah_dp');
             let totalHargaInput = document.getElementById('total-harga');
             let is_dp = document.getElementById('is_dp');
             let teleponInput = document.getElementById('telepon');
-
+     
             teleponInput.addEventListener('input', function() {
                 let maxLength = 12;
                 let enteredValue = this.value;
-
+     
                 if (enteredValue.length > maxLength) {
                     this.value = enteredValue.slice(0, maxLength);
                 }
             });
-            
-            jumlahDpInput.addEventListener('keyup', function(e) {
-                jumlahDpInput.value = formatRupiah(this.value);
+     
+            // Fungsi untuk menghapus format dan mengembalikan nilai sebagai angka
+            function unformatNumber(value) {
+                return parseFloat(value.replace(/[^0-9]/g, '')) || 0;
+            }
+     
+            jumlahDpInput.addEventListener('input', function(e) {
+                // Hapus format saat mengetik
+                this.value = unformatNumber(this.value);
             });
-
-            totalHargaInput.addEventListener('keyup', function(e) {
-                totalHargaInput.value = formatRupiah(this.value);
+     
+            totalHargaInput.addEventListener('input', function(e) {
+                // Hapus format saat mengetik
+                this.value = unformatNumber(this.value);
             });
-
+     
             isCompleteRadios.forEach(function(radio) {
                 radio.addEventListener('change', function() {
                     if (this.value === '1') {
                         // When "Selesai" is selected, set jumlah_dp to total_harga
-                        jumlahDpInput.value = totalHargaInput.value;
+                        jumlahDpInput.value = unformatNumber(totalHargaInput.value);
                     } else {
                         // When "Belum Selesai" is selected, reset jumlah_dp
-                        jumlahDpInput.value = formatRupiah(0);
+                        jumlahDpInput.value = 0;
                     }
                 });
             });
-
-            /* Fungsi */
-            function formatRupiah(angka, prefix) {
-                var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                    split = number_string.split(','),
-                    sisa = split[0].length % 3,
-                    rupiah = split[0].substr(0, sisa),
-                    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-                if (ribuan) {
-                    separator = sisa ? '.' : '';
-                    rupiah += separator + ribuan.join('.');
-                }
-
-                rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-                return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
-            }
-
+     
             is_dp.addEventListener('change', function() {
-                console.log(this.value);
                 let tanggalContainer = document.getElementById('tanggal_dp_container');
                 let jumlahContainer = document.getElementById('jumlah_dp_container');
-
+     
                 if (this.value === '1') {
                     tanggalContainer.style.display = 'block';
                     jumlahContainer.style.display = 'block';
@@ -301,6 +289,6 @@
                 }
             });
         });
-    </script>
+     </script>
 
 @endsection

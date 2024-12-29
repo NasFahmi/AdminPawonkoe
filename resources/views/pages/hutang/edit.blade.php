@@ -54,6 +54,21 @@
                                     <h1 class="text-lg font-medium text-gray-800">Cicilan Hutang Awal</h1>
                                     <p class="text-gray-700 mb-2 font-normal text-xs">Isi nominal dengan jumlah cicilan
                                         pertama Anda.</p>
+
+                                        @if ($cicilanHutang->isEmpty())
+                                        <div class="w-full">
+                                            <label for="nominal"
+                                                class="block mb-2 text-sm font-medium text-gray-700">Nominal</label>
+                                                <input type="number" placeholder="Nominal" name="nominal"
+                                                value="{{ old('nominal') }}" min="0"
+                                                oninput="this.value = this.value.replace(/^0+(?!$)/, '')"
+                                                class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+                                                @error('nominal')
+                                                <small class="error" style="color: red">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        @endif
+
                                         @foreach ($cicilanHutang as $data)
                                     <div class="w-full">
                                         <label for="nominal"

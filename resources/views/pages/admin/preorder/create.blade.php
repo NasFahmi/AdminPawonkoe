@@ -23,7 +23,8 @@
                                             </svg>
                                         </div>
                                         {{-- <input id="datepicker-format" datepicker datepicker-format="mm-dd-yyyy" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date"> --}}
-                                        <input id="datepicker-format" datepicker datepicker-format="yyyy-mm-dd" type="text" name="tanggal" value="{{ old('tanggal') }}" 
+                                        <input id="datepicker-format" datepicker datepicker-format="yyyy-mm-dd"
+                                            type="text" name="tanggal" value="{{ old('tanggal') }}"
                                             class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Select date">
 
@@ -61,7 +62,8 @@
                                 <div class="w-full">
                                     <label for="jumlah"
                                         class="block  text-sm font-medium text-gray-900 dark:text-white">Jumlah</label>
-                                    <input type="number" id="jumlah" name="jumlah" value="{{ old('jumlah') }}" oninput="this.value = this.value.replace(/^0+(?!$)/, '')"
+                                    <input type="number" id="jumlah" name="jumlah" value="{{ old('jumlah') }}"
+                                        oninput="this.value = this.value.replace(/^0+(?!$)/, '')"
                                         class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="0">
 
@@ -125,7 +127,8 @@
                                                     d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                             </svg>
                                         </div>
-                                        <input id="datepicker-format" datepicker datepicker-format="yyyy-mm-dd" type="text" name="tanggal_dp" value="{{ old('tanggal_dp') }}"
+                                        <input id="datepicker-format" datepicker datepicker-format="yyyy-mm-dd"
+                                            type="text" name="tanggal_dp" value="{{ old('tanggal_dp') }}"
                                             class="bg-gray-50 border max-w-4xl border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Select date">
 
@@ -217,55 +220,49 @@
         </div>
     </div>
     <script>
-        /* Tanpa Rupiah */
         document.addEventListener('DOMContentLoaded', function() {
             let jumlahInput = document.getElementById('jumlah');
             let totalHargaInput = document.getElementById('total-harga');
             let productSelectedInput = document.getElementById('product');
             let productData = {!! json_encode($data) !!};
-            let productDataHistory = {!! json_encode($data) !!};;
+            let productDataHistory = {!! json_encode($data) !!};
             let jumlah_dp = document.getElementById('jumlah_dp');
             let is_dp = document.getElementById('is_dp');
             var totalHargaDP = 0;
             let teleponInput = document.getElementById('telepon');
-
+    
             teleponInput.addEventListener('input', function() {
                 let maxLength = 12;
                 let enteredValue = this.value;
-
+    
                 if (enteredValue.length > maxLength) {
                     this.value = enteredValue.slice(0, maxLength);
                 }
             });
-
-
-
+    
             function unformatCurrency(currencyString) {
                 return parseFloat(currencyString.replace(/[^0-9.]/g, ''));
             }
-            // function unformatRupiah(rupiah) {
-            //     return parseInt(rupiah.replace.value(/[^0-9]/g, ''), 10);
-            // }
-
+    
             totalHargaInput.addEventListener('keyup', function(e) {
-                totalHargaInput.value = formatRupiah(this.value);
+                // Hapus format saat mengetik
+                this.value = this.value.replace(/[^0-9]/g, '');
             });
-
+    
             // Function to calculate and update the total price
             function updateTotalHarga() {
                 let jumlah = jumlahInput.value;
                 let selectedProductId = productSelectedInput.value;
-
+    
                 // Find the selected product by ID
                 let selectedProduct = productData.find(product => product.id == selectedProductId);
-
+    
                 if (selectedProduct) {
                     let hargaPerItem;
-
+    
                     // Check if there is a corresponding history product
-                    let historyProduct = productDataHistory.find(history => history.product_id ==
-                        selectedProductId);
-
+                    let historyProduct = productDataHistory.find(history => history.product_id == selectedProductId);
+    
                     if (historyProduct && historyProduct.harga != selectedProduct.harga) {
                         // If there is a history product and the price is different, use the history price
                         hargaPerItem = historyProduct.harga;
@@ -273,80 +270,34 @@
                         // Otherwise, use the current product price
                         hargaPerItem = selectedProduct.harga;
                     }
-
+    
                     // Ensure jumlah is not negative
                     if (jumlah < 0) {
                         jumlah = 0;
                         jumlahInput.value = 0; // Set the input value to 0 if negative
                     }
-
+    
                     var totalHarga = jumlah * hargaPerItem;
-                    totalHargaInput.value = formatTotalHarga(totalHarga);
+                    totalHargaInput.value = totalHarga; // Tampilkan total harga tanpa format
                     totalHargaDP = totalHarga;
-                    // console.log(totalHargaDP)
                 } else {
                     // Handle if the product is not found
                     console.error('Product not found');
                 }
             }
-
-            function formatTotalHarga(totalHarga) {
-                return formatRupiah(totalHarga.toString());
-            }
-
-            // Attach the 'input' event listener to the jumlahInput
+    
             jumlahInput.addEventListener('input', updateTotalHarga);
-
+    
             jumlah_dp.addEventListener('input', function(e) {
-                // Menghapus karakter non-numeric
                 this.value = this.value.replace(/[^0-9]/g, '');
-
-                // Mengonversi ke number
                 var numberValue = Number(this.value);
-
-                // Jika nilai negatif, set ke 0
-                if (numberValue < 0) {
+    
+                if (numberValue < 0) { 
                     this.value = '0';
                 } else if (numberValue > totalHargaDP) {
-                    this.value = formatTotalHarga(totalHargaDP); // Batasi nilai maksimum
-                } else {
-                    this.value = formatTotalHarga(numberValue); // Format nilai input
+                    this.value = totalHargaDP;
                 }
             });
-
         });
-
-
-
-        /* Fungsi */
-        function formatRupiah(angka, prefix) {
-            var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                split = number_string.split(','),
-                sisa = split[0].length % 3,
-                rupiah = split[0].substr(0, sisa),
-                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-            if (ribuan) {
-                separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-            }
-
-            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
-        }
-
-        // is_dp.addEventListener('change', function() {
-        //     console.log(this.value);
-        //     let tanggalContainer = document.getElementById('tanggal_dp_container');
-        //     let jumlahContainer = document.getElementById('jumlah_dp_container');
-
-        //     if (this.value === '1') {
-        //         tanggalContainer.style.display = 'block';
-        //         jumlahContainer.style.display = 'block';
-        //     } else {
-        //         tanggalContainer.style.display = 'none';
-        //         jumlahContainer.style.display = 'none';
-        //     }
-        // });
     </script>
 @endsection

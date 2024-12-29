@@ -13,7 +13,6 @@ class TemporaryImageController extends Controller
 {
     public function uploadTemporary(Request $request)
     {
-        // return response()->json($request->all());
         if ($request->hasFile('images')) {
             $images = $request->file('images');
             $folders = [];
@@ -21,7 +20,10 @@ class TemporaryImageController extends Controller
             foreach ($images as $image) {
                 $filename = $image->getClientOriginalName();
                 $folder = uniqid('image-', true);
-                $image->storeAs('public/images/tmp/' . $folder, $filename);
+
+                // Store in the public/images/tmp directory
+                $image->storeAs('images/tmp/' . $folder, $filename, 'public');
+
                 TemporaryImage::create([
                     'folder' => $folder,
                     'file' => $filename,
@@ -37,52 +39,51 @@ class TemporaryImageController extends Controller
 
     public function deleteTemporary(Request $request)
     {
-
         $payload = json_decode($request->getContent(), true);
         $folder = $payload[0];
         $temporaryImage = TemporaryImage::where('folder', $folder)->first();
 
         if ($temporaryImage) {
             try {
-                // Delete files from storage
-                Storage::deleteDirectory('public/images/tmp/' . $temporaryImage->folder);
+                // Delete files from public storage
+                Storage::disk('public')->deleteDirectory('images/tmp/' . $temporaryImage->folder);
 
                 // Delete record from the database
                 $temporaryImage->delete();
 
-                // Return success response
                 return response()->noContent();
             } catch (\Exception $e) {
-                // Log the error
-                // \Log::error('Error deleting temporary image: ' . $e->getMessage());
-
-                // Return error response
                 return response()->json(['message' => 'Failed to delete temporary image.'], 500);
             }
         }
 
-        // If no temporary image found with the given folder, return 404
         return response()->json(['message' => 'Temporary image not found.'], 404);
     }
 
-
     public function uploadImageDirectlyToDB(Request $request, $id)
     {
-        $product = Product::findorFail($id);
+        $product = Product::findOrFail($id);
+
         if ($request->hasFile('images')) {
             $images = $request->file('images');
             $fileNameProduct = [];
 
             foreach ($images as $image) {
                 $extensionTemp = $image->getClientOriginalExtension();
-                $fileNameProductImage =  Str::random(20) . '.' . $extensionTemp;
+                $fileNameProductImage = Str::random(20) . '.' . $extensionTemp;
 
-                // Store the image in the public/images directory
-                $image->move(public_path('/storage/images/product/'.$product->slug), $fileNameProductImage);
+                // Ensure the product directory exists
+                $productFolderPath = public_path('storage/images/product/' . $product->slug);
+                if (!file_exists($productFolderPath)) {
+                    mkdir($productFolderPath, 0777, true);
+                }
+
+                // Move the image to the public storage directory
+                $image->move($productFolderPath, $fileNameProductImage);
 
                 // Store the image path in the database
                 Foto::create([
-                    'foto' => '/storage/images/product/' .$product->slug.'/'. $fileNameProductImage,
+                    'foto' => '/storage/images/product/' . $product->slug . '/' . $fileNameProductImage,
                     'product_id' => $id,
                 ]);
 

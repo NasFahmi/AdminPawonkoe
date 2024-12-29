@@ -86,14 +86,17 @@ class ProductController extends Controller
         // dd($slug);
         // dd($data);
         try {
+            // dd($request->all());
             DB::beginTransaction();
             // get data from images
+            // !get all Image
             $dataAllImage = $request->images; // Mendapatkan array dari request
             $decodedImages = [];
             foreach ($dataAllImage as $image) {
                 $decodedImages[] = json_decode($image, true); // Mendekodekan string JSON menjadi array PHP dan menambahkannya ke dalam array $decodedImages
             }
             $dataImages = call_user_func_array('array_merge', $decodedImages);
+            // dd($dataImages);
             // filter data to name
             if ($validator->fails()) {
                 //delete data temporary images
@@ -144,27 +147,22 @@ class ProductController extends Controller
                 $folderNameTemp = $imageTemp->folder;
                 $fileNameTemp = $imageTemp->file;
                 $fileNameProductImage = Str::random(20) . '.' . $extensionTemp;
-                // dd($fileNameProductImage); //GdomcXRDdftRq30MjJPz.jpeg
-                // copy file image from storage\app\public\images\tmp\image-660a77aaf10368.27307606\WhatsApp Image 2024-03-18 at 9.29.38 PM.jpeg to storage\app\public\images\GdomcXRDdftRq30MjJPz.jpeg
-                // Membuat folder produk jika belum ada
-                $slugFolderPath = 'public/images/product/' . $slug;
-                if (!Storage::exists($slugFolderPath)) {
-                    Storage::makeDirectory($slugFolderPath);
-                    // Mengatur izin folder
-                    $folderPermissions = 0755; // Atur izin sesuai kebutuhan Anda
-                    chmod(storage_path('app/' . $slugFolderPath), $folderPermissions);
-                }
-                // copy file image dari storage\app\public\images\tmp\image-660a77aaf10368.27307606\WhatsApp Image 2024-03-18 at 9.29.38 PM.jpeg ke storage\app\public\images\GdomcXRDdftRq30MjJPz.jpeg
-                $sourcesPath = 'public/images/tmp/' . $folderNameTemp . '/' . $fileNameTemp;
-                $destinationPath = 'public/images/product/' . $slug . '/' . $fileNameProductImage;
-                Storage::copy($sourcesPath, $destinationPath);
-                Foto::updateOrInsert([ //! hanya bekerja di store, namun tidak bekerja di update
+
+
+                // Copy file dari temporary folder ke folder produk
+                $sourcesPath = 'images/tmp/' . $folderNameTemp . '/' . $fileNameTemp; // Path relatif di disk 'public'
+                $destinationPath = 'images/product/' . $slug . '/' . $fileNameProductImage;
+                // dd($destinationPath);
+                Storage::disk('public')->copy($sourcesPath, $destinationPath);
+
+
+                Foto::updateOrInsert([
                     'foto' => '/storage/images/product/' . $slug . '/' . $fileNameProductImage,
                     'product_id' => $productID,
                 ]);
                 // dd($isertimagedb);
                 $imageTemp->delete();
-                Storage::deleteDirectory('public/images/tmp/' . $folderNameTemp);
+                Storage::disk('public')->deleteDirectory('images/tmp/' . $folderNameTemp);
             }
 
             activity()
@@ -328,18 +326,28 @@ class ProductController extends Controller
             }
 
             if (isset($combinedImage)) {
+                // Mengambil semua foto lama yang terkait dengan produk
                 $allOldPhotos = Foto::where('product_id', (int) $id)->pluck('foto')->toArray();
 
-                $photosToDelete = array_diff($allOldPhotos, $combinedImage); //array
+                // Foto yang tidak lagi ada di kombinasi gambar baru
+                $photosToDelete = array_diff($allOldPhotos, $combinedImage); // Array foto yang perlu dihapus
 
                 if (!empty($photosToDelete)) {
                     foreach ($photosToDelete as $photo) {
+                        // Hapus dari database
                         Foto::where('foto', $photo)->delete();
-                        Storage::delete(str_replace('/storage', '/public', $photo));
+
+                        // Ubah jalur '/storage' ke jalur direktori 'public'
+                        $filePath = public_path($photo);
+                        // dd($filePath);
+                        // Hapus file jika ada
+                        if (file_exists($filePath)) {
+                            unlink($filePath);
+                        }
                     }
                 }
-                // dd('end foreach');
             }
+
 
             activity()
                 ->causedBy(auth()->user())

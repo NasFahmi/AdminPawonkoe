@@ -99,15 +99,13 @@ class PiutangController extends Controller
             // 3. store image
             if ($request->hasFile('image')) {
                 $images = $request->file('image'); // not empty
-                // dd($images); // Check if $images is not empty
 
                 $foldername = $validatedData['nama_toko'] . '_' . $tanggal . Str::random(10);
-                $folderPath = 'public/images/piutang/' . $foldername;
+                $folderPath = 'images/piutang/' . $foldername; // Path folder dalam 'public'
 
-                if (!Storage::exists($folderPath)) {
-                    Storage::makeDirectory($folderPath); // Recursive directory creation
-                    $folderPermissions = 0755; // Atur izin sesuai kebutuhan Anda
-                    chmod(storage_path('app/' . $folderPath), $folderPermissions);
+                // Pastikan folder ada atau buat folder baru
+                if (!Storage::disk('public')->exists($folderPath)) {
+                    Storage::disk('public')->makeDirectory($folderPath);
                 }
 
                 foreach ($images as $image) {
@@ -115,11 +113,13 @@ class PiutangController extends Controller
                     $extension = $image->getClientOriginalExtension();
                     $name = $nameResource . '.' . $extension;
 
-                    $image->storeAs($folderPath, $name);
+                    // Simpan file menggunakan disk 'public'
+                    Storage::disk('public')->putFileAs($folderPath, $image, $name);
 
+                    // Simpan path file ke database
                     NotaPiutang::create([
                         'piutang_id' => $piutang->id,
-                        'foto' => 'storage/images/piutang/' . $foldername . '/' . $name, // Concatenate folder path and file name
+                        'foto' => 'storage/' . $folderPath . '/' . $name, // URL untuk akses publik
                     ]);
                 }
             }
@@ -212,8 +212,6 @@ class PiutangController extends Controller
 
                 if (!Storage::exists($folderPath)) {
                     Storage::makeDirectory($folderPath); // Recursive directory creation
-                    $folderPermissions = 0755; // Atur izin sesuai kebutuhan Anda
-                    chmod(storage_path('app/' . $folderPath), $folderPermissions);
                 }
 
                 foreach ($images as $image) {
@@ -221,7 +219,8 @@ class PiutangController extends Controller
                     $extension = $image->getClientOriginalExtension();
                     $name = $nameResource . '.' . $extension;
 
-                    $image->storeAs($folderPath, $name);
+                    // Simpan file menggunakan disk 'public'
+                    Storage::disk('public')->putFileAs($folderPath, $image, $name);
 
                     NotaPiutang::updateOrCreate([
                         'piutang_id' => $piutang->id,

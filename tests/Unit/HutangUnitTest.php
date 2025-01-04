@@ -420,7 +420,7 @@ class HutangUnitTest extends TestCase
             'status' => 1,
             'jumlahHutang' => 600000,
             'tenggat_waktu' => null,
-            'tanggal_lunas' => '2024-12-31',
+            'tanggal_lunas' => '2025-12-31',
             'nominal' => 60000,
         ];
 
@@ -834,7 +834,7 @@ class HutangUnitTest extends TestCase
             'status' => 1,
             'jumlah_hutang' => 500000,
             'tenggat_waktu' => null,
-            'tanggal_lunas' => '2024-10-30',
+            'tanggal_lunas' => '2025-01-30',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -847,11 +847,11 @@ class HutangUnitTest extends TestCase
             'status' => 1,
             'jumlahHutang' => 600000,
             'tenggat_waktu' => null,
-            'tanggal_lunas' => '2024-12-31',
-            'nominal' => 60000,
+            'tanggal_lunas' => '2025-01-31',
+            'nominal' => null,
         ];
 
-        $response = $this->patch(route('hutang.update', $id), $updatedData);
+        $response = $this->patch(route('hutang.update', ['hutang' => $hutang->id]), $updatedData);
 
         $response->assertStatus(302);
         $response->assertRedirect(route('hutang.index'));

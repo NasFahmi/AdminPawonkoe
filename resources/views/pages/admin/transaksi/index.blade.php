@@ -246,6 +246,7 @@
                                                 </li>
                                             @endif
 
+                                            @if (auth()->check() && (auth()->user()->hasRole('superadmin') || auth()->user()->can('edit-transaksi')))
                                             <li>
                                                 <button id="deleteButton" data-modal-target="deleteModal"
                                                     data-modal-toggle="deleteModal"
@@ -265,6 +266,7 @@
                                                     <span class="font-semibold text-red-400">Hapus</span>
                                                 </button>
                                             </li>
+                                            @endif
                                         </ul>
                                     </div>
                                 </td>

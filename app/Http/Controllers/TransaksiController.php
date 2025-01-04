@@ -8,6 +8,7 @@ use App\Models\Rekap;
 use App\Models\Pembeli;
 use App\Models\Product;
 use App\Models\Transaksi;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\HistoryProduct;
 use App\Events\TransaksiSelesai;
@@ -31,7 +32,7 @@ class TransaksiController extends Controller
         //! find history procut berdsarkan id historu product dari tabel historu product transaksi
         //! simpan di variabel dan return view di product nama dan harga
 
-        
+
         $data = Transaksi::with(['pembelis', 'history_product_transaksis.history_product', 'methode_pembayaran'])
             ->search(request('search'))
             ->paginate(10);
@@ -294,42 +295,48 @@ class TransaksiController extends Controller
      */
     public function destroy(Transaksi $transaksi, Request $request)
     {
-        // dd($transaksi);
         $request->validate([
             'password' => 'required', // Validasi input password
         ]);
+
         $user = Auth::user();
-        // dd($user);
-        $succesVerify = Auth::attempt([
-            'nama' => $user->nama,
-            'password' => $request->password
-        ]);
-        if (!$succesVerify) {
-            return redirect()->back()->with('error', 'Password salah');
+        // dd($user->roles[0]->name);
+        // Cek apakah pengguna adalah superadmin
+        if (!$user || $user->roles[0]->name !== "superadmin") {
+            return redirect()->back()->with('error', 'You are not authorized to delete this transaksi.');
         }
+
+        // Verifikasi password pengguna
+        if (!Hash::check($request->password, $user->password)) {
+            return redirect()->back()->with('error', 'Password salah.');
+        }
+
         try {
             DB::beginTransaction();
+
+            // Log aktivitas penghapusan
             activity()
-                ->causedBy(Auth::user())
+                ->causedBy($user)
                 ->performedOn($transaksi)
                 ->event('delete_transaksi')
                 ->withProperties(['data' => $transaksi])
-                ->log('User ' . Auth::user()->nama . ' delete a transaksi');
+                ->log('User ' . $user->nama . ' deleted a transaksi.');
 
+            // Hapus transaksi
             $transaksi->delete();
 
+            // Hapus data terkait di tabel Rekap
             Rekap::where('id_tabel_asal', $transaksi->id)->delete();
-
 
             DB::commit();
 
-            return redirect()->route('transaksis.index')->with('success', 'Transaksi has been deleted successfully');
+            return redirect()->route('transaksis.index')->with('success', 'Transaksi has been deleted successfully.');
         } catch (\Throwable $th) {
             DB::rollBack();
-            // throw $th;
             return redirect()->back()->with('error', 'Failed to delete transaksi data.');
         }
     }
+
 
 
 }

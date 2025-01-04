@@ -539,6 +539,10 @@ class LogActivityTest extends TestCase
 
         $this->assertNotNull($log);
     }
+    public function test_create_data_log_activities_when_successful_delete_transaksi()
+    {
+
+    }
     public function test_create_data_log_activities_when_succesfull_create_preoder()
     {
         $response = $this->post(route('authentication'), [
@@ -1176,20 +1180,20 @@ class LogActivityTest extends TestCase
             'jenis' => $modalFisik->id, // Assuming valid `jenis_modal_id` exists
             'nama' => 'Test Modal',
             'nominal' => 5000,
-            'penyedia' => 'Test Provider',
+            'penyedia' => 'penyedia',
             'jumlah' => 10,
             'tanggal' => now()->format('Y-m-d'),
         ];
         $this->post(route('modal.store'), $data);
         $modal = Modal::latest()->first(); // Fetch the latest modal after creation
-
+        // dd($modalFinansial->id);
         // Prepare data for updating the modal
         $dataUpdated = [
-            'jenis' => $modalFinansial->id, // Updated to a new valid `jenis_modal_id`
-            'nama' => 'Updated Test Modal',
+            'jenis' => $modalFisik->id, // Updated to a new valid `jenis_modal_id`
+            'nama' => 'Updated Modal',
             'nominal' => 5000,
-            'penyedia' => 'Updated Test Provider',
-            'jumlah' => 100,
+            'penyedia' => 'penyedia',
+            'jumlah' => 12,
             'tanggal' => now()->format('Y-m-d'),
         ];
 

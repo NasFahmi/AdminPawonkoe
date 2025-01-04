@@ -281,6 +281,7 @@ class ProductController extends Controller
             $newPhotos = array_filter($dataAllImage, function ($item) {
                 return preg_match('/^\[".*"\]$/', $item);
             }); //! new photos was upload direcly into database
+
             $oldPhotos = array_filter($dataAllImage, function ($item) {
                 return !preg_match('/^\[".*"\]$/', $item);
             }); //!old photos

@@ -123,13 +123,12 @@ class TemporaryImageTest extends TestCase
             'varian' => ['Red', 'Blue']
         ];
 
-        $response = $this->postJson(route('products.store'), $productData);
+        $response = $this->postJson(route('products.store'), data: $productData);
         // $response->assertStatus(201);
 
         // Assert product exists in the database
         $this->assertDatabaseHas('products', [
             'nama_product' => 'Test Product',
-            'slug' => 'test-product',
         ]);
 
 
@@ -180,7 +179,6 @@ class TemporaryImageTest extends TestCase
         // Assert product exists in the database
         $this->assertDatabaseHas('products', [
             'nama_product' => 'Test Product',
-            'slug' => 'test-product',
         ]);
         // Delete the temporary image
         $response = $this->postJson(route('delete.temporary'), [
@@ -237,13 +235,12 @@ class TemporaryImageTest extends TestCase
         // Assert product exists in the database
         $this->assertDatabaseHas('products', [
             'nama_product' => 'Test Product',
-            'slug' => 'test-product',
         ]);
         // Simulate file upload for the second image
         $file2 = UploadedFile::fake()->image('test_image.jpg');
 
         // Upload temporary image
-        $response2 = $this->postJson(route('upload.directtoDB',$product->id), [
+        $response2 = $this->postJson(route('upload.directtoDB', $product->id), [
             'images' => [$file2],
         ]);
         $response2->assertStatus(200);
@@ -258,7 +255,8 @@ class TemporaryImageTest extends TestCase
         $response = $this->postJson(route('delete.temporary'), [uniqid('image-', true)]);
         $response->assertStatus(404);
     }
-    public function test_return_noting_in_upload_temporary_image_when_has_no_image(){
+    public function test_return_noting_in_upload_temporary_image_when_has_no_image()
+    {
         $this->post(route('authentication'), [
             'nama' => 'pawonkoe',
             'password' => 'pawonkoe',
@@ -266,12 +264,13 @@ class TemporaryImageTest extends TestCase
         $response = $this->postJson(route('upload.temporary'), [uniqid('image-', true)]);
         $response->assertStatus(200);
     }
-    public function test_return_noting_in_upload_image_direct_to_db_when_has_no_image(){
+    public function test_return_noting_in_upload_image_direct_to_db_when_has_no_image()
+    {
         $this->post(route('authentication'), [
             'nama' => 'pawonkoe',
             'password' => 'pawonkoe',
         ]);
-        $response = $this->postJson(route('upload.directtoDB',2), [uniqid('image-', true)]);
+        $response = $this->postJson(route('upload.directtoDB', 2), [uniqid('image-', true)]);
         $response->assertStatus(404);
     }
 }

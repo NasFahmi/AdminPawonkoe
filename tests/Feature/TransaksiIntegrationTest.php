@@ -1203,5 +1203,12 @@ class TransaksiIntegrationTest extends TestCase
         ]);
 
     }
+    // public function test_succesful_delete_transaksi_by_superadmin()
+    // {
 
+    // }
+    // public function test_cannot_delete_transaksi_by_admin()
+    // {
+
+    // }
 }

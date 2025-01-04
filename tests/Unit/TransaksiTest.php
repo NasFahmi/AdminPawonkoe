@@ -119,7 +119,7 @@ class TransaksiTest extends TestCase
             'tersedia' => '1',
             'spesifikasi_product' => 'Test Specifications',
         ];
-        $productHistory= HistoryProduct::create($productHistoryData);
+        $productHistory = HistoryProduct::create($productHistoryData);
         $transaksi = Transaksi::create(
             [
                 'tanggal' => Carbon::now(),
@@ -204,7 +204,7 @@ class TransaksiTest extends TestCase
             'tersedia' => '1',
             'spesifikasi_product' => 'Test Specifications',
         ];
-        $productHistory= HistoryProduct::create($productHistoryData);
+        $productHistory = HistoryProduct::create($productHistoryData);
         // dd($productId);// 1 ->exsisting product
 
         // Pastikan metode pembayaran ada
@@ -283,7 +283,7 @@ class TransaksiTest extends TestCase
             'tersedia' => '1',
             'spesifikasi_product' => 'Test Specifications',
         ];
-        $productHistory= HistoryProduct::create($productHistoryData);
+        $productHistory = HistoryProduct::create($productHistoryData);
         // dd($productId);// 1 ->exsisting product
 
         // Pastikan metode pembayaran ada
@@ -363,7 +363,7 @@ class TransaksiTest extends TestCase
             'tersedia' => '1',
             'spesifikasi_product' => 'Test Specifications',
         ];
-        $productHistory= HistoryProduct::create($productHistoryData);
+        $productHistory = HistoryProduct::create($productHistoryData);
         // dd($productId);// 1 ->exsisting product
 
         // Pastikan metode pembayaran ada
@@ -442,7 +442,7 @@ class TransaksiTest extends TestCase
             'tersedia' => '1',
             'spesifikasi_product' => 'Test Specifications',
         ];
-        $productHistory= HistoryProduct::create($productHistoryData);
+        $productHistory = HistoryProduct::create($productHistoryData);
         // dd($productId);// 1 ->exsisting product
 
         // Pastikan metode pembayaran ada
@@ -516,7 +516,7 @@ class TransaksiTest extends TestCase
             'tersedia' => '1',
             'spesifikasi_product' => 'Test Specifications',
         ];
-        $productHistory= HistoryProduct::create($productHistoryData);
+        $productHistory = HistoryProduct::create($productHistoryData);
 
         // Pastikan metode pembayaran ada
         $methodePembayaran = MethodePembayaran::first();
@@ -602,7 +602,7 @@ class TransaksiTest extends TestCase
             'tersedia' => '1',
             'spesifikasi_product' => 'Test Specifications',
         ];
-        $productHistory= HistoryProduct::create($productHistoryData);
+        $productHistory = HistoryProduct::create($productHistoryData);
         $transaksiData = [
             'tanggal' => Carbon::now()->format('Y-m-d'),
             'product' => $product->id, // Pastikan ini product_id
@@ -671,7 +671,7 @@ class TransaksiTest extends TestCase
             'tersedia' => '1',
             'spesifikasi_product' => 'Test Specifications',
         ];
-        $productHistory= HistoryProduct::create($productHistoryData);
+        $productHistory = HistoryProduct::create($productHistoryData);
 
         // dd($productId);// 1 ->exsist ing product
 
@@ -755,7 +755,7 @@ class TransaksiTest extends TestCase
             'tersedia' => '1',
             'spesifikasi_product' => 'Test Specifications',
         ];
-        $productHistory= HistoryProduct::create($productHistoryData);
+        $productHistory = HistoryProduct::create($productHistoryData);
         // dd($productId);// 1 ->exsisting product
 
         // Pastikan metode pembayaran ada
@@ -833,7 +833,7 @@ class TransaksiTest extends TestCase
             'tersedia' => '1',
             'spesifikasi_product' => 'Test Specifications',
         ];
-        $productHistory= HistoryProduct::create($productHistoryData);
+        $productHistory = HistoryProduct::create($productHistoryData);
         // dd($productId);// 1 ->exsisting product
 
         // Pastikan metode pembayaran ada
@@ -905,7 +905,7 @@ class TransaksiTest extends TestCase
             'tersedia' => '1',
             'spesifikasi_product' => 'Test Specifications',
         ];
-        $productHistory= HistoryProduct::create($productHistoryData);
+        $productHistory = HistoryProduct::create($productHistoryData);
         // dd($productId);// 1 ->exsisting product
 
         // Pastikan metode pembayaran ada
@@ -940,4 +940,14 @@ class TransaksiTest extends TestCase
             'tanggal' => 'The tanggal field must be a date before or equal to today.'
         ]);
     }
+
+    // public function test_delete_transaksi()
+    // {
+
+    // }
+    // public function test_cannot_delete_transaksi_when_password_incorrect()
+    // {
+
+    // }
+
 }

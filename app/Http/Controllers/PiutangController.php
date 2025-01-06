@@ -161,8 +161,8 @@ class PiutangController extends Controller
             return redirect()->route('piutang.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
-            // return redirect()->back()->with('error', 'Gagal menyimpan.');
+            // throw $th;
+            return redirect()->back()->with('error', 'Gagal menyimpan.');
         }
     }
 
@@ -254,8 +254,8 @@ class PiutangController extends Controller
             return redirect()->route('piutang.index')->with('success', 'Data Berhasil Diupdate');
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
-            // return redirect()->back()->with('error', 'Gagal menyimpan.');
+            // throw $th;
+            return redirect()->back()->with('error', 'Gagal menyimpan.');
         }
     }
 

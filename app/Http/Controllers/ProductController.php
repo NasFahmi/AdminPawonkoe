@@ -181,7 +181,7 @@ class ProductController extends Controller
             // Jika ada kesalahan, rollback transaksi
             // dd($e->getMessage());
             DB::rollBack();
-            throw $e;
+            // throw $e;
             // dd('gagal ');
             // Handle kesalahan sesuai kebutuhan Anda, misalnya:
             return redirect()->back()->with('error', 'Gagal menyimpan data Product.');
@@ -363,7 +363,7 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             // If there is an error, rollback the transaction
             DB::rollBack();
-            throw $e;
+            // throw $e;
             // Handle the error as needed
             return redirect()->back()->with('error', 'Failed to update product data.');
         }

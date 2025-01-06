@@ -169,7 +169,7 @@ class TransaksiController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             // dd($th->getMessage());
-            throw $th;
+            // throw $th;
             return redirect()->back()->with('error', 'Failed to create transaksi data.');
         }
     }
@@ -314,7 +314,7 @@ class TransaksiController extends Controller
         try {
             DB::beginTransaction();
 
-            // Log aktivitas penghapusan
+            // Log aktivitas penghapusanA
             activity()
                 ->causedBy($user)
                 ->performedOn($transaksi)

@@ -51,11 +51,8 @@ class HutangController extends Controller
     {
 
         try {
-
             DB::beginTransaction();
-
             $status = $request->input('status');
-            // dd(vars: $request->all());
             $validatedData = $request->validate(
                 [
                     'nama' => 'required|string|max:255|regex:/^[A-Za-z\s]+$/',
@@ -74,7 +71,6 @@ class HutangController extends Controller
                     'tenggat_waktu.date' => 'Tenggat waktu harus berupa tanggal dengan format YYYY-MM-DD.',
                 ]
             );
-            // dd($status);
 
             if ($request->nominal > $request->jumlahHutang) {
                 return back()->withErrors(['nominal' => 'Nominal cicilan awal tidak boleh lebih dari jumlah hutang.'])->withInput();
@@ -82,17 +78,15 @@ class HutangController extends Controller
 
             // lunas
             if ($status == 1) {
-                // $tanggalLunas = Carbon::parse($validatedData['tanggal_lunas'], 'Asia/Jakarta')->format('Y-m-d');
                 // Membuat data hutang
                 $hutang = Hutang::create([
                     'nama' => $validatedData['nama'],
                     'catatan' => $validatedData['catatan'],
-                    'status' => $validatedData['status'], // Sesuaikan nama kolom jika berbeda
+                    'status' => $validatedData['status'],
                     'jumlah_hutang' => $validatedData['jumlahHutang'],
                     'tenggat_waktu' => null,
                     'tanggal_lunas' => $validatedData['tanggal_lunas'],
                 ]);
-
 
                 activity()
                     ->causedBy(auth()->user())
@@ -100,11 +94,9 @@ class HutangController extends Controller
                     ->event('add_hutang')
                     ->withProperties(['id' => $hutang->id])
                     ->log('User ' . auth()->user()->nama . ' add a new hutang ');
-
             }
 
             if ($status == 0) {
-                // $tenggatWaktu = Carbon::parse($validatedData['tenggat_waktu'], 'Asia/Jakarta')->format('Y-m-d');
                 // Membuat data cicilan
                 $hutang = Hutang::create([
                     'nama' => $validatedData['nama'],
@@ -121,14 +113,12 @@ class HutangController extends Controller
                     ]);
                 }
 
-
                 activity()
                     ->causedBy(auth()->user())
                     ->performedOn($hutang)
                     ->event('add_hutang')
                     ->withProperties(['id' => $hutang->id])
                     ->log('User ' . auth()->user()->nama . ' add a new hutang ');
-
             }
             $tanggal = Carbon::parse($hutang->created_at, 'Asia/Jakarta')->format('Y-m-d');
 
@@ -256,7 +246,6 @@ class HutangController extends Controller
                     ->event('edit_hutang')
                     ->withProperties(['id' => $hutang->id])
                     ->log('User ' . auth()->user()->nama . ' update a hutang ');
-
             } elseif ($validatedData['status'] == 1) {
                 $hutang->update([
                     'nama' => $validatedData['nama'],
@@ -294,6 +283,8 @@ class HutangController extends Controller
             DB::commit();
 
             return redirect()->route('hutang.index')->with('success', 'Data Berhasil Disimpan');
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator)->withInput();
         } catch (\Exception $e) {
             // dd($e->getMessage());
             DB::rollBack();

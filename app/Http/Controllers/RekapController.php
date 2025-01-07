@@ -166,18 +166,14 @@ class RekapController extends Controller
     {
         $searchTerm = request('search');
 
-        // Mencari data berdasarkan tipe transaksi 'masuk'
         $query = Rekap::where('tipe_transaksi', 'masuk');
         $type = 'masuk';
         $month = null;
         $year = null;
-        // Jika ada istilah pencarian, tambahkan filter untuk produk
         if ($searchTerm) {
             $query->where('sumber', 'like', "%$searchTerm%");
         }
 
-
-        // Ambil hasil paginasi
         $data = $query->paginate(10);
         return view('pages.rekap.detail', [
             'data' => $data,
@@ -185,7 +181,6 @@ class RekapController extends Controller
             'month' => $month,
             'daftarBulan' => $this->daftarBulan,
             'year' => $year,
-
         ]);
     }
 

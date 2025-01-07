@@ -78,7 +78,7 @@ class ProduksiController extends Controller
             return redirect()->route('produksi.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
+            // throw $th;
             return redirect()->back()->with('error', 'Gagal menyimpan.');
         }
     }
@@ -136,7 +136,7 @@ class ProduksiController extends Controller
             DB::commit();
             return redirect()->route('produksi.index')->with('success', 'Data Berhasil Diupdate');
         } catch (\Throwable $th) {
-            throw $th;
+            // throw $th;
             DB::rollBack();
             return redirect()->back()->with('error', 'Terjadi kesalahan saat megnupdate data');
         }
@@ -162,7 +162,7 @@ class ProduksiController extends Controller
             DB::commit();
             return redirect()->route('produksi.index')->with('success', 'Data Berhasil Dihapus');
         } catch (\Throwable $th) {
-            throw $th;
+            // throw $th;
             DB::rollBack();
             return redirect()->back()->with('error', 'Terjadi kesalahan saat delete data');
         }

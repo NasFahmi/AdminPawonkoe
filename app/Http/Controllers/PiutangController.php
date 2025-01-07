@@ -53,7 +53,7 @@ class PiutangController extends Controller
         // Validasi input data
         $validatedData = $request->validate([
             'nama_toko' => 'required|string',
-            'sewa_titip' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
+            'sewa_titip' => 'required|numeric|min:0|regex:/^[1-9][0-9]*$/',
             'tanggal_disetorkan' => 'required|',
             'catatan' => 'nullable|string',
             'product.*.product' => 'required|string',
@@ -161,8 +161,8 @@ class PiutangController extends Controller
             return redirect()->route('piutang.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
-            // return redirect()->back()->with('error', 'Gagal menyimpan.');
+            // throw $th;
+            return redirect()->back()->with('error', 'Gagal menyimpan.');
         }
     }
 
@@ -254,8 +254,8 @@ class PiutangController extends Controller
             return redirect()->route('piutang.index')->with('success', 'Data Berhasil Diupdate');
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
-            // return redirect()->back()->with('error', 'Gagal menyimpan.');
+            // throw $th;
+            return redirect()->back()->with('error', 'Gagal menyimpan.');
         }
     }
 

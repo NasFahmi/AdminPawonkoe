@@ -209,7 +209,8 @@
                                 <tr>
                                     <td class="px-4 py-2 whitespace-nowrap">{{ $transaksi->tanggal }}</td>
                                     <td class="px-4 py-2 whitespace-nowrap">{{ $transaksi->jumlah }}</td>
-                                    <td class="px-4 py-2 whitespace-nowrap">{{ $transaksi->methode_pembayaran->methode_pembayaran }}</td>
+                                    <td class="px-4 py-2 whitespace-nowrap">
+                                        {{ $transaksi->methode_pembayaran->methode_pembayaran }}</td>
                                     <td cope="row" class="w-10 h-16 px-4 py-2 lg:whitespace-nowrap">
                                         @if ($transaksi->is_complete == true)
                                             <div
@@ -225,7 +226,8 @@
                                         @endif
                                     </td>
 
-                                    <td class="px-4 py-2 whitespace-nowrap"><a href="{{ route('transaksis.detail', $transaksi->id) }}">Detail</a></td>
+                                    <td class="px-4 py-2 whitespace-nowrap"><a
+                                            href="{{ route('transaksis.detail', $transaksi->id) }}">Detail</a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -258,19 +260,54 @@
         var options = {
             series: [{
                 name: "Product",
-                data: [
-                    { x: 'Januari', y: transaksiPerBulan[1] },
-                    { x: 'Februari', y: transaksiPerBulan[2] },
-                    { x: 'Maret', y: transaksiPerBulan[3] },
-                    { x: 'April', y: transaksiPerBulan[4] },
-                    { x: 'Mei', y: transaksiPerBulan[5] },
-                    { x: 'Juni', y: transaksiPerBulan[6] },
-                    { x: 'Juli', y: transaksiPerBulan[7] },
-                    { x: 'Agustus', y: transaksiPerBulan[8] },
-                    { x: 'September', y: transaksiPerBulan[9] },
-                    { x: 'Oktober', y: transaksiPerBulan[10] },
-                    { x: 'November', y: transaksiPerBulan[11] },
-                    { x: 'Desember', y: transaksiPerBulan[12] }
+                data: [{
+                        x: 'Januari',
+                        y: transaksiPerBulan[1]
+                    },
+                    {
+                        x: 'Februari',
+                        y: transaksiPerBulan[2]
+                    },
+                    {
+                        x: 'Maret',
+                        y: transaksiPerBulan[3]
+                    },
+                    {
+                        x: 'April',
+                        y: transaksiPerBulan[4]
+                    },
+                    {
+                        x: 'Mei',
+                        y: transaksiPerBulan[5]
+                    },
+                    {
+                        x: 'Juni',
+                        y: transaksiPerBulan[6]
+                    },
+                    {
+                        x: 'Juli',
+                        y: transaksiPerBulan[7]
+                    },
+                    {
+                        x: 'Agustus',
+                        y: transaksiPerBulan[8]
+                    },
+                    {
+                        x: 'September',
+                        y: transaksiPerBulan[9]
+                    },
+                    {
+                        x: 'Oktober',
+                        y: transaksiPerBulan[10]
+                    },
+                    {
+                        x: 'November',
+                        y: transaksiPerBulan[11]
+                    },
+                    {
+                        x: 'Desember',
+                        y: transaksiPerBulan[12]
+                    }
                 ]
             }],
             chart: {
@@ -292,7 +329,7 @@
                 }
             },
             title: {
-                text: `Transkai product ${namaProduct} Tahun 2024`,
+                text: `Transaksi product ${namaProduct} ${new Date().getFullYear()}`,
             },
             tooltip: {
                 x: {

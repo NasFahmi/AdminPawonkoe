@@ -26,8 +26,6 @@ class LogController extends Controller
             // Pastikan $subject tidak null
             if ($subject) {
                 $actor[] = $subject->nama;
-            } else {
-                $actor[] = 'Unknown'; // Atau nilai default lainnya jika pengguna tidak ditemukan
             }
 
             // Konversi waktu dan tambahkan ke array $datetime
@@ -39,6 +37,6 @@ class LogController extends Controller
             $datetime[] = $convertedTime;
         }
         // dd($datetime);
-        return view('pages.activities.index', compact('data', 'actor','datetime'));
+        return view('pages.activities.index', compact('data', 'actor', 'datetime'));
     }
 }

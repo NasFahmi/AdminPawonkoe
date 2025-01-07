@@ -76,14 +76,14 @@ class BebanKewajibanController extends Controller
             ]);
 
             Rekap::insert([
-                    'tanggal_transaksi' => $tanggal,
-                    'sumber' => 'Beban dan Kewajiban',
-                    'jumlah' => $validatedData['nominal'],
-                    'keterangan' => 'Pembayaran ' . $validatedData['jenis']. ' untuk ' . $validatedData['nama'],
-                    'id_tabel_asal' => $bebanKewajiban->id,
-                    'tipe_transaksi' => 'Keluar'
-                ]);
-    
+                'tanggal_transaksi' => $tanggal,
+                'sumber' => 'Beban dan Kewajiban',
+                'jumlah' => $validatedData['nominal'],
+                'keterangan' => 'Pembayaran ' . $validatedData['jenis'] . ' untuk ' . $validatedData['nama'],
+                'id_tabel_asal' => $bebanKewajiban->id,
+                'tipe_transaksi' => 'Keluar'
+            ]);
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($bebanKewajiban)
@@ -95,7 +95,7 @@ class BebanKewajibanController extends Controller
             return redirect()->route('beban-kewajibans.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
+            // throw $th;
             return redirect()->back()->with('error', 'Gagal menyimpan.');
         }
     }
@@ -160,7 +160,7 @@ class BebanKewajibanController extends Controller
                 'tanggal_transaksi' => $tanggal,
                 'sumber' => 'Beban dan Kewajiban',
                 'jumlah' => $validatedData['nominal'],
-                'keterangan' => 'Pembayaran ' . $validatedData['jenis']. ' untuk ' . $validatedData['nama'],
+                'keterangan' => 'Pembayaran ' . $validatedData['jenis'] . ' untuk ' . $validatedData['nama'],
                 'id_tabel_asal' => $bebanKewajiban->id,
                 'tipe_transaksi' => 'Keluar'
             ]);
@@ -175,7 +175,7 @@ class BebanKewajibanController extends Controller
             DB::commit();
             return redirect()->route('beban-kewajibans.index')->with('success', 'Data Berhasil Diupdate');
         } catch (\Throwable $th) {
-            throw $th;
+            // throw $th;
             DB::rollBack();
             return redirect()->back()->with('error', 'Terjadi kesalahan saat megnupdate data');
         }
@@ -202,7 +202,7 @@ class BebanKewajibanController extends Controller
             DB::commit();
             return redirect()->route('beban-kewajibans.index')->with('success', 'Data Berhasil Dihapus');
         } catch (\Throwable $th) {
-            throw $th;
+            // throw $th;
             DB::rollBack();
             return redirect()->back()->with('error', 'Terjadi kesalahan saat delete data');
         }

@@ -1120,21 +1120,23 @@ class HutangUnitTest extends TestCase
             'catatan' => 'Catatan hutang',
             'status' => 0,
             'jumlah_hutang' => 500000,
-            'tenggat_waktu' => '2024-10-30',
+            'tenggat_waktu' => Carbon::now()->format('Y-m-d'),
             'tanggal_lunas' => null,
+            "created_at" => Carbon::now()->format('Y-m-d'),
         ]);
-
+        $id = $hutang->id;
+        // dd($id);
         $updatedData = [
             'nama' => 'Bank XYZ',
             'catatan' => 'Catatan hutang diperbarui',
             'status' => 1,
             'jumlahHutang' => 600000,
             'tenggat_waktu' => null,
-            'tanggal_lunas' => '2024-10-29',
+            'tanggal_lunas' => Carbon::now()->subDay()->format('Y-m-d'),
         ];
 
-        $response = $this->patch(route('hutang.update', $hutang->id), $updatedData);
-
+        $response = $this->patch(route('hutang.update', $id), $updatedData);
+        // dd($response);
         $response->assertSessionHasErrors([
             'tanggal_lunas',
         ]);
@@ -1157,7 +1159,8 @@ class HutangUnitTest extends TestCase
         $response->assertStatus(500);
     }
 
-    public function test_fail_nominal_cicilan_lebih_dari_sisa_hutang(){
+    public function test_fail_nominal_cicilan_lebih_dari_sisa_hutang()
+    {
 
         $response = $this->post(route('authentication'), [
             'nama' => 'pawonkoe',
@@ -1189,7 +1192,8 @@ class HutangUnitTest extends TestCase
         ]);
     }
 
-    public function test_fail_cicilan_hutang(){
+    public function test_fail_cicilan_hutang()
+    {
 
         $response = $this->post(route('authentication'), [
             'nama' => 'pawonkoe',

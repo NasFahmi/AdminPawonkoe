@@ -189,7 +189,7 @@ class PreorderController extends Controller
             return redirect()->route('preorders.index')->with('success', 'Transaksi has been created successfully');
         } catch (\Throwable $th) {
             DB::rollBack();
-            dd($th->getMessage());
+            // dd($th->getMessage());
             // throw $th;
             return redirect()->back()->with('error', 'Failed to create transaksi data.');
         }
@@ -273,7 +273,7 @@ class PreorderController extends Controller
         } catch (\Throwable $th) {
 
             DB::rollBack();
-            dd($th->getMessage());
+            // dd($th->getMessage());
             // throw $th;
             return redirect()->back()->with('error', 'Failed to update transaksi data.');
         }

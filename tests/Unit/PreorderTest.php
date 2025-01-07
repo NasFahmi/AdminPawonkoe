@@ -237,13 +237,13 @@ class PreorderTest extends TestCase
                 'updated_at' => Carbon::now(),
             ]
         );
-         // Prepare update data
-         $updateData = [
-            'jumlah_dp'=>20000,
-            'is_complete'=>0,
+        // Prepare update data
+        $updateData = [
+            'jumlah_dp' => 20000,
+            'is_complete' => 0,
             'keterangan' => 'Test Keterangan',
-            'telepon'=>"08123456789",
-            "product_id"=>$product->id
+            'telepon' => "08123456789",
+            "product_id" => $product->id
         ];
 
         // Update the transaction
@@ -1398,7 +1398,7 @@ class PreorderTest extends TestCase
         // Prepare the data for creating a transaction
         $transaksiData = [
             'tanggal' => now()->format('Y-m-d'),
-            'jumlah' => 3,
+            'jumlah' => 4,
             'total' => 100000 * 3,
             'nama' => 'John Doe',
             'email' => 'john.doe@example.com',
@@ -1412,9 +1412,188 @@ class PreorderTest extends TestCase
 
         ];
         $response = $this->post(route('preorders.store'), $transaksiData);
-        $transaksi = Transaksi::latest()->first();
-        $product->refresh();
-        $transaksi->refresh();
-        $this->assertSame($product->harga * 3, $transaksi->total_harga);
+
+        // Verifikasi bahwa respons berisi error validasi di session
+        $response->assertSessionHasErrors([
+            'total' => 'Total harga tidak cocok. Harap hitung ulang.',
+        ]);
+        // $this->assertNotSame($product->harga * 10, $transaksi->total_harga);
+
+    }
+    public function test_cannot_create_preorder_with_id_pembayaran_not_match()
+    {
+        $response = $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+        Storage::fake('public');
+
+        $temporaryFolder = uniqid('image-', true);
+        $temporaryImage = TemporaryImage::create([
+            'folder' => $temporaryFolder,
+            'file' => 'test-image.jpg'
+        ]);
+
+        Storage::disk('public')->put(
+            "images/tmp/{$temporaryFolder}/test-image.jpg",
+            UploadedFile::fake()->image('test-image.jpg')->size(100)
+        );
+
+        // Create Product
+        $productData = [
+            'nama_product' => 'Test Product',
+            'slug' => 'Test-Product',
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+            'images' => [json_encode([$temporaryFolder])],
+            'varian' => ['Red', 'Blue']
+        ];
+
+        $this->post(route('products.store'), $productData);
+
+        // Ambil ID produk terakhir
+        $product = Product::latest()->first();
+        $productId = $product->id;
+        // dd($productId);// 1 ->exsisting product
+
+        // Pastikan metode pembayaran ada
+        // Pastikan metode pembayaran ada
+        $methodePembayaranTransfer = MethodePembayaran::create([
+            'methode_pembayaran' => 'transfer'
+        ]);
+        $methodePembayaranShopee = MethodePembayaran::create([
+            'methode_pembayaran' => 'shopee'
+        ]);
+        $methodePembayaranOffline = MethodePembayaran::create([
+            'methode_pembayaran' => 'offline'
+        ]);
+        $methodePembayaranLainnya = MethodePembayaran::create([
+            'methode_pembayaran' => 'lainnya'
+        ]);
+        // Prepare the data for creating a transaction
+        $transaksiData = [
+            'tanggal' => now()->format('Y-m-d'),
+            'jumlah' => 3,
+            'total' => 100000 * 3,
+            'nama' => 'John Doe',
+            'email' => 'john.doe@example.com',
+            'alamat' => '123 Street, City',
+            'telepon' => '081234567890',
+            'tanggal_dp' => now()->format('Y-m-d'),
+            'jumlah_dp' => '50000',
+            'product' => $product->id,
+            'methode_pembayaran' => 100,
+            'keterangan' => 'Test Keterangan'
+
+        ];
+        $response = $this->post(route('preorders.store'), $transaksiData);
+        // dd($response);
+        // $transaksi = Transaksi::latest()->first();
+        // $product->refresh();
+        // $transaksi->refresh();
+        $response->assertSessionHas([
+            'error' => 'Failed to create transaksi data.'
+        ]);
+    }
+
+    public function test_error_edit_preorder_with_random_id()
+    {
+        $response = $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+
+        Storage::fake('public');
+
+        // Create a temporary image
+        $temporaryFolder = uniqid('image-', true);
+        $temporaryImage = TemporaryImage::create([
+            'folder' => $temporaryFolder,
+            'file' => 'test-image.jpg'
+        ]);
+
+        Storage::disk('public')->put(
+            "images/tmp/{$temporaryFolder}/test-image.jpg",
+            UploadedFile::fake()->image('test-image.jpg')->size(100)
+        );
+
+        // Create a product
+        $productData = [
+            'nama_product' => 'Test Product',
+            'slug' => 'Test-Product',
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+            'images' => [json_encode([$temporaryFolder])],
+            'varian' => ['Red', 'Blue']
+        ];
+
+        $this->post(route('products.store'), $productData);
+
+        // Retrieve the latest product ID
+        $product = Product::latest()->first();
+        $productId = $product->id;
+
+        // Ensure that a payment method exists
+        $methodePembayaran = MethodePembayaran::first() ?? MethodePembayaran::create([
+            'methode_pembayaran' => 'Transfer'
+        ]);
+
+        // Prepare transaction data
+        $transaksiData = [
+            'tanggal' => now()->format('Y-m-d'),
+            'jumlah' => 1,
+            'total' => '100000',
+            'nama' => 'John Doe',
+            'email' => 'john.doe@example.com',
+            'alamat' => '123 Street, City',
+            'telepon' => '081234567890',
+            'tanggal_dp' => now()->format('Y-m-d'),
+            'jumlah_dp' => '50000',
+            'product' => $product->id,
+            'methode_pembayaran' => $methodePembayaran->id,
+            'keterangan' => 'Test Keterangan'
+        ];
+
+        // Create a transaction
+        $response = $this->post(route('preorders.store'), $transaksiData);
+        $preorder = Transaksi::latest()->first();
+        // dd($preorder);
+        $preorderId = $preorder->id;
+
+        // Assert that the response is a redirect and the transaction is in the database
+        $response->assertStatus(302);
+
+        // Prepare update data
+        $updateData = [
+            'tanggal' => now()->format('Y-m-d'),
+            'jumlah' => 111,
+            'total' => '100000',
+            'nama' => 'John Doe',
+            'email' => 'john.doe@example.com',
+            'alamat' => '123 Street, City',
+            'telepon' => '081234567890',
+            'tanggal_dp' => now()->format('Y-m-d'),
+            'jumlah_dp' => '221412214124',
+            'product_id' => $productId,
+            'methode_pembayaran' => $methodePembayaran->id,
+            'keterangan' => 'Test Keterangan',
+            'is_complete' => 1,
+        ];
+
+        // Update the transaction
+        $response = $this->patch(route('preorders.update', 30), $updateData);
+        // dd($response);
+
+        $response->assertSessionHas([
+            'error' => 'Failed to update transaksi data.'
+        ]);
     }
 }

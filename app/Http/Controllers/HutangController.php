@@ -283,6 +283,8 @@ class HutangController extends Controller
             DB::commit();
 
             return redirect()->route('hutang.index')->with('success', 'Data Berhasil Disimpan');
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator)->withInput();
         } catch (\Exception $e) {
             // dd($e->getMessage());
             DB::rollBack();

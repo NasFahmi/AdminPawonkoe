@@ -70,7 +70,7 @@ class TransaksiController extends Controller
             'methode_pembayaran' => 'required',
             'jumlah' => 'required|numeric|min:1|regex:/^[1-9][0-9]*$/',
             'total' => 'required',
-            'is_complete' => 'required',
+            'is_complete' => 'required|in:0,1',
         ]);
 
         if ($validator->fails()) {
@@ -170,7 +170,7 @@ class TransaksiController extends Controller
             DB::rollBack();
             // dd($th->getMessage());
             // throw $th;
-            return redirect()->back()->with('error', 'Failed to create transaksi data.');
+            return redirect()->back()->with('error', value: 'Failed to create transaksi data.');
         }
     }
 
@@ -301,10 +301,10 @@ class TransaksiController extends Controller
 
         $user = Auth::user();
         // dd($user->roles[0]->name);
-        // Cek apakah pengguna adalah superadmin
-        if (!$user || $user->roles[0]->name !== "superadmin") {
-            return redirect()->back()->with('error', 'You are not authorized to delete this transaksi.');
-        }
+        // // Cek apakah pengguna adalah superadmin
+        // if (!$user || $user->roles[0]->name !== "superadmin") {
+        //     return redirect()->back()->with('error', 'You are not authorized to delete this transaksi.');
+        // }
 
         // Verifikasi password pengguna
         if (!Hash::check($request->password, $user->password)) {

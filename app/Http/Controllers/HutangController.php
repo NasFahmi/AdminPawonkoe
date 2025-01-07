@@ -296,8 +296,9 @@ class HutangController extends Controller
             return redirect()->route('hutang.index')->with('success', 'Data Berhasil Disimpan');
         } catch (\Exception $e) {
             // dd($e->getMessage());
-            throw $e;
             DB::rollBack();
+            return redirect()->back()->with('error', 'Data Gagal Disimpan');
+            // throw $e;
         }
     }
 

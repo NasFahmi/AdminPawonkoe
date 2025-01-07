@@ -49,6 +49,8 @@ class TransaksiTest extends TestCase
         superadmin/owder dapat mengedit status transaksi yang belum selesai ke selesai
         Total Harga Terhitung Otomatis Berdasarkan Jumlah Produk dan Harga Satuan
         Validasi Tanggal Transaksi Tidak Melebihi Tanggal Saat Ini
+        user delete transakasi
+        gagal delete transakasi ketika password salah
      */
 
     public function test_view_index_transaksi()
@@ -1083,5 +1085,70 @@ class TransaksiTest extends TestCase
         $response->assertStatus(302);
         $responseDelete->assertSessionHas('error', 'Password salah.');
     }
+
+    // public function test_bloc_catch()
+    // {
+    //     // Login
+    //     $response = $this->post(route('authentication'), [
+    //         'nama' => 'pawonkoe',
+    //         'password' => 'pawonkoe',
+    //     ]);
+    //     Storage::fake('public');
+
+    //     $temporaryFolder = uniqid('image-', true);
+    //     $temporaryImage = TemporaryImage::create([
+    //         'folder' => $temporaryFolder,
+    //         'file' => 'test-image.jpg'
+    //     ]);
+
+    //     Storage::disk('public')->put(
+    //         "images/tmp/{$temporaryFolder}/test-image.jpg",
+    //         UploadedFile::fake()->image('test-image.jpg')->size(100)
+    //     );
+
+    //     // Create Product
+    //     $productData = [
+    //         'nama_product' => 'Test Product',
+    //         'slug' => 'Test-Product',
+    //         'harga' => '100000',
+    //         'deskripsi' => 'Test Description',
+    //         'link_shopee' => 'https://shopee.com/test',
+    //         'stok' => '10',
+    //         'tersedia' => '1',
+    //         'spesifikasi_product' => 'Test Specifications',
+    //         'images' => [json_encode([$temporaryFolder])],
+    //         'varian' => ['Red', 'Blue']
+    //     ];
+
+    //     $this->post(route('products.store'), $productData);
+
+    //     // Ambil ID produk terakhir
+    //     $product = Product::latest()->first();
+    //     $productId = $product->id;
+    //     // dd($productId);// 1 ->exsisting product
+
+    //     // Pastikan metode pembayaran ada
+    //     $methodePembayaran = MethodePembayaran::first();
+    //     if (!$methodePembayaran) {
+    //         $methodePembayaran = MethodePembayaran::create([
+    //             'methode_pembayaran' => 'Transfer'
+    //         ]);
+    //     }
+
+    //     $transaksiData = [
+    //         'tanggal' => Carbon::now()->format('Y-m-d'),
+    //         'product' => $productId,
+    //         'methode_pembayaran' => $methodePembayaran->id,
+    //         'total' => $product->harga,
+    //         'keterangan' => 'Test Keterangan',
+    //         'jumlah' => 1,
+    //         'is_complete' => 3
+    //     ];
+
+    //     // Menyimpan transaksi
+    //     $response = $this->post(route('transaksis.store'), $transaksiData);
+    //     // dd($response);
+    //     $response->assertStatus(302);
+    // }
 
 }

@@ -10,6 +10,7 @@ use App\Models\Transaksi;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Storage;
 use Tests\TestCase; // Change this line to extend Laravel's TestCase
 
@@ -1086,69 +1087,149 @@ class TransaksiTest extends TestCase
         $responseDelete->assertSessionHas('error', 'Password salah.');
     }
 
-    // public function test_bloc_catch()
-    // {
-    //     // Login
-    //     $response = $this->post(route('authentication'), [
-    //         'nama' => 'pawonkoe',
-    //         'password' => 'pawonkoe',
-    //     ]);
-    //     Storage::fake('public');
+    public function test_cannot_create_transaksi_with_random_id_methode_pembayaran()
+    {
+        // Login
+        $response = $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+        Storage::fake('public');
 
-    //     $temporaryFolder = uniqid('image-', true);
-    //     $temporaryImage = TemporaryImage::create([
-    //         'folder' => $temporaryFolder,
-    //         'file' => 'test-image.jpg'
-    //     ]);
+        $temporaryFolder = uniqid('image-', true);
+        $temporaryImage = TemporaryImage::create([
+            'folder' => $temporaryFolder,
+            'file' => 'test-image.jpg'
+        ]);
 
-    //     Storage::disk('public')->put(
-    //         "images/tmp/{$temporaryFolder}/test-image.jpg",
-    //         UploadedFile::fake()->image('test-image.jpg')->size(100)
-    //     );
+        Storage::disk('public')->put(
+            "images/tmp/{$temporaryFolder}/test-image.jpg",
+            UploadedFile::fake()->image('test-image.jpg')->size(100)
+        );
 
-    //     // Create Product
-    //     $productData = [
-    //         'nama_product' => 'Test Product',
-    //         'slug' => 'Test-Product',
-    //         'harga' => '100000',
-    //         'deskripsi' => 'Test Description',
-    //         'link_shopee' => 'https://shopee.com/test',
-    //         'stok' => '10',
-    //         'tersedia' => '1',
-    //         'spesifikasi_product' => 'Test Specifications',
-    //         'images' => [json_encode([$temporaryFolder])],
-    //         'varian' => ['Red', 'Blue']
-    //     ];
+        // Create Product
+        $productData = [
+            'nama_product' => 'Test Product',
+            'slug' => 'Test-Product',
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+            'images' => [json_encode([$temporaryFolder])],
+            'varian' => ['Red', 'Blue']
+        ];
 
-    //     $this->post(route('products.store'), $productData);
+        $this->post(route('products.store'), $productData);
 
-    //     // Ambil ID produk terakhir
-    //     $product = Product::latest()->first();
-    //     $productId = $product->id;
-    //     // dd($productId);// 1 ->exsisting product
+        // Ambil ID produk terakhir
+        $product = Product::latest()->first();
+        $productId = $product->id;
+        // dd($productId);// 1 ->exsisting product
 
-    //     // Pastikan metode pembayaran ada
-    //     $methodePembayaran = MethodePembayaran::first();
-    //     if (!$methodePembayaran) {
-    //         $methodePembayaran = MethodePembayaran::create([
-    //             'methode_pembayaran' => 'Transfer'
-    //         ]);
-    //     }
+        // // Pastikan metode pembayaran ada
+        // $methodePembayaran = MethodePembayaran::first();
+        // if (!$methodePembayaran) {
+        //     $methodePembayaran = MethodePembayaran::create([
+        //         'methode_pembayaran' => 'Transfer'
+        //     ]);
+        // }
 
-    //     $transaksiData = [
-    //         'tanggal' => Carbon::now()->format('Y-m-d'),
-    //         'product' => $productId,
-    //         'methode_pembayaran' => $methodePembayaran->id,
-    //         'total' => $product->harga,
-    //         'keterangan' => 'Test Keterangan',
-    //         'jumlah' => 1,
-    //         'is_complete' => 3
-    //     ];
+        $transaksiData = [
+            'tanggal' => Carbon::now()->format('Y-m-d'),
+            'product' => $productId,
+            'methode_pembayaran' => 10,
+            'total' => $product->harga,
+            'keterangan' => 'Test Keterangan',
+            'jumlah' => 1,
+            'is_complete' => 1
+        ];
 
-    //     // Menyimpan transaksi
-    //     $response = $this->post(route('transaksis.store'), $transaksiData);
-    //     // dd($response);
-    //     $response->assertStatus(302);
-    // }
+        // Menyimpan transaksi
+        $response = $this->post(route('transaksis.store'), $transaksiData);
+        // dd($response);
+        $response->assertSessionHas([
+            'error' => 'Failed to create transaksi data.'
+        ]);
+    }
+
+    public function test_update_transaksi_with_not_bolean_in_is_complete()
+    {
+        $response = $this->post(route('authentication'), [
+            'nama' => 'pawonkoe',
+            'password' => 'pawonkoe',
+        ]);
+        Storage::fake('public');
+
+        $temporaryFolder = uniqid('image-', true);
+        $temporaryImage = TemporaryImage::create([
+            'folder' => $temporaryFolder,
+            'file' => 'test-image.jpg'
+        ]);
+
+        Storage::disk('public')->put(
+            "images/tmp/{$temporaryFolder}/test-image.jpg",
+            UploadedFile::fake()->image('test-image.jpg')->size(100)
+        );
+
+        // Create Product
+        $productData = [
+            'nama_product' => 'Test Product',
+            'slug' => 'Test-Product',
+            'harga' => '100000',
+            'deskripsi' => 'Test Description',
+            'link_shopee' => 'https://shopee.com/test',
+            'stok' => '10',
+            'tersedia' => '1',
+            'spesifikasi_product' => 'Test Specifications',
+            'images' => [json_encode([$temporaryFolder])],
+            'varian' => ['Red', 'Blue']
+        ];
+
+        $this->post(route('products.store'), $productData);
+
+        // Ambil ID produk terakhir
+        $product = Product::latest()->first();
+        $productId = $product->id;
+        // dd($productId);// 1 ->exsisting product
+
+        // Pastikan metode pembayaran ada
+        $methodePembayaran = MethodePembayaran::first();
+        if (!$methodePembayaran) {
+            $methodePembayaran = MethodePembayaran::create([
+                'methode_pembayaran' => 'Transfer'
+            ]);
+        }
+
+        $transaksiData = [
+            'tanggal' => Carbon::now()->format('Y-m-d'),
+            'product' => $productId, // Pastikan ini product_id
+            'methode_pembayaran' => $methodePembayaran->id,
+            'total' => $product->harga,
+            'keterangan' => 'Test Keterangan',
+            'jumlah' => 1,
+            'is_complete' => 0
+        ];
+
+        // Menyimpan transaksi
+        $response = $this->post(route('transaksis.store'), $transaksiData);
+        $transaksi = Transaksi::latest()->first();
+        $product->refresh();
+        // Update data transaksi
+        $transaksiUpdateData = [
+            'product' => $productId,
+            'total' => $product->total_harga,
+            'jumlah' => $product->jumlah,
+            'is_complete' => 3 // Mengubah status menjadi complete untuk memicu event dan log
+        ];
+
+        $responseUpdate = $this->patch(route('transaksis.update', $transaksi->id), $transaksiUpdateData); // Ganti post dengan patch
+        $response->assertSessionHas([
+            'error' => 'Failed to update transaksi data.'
+        ]);
+    }
+
+
 
 }
